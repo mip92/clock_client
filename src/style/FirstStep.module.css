@@ -1,0 +1,56 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 50px 50px auto auto;
+}
+
+.email {
+    text-align: center;
+    grid-area: 1 / 1 / 2 / 4;
+}
+
+.name {
+    text-align: center;
+    grid-area: 2 / 1 / 3 / 4;
+}
+
+.btn{
+    text-align: center;
+    grid-area: 3 / 2 / 4 / 3;
+}
+.error{
+    text-align: center;
+    grid-area: 4 / 2 / 5 / 3;
+    color: red;
+}
+
+.size {
+    text-align: center;
+    grid-area: 3 / 1 / 4 / 4;
+}
+
+.city {
+    text-align: center;
+    grid-area: 4 / 1 / 5 / 2;
+    margin-bottom: 20px;
+    padding-top: 0.5px;
+}
+
+.date {
+    text-align: center;
+    grid-area: 4 / 2 / 5 / 3;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+.field{
+    width: 50px
+}
+
+.time {
+    text-align: center;
+    grid-area: 4 / 3 / 5 / 4;
+    margin-bottom: 20px;
+    padding-top: 0.5px;
+}

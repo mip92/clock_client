@@ -1,0 +1,19 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+}
+.page_wrapper{
+    margin-top: 20px;
+    display: flex;
+}
+.page{
+    padding: 5px;
+    border: 1px solid #f57c00;
+    cursor: pointer;
+}
+.page_current{
+    padding: 5px;
+    cursor: pointer;
+    background: #f57c00;
+    font-weight: bold;
+}
