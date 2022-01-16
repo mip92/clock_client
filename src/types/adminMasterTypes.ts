@@ -1,17 +1,17 @@
-import {city} from "./adminCityTypes";
+import {BooleanPayload, City, MasterPayload, StringPayload} from "./mainInterfacesAndTypes";
 
-export interface master{
+export interface Master {
     id: number,
     name: string,
     email: string,
     rating: number,
     createdAt: string,
     updatedAt: string,
-    cities: Array<city>
+    cities: City[]
 }
 
 export interface AdminMasterStateType {
-    masters: Array<master>
+    masters: Master[]
     newMaster: string
     isFetch: boolean
     error: string | null
@@ -27,75 +27,49 @@ export enum AdminMastersActionTypes {
     CHANGE_MASTER_NAME= "CHANGE_MASTER_NAME",
 }
 
-type fetchActionPayload = {
-    payload: boolean
-}
-
-export interface fetchAction {
+export interface FetchAction {
     type: AdminMastersActionTypes.FETCH_START;
-    payload: fetchActionPayload
+    payload: BooleanPayload
 }
 
-type fetchErrorActionPayload = {
-    payload: string
-}
-
-export interface fetchErrorAction {
+export interface FetchErrorAction {
     type: AdminMastersActionTypes.FETCH_ERROR;
-    payload: fetchErrorActionPayload
+    payload: StringPayload
 }
 
-type fetchMastersActionPayload = {
-    payload: Array<master>
+type FetchMastersActionPayload = {
+    payload: Master[]
 }
 
-export interface fetchMastersAction {
+export interface FetchMastersAction {
     type: AdminMastersActionTypes.FETCH_MASTERS;
-    payload: fetchMastersActionPayload
+    payload: FetchMastersActionPayload
 }
 
-type deleteMasterActionPayload = {
-    payload: master
-}
-
-export interface deleteMasterAction{
+export interface DeleteMasterAction {
     type: AdminMastersActionTypes.DELETE_MASTER;
-    payload: deleteMasterActionPayload
+    payload: MasterPayload
 }
 
-type setMasterNameActionPayload = {
-    payload: string
-}
-
-export interface setMasterNameAction{
+export interface SetMasterNameAction {
     type: AdminMastersActionTypes.SET_MASTER_NAME;
-    payload: setMasterNameActionPayload
+    payload: StringPayload
 }
 
-type addMasterActionPayload = {
-    payload: master
-}
-
-export interface addMasterAction{
+export interface AddMasterAction {
     type: AdminMastersActionTypes.ADD_MASTER;
-    payload: addMasterActionPayload
+    payload: MasterPayload
 }
 
-type changeMasterNameActionPayload = {
-    payload: master
-}
-
-export interface changeMasterNameAction{
+export interface ChangeMasterNameAction {
     type: AdminMastersActionTypes.CHANGE_MASTER_NAME;
-    master: changeMasterNameActionPayload,
+    master: MasterPayload,
 }
 
-
-
-export type AdminMasterAction = fetchAction |
-    fetchErrorAction |
-    fetchMastersAction |
-    deleteMasterAction |
-    setMasterNameAction |
-    addMasterAction |
-    changeMasterNameAction
+export type AdminMasterAction = FetchAction |
+    FetchErrorAction |
+    FetchMastersAction |
+    DeleteMasterAction |
+    SetMasterNameAction |
+    AddMasterAction |
+    ChangeMasterNameAction

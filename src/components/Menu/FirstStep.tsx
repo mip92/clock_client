@@ -6,25 +6,22 @@ import {FormContext} from "../../context/formContext";
 import s from "../../style/FirstStep.module.css"
 import axios from "axios";
 import Date from "./Date"
-import {ICity} from "../../types/mainInterfaces";
-
+import {City, Time} from "../../types/mainInterfacesAndTypes";
 
 const FirstStep: React.FC = () => {
-
     const {
-        currencyCity,
-        setCurrencyCity,
-        currencyTime,
-        setCurrencyTime,
+        currentCity,
+        setCurrentCity,
+        currentTime,
+        setCurrentTime,
         email,
         name,
     } = useContext(FormContext)
 
-
     const [error, setError] = useState<boolean | null>(null)
-    const [cities, setCities] = useState<Array<ICity>>([])
+    const [cities, setCities] = useState<City[]>([])
     const [loading, setLoading] = useState<boolean>(false)
-    const time = [
+    const time: Time[] = [
         {
             "id": 8,
             "time": "8:00",
@@ -78,7 +75,7 @@ const FirstStep: React.FC = () => {
             "time": "20:00",
         },
     ]
-    const findCities = async (offset:number, limit:number): Promise<void> => {
+    const findCities = async (offset: number, limit: number): Promise<void> => {
         try {
             setLoading(true)
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/cities?offset=${offset}&limit=${limit}`)
@@ -93,33 +90,35 @@ const FirstStep: React.FC = () => {
         }
     }
     useEffect(() => {
-        findCities(0,50)
+        findCities(0, 50)
     }, [])
     useEffect(() => {
-        setCurrencyCity(cities[0] && cities[0].id)
+        setCurrentCity(cities[0] && cities[0].id)
     }, [cities])
-
-    //if (!cities) return <div>Загрузка</div>
     return (
         <Card className={s.wrapper}>
-            <Input {...email}
-                   placeholder="Ваша почта"
-                   color="primary"
-                   inputProps={{'aria-label': 'description'}}
-                   className={s.email}
+            <Input
+                value={email.value}
+                onChange={email.onChange}
+                placeholder="Ваша почта"
+                color="primary"
+                inputProps={{'aria-label': 'description'}}
+                className={s.email}
             />
-            <Input {...name}
-                   placeholder="Ваша имя"
-                   color="primary"
-                   inputProps={{'aria-label': 'description'}}
-                   className={s.name}
+            <Input
+                value={name.value}
+                onChange={name.onChange}
+                placeholder="Ваша имя"
+                color="primary"
+                inputProps={{'aria-label': 'description'}}
+                className={s.name}
             />
             <div className={s.size}>
                 <ClockSize/>
             </div>
             <div className={s.city}>
-                {!loading ? <MultilineTextFields currency={currencyCity}
-                                                 setCurrency={setCurrencyCity}
+                {!loading ? <MultilineTextFields current={currentCity}
+                                                 setCurrent={setCurrentCity}
                                                  label={"Город"}
                                                  cities={cities}/> : <div>Загрузка</div>}
             </div>
@@ -142,8 +141,8 @@ const FirstStep: React.FC = () => {
                 marginLeft: 'auto',
                 marginRight: 'auto'
             }}>
-                {!loading ? <MultilineTextFields currency={currencyTime}
-                                                 setCurrency={setCurrencyTime}
+                {!loading ? <MultilineTextFields current={currentTime}
+                                                 setCurrent={setCurrentTime}
                                                  label={"Время"}
                                                  time={time}/> : <div>Загрузка</div>}
             </div>

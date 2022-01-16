@@ -1,14 +1,14 @@
 import React, {useContext} from "react";
 import {Card} from "@material-ui/core";
 import s from "../../style/SecondStep.module.css"
-import {master} from "../../types/adminMasterTypes";
+import {Master} from "../../types/adminMasterTypes";
 import FormMaster from "./FormMaster";
 import {FormContext} from "../../context/formContext";
 
-interface mastersProps {
-    masters: Array<master>
+interface MastersProps {
+    masters: Master[]
 }
-const SecondStep: React.FC<mastersProps> = ({masters}) => {
+const SecondStep: React.FC<MastersProps> = ({masters}) => {
     const {currentMaster, setCurrentMaster}=useContext(FormContext)
     return (
         <Card className={s.wrapper}>

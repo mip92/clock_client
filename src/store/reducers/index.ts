@@ -3,7 +3,6 @@ import {adminReducer} from "./adminReducer";
 import {adminCitiesReducer} from "./adminCityReducer";
 import {adminMasterReducer} from "./adminMasterReducer";
 
-
 export const rootReducer=combineReducers(
     {
         admin:adminReducer,
@@ -11,6 +10,7 @@ export const rootReducer=combineReducers(
         adminMaster: adminMasterReducer
     }
 )
+
 export type RootStateType=ReturnType<typeof rootReducer>
 
 declare global {

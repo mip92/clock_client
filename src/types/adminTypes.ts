@@ -1,3 +1,5 @@
+import {BooleanPayload, StringOrNullPayload, StringPayload} from "./mainInterfacesAndTypes";
+
 export interface AdminStateType {
     isAdminFound: boolean,
     isFetch: boolean,
@@ -17,64 +19,44 @@ export enum AdminActionTypes {
     LOGOUT="LOGOUT"
 }
 
-type fetchActionPayload = {
-    payload: boolean
-}
-export interface fetchAction {
+export interface FetchAction {
     type: AdminActionTypes.FETCH_START;
-    payload: fetchActionPayload
+    payload: BooleanPayload
 }
-type setTokenActionPayload = {
-    payload: string | null
-}
-export interface setTokenAction {
+
+export interface SetTokenAction {
     type: AdminActionTypes.SET_TOKEN;
-    payload: setTokenActionPayload
-}
-type loginActionPayload = {
-    payload: string
+    payload: StringOrNullPayload
 }
 
-export interface loginAction {
+export interface LoginAction {
     type: AdminActionTypes.LOGIN;
-    payload: loginActionPayload
+    payload: StringPayload
 }
 
-export interface logoutAction {
+export interface LogoutAction {
     type: AdminActionTypes.LOGOUT;
 }
 
-type setAdminEmailActionPayload = {
-    payload: string
-}
-
-export interface setAdminEmailAction {
+export interface SetAdminEmailAction {
     type: AdminActionTypes.SET_ADMIN_EMAIL;
-    payload: setAdminEmailActionPayload
+    payload: StringPayload
 }
 
-type setAdminPasswordActionPayload = {
-    payload: string
-}
-
-export interface setAdminPasswordAction {
+export interface SetAdminPasswordAction {
     type: AdminActionTypes.SET_ADMIN_PASSWORD;
-    payload: setAdminPasswordActionPayload
+    payload: StringPayload
 }
 
-type fetchErrorActionPayload = {
-    payload: null | string
-}
-
-export interface fetchErrorAction {
+export interface FetchErrorAction {
     type: AdminActionTypes.FETCH_ERROR
-    payload: fetchErrorActionPayload
+    payload: StringOrNullPayload
 }
 
-export type AdminAction = fetchAction |
-    fetchErrorAction |
-    setAdminEmailAction |
-    setAdminPasswordAction |
-    loginAction |
-    setTokenAction |
-    logoutAction
+export type AdminAction = FetchAction |
+    FetchErrorAction |
+    SetAdminEmailAction |
+    SetAdminPasswordAction |
+    LoginAction |
+    SetTokenAction |
+    LogoutAction

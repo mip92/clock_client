@@ -7,20 +7,20 @@ import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
 import axios from "axios";
 
-export interface user {
+export interface User {
     id: number,
     name: string,
     email: string,
     role: string,
 }
 
-interface userProps {
-    user: user,
+interface UserProps {
+    user: User,
     deleteUser: (id: number) => void,
-    updateUser: ({id, email, name}:any) => void,
+    updateUser: ({id, email, name}: any) => void,
 }
 
-const Master: React.FC<userProps> = ({user, deleteUser, updateUser}) => {
+const OneUser: React.FC<UserProps> = ({user, deleteUser, updateUser}) => {
     const [isInputActivate, activateInput] = useState(false)
     const newNameOfUser = useInput(user.name)
     const newEmailOfUser = useInput(user.email)
@@ -35,12 +35,8 @@ const Master: React.FC<userProps> = ({user, deleteUser, updateUser}) => {
             }
         )
         activateInput(false)
-        updateUser({id:response.data.id, email:response.data.email, name:response.data.name})
+        updateUser({id: response.data.id, email: response.data.email, name: response.data.name})
     }
-
-    /*  if(isFetch){
-          return <div>Загрузка</div>
-      }*/
     if (!isInputActivate) {
         return (
             <div>
@@ -57,13 +53,16 @@ const Master: React.FC<userProps> = ({user, deleteUser, updateUser}) => {
     } else
         return (
             <div className={s.wrapper}>
-                <Input {...newNameOfUser}
-                       placeholder="Новое имя пользователя"
-                       color="primary"
-                       inputProps={{'aria-label': 'description'}}
-                       className={s.name}
+                <Input
+                    value={newNameOfUser.value}
+                    onChange={newNameOfUser.onChange}
+                    placeholder="Новое имя пользователя"
+                    color="primary"
+                    inputProps={{'aria-label': 'description'}}
+                    className={s.name}
                 />
-                <Input {...newEmailOfUser}
+                <Input value={newEmailOfUser.value}
+                       onChange={newEmailOfUser.onChange}
                        placeholder="Новая почта пользователя"
                        color="primary"
                        inputProps={{'aria-label': 'description'}}
@@ -77,4 +76,4 @@ const Master: React.FC<userProps> = ({user, deleteUser, updateUser}) => {
             </div>
         );
 }
-export default Master
+export default OneUser

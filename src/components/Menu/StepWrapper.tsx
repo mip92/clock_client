@@ -4,7 +4,7 @@ import {Step, StepLabel, Stepper} from "@material-ui/core";
 
 interface IStepWrapperProps {
     activeStep: number
-    steps: Array<string>
+    steps: string[]
 }
 
 const StepWrapper: FC<IStepWrapperProps> = ({steps, activeStep, children}) => {

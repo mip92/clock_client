@@ -1,27 +1,26 @@
 import {createContext} from 'react';
 import React from 'react';
-import {IClock} from "../types/mainInterfaces";
+import {Clock} from "../types/mainInterfacesAndTypes";
 
 
 export const FormContext = createContext({
     currentMaster:1,
     setCurrentMaster: (currentMaster: number)=>{},
-    currencyCity: 1,
-    setCurrencyCity: (currencyCity: number)=>{},
-    currencyTime: 1,
-    setCurrencyTime: (currencyTime: number)=>{},
-    currencyDay: 1,
-    setCurrencyDay: (currencyDay: number)=>{},
+    currentCity: 1,
+    setCurrentCity: (currencyCity: number)=>{},
+    currentTime: 1,
+    setCurrentTime: (currencyTime: number)=>{},
+    currentDay: 1,
+    setCurrentDay: (currencyDay: number)=>{},
     clockSize: {
         small:true,
         middle:false,
         big:false,
     },
-    setClockSize: (clockSize: IClock) => {},
+    setClockSize: (clockSize: Clock) => {},
     date: new Date(),
     setDate: (date: Date)=>{},
-
-    email: {value: '', onChange: (e: React.ChangeEvent<HTMLInputElement>) => {}, change: (e: string) => {}},
-    name: {value:'', onChange: (e: React.ChangeEvent<HTMLInputElement>) => {}, change: (e: string) => {}},
+    email: {value: '', onChange: (e: React.ChangeEvent<HTMLInputElement>) => {}, changeInput: (e: string) => {}},
+    name: {value:'', onChange: (e: React.ChangeEvent<HTMLInputElement>) => {}, changeInput: (e: string) => {}},
 
 },)

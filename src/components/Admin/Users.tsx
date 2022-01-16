@@ -3,20 +3,24 @@ import s from "../../style/Master.module.css";
 import {Input} from "@material-ui/core";
 import {usePaginator} from "../../hooks/usePaginator";
 import axios from "axios";
-import User, {user} from "./User";
-
+import OneUser, {User} from "./User";
+import Navbar from './Navbar';
 
 const Users: React.FC = () => {
-
     const[offset, limit, handleChange, changePage, currentPage, users, isLoading, error, pagesArray, getUsers, delUser, updateUser]=usePaginator(async () => {
-       return await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/users?offset=${offset}&limit=${limit}`)
+       return await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/users?offset=${offset}&limit=${limit}`, {
+           headers: {
+               "Authorization": `Bearer ${localStorage.getItem('token')}`
+           }
+       })
     })
+
     useEffect(()=>{
         getUsers()
     },[limit, currentPage])
 
     return (
-        <div>
+        <Navbar>
             <h3>Список пользователей</h3>
             <div>
                 <div className={s.wrapper}>
@@ -26,7 +30,7 @@ const Users: React.FC = () => {
                     <div>Изменить</div>
                     <div>Удалить</div>
                 </div>
-                {users && users.map((u: user, key: React.Key) => <User deleteUser={delUser} updateUser={updateUser} key={key} user={u}/>)}
+                {users && users.map((u: User, key: React.Key) => <OneUser deleteUser={delUser} updateUser={updateUser} key={key} user={u}/>)}
                 {pagesArray.map((p: number, key: React.Key)=> <span
                     className={currentPage===p ? s.page_current :s.page}
                     key={key}
@@ -42,8 +46,7 @@ const Users: React.FC = () => {
                     inputProps={{'aria-label': 'description'}}
                 />
             </div>
-
-        </div>
+        </Navbar>
     );
 }
 export default Users

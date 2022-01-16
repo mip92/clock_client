@@ -34,17 +34,21 @@ const Login: React.FC = () => {
     )
     return (
         <div className={s.wrapper}>
-            <Input {...email}
-                   placeholder="Email"
-                   color="primary"
-                   inputProps={{'aria-label': 'description'}}
-                   className={s.email}
+            <Input
+                value={email.value}
+                onChange={email.onChange}
+                placeholder="Email"
+                color="primary"
+                inputProps={{'aria-label': 'description'}}
+                className={s.email}
             />
-            <Input {...password}
-                   placeholder="Password"
-                   color="primary"
-                   inputProps={{'aria-label': 'description'}}
-                   className={s.password}
+            <Input
+                value={password.value}
+                onChange={password.onChange}
+                placeholder="Password"
+                color="primary"
+                inputProps={{'aria-label': 'description'}}
+                className={s.password}
             />
             <Button className={s.btn} onClick={() => login()}>Login</Button>
             <div className={s.error}>{error}</div>

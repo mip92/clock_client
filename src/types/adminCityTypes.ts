@@ -1,18 +1,13 @@
-export interface city{
-    city_name: string
-    createdAt: string
-    id: number
-    updatedAt: string
-}
+import {BooleanPayload, City, CityPayload, StringPayload} from "./mainInterfacesAndTypes";
 
 export interface AdminCitiesStateType {
-    cities: Array<city>
+    cities: City[]
     citiesCount:number
     newCity: string
     isFetch: boolean
     error: string | null
     totalPages: number
-    pagesArray: Array<number>
+    pagesArray: number[]
 }
 
 export enum AdminCitiesActionTypes {
@@ -25,78 +20,53 @@ export enum AdminCitiesActionTypes {
     CHANGE_CITY_NAME= "CHANGE_CITY_NAME",
 }
 
-type fetchActionPayload = {
-    payload: boolean
-}
 
-export interface fetchAction {
+export interface FetchAction {
     type: AdminCitiesActionTypes.FETCH_START;
-    payload: fetchActionPayload
+    payload: BooleanPayload
 }
 
-type fetchErrorActionPayload = {
-    payload: string
-}
-
-export interface fetchErrorAction {
+export interface FetchErrorAction {
     type: AdminCitiesActionTypes.FETCH_ERROR;
-    payload: fetchErrorActionPayload
+    payload: StringPayload
 }
 
-type fetchCitiesActionPayload = {
-    cities: Array<city>
+type FetchCitiesActionPayload = {
+    cities: City[]
     citiesCount: number
     totalPages: number
-    pagesArray:Array<number>
+    pagesArray:number[]
 }
 
-export interface fetchCitiesAction {
+export interface FetchCitiesAction {
     type: AdminCitiesActionTypes.FETCH_CITIES;
-    payload: fetchCitiesActionPayload
+    payload: FetchCitiesActionPayload
 }
 
-type deleteCityActionPayload = {
-    payload: city
-}
-
-export interface deleteCityAction{
+export interface DeleteCityAction {
     type: AdminCitiesActionTypes.DELETE_CITY;
-    payload: deleteCityActionPayload
+    payload: CityPayload
 }
 
-type setCityNameActionPayload = {
-    payload: string
-}
-
-export interface setCityNameAction{
+export interface SetCityNameAction {
     type: AdminCitiesActionTypes.SET_CITY_NAME;
-    payload: setCityNameActionPayload
+    payload: StringPayload
 }
 
-type addCityActionPayload = {
-    payload: city
-}
-
-export interface addCityAction{
+export interface AddCityAction {
     type: AdminCitiesActionTypes.ADD_CITY;
-    payload: addCityActionPayload
+    payload: CityPayload
 }
 
-type changeCityNameActionPayload = {
-    payload: city
-}
-
-export interface changeCityNameAction{
+export interface ChangeCityNameAction{
     type: AdminCitiesActionTypes.CHANGE_CITY_NAME;
-    city: changeCityNameActionPayload,
+    city: CityPayload,
 }
 
-
-
-export type AdminCitiesAction = fetchAction |
-    fetchErrorAction |
-    fetchCitiesAction |
-    deleteCityAction |
-    setCityNameAction |
-    addCityAction |
-    changeCityNameAction
+export type AdminCitiesAction = FetchAction |
+    FetchErrorAction |
+    FetchCitiesAction |
+    DeleteCityAction |
+    SetCityNameAction |
+    AddCityAction |
+    ChangeCityNameAction

@@ -3,27 +3,27 @@ import {Dispatch} from "react"
 import {
     AdminCitiesAction,
     AdminCitiesActionTypes,
-    fetchAction,
-    fetchErrorAction,
-    setCityNameAction
+    FetchAction,
+    FetchErrorAction,
+    SetCityNameAction
 } from "../types/adminCityTypes";
 import {getPageCount, getPagesArray} from "../utils/pages";
 
 
-export const fetchStart = (bol: boolean): fetchAction => {
+export const fetchStart = (bol: boolean): FetchAction => {
     return {
         type: AdminCitiesActionTypes.FETCH_START,
         payload: {payload: bol}
     }
 }
-export const fetchError = (error?: string | null): fetchErrorAction => {
+export const fetchError = (error?: string | null): FetchErrorAction => {
     return {
         type: AdminCitiesActionTypes.FETCH_ERROR,
         payload: {payload: error || "An error occurred while loading"}
     }
 }
 
-export const setCityName = (cityName: string): setCityNameAction => {
+export const setCityName = (cityName: string): SetCityNameAction => {
     return {
         type: AdminCitiesActionTypes.SET_CITY_NAME,
         payload: {payload: cityName}
@@ -110,7 +110,7 @@ export const changeCityName = (id: number, city: string) => {
     return async (dispatch: Dispatch<AdminCitiesAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/cities/${id}`, {city_name: city}, {
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/cities/${id}`, {cityName: city}, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }

@@ -7,24 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function createData(
-    orderId: number,
-    dateTime: string,
-    clockSize: number,
-    userId: number,
-    userEmail: string,
-    userName: string,
-    masterId: number,
-    masterEmail: string,
-    masterName: string,
-    cityId: number,
-    cityName: string,
-
-) {
-    return { orderId, dateTime, clockSize, userId, userEmail, userName,masterId, masterEmail, masterName, cityId, cityName};
-}
-
-
 const MyTable = ({rows}) => {
     return (
         <TableContainer component={Paper}>
@@ -45,14 +27,11 @@ const MyTable = ({rows}) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {rows.map((row, key) => (
                         <TableRow
-                            key={row.name}
+                            key={key}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            {/*<TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>*/}
                             <TableCell align="right">{row.orderId}</TableCell>
                             <TableCell align="right">{row.dateTime}</TableCell>
                             <TableCell align="right">{row.clockSize}</TableCell>

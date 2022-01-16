@@ -8,6 +8,7 @@ const initState: AdminStateType = {
     adminEmail: '',
     adminPassword:''
 }
+
 export const adminReducer = (state = initState, action: AdminAction): AdminStateType => {
     switch (action.type) {
         case AdminActionTypes.FETCH_START:

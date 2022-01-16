@@ -3,20 +3,20 @@ import {Dispatch} from "react"
 import {
     AdminAction,
     AdminActionTypes,
-    fetchAction,
-    fetchErrorAction,
-    setAdminEmailAction,
-    setAdminPasswordAction, setTokenAction
+    FetchAction,
+    FetchErrorAction,
+    SetAdminEmailAction,
+    SetAdminPasswordAction, SetTokenAction
 } from "../types/adminTypes"
 
 
-export const fetchStart = (bol: boolean): fetchAction => {
+export const fetchStart = (bol: boolean): FetchAction => {
     return {
         type: AdminActionTypes.FETCH_START,
         payload: {payload: bol}
     }
 }
-export const fetchError = (error: string | null): fetchErrorAction => {
+export const fetchError = (error: string | null): FetchErrorAction => {
     return {
         type: AdminActionTypes.FETCH_ERROR,
         payload: {payload: error}
@@ -56,20 +56,20 @@ export const logout=()=>{
     }
 }
 
-export const setAdminEmail = (email: string): setAdminEmailAction => {
+export const setAdminEmail = (email: string): SetAdminEmailAction => {
     return {
         type: AdminActionTypes.SET_ADMIN_EMAIL,
         payload: {payload: email}
     }
 }
 
-export const setAdminPassword = (password: string): setAdminPasswordAction => {
+export const setAdminPassword = (password: string): SetAdminPasswordAction => {
     return {
         type: AdminActionTypes.SET_ADMIN_PASSWORD,
         payload: {payload: password}
     }
 }
-export const setToken = (): setTokenAction => {
+export const setToken = (): SetTokenAction => {
     let token: string | null = localStorage.getItem('token');
     let time: string | null = localStorage.getItem('time');
     if (time) {

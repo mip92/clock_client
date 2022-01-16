@@ -4,7 +4,7 @@ export const useFetching = (callback:any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
-    const fetching = async (...args: any[]): Promise<void> => {
+    const fetching = async (...args: any[]) => {
         try {
             setIsLoading(true)
             await callback(...args)
@@ -19,5 +19,5 @@ export const useFetching = (callback:any) => {
         }
     }
 
-    return [fetching, isLoading, error]
+    return [fetching, isLoading, error] as const
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import s from "../../style/Order.module.css";
-export interface orderInterface{
+export interface OrderInterface {
     orderId: number,
     dateTime: string,
     clockSize: number,
@@ -14,12 +14,12 @@ export interface orderInterface{
     cityName: string,
 }
 
-interface orderProps {
-    order:orderInterface
+interface OrderProps {
+    order:OrderInterface
     currentPage:number,
 }
 
-const Order: React.FC<orderProps> = ({order, currentPage}) => {
+const Order: React.FC<OrderProps> = ({order, currentPage}) => {
     return (
         <div>
             <div className={s.wrapper}>
@@ -34,8 +34,6 @@ const Order: React.FC<orderProps> = ({order, currentPage}) => {
                 <div>{order.masterName}</div>
                 <div>{order.cityId}</div>
                 <div>{order.cityName}</div>
-                {/*<CachedIcon onClick={constChangeUserName} style={{cursor: "pointer"}}/>
-                <HighlightOffIcon style={{cursor: "pointer"}} onClick={() => deleteUser(user.id)}/>*/}
             </div>
         </div>
     )

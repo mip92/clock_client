@@ -19,7 +19,6 @@ export const adminMasterReducer = (state = initState, action: AdminMasterAction)
         case AdminMastersActionTypes.SET_MASTER_NAME:
             return {...state, newMaster: action.payload.payload}
         case AdminMastersActionTypes.ADD_MASTER:
-            console.log(action.payload.payload)
             return {...state, masters: [...state.masters, action.payload.payload]}
         case AdminMastersActionTypes.CHANGE_MASTER_NAME:
             return <AdminMasterStateType>{

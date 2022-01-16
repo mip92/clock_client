@@ -9,6 +9,7 @@ const initState: AdminCitiesStateType = {
     totalPages: 0,
     pagesArray: [1]
 }
+
 export const adminCitiesReducer = (state = initState, action: AdminCitiesAction): AdminCitiesStateType => {
     switch (action.type) {
         case AdminCitiesActionTypes.FETCH_CITIES:

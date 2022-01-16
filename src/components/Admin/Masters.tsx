@@ -1,26 +1,25 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import Master from "./Master"
+import OneMaster from "./OneMaster"
 import s from "../../style/Master.module.css";
 import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {addOneMaster, setMasterName} from "../../actionCreators/adminMasterActionCreators";
 import MultilineTextFields from "../Menu/MultilineTextFields";
-import {city} from "../../types/adminCityTypes";
 import {usePaginator} from "../../hooks/usePaginator";
 import axios from "axios";
-import {master} from "../../types/adminMasterTypes";
-import {ICities} from "../../types/mainInterfaces";
+import {Master} from "../../types/adminMasterTypes";
 import MyModal from "../utilits/MyModal";
+import {City} from "../../types/mainInterfacesAndTypes";
 
-interface MastersListProps {
-    cities: Array<ICities>,
+interface MastersProps {
+    cities: City[],
     isFetch: boolean
 }
 
-const Masters: React.FC<MastersListProps> = ({cities, isFetch}) => {
-    const [currency, setCurrency] = React.useState(1);
+const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
+    const [current, setCurrent] = useState(1);
     const newMasterName = useInput('')
     const newMasterEmail = useInput('')
     const dispatch = useDispatch()
@@ -28,13 +27,13 @@ const Masters: React.FC<MastersListProps> = ({cities, isFetch}) => {
         dispatch(setMasterName(newMasterName.value))
     }, [newMasterName.value])
     useEffect(() => {
-        setCurrency(cities[0] && cities[0].id)
+        setCurrent(cities[0] && cities[0].id)
     }, [cities])
     const addMaster = () => {
-        dispatch(addOneMaster(newMasterName.value, newMasterEmail.value, currency))
-        newMasterName.change('')
-        newMasterEmail.change('')
-        setCurrency(1)
+        dispatch(addOneMaster(newMasterName.value, newMasterEmail.value, current))
+        newMasterName.changeInput('')
+        newMasterEmail.changeInput('')
+        setCurrent(1)
     }
     const [offset, limit, handleChange, changePage, currentPage, masters, isLoading, error, pagesArray, getMasters] = usePaginator(async () => {
         return await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/masters?offset=${offset}&limit=${limit}`)
@@ -42,8 +41,13 @@ const Masters: React.FC<MastersListProps> = ({cities, isFetch}) => {
     useEffect(() => {
         getMasters()
     }, [limit, currentPage])
-
-    if (isFetch || !cities) return <div>Загрузка</div>
+    useEffect(()=>{
+        return () => {
+            setCurrent(1);
+            dispatch(setMasterName(''))
+        };
+    })
+    if (isFetch || !cities || isLoading) return <div>Загрузка</div>
     return (
         <div>
             <h3>Список мастеров</h3>
@@ -55,9 +59,9 @@ const Masters: React.FC<MastersListProps> = ({cities, isFetch}) => {
                     <div>Изменить</div>
                     <div>Удалить</div>
                 </div>
-                {masters && masters.map((m: master, key: React.Key | null | undefined) => <Master key={key}
-                                                                                                  master={m}
-                currentPage={currentPage}/>)}
+                {masters && masters.map((m: Master, key: React.Key | null | undefined) => <OneMaster key={key}
+                                                                                                     master={m}
+                                                                                                     currentPage={currentPage}/>)}
                 {pagesArray.map((p: number, key: React.Key) => <span
                     className={currentPage === p ? s.page_current : s.page}
                     key={key}
@@ -76,21 +80,25 @@ const Masters: React.FC<MastersListProps> = ({cities, isFetch}) => {
             <MyModal name='Добавить мастера'>
                 <div className={s.wrapper}>
                     <div>
-                        <Input {...newMasterName}
-                               placeholder="Имя мастера"
-                               color="primary"
-                               inputProps={{'aria-label': 'description'}}
-                               className={s.name}
+                        <Input
+                            value={newMasterName.value}
+                            onChange={newMasterName.onChange}
+                            placeholder="Имя мастера"
+                            color="primary"
+                            inputProps={{'aria-label': 'description'}}
+                            className={s.name}
                         />
-                        <Input {...newMasterEmail}
-                               placeholder="Почта мастера"
-                               color="primary"
-                               inputProps={{'aria-label': 'description'}}
-                               className={s.name}
+                        <Input
+                            value={newMasterEmail.value}
+                            onChange={newMasterEmail.onChange}
+                            placeholder="Почта мастера"
+                            color="primary"
+                            inputProps={{'aria-label': 'description'}}
+                            className={s.name}
                         />
                         <div className={s.city}>
-                            <MultilineTextFields currency={currency}
-                                                 setCurrency={setCurrency}
+                            <MultilineTextFields current={current}
+                                                 setCurrent={setCurrent}
                                                  label={"Город"}
                                                  cities={cities}/>
                         </div>

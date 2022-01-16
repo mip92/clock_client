@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 
-
 export const usePaginator = (callback:any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import {ICities} from "../../types/mainInterfaces";
 import {Button} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -12,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-
         },
         paper: {
             backgroundColor: theme.palette.background.paper,
@@ -29,7 +27,7 @@ interface MyModalListProps {
 }
 const MyModal: React.FC<MyModalListProps> =({name, children})=> {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);

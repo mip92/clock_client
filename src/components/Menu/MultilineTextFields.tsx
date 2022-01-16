@@ -1,8 +1,7 @@
 import React from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import {ICities, IDay, ITime} from "../../types/mainInterfaces";
-
+import {City, Time} from "../../types/mainInterfacesAndTypes";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -17,24 +16,22 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface MultilineTextFieldsListProps {
     label: string;
-    cities?: Array<ICities> | undefined
-    time?: Array<ITime> | undefined
-    days?: Array<IDay> | undefined
-    currency: number,
-    setCurrency: (arg0: number) => void
+    cities?: City[] | undefined
+    time?: Time[] | undefined
+    current: number,
+    setCurrent: (arg0: number) => void
 }
 
 const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
                                                                          label,
                                                                          cities,
                                                                          time,
-                                                                         days,
-                                                                         currency,
-                                                                         setCurrency
+                                                                         current,
+                                                                         setCurrent
                                                                      }) => {
     const classes = useStyles();
     const change = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrency(Number(event.target.value));
+        setCurrent(Number(event.target.value));
     };
     return (
         <form className={classes.root} noValidate autoComplete="off">
@@ -43,7 +40,7 @@ const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
                     id={'standard-select-currency-native'+label}
                     select
                     label={label}
-                    value={currency}
+                    value={current}
                     onChange={change}
                     SelectProps={{
                         native: true,
@@ -51,17 +48,12 @@ const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
                 >
                     {cities && cities.map((option, key) => (
                         <option key={'cities'+key} value={option.id}>
-                            {option.city_name}
+                            {option.cityName}
                         </option>
                     ))}
                     {time && time.map((option, key) => (
                         <option key={'time'+key} value={option.id}>
                             {option.time}
-                        </option>
-                    ))}
-                    {days && days.map((option, key) => (
-                        <option key={'days'+key} value={option.id}>
-                            {option.day_name}
                         </option>
                     ))}
                 </TextField>

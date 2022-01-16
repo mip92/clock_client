@@ -5,19 +5,18 @@ import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import s from "../../style/ClockSize.module.css"
 import {FormContext} from "../../context/formContext";
 import {Card, Typography} from "@material-ui/core";
+import {Clock} from "../../types/mainInterfacesAndTypes";
 
 const ClockSize: React.FC = () => {
     const {clockSize, setClockSize} = useContext(FormContext)
-
-    const handleChangeOne = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setClockSize({small: event.target.checked, middle: false, big: false});
-    };
-    const handleChangeTwo = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setClockSize({small: false, middle: event.target.checked, big: false});
-    };
-    const handleChangeThree = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setClockSize({small: false, middle: false, big: event.target.checked});
-    };
+    const arr: Clock[] = [
+        {small: true, middle: false, big: false},
+        {small: false, middle: true, big: false},
+        {small: false, middle: false, big: true}
+    ]
+    const handleChange = (obj: Clock) => {
+        setClockSize(obj);
+    }
     const {small, middle, big} = clockSize;
 
     return (
@@ -28,17 +27,23 @@ const ClockSize: React.FC = () => {
                 </Typography>
                 <FormControlLabel
                     labelPlacement="top"
-                    control={<Checkbox checked={small} onChange={handleChangeOne} name="small"/>}
+                    control={<Checkbox checked={small}
+                                       onChange={() => handleChange(arr[0])}
+                                       name="small"/>}
                     label={<QueryBuilderIcon fontSize="small"/>}
                 />
                 <FormControlLabel
                     labelPlacement="top"
-                    control={<Checkbox checked={middle} onChange={handleChangeTwo} name="middle"/>}
+                    control={<Checkbox checked={middle}
+                                       onChange={() => handleChange(arr[1])}
+                                       name="middle"/>}
                     label={<QueryBuilderIcon fontSize="medium"/>}
                 />
                 <FormControlLabel
                     labelPlacement="top"
-                    control={<Checkbox checked={big} onChange={handleChangeThree} name="big"/>}
+                    control={<Checkbox checked={big}
+                                       onChange={() => handleChange(arr[2])}
+                                       name="big"/>}
                     label={<QueryBuilderIcon fontSize="large"/>}
                 />
             </Card>

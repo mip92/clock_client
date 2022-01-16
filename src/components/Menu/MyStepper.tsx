@@ -8,14 +8,13 @@ import s from "../../style/Steper.module.css"
 import axios from "axios";
 import {FormContext} from "../../context/formContext";
 import SecondStep from "./SecondStep";
-import {master} from "../../types/adminMasterTypes";
+import {Master} from "../../types/adminMasterTypes";
 import {useFetching} from "../../hooks/useFetching";
 
-
-const Steper: React.FC = () => {
+const MyStepper: React.FC = () => {
     const {
-        currencyCity,
-        currencyTime,
+        currentCity,
+        currentTime,
         clockSize,
         currentMaster,
         email,
@@ -23,37 +22,31 @@ const Steper: React.FC = () => {
         date
     } = useContext(FormContext)
     const [activeStep, setActiveStep] = useState<number>(0)
-    const [masters, setMasters] = useState<Array<master>>([])
-    const [chooseAMaster, isLoadingchooseAMaster, errorchooseAMaster] = useFetching(async () => {
+    const [masters, setMasters] = useState<Array<Master>>([])
+    const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
-        let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currencyTime)
+        let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currentTime)
 
         await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/order/`, {
             email: email.value,
             name: name.value,
             clockSize: clock,
-            cityId: currencyCity,
+            cityId: currentCity,
             dateTime: dateWithTime,
             masterId: currentMaster
         })
         setActiveStep(2)
     })
-    const [findMaster, isLoadingfindMaster, errorfindMaster] = useFetching(async () => {
+    const [findMaster, isLoadingMaster, errorfindMaster] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
-        let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currencyTime)
-
-
-        const res1 = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users`, {
-            email: email.value,
-            name: name.value
-        })
-        const res2 = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/masters/getFreeMasters/`, {
-            cityId: currencyCity,
+        let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currentTime)
+        const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/masters/getFreeMasters/`, {
+            cityId: currentCity,
             dateTime: dateWithTime,
             clockSize: clock,
         })
 
-        const masters: Array<master> = res2.data
+        const masters: Master[] = res.data
         setMasters(masters)
         setActiveStep(1)
     })
@@ -64,11 +57,9 @@ const Steper: React.FC = () => {
 
     const next = (): void => {
         if (activeStep === 0) {
-            // @ts-ignore
             findMaster()
         }
         if (activeStep === 1) {
-            // @ts-ignore
             chooseAMaster()
         }
     }
@@ -80,7 +71,7 @@ const Steper: React.FC = () => {
         if (v === 'big') return 3
     }
 
-    const steps: Array<string> = ["Форма", "Выбор мастере", "Подтверждение заказа"]
+    const steps: string[] = ["Форма", "Выбор мастере", "Подтверждение заказа"]
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -105,13 +96,12 @@ const Steper: React.FC = () => {
                                         disabled={activeStep === 0}
                                         onClick={back}>
                                     Назад</Button>
-                                <div style={{color: 'red'}}>{errorchooseAMaster || errorfindMaster}</div>
+                                <div style={{color: 'red'}}>{errorChooseAMaster || errorfindMaster}</div>
                                 <Button variant="contained"
                                         color='primary'
                                         disabled={email.value === '' || name.value === '' || activeStep === 2}
                                         onClick={() => next()}>
                                     Далее</Button>
-
                             </Grid>
                         </List>
                     </Card>
@@ -120,4 +110,4 @@ const Steper: React.FC = () => {
         </div>
     );
 };
-export default Steper
+export default MyStepper

@@ -1,8 +1,5 @@
 import React, {useContext} from 'react';
-
-import {
-    DatePicker,
-} from '@material-ui/pickers';
+import {DatePicker} from '@material-ui/pickers';
 import {FormContext} from "../../context/formContext";
 
 const Date = () => {

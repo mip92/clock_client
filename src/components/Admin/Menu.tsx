@@ -1,26 +1,15 @@
-import React, {useEffect} from 'react';
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {setToken} from "../../actionCreators/adminActionCreators";
-import {useDispatch} from "react-redux";
-import Cities from "../City/Cities";
-import Masters from "./Masters";
+import React from 'react';
 import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
-import Users from "./Users";
+import Navbar from "./Navbar";
 
 const Menu:React.FC = () => {
     const history = useHistory()
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(setToken())
-    }, [])
-    const {token} = useTypedSelector(state => state.admin)
-    if (token) {history.push('/menu/orders')}
     return (
-        <div>
+        <Navbar>
             Ресурс недоступен
             <Button onClick={() => history.push('/login')}>Войти</Button>
-        </div>
+        </Navbar>
     )
 }
 export default Menu

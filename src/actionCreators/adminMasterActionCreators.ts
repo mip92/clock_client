@@ -4,28 +4,28 @@ import {Dispatch} from "react"
 import {
     AdminMasterAction,
     AdminMastersActionTypes,
-    fetchAction,
-    fetchErrorAction,
-    setMasterNameAction
+    FetchAction,
+    FetchErrorAction,
+    SetMasterNameAction
 } from "../types/adminMasterTypes";
 import {AdminAction, AdminActionTypes} from "../types/adminTypes";
 
 
 
-export const fetchStart = (bol: boolean): fetchAction => {
+export const fetchStart = (bol: boolean): FetchAction => {
     return {
         type: AdminMastersActionTypes.FETCH_START,
         payload: {payload:bol}
     }
 }
-export const fetchError = (error?: string | null): fetchErrorAction => {
+export const fetchError = (error?: string | null): FetchErrorAction => {
     return {
         type: AdminMastersActionTypes.FETCH_ERROR,
         payload:{payload:error || "An error occurred while loading"}
     }
 }
 
-export const setMasterName = (masterName: string):  setMasterNameAction=> {
+export const setMasterName = (masterName: string):  SetMasterNameAction=> {
     return {
         type: AdminMastersActionTypes.SET_MASTER_NAME,
         payload: {payload:masterName}
@@ -64,7 +64,6 @@ export const delOneMaster = (id: number) => {
                     }
                 }
             )
-            console.log(response.data)
             dispatch({
                 type: AdminMastersActionTypes.DELETE_MASTER,
                 payload: {payload: response.data.master},
@@ -97,7 +96,6 @@ export const addOneMaster = (name: string, email:string, city_id:number) => {
             dispatch(fetchStart(false))
         } catch (e) {
             dispatch(fetchStart(false))
-            console.log(e)
             if(e.request.status===401) {
                 localStorage.removeItem('token')
                 localStorage.removeItem('time')
@@ -131,12 +129,6 @@ export const changeMaster = (id:number, name:string, email:string, city_id:numbe
             dispatch(fetchStart(false))
         } catch (e) {
             dispatch(fetchStart(false))
-            console.log(e)
-            /*const error = JSON.parse(e.request.responseText).message[0]
-            dispatch(fetchError(error))
-            setTimeout(async () => {
-                dispatch(fetchError(null))
-            }, 2000)*/
         }
     }
 }
