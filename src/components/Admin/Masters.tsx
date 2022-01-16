@@ -26,9 +26,6 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
     useEffect(() => {
         dispatch(setMasterName(newMasterName.value))
     }, [newMasterName.value])
-    useEffect(() => {
-        setCurrent(cities[0] && cities[0].id)
-    }, [cities])
     const addMaster = () => {
         dispatch(addOneMaster(newMasterName.value, newMasterEmail.value, current))
         newMasterName.changeInput('')
@@ -46,7 +43,7 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
             setCurrent(1);
             dispatch(setMasterName(''))
         };
-    })
+    },[])
     if (isFetch || !cities || isLoading) return <div>Загрузка</div>
     return (
         <div>

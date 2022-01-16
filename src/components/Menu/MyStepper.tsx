@@ -26,7 +26,6 @@ const MyStepper: React.FC = () => {
     const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
         let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currentTime)
-
         await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/order/`, {
             email: email.value,
             name: name.value,
