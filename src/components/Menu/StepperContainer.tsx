@@ -3,8 +3,6 @@ import MyStepper from "./MyStepper";
 import {FormContext} from "../../context/formContext";
 import {useInput} from "../../hooks/useInput";
 import {City, Clock} from "../../types/mainInterfacesAndTypes";
-import {useFetching} from "../../hooks/useFetching";
-import axios from "axios";
 
 const StepperContainer: React.FC  = () => {
     /*const [cities, setCities] = useState<City[]>([{

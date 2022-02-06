@@ -5,14 +5,11 @@ import {usePaginator} from "../../hooks/usePaginator";
 import axios from "axios";
 import OneUser, {User} from "./User";
 import Navbar from './Navbar';
+import $api from "../../http";
 
 const Users: React.FC = () => {
     const[offset, limit, handleChange, changePage, currentPage, users, isLoading, error, pagesArray, getUsers, delUser, updateUser]=usePaginator(async () => {
-       return await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/users?offset=${offset}&limit=${limit}`, {
-           headers: {
-               "Authorization": `Bearer ${localStorage.getItem('token')}`
-           }
-       })
+       return await $api.get(`/users?offset=${offset}&limit=${limit}`)
     })
 
     useEffect(()=>{

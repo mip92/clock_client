@@ -8,10 +8,11 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {addOneMaster, setMasterName} from "../../actionCreators/adminMasterActionCreators";
 import MultilineTextFields from "../Menu/MultilineTextFields";
 import {usePaginator} from "../../hooks/usePaginator";
-import axios from "axios";
 import {Master} from "../../types/adminMasterTypes";
 import MyModal from "../utilits/MyModal";
 import {City} from "../../types/mainInterfacesAndTypes";
+import $api from "../../http";
+import CitiesCheckBox from "./CitiesCheckBox";
 
 interface MastersProps {
     cities: City[],
@@ -19,7 +20,7 @@ interface MastersProps {
 }
 
 const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
-    const [current, setCurrent] = useState(1);
+    const [arrayCurrentCities, setArrayCurrentCities]=useState<number[]>([])
     const newMasterName = useInput('')
     const newMasterEmail = useInput('')
     const dispatch = useDispatch()
@@ -27,20 +28,18 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
         dispatch(setMasterName(newMasterName.value))
     }, [newMasterName.value])
     const addMaster = () => {
-        dispatch(addOneMaster(newMasterName.value, newMasterEmail.value, current))
+        dispatch(addOneMaster(newMasterName.value, newMasterEmail.value, arrayCurrentCities))
         newMasterName.changeInput('')
         newMasterEmail.changeInput('')
-        setCurrent(1)
     }
     const [offset, limit, handleChange, changePage, currentPage, masters, isLoading, error, pagesArray, getMasters] = usePaginator(async () => {
-        return await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/masters?offset=${offset}&limit=${limit}`)
+        return await $api.get(`/masters?offset=${offset}&limit=${limit}`)
     })
     useEffect(() => {
         getMasters()
     }, [limit, currentPage])
     useEffect(()=>{
         return () => {
-            setCurrent(1);
             dispatch(setMasterName(''))
         };
     },[])
@@ -94,10 +93,14 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
                             className={s.name}
                         />
                         <div className={s.city}>
-                            <MultilineTextFields current={current}
+                            <CitiesCheckBox cities={cities}
+                                            arrayCurrentCities={arrayCurrentCities}
+                                            setArrayCurrentCities={setArrayCurrentCities}
+                            />
+                            {/*<MultilineTextFields current={current}
                                                  setCurrent={setCurrent}
                                                  label={"Город"}
-                                                 cities={cities}/>
+                                                 cities={cities}/>*/}
                         </div>
                     </div>
                     <AddCircleOutlineIcon style={{cursor: "pointer"}} onClick={addMaster}/>

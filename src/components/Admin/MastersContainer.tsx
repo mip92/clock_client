@@ -5,6 +5,7 @@ import {MasterContext} from "../../context/masterContext";
 import {City} from "../../types/mainInterfacesAndTypes";
 import {useFetching} from "../../hooks/useFetching";
 import axios from "axios";
+import $api from "../../http";
 
 const MastersContainer = () => {
     const [cities, setCities] = useState<City[]>([{
@@ -14,7 +15,7 @@ const MastersContainer = () => {
         id: 0,
     }])
     const [fetching, isFetch, error] = useFetching(async () => {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/cities?offset=0&limit=50`)
+        const response = await $api.get(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
     })
     useEffect(() => {

@@ -18,6 +18,10 @@ const MyAlert: React.FC<MyAlertListProps> =({handler, text})=>{
     const handleClickOpen = () => {
         setOpen(true);
     };
+    const handleFetch = () => {
+        handler()
+        setOpen(false);
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -42,7 +46,7 @@ const MyAlert: React.FC<MyAlertListProps> =({handler, text})=>{
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Отменить</Button>
-                    <Button onClick={handler} autoFocus>
+                    <Button onClick={handleFetch} autoFocus>
                         Удалить
                     </Button>
                 </DialogActions>

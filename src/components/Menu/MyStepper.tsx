@@ -1,15 +1,15 @@
 import {Button, Card, Grid, List, ThemeProvider} from '@material-ui/core';
 import {theme} from "../../App";
 import Typography from "@material-ui/core/Typography";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import StepWrapper from "./StepWrapper";
 import FirstStep from "./FirstStep";
 import s from "../../style/Steper.module.css"
-import axios from "axios";
 import {FormContext} from "../../context/formContext";
 import SecondStep from "./SecondStep";
 import {Master} from "../../types/adminMasterTypes";
 import {useFetching} from "../../hooks/useFetching";
+import $api from "../../http";
 
 const MyStepper: React.FC = () => {
     const {
@@ -23,10 +23,10 @@ const MyStepper: React.FC = () => {
     } = useContext(FormContext)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
-    const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster] = useFetching(async () => {
+    const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
         let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currentTime)
-        await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/order/`, {
+        await $api.post(`/order/`, {
             email: email.value,
             name: name.value,
             clockSize: clock,
@@ -36,13 +36,19 @@ const MyStepper: React.FC = () => {
         })
         setActiveStep(2)
     })
-    const [findMaster, isLoadingMaster, errorfindMaster] = useFetching(async () => {
+    useEffect(()=>{
+        setError('')
+        setFindMasterError('')
+    },[email.value, name.value, clockSize, currentCity, currentMaster, currentTime])
+    const [findMaster, isLoadingMaster, errorfindMaster, setFindMasterError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
         let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currentTime)
-        const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/masters/getFreeMasters/`, {
+        const res = await $api.post(`/masters/getFreeMasters/`, {
             cityId: currentCity,
             dateTime: dateWithTime,
             clockSize: clock,
+            email: email.value,
+            name: name.value
         })
 
         const masters: Master[] = res.data
@@ -89,18 +95,21 @@ const MyStepper: React.FC = () => {
                                 </div>}
 
                             </StepWrapper>
-                            <Grid className={s.buttons}>
-                                <Button variant="contained"
-                                        color='primary'
-                                        disabled={activeStep === 0}
-                                        onClick={back}>
-                                    Назад</Button>
-                                <div style={{color: 'red'}}>{errorChooseAMaster || errorfindMaster}</div>
-                                <Button variant="contained"
-                                        color='primary'
-                                        disabled={email.value === '' || name.value === '' || activeStep === 2}
-                                        onClick={() => next()}>
-                                    Далее</Button>
+                            <Grid >
+                                {activeStep !== 2 && <div className={s.buttons}>
+                                    <Button variant="contained"
+                                            color='primary'
+                                            disabled={activeStep === 0}
+                                            onClick={back}>
+                                        Назад</Button>
+                                    <div style={{color: 'red'}}>{errorChooseAMaster || errorfindMaster}</div>
+                                    <Button variant="contained"
+                                            color='primary'
+                                            disabled={email.value === '' || name.value === '' || activeStep === 2}
+                                            onClick={() => next()}>
+                                        Далее</Button>
+                                </div>
+                                }
                             </Grid>
                         </List>
                     </Card>

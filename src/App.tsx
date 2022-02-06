@@ -5,7 +5,7 @@ import {Route, Switch} from "react-router-dom";
 import DateFnsUtils from "@date-io/date-fns";
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {useDispatch} from "react-redux";
-import {setToken} from "./actionCreators/adminActionCreators";
+import {logout, setToken} from "./actionCreators/adminActionCreators";
 import {useTypedSelector} from "./hooks/useTypedSelector";
 import {createRoute} from "./utils/createRoutes";
 
@@ -36,6 +36,9 @@ const App: React.FC = () => {
     useEffect(() => {
         setRoutes(createRoute(token))
     }, [token])
+/*    useEffect(()=>{
+        if (!token) dispatch(logout())
+    },[localStorage.getItem('token')])*/
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

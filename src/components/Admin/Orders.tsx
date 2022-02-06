@@ -6,6 +6,7 @@ import axios from "axios";
 import {OrderInterface} from "./Order";
 import MyTable from "../utilits/MyTable";
 import Navbar from "./Navbar";
+import $api from "../../http";
 
 interface AxiosOrder {
     rows: OrderInterface[],
@@ -14,11 +15,7 @@ interface AxiosOrder {
 
 const Orders: React.FC = () => {
     const [offset, limit, handleChange, changePage, currentPage, orders, isLoading, error, pagesArray, getOrders] = usePaginator(async () => {
-        return await axios.get<AxiosOrder>(`${process.env.REACT_APP_SERVER_URL}/api/order?offset=${offset}&limit=${limit}`, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
-            }
-        })
+        return await $api.get<AxiosOrder>(`/order?offset=${offset}&limit=${limit}`)
     })
     useEffect(() => {
         getOrders()

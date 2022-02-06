@@ -6,6 +6,7 @@ import s from "../../style/Master.module.css"
 import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
 import axios from "axios";
+import $api from "../../http";
 
 export interface User {
     id: number,
@@ -28,7 +29,7 @@ const OneUser: React.FC<UserProps> = ({user, deleteUser, updateUser}) => {
         activateInput(true)
     }
     const cnangeUserEventListener = async () => {
-        const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/users`, {
+        const response = await $api.put(`/users`, {
                 id: user.id,
                 newEmail: newEmailOfUser.value,
                 newName: newNameOfUser.value,

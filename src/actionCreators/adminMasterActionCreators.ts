@@ -1,4 +1,3 @@
-import axios from "axios"
 import {Dispatch} from "react"
 
 import {
@@ -9,6 +8,7 @@ import {
     SetMasterNameAction
 } from "../types/adminMasterTypes";
 import {AdminAction, AdminActionTypes} from "../types/adminTypes";
+import $api from "../http";
 
 
 
@@ -36,7 +36,7 @@ export const fetchMasters = () => {
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/masters`,)
+            const response = await $api.get(`/masters`,)
 
             dispatch({
                 type: AdminMastersActionTypes.FETCH_MASTERS,
@@ -58,7 +58,7 @@ export const delOneMaster = (id: number) => {
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/masters/${id}`, {
+            const response = await $api.delete(`/masters/${id}`, {
                     headers: {
                         "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
@@ -79,16 +79,11 @@ export const delOneMaster = (id: number) => {
         }
     }
 }
-export const addOneMaster = (name: string, email:string, city_id:number) => {
+export const addOneMaster = (name: string, email:string, arrayCurrentCities:number[]) => {
     return async (dispatch: Dispatch<AdminMasterAction | AdminAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/masters/`, {name, email, city_id},{
-                    headers: {
-                        "Authorization": `Bearer ${localStorage.getItem('token')}`
-                    }
-                }
-            )
+            const response = await $api.post(`/masters/`, {name, email, cities_id:String(arrayCurrentCities)})
             dispatch({
                 type: AdminMastersActionTypes.ADD_MASTER,
                 payload: {payload:response.data},
@@ -112,16 +107,11 @@ export const addOneMaster = (name: string, email:string, city_id:number) => {
         }
     }
 }
-export const changeMaster = (id:number, name:string, email:string, city_id:number) => {
+export const changeMaster = (id:number, name:string, email:string, cities_id:number[]) => {
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/masters/`, {id,name,email,city_id},{
-                    headers: {
-                        "Authorization": `Bearer ${localStorage.getItem('token')}`
-                    }
-                }
-            )
+            const response = await $api.put(`/masters/`, {id,name,email,cities_id:String(cities_id)})
             dispatch({
                 type: AdminMastersActionTypes.CHANGE_MASTER_NAME,
                 master:{payload: response.data}

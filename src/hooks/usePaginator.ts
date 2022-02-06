@@ -45,9 +45,9 @@ export const usePaginator = (callback:any) => {
         } catch (e) {
             if (e.response.data.message )setError(e.response.data.message);
             else setError(e.message);
-            setTimeout(async () => {
+            /*setTimeout(async () => {
                 setError('')
-            }, 2000)
+            }, 5000)*/
         } finally {
             setIsLoading(false)
         }

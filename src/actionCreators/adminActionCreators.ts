@@ -1,4 +1,3 @@
-import axios from "axios"
 import {Dispatch} from "react"
 import {
     AdminAction,
@@ -8,6 +7,7 @@ import {
     SetAdminEmailAction,
     SetAdminPasswordAction, SetTokenAction
 } from "../types/adminTypes"
+import $api from "../http";
 
 
 export const fetchStart = (bol: boolean): FetchAction => {
@@ -26,7 +26,7 @@ export const loginAdmin = (email: string, password: string, history: any) => {
     return async (dispatch: Dispatch<AdminAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/admin/login`, {
+            const response = await $api.post(`/admin/login`, {
                 email,
                 password
             })

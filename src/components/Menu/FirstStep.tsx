@@ -4,9 +4,9 @@ import {Card, Input} from "@material-ui/core";
 import ClockSize from "./ClockSize";
 import {FormContext} from "../../context/formContext";
 import s from "../../style/FirstStep.module.css"
-import axios from "axios";
 import Date from "./Date"
 import {City, Time} from "../../types/mainInterfacesAndTypes";
+import $api from "../../http";
 
 const FirstStep: React.FC = () => {
     const {
@@ -78,7 +78,7 @@ const FirstStep: React.FC = () => {
     const findCities = async (offset: number, limit: number): Promise<void> => {
         try {
             setLoading(true)
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/cities?offset=${offset}&limit=${limit}`)
+            const response = await $api.get(`/cities?offset=${offset}&limit=${limit}`)
             setCities(response.data.rows)
             setLoading(false)
         } catch (e) {
@@ -117,34 +117,33 @@ const FirstStep: React.FC = () => {
                 <ClockSize/>
             </div>
             <div className={s.city}>
-                {!loading ? <MultilineTextFields current={currentCity}
-                                                 setCurrent={setCurrentCity}
-                                                 label={"Город"}
-                                                 cities={cities}/> : <div>Загрузка</div>}
+                <MultilineTextFields current={currentCity}
+                                     setCurrent={setCurrentCity}
+                                     label={"Город"}
+                                     cities={cities}/>
             </div>
             <div className={s.date}>
-                {!loading ? <div>
-                        <div style={{
-                            textAlign: 'left',
-                            color: 'rgba(0, 0, 0, 0.54)',
-                            marginBottom: '0px',
-                            fontSize: "14px"
-                        }}>Дата
-                        </div>
-                        <Date/>
+                <div>
+                    <div style={{
+                        textAlign: 'left',
+                        color: 'rgba(0, 0, 0, 0.54)',
+                        marginBottom: '0px',
+                        fontSize: "14px"
+                    }}>Дата
                     </div>
-                    : <div>Загрузка</div>
-                }
+                    <Date/>
+                </div>
+
             </div>
 
             <div className={s.time} style={{
                 marginLeft: 'auto',
                 marginRight: 'auto'
             }}>
-                {!loading ? <MultilineTextFields current={currentTime}
-                                                 setCurrent={setCurrentTime}
-                                                 label={"Время"}
-                                                 time={time}/> : <div>Загрузка</div>}
+                <MultilineTextFields current={currentTime}
+                                     setCurrent={setCurrentTime}
+                                     label={"Время"}
+                                     time={time}/>
             </div>
         </Card>
     )
