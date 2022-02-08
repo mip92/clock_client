@@ -4,7 +4,7 @@ import {Card, Input} from "@material-ui/core";
 import ClockSize from "./ClockSize";
 import {FormContext} from "../../context/formContext";
 import s from "../../style/FirstStep.module.css"
-import Date from "./Date"
+import MyDate from "./MyDate"
 import {City, Time} from "../../types/mainInterfacesAndTypes";
 import $api from "../../http";
 
@@ -18,8 +18,14 @@ const FirstStep: React.FC = () => {
         name,
     } = useContext(FormContext)
 
+    const initialState = {
+        cityName: 'Загрузка',
+        createdAt: '',
+        id: 0,
+        updatedAt: ''
+    }
     const [error, setError] = useState<boolean | null>(null)
-    const [cities, setCities] = useState<City[]>([])
+    const [cities, setCities] = useState<City[]>([initialState])
     const [loading, setLoading] = useState<boolean>(false)
     const time: Time[] = [
         {
@@ -123,17 +129,7 @@ const FirstStep: React.FC = () => {
                                      cities={cities}/>
             </div>
             <div className={s.date}>
-                <div>
-                    <div style={{
-                        textAlign: 'left',
-                        color: 'rgba(0, 0, 0, 0.54)',
-                        marginBottom: '0px',
-                        fontSize: "14px"
-                    }}>Дата
-                    </div>
-                    <Date/>
-                </div>
-
+                <MyDate/>
             </div>
 
             <div className={s.time} style={{

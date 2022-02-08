@@ -7,6 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+const getString=(date)=>{
+    const d=new Date(date)
+    return `${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()} ${d.getHours()}:00`
+}
 const MyTable = ({rows}) => {
     return (
         <TableContainer component={Paper}>
@@ -33,7 +37,7 @@ const MyTable = ({rows}) => {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell align="right">{row.orderId}</TableCell>
-                            <TableCell align="right">{row.dateTime}</TableCell>
+                            <TableCell align="right">{getString(row.dateTime)}</TableCell>
                             <TableCell align="right">{row.clockSize}</TableCell>
                             <TableCell align="right">{row.userId}</TableCell>
                             <TableCell align="right">{row.userEmail}</TableCell>

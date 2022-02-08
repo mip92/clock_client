@@ -36,7 +36,6 @@ export const loginAdmin = (email: string, password: string, history: any) => {
             })
             dispatch(fetchStart(false))
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('time', String(Date.now()));
             history.push('/menu')
         } catch (e) {
             dispatch(fetchStart(false))
@@ -50,7 +49,6 @@ export const loginAdmin = (email: string, password: string, history: any) => {
 }
 export const logout=()=>{
     localStorage.removeItem('token')
-    localStorage.removeItem('time')
     return{
         type: AdminActionTypes.LOGOUT
     }
@@ -71,13 +69,6 @@ export const setAdminPassword = (password: string): SetAdminPasswordAction => {
 }
 export const setToken = (): SetTokenAction => {
     let token: string | null = localStorage.getItem('token');
-    let time: string | null = localStorage.getItem('time');
-    if (time) {
-        if (Date.now() - +time > 24 * 60 * 60 * 1000) {
-            localStorage.removeItem('token')
-            localStorage.removeItem('time')
-        }
-    }
     return {
         type: AdminActionTypes.SET_TOKEN,
         payload: {payload: token}

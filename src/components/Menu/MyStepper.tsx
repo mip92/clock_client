@@ -25,7 +25,9 @@ const MyStepper: React.FC = () => {
     const [masters, setMasters] = useState<Array<Master>>([])
     const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
-        let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currentTime)
+        let dateWithTime = new Date(date)
+        dateWithTime.setHours(currentTime)
+        dateWithTime.setMinutes(0)
         await $api.post(`/order/`, {
             email: email.value,
             name: name.value,
@@ -42,7 +44,9 @@ const MyStepper: React.FC = () => {
     },[email.value, name.value, clockSize, currentCity, currentMaster, currentTime])
     const [findMaster, isLoadingMaster, errorfindMaster, setFindMasterError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
-        let dateWithTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), currentTime)
+        let dateWithTime = new Date(date)
+        dateWithTime.setHours(currentTime)
+        dateWithTime.setMinutes(0)
         const res = await $api.post(`/masters/getFreeMasters/`, {
             cityId: currentCity,
             dateTime: dateWithTime,
@@ -92,6 +96,10 @@ const MyStepper: React.FC = () => {
                                 {activeStep === 1 && <SecondStep masters={masters}/>}
                                 {activeStep === 2 && <div style={{textAlign: "center"}}>
                                     Вам на почту отправлено письмо, подтвердите заказ мастера
+                                    <Button variant="contained"
+                                            color='primary'
+                                            onClick={()=>setActiveStep(0)}>
+                                        На главную</Button>
                                 </div>}
 
                             </StepWrapper>
