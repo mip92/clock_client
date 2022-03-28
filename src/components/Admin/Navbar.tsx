@@ -1,13 +1,15 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
+import {AppBar, Box, Toolbar, Container, Button} from '@material-ui/core'
+//import AppBar from '@mui/material/AppBar';
+//import Box from '@mui/material/Box';
+//import Toolbar from '@mui/material/Toolbar';
+//import Typography from '@mui/material/Typography';
+//import Container from '@mui/material/Container';
+//import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
 import {logout} from "../../actionCreators/adminActionCreators";
+import Typography from "@material-ui/core/Typography";
 
 const pages = [
     {
@@ -46,12 +48,13 @@ const Navbar = ({children}) => {
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Typography
+
                             onClick={() => teleport('/')}
                             variant="h6"
                             noWrap
                             style={{'cursor':'pointer'}}
                             component="div"
-                            sx={{mr: 2, display: 'flex'}}
+                           /*sx={{mr: 2, display: 'flex'}}*/
                         >
                             LOGO
                         </Typography>
@@ -60,7 +63,7 @@ const Navbar = ({children}) => {
                                 <Button
                                     key={key}
                                     onClick={() => teleport(page.to)}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
+                                    /*sx={{my: 2, color: 'white', display: 'block'}}*/
                                 >
                                     {page.name}
                                 </Button>
@@ -72,7 +75,7 @@ const Navbar = ({children}) => {
                             noWrap
                             style={{'cursor':'pointer'}}
                             component="div"
-                            sx={{mr: 2, display: 'flex'}}
+                            /*sx={{mr: 2, display: 'flex'}}*/
                         >
                             Выйти
                         </Typography>

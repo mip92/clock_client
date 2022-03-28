@@ -1,4 +1,4 @@
-import {BooleanPayload, StringOrNullPayload, StringPayload} from "./mainInterfacesAndTypes";
+import {BooleanPayload, NumberPayload, StringOrNullPayload, StringPayload} from "./mainInterfacesAndTypes";
 
 export interface AdminStateType {
     isAdminFound: boolean,
@@ -6,7 +6,8 @@ export interface AdminStateType {
     error: null | string,
     token: null | string,
     adminEmail: string,
-    adminPassword: string
+    adminPassword: string,
+    status: number
 }
 
 export enum AdminActionTypes {
@@ -16,12 +17,18 @@ export enum AdminActionTypes {
     SET_ADMIN_PASSWORD="SET_ADMIN_PASSWORD",
     SET_TOKEN="SET_TOKEN",
     LOGIN="LOGIN",
-    LOGOUT="LOGOUT"
+    LOGOUT="LOGOUT",
+    STATUS="STATUS"
 }
 
 export interface FetchAction {
     type: AdminActionTypes.FETCH_START;
     payload: BooleanPayload
+}
+
+export interface SetStatusCode {
+    type: AdminActionTypes.STATUS;
+    payload: NumberPayload
 }
 
 export interface SetTokenAction {
@@ -59,4 +66,5 @@ export type AdminAction = FetchAction |
     SetAdminPasswordAction |
     LoginAction |
     SetTokenAction |
-    LogoutAction
+    LogoutAction |
+    SetStatusCode

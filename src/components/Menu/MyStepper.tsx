@@ -41,7 +41,7 @@ const MyStepper: React.FC = () => {
     useEffect(()=>{
         setError('')
         setFindMasterError('')
-    },[email.value, name.value, clockSize, currentCity, currentMaster, currentTime])
+    },[email.value, name.value, clockSize, currentCity, currentMaster, currentTime, date])
     const [findMaster, isLoadingMaster, errorfindMaster, setFindMasterError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
         let dateWithTime = new Date(date)

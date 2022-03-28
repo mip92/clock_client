@@ -6,7 +6,8 @@ const initState: AdminStateType = {
     error: null,
     token: null,
     adminEmail: '',
-    adminPassword:''
+    adminPassword:'',
+    status: 200
 }
 
 export const adminReducer = (state = initState, action: AdminAction): AdminStateType => {
@@ -25,6 +26,8 @@ export const adminReducer = (state = initState, action: AdminAction): AdminState
             return {...state, token:action.payload.payload}
         case AdminActionTypes.LOGOUT:
             return {...state, token:null}
+        case AdminActionTypes.STATUS:
+            return {...state, status:action.payload.payload}
         default:
             return state
     }

@@ -2,19 +2,19 @@ import $api from "./index";
 import {AdminActionTypes} from "../types/adminTypes";
 
 export default {
-    setupInterceptors: (store) => {
+    /*setupInterceptors: (store) => {
         $api.interceptors.response.use(function (response) {
                 return response;
             }, (async error => {
                     if (error.response.status == 401 && error.config) {
                         localStorage.removeItem('token')
                         localStorage.removeItem('time')
-                        store.dispatch({ type: AdminActionTypes.LOGOUT});
+                        return store.dispatch({type: AdminActionTypes.LOGOUT});
                     }
-                    throw error
-
+                    console.log(11111)
+                    //throw error
                 }
             )
         )
-    }
+    }*/
 };

@@ -5,7 +5,7 @@ import {
     FetchAction,
     FetchErrorAction,
     SetAdminEmailAction,
-    SetAdminPasswordAction, SetTokenAction
+    SetAdminPasswordAction, SetStatusCode, SetTokenAction
 } from "../types/adminTypes"
 import $api from "../http";
 
@@ -65,6 +65,12 @@ export const setAdminPassword = (password: string): SetAdminPasswordAction => {
     return {
         type: AdminActionTypes.SET_ADMIN_PASSWORD,
         payload: {payload: password}
+    }
+}
+export const setStatus = (code: number): SetStatusCode => {
+    return {
+        type: AdminActionTypes.STATUS,
+        payload: {payload: code}
     }
 }
 export const setToken = (): SetTokenAction => {

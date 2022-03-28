@@ -22,6 +22,10 @@ export type BooleanPayload = {
     payload: boolean
 }
 
+export type NumberPayload = {
+    payload: number
+}
+
 export type StringOrNullPayload = {
     payload: string | null
 }
