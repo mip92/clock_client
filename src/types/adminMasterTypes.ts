@@ -8,6 +8,9 @@ export interface Master {
     createdAt: string,
     updatedAt: string,
     cities: City[]
+    isActivated: boolean
+    isApproved: boolean
+    role: string
 }
 
 export interface AdminMasterStateType {
@@ -21,7 +24,9 @@ export enum AdminMastersActionTypes {
     FETCH_START = "FETCH_START",
     FETCH_ERROR = "FETCH_ERROR",
     FETCH_MASTERS = 'FETCH_MASTERS',
+    SET_MASTERS = 'SET_MASTERS',
     DELETE_MASTER = "DELETE_MASTER",
+    APPROVE_MASTER = "APPROVE_MASTER",
     SET_MASTER_NAME = "SET_MASTER_NAME",
     ADD_MASTER="ADD_MASTER",
     CHANGE_MASTER_NAME= "CHANGE_MASTER_NAME",
@@ -41,6 +46,11 @@ type FetchMastersActionPayload = {
     payload: Master[]
 }
 
+export interface SetMastersAction {
+    type: AdminMastersActionTypes.SET_MASTERS;
+    payload: FetchMastersActionPayload
+}
+
 export interface FetchMastersAction {
     type: AdminMastersActionTypes.FETCH_MASTERS;
     payload: FetchMastersActionPayload
@@ -48,6 +58,11 @@ export interface FetchMastersAction {
 
 export interface DeleteMasterAction {
     type: AdminMastersActionTypes.DELETE_MASTER;
+    payload: MasterPayload
+}
+
+export interface ApproveMasterAction {
+    type: AdminMastersActionTypes.APPROVE_MASTER;
     payload: MasterPayload
 }
 
@@ -72,4 +87,6 @@ export type AdminMasterAction = FetchAction |
     DeleteMasterAction |
     SetMasterNameAction |
     AddMasterAction |
-    ChangeMasterNameAction
+    ChangeMasterNameAction |
+    ApproveMasterAction |
+    SetMastersAction

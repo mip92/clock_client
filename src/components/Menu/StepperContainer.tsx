@@ -3,24 +3,9 @@ import MyStepper from "./MyStepper";
 import {FormContext} from "../../context/formContext";
 import {useInput} from "../../hooks/useInput";
 import {City, Clock} from "../../types/mainInterfacesAndTypes";
+import Navbar from "../Admin/Navbar";
 
-const StepperContainer: React.FC  = () => {
-    /*const [cities, setCities] = useState<City[]>([{
-        cityName: '',
-        createdAt: '',
-        updatedAt: '',
-        id: 0,
-    }])
-    const [fetching, isLoading, error] = useFetching(async () => {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/cities?offset=0&limit=50`)
-        setCities(response.data.rows)
-    })
-    useEffect(() => {
-        fetching()
-        return () => {
-            setCities([])
-        };
-    }, [])*/
+const StepperContainer: React.FC = () => {
     const [currentCity, setCurrentCity] = useState<number>(1);
     const [currentTime, setCurrentTime] = useState<number>(8);
     const [currentDay, setCurrentDay] = useState<number>(1);
@@ -50,7 +35,9 @@ const StepperContainer: React.FC  = () => {
             date,
             setDate,
         }}>
-            <MyStepper/>
+            <Navbar>
+                <MyStepper/>
+            </Navbar>
         </FormContext.Provider>
     );
 };

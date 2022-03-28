@@ -12,6 +12,11 @@ export interface Time {
     time: string,
 }
 
+export interface NavBarLink {
+    to: string,
+    name: string
+}
+
 export interface Clock {
     small:boolean,
     middle: boolean,
@@ -20,6 +25,10 @@ export interface Clock {
 
 export type BooleanPayload = {
     payload: boolean
+}
+
+export type NumberPayload = {
+    payload: number
 }
 
 export type StringOrNullPayload = {
@@ -36,4 +45,8 @@ export type CityPayload = {
 
 export type MasterPayload = {
     payload: Master
+}
+
+export type NavBarLinksPayload={
+    payload: NavBarLink[]
 }

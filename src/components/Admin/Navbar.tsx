@@ -1,44 +1,51 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
+import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem} from '@material-ui/core'
+//import AppBar from '@mui/material/AppBar';
+//import Box from '@mui/material/Box';
+//import Toolbar from '@mui/material/Toolbar';
+//import Typography from '@mui/material/Typography';
+//import Container from '@mui/material/Container';
+//import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
 import {logout} from "../../actionCreators/adminActionCreators";
-
-const pages = [
-    {
-        to: '/menu/cities',
-        name: 'Города'
-    },
-    {
-        to: '/menu/masters',
-        name: 'Мастера'
-    },
-    {
-        to: '/menu/users',
-        name: 'Пользователи'
-    },
-    {
-        to: '/menu/orders',
-        name: 'Заказы'
-    }
-];
+import Typography from "@material-ui/core/Typography";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {AccountCircle} from "@material-ui/icons";
+import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
 
 const Navbar = ({children}) => {
-    const dispatch =useDispatch();
+    const {pages} = useTypedSelector(state => state.navbar)
+    const {token} = useTypedSelector(state => state.auth)
+    const dispatch = useDispatch();
     const history = useHistory()
+    useEffect(() => {
+        if (!token) dispatch(setNavbarPages([{
+            to: '/',
+            name: "abc"
+        }]))
 
+    }, [token])
+    const [auth, setAuth] = React.useState(true);
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const teleport = (to) => {
         history.push(to);
     };
-    const exit=()=>{
+    const exit = () => {
         dispatch(logout())
         teleport('/login')
     }
+    const handleChange = (event) => {
+        setAuth(event.target.checked);
+    };
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <div>
@@ -49,9 +56,8 @@ const Navbar = ({children}) => {
                             onClick={() => teleport('/')}
                             variant="h6"
                             noWrap
-                            style={{'cursor':'pointer'}}
+                            style={{'cursor': 'pointer'}}
                             component="div"
-                            sx={{mr: 2, display: 'flex'}}
                         >
                             LOGO
                         </Typography>
@@ -60,22 +66,65 @@ const Navbar = ({children}) => {
                                 <Button
                                     key={key}
                                     onClick={() => teleport(page.to)}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
                                 >
                                     {page.name}
                                 </Button>
                             ))}
                         </Box>
-                        <Typography
-                            onClick={() =>exit()}
-                            variant="h6"
-                            noWrap
-                            style={{'cursor':'pointer'}}
-                            component="div"
-                            sx={{mr: 2, display: 'flex'}}
-                        >
-                            Выйти
-                        </Typography>
+                        {token ?
+                            <Typography
+                                onClick={() => exit()}
+                                variant="h6"
+                                noWrap
+                                style={{'cursor': 'pointer'}}
+                                component="div"
+                            >
+                                Logout
+                            </Typography>
+                            :
+                            <div>
+                                {history.location.pathname !== '/login' &&
+                                < Button onClick={() => teleport('login')}>
+                                    Login
+                                    </Button>
+                                }
+                                {history.location.pathname !== '/registration' &&
+                                <Button onClick={() => teleport('registration')}>
+                                    Registration
+                                </Button>}
+                            </div>
+                        }
+                        {auth && (
+                            <div>
+                                <IconButton
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleMenu}
+                                    color="inherit"
+                                >
+                                    <AccountCircle/>
+                                </IconButton>
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                                </Menu>
+                            </div>
+                        )}
                     </Toolbar>
                 </Container>
             </AppBar>

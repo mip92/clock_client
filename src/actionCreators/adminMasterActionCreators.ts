@@ -4,10 +4,10 @@ import {
     AdminMasterAction,
     AdminMastersActionTypes,
     FetchAction,
-    FetchErrorAction,
-    SetMasterNameAction
+    FetchErrorAction, Master,
+    SetMasterNameAction, SetMastersAction
 } from "../types/adminMasterTypes";
-import {AdminAction, AdminActionTypes} from "../types/adminTypes";
+import {AuthAction, AuthActionTypes} from "../types/authTypes";
 import $api from "../http";
 
 
@@ -53,7 +53,12 @@ export const fetchMasters = () => {
         }
     }
 }
-
+export const setMaster = (masters: Master[]):  SetMastersAction=> {
+    return {
+        type: AdminMastersActionTypes.SET_MASTERS,
+        payload: {payload:masters}
+    }
+}
 export const delOneMaster = (id: number) => {
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
@@ -79,8 +84,34 @@ export const delOneMaster = (id: number) => {
         }
     }
 }
+
+export const approveOneMaster = (id: number) => {
+    return async (dispatch: Dispatch<AdminMasterAction>) => {
+        try {
+            dispatch(fetchStart(true))
+            const response = await $api.get(`/masters/approve/${id}`, {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            )
+            dispatch({
+                type: AdminMastersActionTypes.APPROVE_MASTER,
+                payload: {payload: response.data.master},
+            })
+            dispatch(fetchStart(false))
+        } catch (e) {
+            dispatch(fetchStart(false))
+            const error = JSON.parse(e.request.responseText).message[0]
+            dispatch(fetchError(error))
+            setTimeout(async () => {
+                dispatch(fetchError(null))
+            }, 2000)
+        }
+    }
+}
 export const addOneMaster = (name: string, email:string, arrayCurrentCities:number[]) => {
-    return async (dispatch: Dispatch<AdminMasterAction | AdminAction>) => {
+    return async (dispatch: Dispatch<AdminMasterAction | AuthAction>) => {
         try {
             dispatch(fetchStart(true))
             const response = await $api.post(`/masters/`, {name, email, cities_id:String(arrayCurrentCities)})
@@ -95,7 +126,7 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
                 localStorage.removeItem('token')
                 localStorage.removeItem('time')
                 return dispatch({
-                    type: AdminActionTypes.SET_TOKEN,
+                    type: AuthActionTypes.SET_TOKEN,
                     payload:  {payload: null}
                 })
             }

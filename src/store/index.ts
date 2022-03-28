@@ -4,4 +4,4 @@ import thunkMiddleware from "redux-thunk";
 import NetworkService from "../http/network-service";
 
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
-NetworkService.setupInterceptors(store);
+//NetworkService.setupInterceptors(store);

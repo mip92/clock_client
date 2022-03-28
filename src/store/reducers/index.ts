@@ -1,13 +1,15 @@
 import {combineReducers, compose} from "redux";
-import {adminReducer} from "./adminReducer";
+import {authReducer} from "./authReducer";
 import {adminCitiesReducer} from "./adminCityReducer";
 import {adminMasterReducer} from "./adminMasterReducer";
+import {navbarReducer} from "./navbarReducer";
 
 export const rootReducer=combineReducers(
     {
-        admin:adminReducer,
+        auth:authReducer,
         adminCity: adminCitiesReducer,
-        adminMaster: adminMasterReducer
+        adminMaster: adminMasterReducer,
+        navbar: navbarReducer
     }
 )
 

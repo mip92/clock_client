@@ -10,6 +10,8 @@ import SecondStep from "./SecondStep";
 import {Master} from "../../types/adminMasterTypes";
 import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
+import Registration from "../Registration/Registration";
+import {Link} from "react-router-dom";
 
 const MyStepper: React.FC = () => {
     const {
@@ -38,10 +40,10 @@ const MyStepper: React.FC = () => {
         })
         setActiveStep(2)
     })
-    useEffect(()=>{
+    useEffect(() => {
         setError('')
         setFindMasterError('')
-    },[email.value, name.value, clockSize, currentCity, currentMaster, currentTime])
+    }, [email.value, name.value, clockSize, currentCity, currentMaster, currentTime, date])
     const [findMaster, isLoadingMaster, errorfindMaster, setFindMasterError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
         let dateWithTime = new Date(date)
@@ -98,12 +100,12 @@ const MyStepper: React.FC = () => {
                                     Вам на почту отправлено письмо, подтвердите заказ мастера
                                     <Button variant="contained"
                                             color='primary'
-                                            onClick={()=>setActiveStep(0)}>
+                                            onClick={() => setActiveStep(0)}>
                                         На главную</Button>
                                 </div>}
 
                             </StepWrapper>
-                            <Grid >
+                            <Grid>
                                 {activeStep !== 2 && <div className={s.buttons}>
                                     <Button variant="contained"
                                             color='primary'

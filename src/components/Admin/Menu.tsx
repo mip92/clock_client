@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 const Menu:React.FC = () => {
     const history = useHistory()
     return (
-        <Navbar>
+        <Navbar >
             Ресурс недоступен
             <Button onClick={() => history.push('/login')}>Войти</Button>
         </Navbar>

@@ -4,7 +4,7 @@ import {createTheme} from '@material-ui/core/styles'
 import {Route, Switch} from "react-router-dom";
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {useDispatch} from "react-redux";
-import {logout, setToken} from "./actionCreators/adminActionCreators";
+import {setToken} from "./actionCreators/adminActionCreators";
 import {useTypedSelector} from "./hooks/useTypedSelector";
 import {createRoute} from "./utils/createRoutes";
 import moment from 'moment'
@@ -38,7 +38,7 @@ const App: React.FC = () => {
     useEffect(() => {
         dispatch(setToken())
     }, [])
-    const {token} = useTypedSelector(state => state.admin)
+    const {token} = useTypedSelector(state => state.auth)
     const [routes, setRoutes] = useState<MyRoute[]>(createRoute(token))
     useEffect(() => {
         setRoutes(createRoute(token))
