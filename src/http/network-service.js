@@ -1,5 +1,5 @@
 import $api from "./index";
-import {AdminActionTypes} from "../types/adminTypes";
+import {AuthActionTypes} from "../types/authTypes";
 
 export default {
     /*setupInterceptors: (store) => {

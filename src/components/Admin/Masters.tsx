@@ -5,7 +5,7 @@ import s from "../../style/Master.module.css";
 import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import {addOneMaster, setMasterName} from "../../actionCreators/adminMasterActionCreators";
+import {addOneMaster, setMaster, setMasterName} from "../../actionCreators/adminMasterActionCreators";
 import MultilineTextFields from "../Menu/MultilineTextFields";
 import {usePaginator} from "../../hooks/usePaginator";
 import {Master} from "../../types/adminMasterTypes";
@@ -13,6 +13,7 @@ import MyModal from "../utilits/MyModal";
 import {City} from "../../types/mainInterfacesAndTypes";
 import $api from "../../http";
 import CitiesCheckBox from "./CitiesCheckBox";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 interface MastersProps {
     cities: City[],
@@ -21,6 +22,7 @@ interface MastersProps {
 
 const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
     const [arrayCurrentCities, setArrayCurrentCities]=useState<number[]>([])
+    const {masters}=useTypedSelector(state => state.adminMaster)
     const newMasterName = useInput('')
     const newMasterEmail = useInput('')
     const dispatch = useDispatch()
@@ -32,12 +34,16 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
         newMasterName.changeInput('')
         newMasterEmail.changeInput('')
     }
-    const [offset, limit, handleChange, changePage, currentPage, masters, isLoading, error, pagesArray, getMasters] = usePaginator(async () => {
+    const [offset, limit, handleChange, changePage, currentPage, lmasters, isLoading, error, pagesArray, getMasters] = usePaginator(async () => {
         return await $api.get(`/masters?offset=${offset}&limit=${limit}`)
     })
     useEffect(() => {
         getMasters()
     }, [limit, currentPage])
+    useEffect(() => {
+        dispatch(setMaster(lmasters))
+    }, [lmasters])
+
     useEffect(()=>{
         return () => {
             dispatch(setMasterName(''))
@@ -54,6 +60,7 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
                     <div>Города</div>
                     <div>Изменить</div>
                     <div>Удалить</div>
+                    <div>Подтвержден</div>
                 </div>
                 {masters && masters.map((m: Master, key: React.Key | null | undefined) => <OneMaster key={key}
                                                                                                      master={m}

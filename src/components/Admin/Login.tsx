@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {Button, Input} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import {
-    loginAdmin,
-    setAdminEmail,
-    setAdminPassword
+    loginAuth,
+    setAuthEmail,
+    setAuthPassword
 } from "../../actionCreators/adminActionCreators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import s from "../../style/Login.module.css";
@@ -14,18 +14,18 @@ import {useHistory} from "react-router-dom";
 const Login: React.FC = () => {
     let history = useHistory();
     const dispatch = useDispatch()
-    const {isFetch, error} = useTypedSelector(state => state.admin)
+    const {isFetch, error} = useTypedSelector(state => state.auth)
     const email = useInput('')
     const password = useInput('')
     useEffect(() => {
-        dispatch(setAdminEmail(email.value))
+        dispatch(setAuthEmail(email.value))
     }, [email.value])
     useEffect(() => {
-        dispatch(setAdminPassword(email.value))
+        dispatch(setAuthPassword(email.value))
     }, [password.value])
 
     const login = async () => {
-        await dispatch(loginAdmin(email.value, password.value, history))
+        await dispatch(loginAuth(email.value, password.value, history))
     }
     const onKeyDown=(e:React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         if (e.key ==="Enter"){
@@ -62,7 +62,6 @@ const Login: React.FC = () => {
             <Button className={s.btn}  onClick={() => login()}>Login</Button>
             <div className={s.error}>{error}</div>
         </div>
-
     );
 }
 export default Login

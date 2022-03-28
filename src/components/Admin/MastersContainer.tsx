@@ -28,7 +28,7 @@ const MastersContainer = () => {
         <MasterContext.Provider value={{
             cities
         }}>
-            <Navbar>
+            <Navbar >
                 <Masters cities={cities} isFetch={isFetch}/>
             </Navbar>
         </MasterContext.Provider>

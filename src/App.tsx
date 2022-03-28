@@ -38,7 +38,7 @@ const App: React.FC = () => {
     useEffect(() => {
         dispatch(setToken())
     }, [])
-    const {token} = useTypedSelector(state => state.admin)
+    const {token} = useTypedSelector(state => state.auth)
     const [routes, setRoutes] = useState<MyRoute[]>(createRoute(token))
     useEffect(() => {
         setRoutes(createRoute(token))

@@ -4,9 +4,10 @@ import {Master} from "../../types/adminMasterTypes";
 import CachedIcon from '@material-ui/icons/Cached';
 import s from "../../style/Master.module.css"
 import {useInput} from "../../hooks/useInput";
-import {changeMaster, delOneMaster} from "../../actionCreators/adminMasterActionCreators";
+import {approveOneMaster, changeMaster, delOneMaster} from "../../actionCreators/adminMasterActionCreators";
 import MyAlert from "../utilits/MyAlert";
 import ChangeMaster from "./ChangeMaster";
+import {Button} from "@material-ui/core";
 
 interface MasterProps {
     master: Master,
@@ -34,6 +35,9 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
     if (!master.cities) {
         return <div>Загрузка</div>
     }
+    const approveMaster = ()=>{
+        dispatch(approveOneMaster(master.id))
+    }
     if (!isInputActivate) {
         return (
             <div>
@@ -44,6 +48,10 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
                     <CachedIcon onClick={constChangeMasterName} style={{cursor: "pointer"}}/>
                     <MyAlert handler={delMaster}
                              text={`Вы точно хотите удалить ${master.name} из списка мастеров`}/>
+                             <Button style={master.isApproved?{backgroundColor:"lightgreen"}:{backgroundColor:"lightpink"}}
+                                     onClick={approveMaster}>
+                                 Подтвердить
+                             </Button>
                 </div>
             </div>
         );

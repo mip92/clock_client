@@ -1,29 +1,29 @@
 import {Dispatch} from "react"
 import {
-    AdminAction,
-    AdminActionTypes,
+    AuthAction,
+    AuthActionTypes,
     FetchAction,
     FetchErrorAction,
-    SetAdminEmailAction,
-    SetAdminPasswordAction, SetStatusCode, SetTokenAction
-} from "../types/adminTypes"
+    SetAuthEmailAction,
+    SetAuthPasswordAction, SetStatusCode, SetTokenAction
+} from "../types/authTypes"
 import $api from "../http";
 
 
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
-        type: AdminActionTypes.FETCH_START,
+        type: AuthActionTypes.FETCH_START,
         payload: {payload: bol}
     }
 }
 export const fetchError = (error: string | null): FetchErrorAction => {
     return {
-        type: AdminActionTypes.FETCH_ERROR,
+        type: AuthActionTypes.FETCH_ERROR,
         payload: {payload: error}
     }
 }
-export const loginAdmin = (email: string, password: string, history: any) => {
-    return async (dispatch: Dispatch<AdminAction>) => {
+export const loginAuth = (email: string, password: string, history: any) => {
+    return async (dispatch: Dispatch<AuthAction>) => {
         try {
             dispatch(fetchStart(true))
             const response = await $api.post(`/admin/login`, {
@@ -31,7 +31,7 @@ export const loginAdmin = (email: string, password: string, history: any) => {
                 password
             })
             dispatch({
-                type: AdminActionTypes.LOGIN,
+                type: AuthActionTypes.LOGIN,
                 payload: {payload: response.data.token}
             })
             dispatch(fetchStart(false))
@@ -50,33 +50,33 @@ export const loginAdmin = (email: string, password: string, history: any) => {
 export const logout=()=>{
     localStorage.removeItem('token')
     return{
-        type: AdminActionTypes.LOGOUT
+        type: AuthActionTypes.LOGOUT
     }
 }
 
-export const setAdminEmail = (email: string): SetAdminEmailAction => {
+export const setAuthEmail = (email: string): SetAuthEmailAction => {
     return {
-        type: AdminActionTypes.SET_ADMIN_EMAIL,
+        type: AuthActionTypes.SET_ADMIN_EMAIL,
         payload: {payload: email}
     }
 }
 
-export const setAdminPassword = (password: string): SetAdminPasswordAction => {
+export const setAuthPassword = (password: string): SetAuthPasswordAction => {
     return {
-        type: AdminActionTypes.SET_ADMIN_PASSWORD,
+        type: AuthActionTypes.SET_ADMIN_PASSWORD,
         payload: {payload: password}
     }
 }
 export const setStatus = (code: number): SetStatusCode => {
     return {
-        type: AdminActionTypes.STATUS,
+        type: AuthActionTypes.STATUS,
         payload: {payload: code}
     }
 }
 export const setToken = (): SetTokenAction => {
     let token: string | null = localStorage.getItem('token');
     return {
-        type: AdminActionTypes.SET_TOKEN,
+        type: AuthActionTypes.SET_TOKEN,
         payload: {payload: token}
     }
 }

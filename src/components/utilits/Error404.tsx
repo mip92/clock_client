@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux";
 import {setStatus} from "../../actionCreators/adminActionCreators";
 
 const Error404= () => {
-    const {token,status} = useTypedSelector(state => state.admin)
+    const {token,status} = useTypedSelector(state => state.auth)
     const history =useHistory()
     const dispatch =useDispatch()
     useEffect(()=>{
