@@ -7,7 +7,8 @@ export interface AuthStateType {
     token: null | string,
     authEmail: string,
     authPassword: string,
-    status: number
+    status: number,
+    role: null | string,
 }
 
 export enum AuthActionTypes {
@@ -16,6 +17,7 @@ export enum AuthActionTypes {
     SET_ADMIN_EMAIL = "SET_ADMIN_EMAIL",
     SET_ADMIN_PASSWORD="SET_ADMIN_PASSWORD",
     SET_TOKEN="SET_TOKEN",
+    SET_ROLE="SET_ROLE",
     LOGIN="LOGIN",
     LOGOUT="LOGOUT",
     STATUS="STATUS"
@@ -50,6 +52,11 @@ export interface SetAuthEmailAction {
     payload: StringPayload
 }
 
+export interface SetAuthRoleAction{
+    type: AuthActionTypes.SET_ROLE;
+    payload: StringOrNullPayload
+}
+
 export interface SetAuthPasswordAction {
     type: AuthActionTypes.SET_ADMIN_PASSWORD;
     payload: StringPayload
@@ -67,4 +74,5 @@ export type AuthAction = FetchAction |
     LoginAction |
     SetTokenAction |
     LogoutAction |
-    SetStatusCode
+    SetStatusCode |
+    SetAuthRoleAction

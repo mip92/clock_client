@@ -17,6 +17,12 @@ const Cities: React.FC = () => {
     const [offset, setOffset] = useState(0)
     const [limit, setLimit] = useState(5)
     const [currentPage, setCurrentPage] = useState(1)
+    const [price, setPrice] = useState<number>(0)
+
+    const handlerChangePrice = (e) => {
+        if (e.target.value < 1) setPrice(1)
+        else setPrice(e.target.value)
+    }
     useEffect(() => {
         dispatch(fetchCities(offset, limit))
     }, [currentPage, limit])
@@ -24,7 +30,7 @@ const Cities: React.FC = () => {
         dispatch(setCityName(newCity.value))
     }, [newCity.value])
     const addCity = (): void => {
-        dispatch(addOneCity(newCity.value))
+        dispatch(addOneCity(newCity.value, price))
         newCity.changeInput('')
     }
     const changePage = (page: number) => {
@@ -38,8 +44,14 @@ const Cities: React.FC = () => {
     };
 
     return (
-        <Navbar>
+        <div>
             <h3>Список городов</h3>
+            <div className={s.title}>
+                <div>Название города</div>
+                <div>Цена за час</div>
+                <div>Редактировать</div>
+                <div>Удалить</div>
+            </div>
             <div>
                 {cities && cities.map((c, key) => <OneCity currentPage={currentPage} key={key} city={c}/>)}
                 <div className={s.page_wrapper}>
@@ -69,11 +81,19 @@ const Cities: React.FC = () => {
                                inputProps={{'aria-label': 'description'}}
                                className={s.name}
                         />
+                        <Input value={price}
+                               onChange={(e) => handlerChangePrice(e)}
+                               type='number'
+                               placeholder="Цена за час"
+                               color="primary"
+                               inputProps={{'aria-label': 'description'}}
+                               className={s.name}
+                        />
                     </div>
                     <AddCircleOutlineIcon style={{cursor: "pointer"}} onClick={addCity}/>
                 </div>
             </MyModal>
-        </Navbar>
+        </div>
     );
 }
 export default Cities

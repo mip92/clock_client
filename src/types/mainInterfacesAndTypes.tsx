@@ -2,6 +2,7 @@ import {Master} from "./adminMasterTypes";
 
 export interface City {
     cityName: string,
+    price: number,
     createdAt: string,
     id: number,
     updatedAt: string,

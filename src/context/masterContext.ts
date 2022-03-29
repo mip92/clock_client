@@ -6,5 +6,6 @@ export const MasterContext = createContext({
         updatedAt:'',
         cityName: '',
         id: 0,
+        price: 0
     }],
 },)

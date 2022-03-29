@@ -19,6 +19,7 @@ interface CityProps {
 const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
     const [isInputActivate, activateInput] = useState<boolean>(false)
     const newNameOfCity = useInput('')
+    const [newPriceOfCity, setNewPriceOfCity] = useState<number>(0)
     const dispatch = useDispatch()
 
     const delCity = (): void => {
@@ -43,6 +44,7 @@ const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
         return (
             <div className={s.wrapper}>
                 <div>{city.cityName}</div>
+                <div>{city.price}</div>
                 <CachedIcon onClick={constChangeCityName} style={{cursor: "pointer"}}/>
                 <MyAlert handler={delCity}
                          text={`Вы точно хотите удалить ${city.cityName} из списка городов`}/>
@@ -55,6 +57,15 @@ const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
                     value={newNameOfCity.value}
                     onChange={newNameOfCity.onChange}
                     placeholder="Название города"
+                    color="primary"
+                    inputProps={{'aria-label': 'description'}}
+                    className={s.name}
+                />
+                <Input
+                    value={newPriceOfCity}
+                    onChange={(e)=>setNewPriceOfCity(Number(e.target.value))}
+                    type='number'
+                    placeholder="Цена за час"
                     color="primary"
                     inputProps={{'aria-label': 'description'}}
                     className={s.name}

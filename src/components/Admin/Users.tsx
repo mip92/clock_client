@@ -8,16 +8,16 @@ import Navbar from './Navbar';
 import $api from "../../http";
 
 const Users: React.FC = () => {
-    const[offset, limit, handleChange, changePage, currentPage, users, isLoading, error, pagesArray, getUsers, delUser, updateUser]=usePaginator(async () => {
-       return await $api.get(`/users?offset=${offset}&limit=${limit}`)
+    const [offset, limit, handleChange, changePage, currentPage, users, isLoading, error, pagesArray, getUsers, delUser, updateUser] = usePaginator(async () => {
+        return await $api.get(`/users?offset=${offset}&limit=${limit}`)
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         getUsers()
-    },[limit, currentPage])
+    }, [limit, currentPage])
 
     return (
-        <Navbar>
+        <div>
             <h3>Список пользователей</h3>
             <div>
                 <div className={s.wrapper}>
@@ -27,15 +27,16 @@ const Users: React.FC = () => {
                     <div>Изменить</div>
                     <div>Удалить</div>
                 </div>
-                {users && users.map((u: User, key: React.Key) => <OneUser deleteUser={delUser} updateUser={updateUser} key={key} user={u}/>)}
-                {pagesArray.map((p: number, key: React.Key)=> <span
-                    className={currentPage===p ? s.page_current :s.page}
+                {users && users.map((u: User, key: React.Key) => <OneUser deleteUser={delUser} updateUser={updateUser}
+                                                                          key={key} user={u}/>)}
+                {pagesArray.map((p: number, key: React.Key) => <span
+                    className={currentPage === p ? s.page_current : s.page}
                     key={key}
-                    onClick={()=>changePage(p)}
+                    onClick={() => changePage(p)}
                 >{p}</span>)}
-                <span style={{marginLeft:30, padding:5}}>Лимит</span>
+                <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
                 <Input
-                    style={{width:20}}
+                    style={{width: 20}}
                     value={limit}
                     onChange={handleChange}
                     placeholder="Пользователей в поле"
@@ -43,7 +44,7 @@ const Users: React.FC = () => {
                     inputProps={{'aria-label': 'description'}}
                 />
             </div>
-        </Navbar>
+        </div>
     );
 }
 export default Users

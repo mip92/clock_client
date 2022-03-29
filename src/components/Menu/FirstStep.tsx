@@ -18,11 +18,12 @@ const FirstStep: React.FC = () => {
         name,
     } = useContext(FormContext)
 
-    const initialState = {
+    const initialState: City = {
         cityName: 'Загрузка',
         createdAt: '',
         id: 0,
-        updatedAt: ''
+        updatedAt: '',
+        price: 0
     }
     const [error, setError] = useState<boolean | null>(null)
     const [cities, setCities] = useState<City[]>([initialState])

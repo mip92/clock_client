@@ -76,11 +76,11 @@ export const delOneCity = (id: number) => {
         }
     }
 }
-export const addOneCity = (city: string) => {
+export const addOneCity = (city: string, price: number) => {
     return async (dispatch: Dispatch<AdminCitiesAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.post(`/cities/`, {city})
+            const response = await $api.post(`/cities/`, {city, price})
             dispatch({
                 type: AdminCitiesActionTypes.ADD_CITY,
                 payload: {payload: response.data},

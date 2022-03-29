@@ -13,6 +13,7 @@ const MastersContainer = () => {
         createdAt: '',
         updatedAt: '',
         id: 0,
+        price: 0
     }])
     const [fetching, isFetch, error] = useFetching(async () => {
         const response = await $api.get(`/cities?offset=0&limit=50`)
@@ -28,9 +29,7 @@ const MastersContainer = () => {
         <MasterContext.Provider value={{
             cities
         }}>
-            <Navbar >
-                <Masters cities={cities} isFetch={isFetch}/>
-            </Navbar>
+            <Masters cities={cities} isFetch={isFetch}/>
         </MasterContext.Provider>
     );
 };

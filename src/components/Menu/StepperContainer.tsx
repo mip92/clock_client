@@ -35,9 +35,9 @@ const StepperContainer: React.FC = () => {
             date,
             setDate,
         }}>
-            <Navbar>
+            <div>
                 <MyStepper/>
-            </Navbar>
+            </div>
         </FormContext.Provider>
     );
 };

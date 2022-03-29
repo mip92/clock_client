@@ -11,11 +11,12 @@ import {City} from "../../types/mainInterfacesAndTypes";
 import Typography from "@material-ui/core/Typography";
 import Navbar from "../Admin/Navbar";
 
-const initialState = {
+const initialState: City = {
     cityName: 'Загрузка',
     createdAt: '',
     id: 0,
-    updatedAt: ''
+    updatedAt: '',
+    price: 0
 }
 const Registration: React.FC = () => {
     const email = useInput('')
@@ -69,7 +70,7 @@ const Registration: React.FC = () => {
         setMasters(masters)*/
     })
     return (
-        <Navbar>
+        <div>
             <div className={s.wrapper}>
                 <Typography variant="h6"
                             color={'secondary'}
@@ -142,7 +143,7 @@ const Registration: React.FC = () => {
                 </Button>
                 <div className={s.error}>{error}</div>
             </div>
-        </Navbar>
+        </div>
     );
 };
 

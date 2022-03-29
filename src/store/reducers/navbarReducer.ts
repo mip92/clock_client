@@ -1,24 +1,7 @@
 import {NavbarAction, NavbarActionTypes, NavbarStateType} from "../../types/navbarTypes";
 
 const initState: NavbarStateType = {
-    pages: [
-        {
-            to: '/menu/cities',
-            name: 'Города'
-        },
-        {
-            to: '/menu/masters',
-            name: 'Мастера'
-        },
-        {
-            to: '/menu/users',
-            name: 'Пользователи'
-        },
-        {
-            to: '/menu/orders',
-            name: 'Заказы'
-        }
-    ]
+    pages: [{to: '/blog', name: "Blog"}]
 }
 
 export const navbarReducer = (state = initState, action: NavbarAction): NavbarStateType => {

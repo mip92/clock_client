@@ -1,31 +1,23 @@
 import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem} from '@material-ui/core'
-//import AppBar from '@mui/material/AppBar';
-//import Box from '@mui/material/Box';
-//import Toolbar from '@mui/material/Toolbar';
-//import Typography from '@mui/material/Typography';
-//import Container from '@mui/material/Container';
-//import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
 import {logout} from "../../actionCreators/adminActionCreators";
 import Typography from "@material-ui/core/Typography";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {AccountCircle} from "@material-ui/icons";
 import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
+import {setLinks} from "../../utils/setLinks";
 
-const Navbar = ({children}) => {
+const Navbar = () => {
     const {pages} = useTypedSelector(state => state.navbar)
-    const {token} = useTypedSelector(state => state.auth)
+    const {token, role} = useTypedSelector(state => state.auth)
     const dispatch = useDispatch();
     const history = useHistory()
     useEffect(() => {
-        if (!token) dispatch(setNavbarPages([{
-            to: '/',
-            name: "abc"
-        }]))
-
-    }, [token])
+        const links = setLinks(role)
+        dispatch(setNavbarPages(links))
+    }, [role])
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const teleport = (to) => {
@@ -128,7 +120,6 @@ const Navbar = ({children}) => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {children}
         </div>
     );
 };

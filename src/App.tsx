@@ -9,6 +9,7 @@ import {useTypedSelector} from "./hooks/useTypedSelector";
 import {createRoute} from "./utils/createRoutes";
 import moment from 'moment'
 import MomentUtils from "@date-io/moment";
+import Navbar from "./components/Admin/Navbar";
 
 
 export const theme = createTheme({
@@ -48,6 +49,7 @@ const App: React.FC = () => {
         <MuiPickersUtilsProvider utils={MomentUtils}>
             <ThemeProvider theme={theme}>
                 <div className="App">
+                    <Navbar/>
                     <Switch>
                         {routes.map((r, key) => <Route key={key}
                                                        path={r.path}

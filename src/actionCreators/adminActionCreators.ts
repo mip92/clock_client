@@ -5,7 +5,7 @@ import {
     FetchAction,
     FetchErrorAction,
     SetAuthEmailAction,
-    SetAuthPasswordAction, SetStatusCode, SetTokenAction
+    SetAuthPasswordAction, SetAuthRoleAction, SetStatusCode, SetTokenAction
 } from "../types/authTypes"
 import $api from "../http";
 
@@ -34,6 +34,7 @@ export const loginAuth = (email: string, password: string, history: any) => {
                 type: AuthActionTypes.LOGIN,
                 payload: {payload: response.data.token}
             })
+            dispatch(setRole(response.data.token))
             dispatch(fetchStart(false))
             localStorage.setItem('token', response.data.token);
             history.push('/menu')
@@ -47,9 +48,9 @@ export const loginAuth = (email: string, password: string, history: any) => {
         }
     }
 }
-export const logout=()=>{
+export const logout = () => {
     localStorage.removeItem('token')
-    return{
+    return {
         type: AuthActionTypes.LOGOUT
     }
 }
@@ -58,6 +59,23 @@ export const setAuthEmail = (email: string): SetAuthEmailAction => {
     return {
         type: AuthActionTypes.SET_ADMIN_EMAIL,
         payload: {payload: email}
+    }
+}
+
+export const setRole = (token: string | null): SetAuthRoleAction => {
+    if (!token) return {
+        type: AuthActionTypes.SET_ROLE,
+        payload: {payload: null}
+    }
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    const obj = JSON.parse(jsonPayload)
+    return {
+        type: AuthActionTypes.SET_ROLE,
+        payload: {payload: obj.role}
     }
 }
 

@@ -22,7 +22,7 @@ const Orders: React.FC = () => {
     }, [limit, currentPage])
 
     return (
-        <Navbar>
+        <div>
             <h3>Список заказов</h3>
             <MyTable rows={orders}/>
             <div>
@@ -43,7 +43,7 @@ const Orders: React.FC = () => {
                     />
                 </div>
             </div>
-        </Navbar>
+        </div>
     );
 }
 export default Orders
