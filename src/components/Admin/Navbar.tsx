@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
-import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem} from '@material-ui/core'
+import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem, makeStyles} from '@material-ui/core'
 import {useDispatch} from "react-redux";
 import {logout} from "../../actionCreators/adminActionCreators";
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +10,12 @@ import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
 import {setLinks} from "../../utils/setLinks";
 
 const Navbar = () => {
+    const useStyles = makeStyles({
+        root: {
+            cursor: 'pointer'
+        },
+    });
+    const classes = useStyles();
     const {pages} = useTypedSelector(state => state.navbar)
     const {token, role} = useTypedSelector(state => state.auth)
     const dispatch = useDispatch();
@@ -48,7 +54,7 @@ const Navbar = () => {
                             onClick={() => teleport('/')}
                             variant="h6"
                             noWrap
-                            style={{'cursor': 'pointer'}}
+                            className={classes.root}
                             component="div"
                         >
                             LOGO
@@ -68,7 +74,7 @@ const Navbar = () => {
                                 onClick={() => exit()}
                                 variant="h6"
                                 noWrap
-                                style={{'cursor': 'pointer'}}
+                                className={classes.root}
                                 component="div"
                             >
                                 Logout

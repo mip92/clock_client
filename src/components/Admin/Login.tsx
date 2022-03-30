@@ -15,8 +15,8 @@ const Login: React.FC = () => {
     let history = useHistory();
     const dispatch = useDispatch()
     const {isFetch, error} = useTypedSelector(state => state.auth)
-    const email = useInput('')
-    const password = useInput('')
+    const email = useInput('admin@example.com')
+    const password = useInput('passwordsecret')
     useEffect(() => {
         dispatch(setAuthEmail(email.value))
     }, [email.value])

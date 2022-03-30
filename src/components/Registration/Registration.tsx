@@ -66,8 +66,6 @@ const Registration: React.FC = () => {
             isMaster,
             citiesId: arrayCurrentCities
         })
-        /*const masters: Master[] = res.data
-        setMasters(masters)*/
     })
     return (
         <div>

@@ -7,10 +7,17 @@ const OneCheckBox = ({city, array, setArray}) => {
         setChecked(event.target.checked);
     };
     useEffect(()=>{
+        //Wif (array.length===0) setArray([])
         if (checked===true) setArray([...array, city.id])
         else setArray(array.filter(a=>{if (a==city.id) return
         else return a}))
     },[checked])
+
+    useEffect(()=>{
+        if (array.length==0) setChecked(false)
+    },[array])
+
+
     return (
         <div>
             <FormControlLabel control={<Checkbox checked={checked}

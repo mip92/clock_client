@@ -21,7 +21,11 @@ export const theme = createTheme({
             main: '#f57c00',
         },
     },
+    typography:{
+
+    }
 });
+
 
 export interface MyRoute {
     exact: boolean;

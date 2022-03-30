@@ -1,6 +1,6 @@
 .wrapper {
     display: grid;
-    grid-template-columns: 200px 200px 200px 70px 70px 100px;
+    grid-template-columns: 200px 200px 200px 70px 70px 120px;
 }
 .page_wrapper{
     margin-top: 20px;

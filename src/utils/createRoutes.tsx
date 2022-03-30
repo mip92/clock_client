@@ -6,13 +6,13 @@ import Users from "../components/Admin/Users";
 import Orders from "../components/Admin/Orders";
 import Error404 from "../components/utilits/Error404";
 import {MyRoute} from "../App";
-import Registration from "../components/Registration/Registration";
+import RegistrationWithReactHookForm from "../components/Registration/RegistrationWithReactHookForm";
 
 export const createRoute=(token)=>{
     const mainRouts:MyRoute[]=[
         {exact: true, path: "/", component: <StepperContainer/>},
         {exact: false, path: "/login", component: <Login/>},
-        {exact: false, path: "/registration", component: <Registration/>},
+        {exact: false, path: "/registration", component: <RegistrationWithReactHookForm/>},
     ]
     const adminRoutes:MyRoute[]=[
         {exact: false, path: "/menu/cities", component: <Cities/>},

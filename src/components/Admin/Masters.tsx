@@ -6,14 +6,13 @@ import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {addOneMaster, setMaster, setMasterName} from "../../actionCreators/adminMasterActionCreators";
-import MultilineTextFields from "../Menu/MultilineTextFields";
-import {usePaginator} from "../../hooks/usePaginator";
 import {Master} from "../../types/adminMasterTypes";
 import MyModal from "../utilits/MyModal";
 import {City} from "../../types/mainInterfacesAndTypes";
 import $api from "../../http";
 import CitiesCheckBox from "./CitiesCheckBox";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
 
 interface MastersProps {
     cities: City[],
@@ -33,16 +32,14 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
         dispatch(addOneMaster(newMasterName.value, newMasterEmail.value, arrayCurrentCities))
         newMasterName.changeInput('')
         newMasterEmail.changeInput('')
+        setArrayCurrentCities([])
     }
-    const [offset, limit, handleChange, changePage, currentPage, lmasters, isLoading, error, pagesArray, getMasters] = usePaginator(async () => {
+    const {offset, limit, handleChange, changePage, currentPage, isLoading, error, pagesArray, fetching} = usePaginatorWithRedux(async () => {
         return await $api.get(`/masters?offset=${offset}&limit=${limit}`)
-    })
+    }, setMaster)
     useEffect(() => {
-        getMasters()
+        fetching()
     }, [limit, currentPage])
-    useEffect(() => {
-        dispatch(setMaster(lmasters))
-    }, [lmasters])
 
     useEffect(()=>{
         return () => {
@@ -50,6 +47,7 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
         };
     },[])
     if (isFetch || !cities || isLoading) return <div>Загрузка</div>
+
     return (
         <div>
             <h3>Список мастеров</h3>
@@ -68,6 +66,7 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
                 {pagesArray.map((p: number, key: React.Key) => <span
                     className={currentPage === p ? s.page_current : s.page}
                     key={key}
+
                     onClick={() => changePage(p)}
                 >{p}</span>)}
                 <span style={{marginLeft: 30, padding: 5}}>Лимит</span>

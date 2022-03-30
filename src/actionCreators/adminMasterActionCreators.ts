@@ -113,12 +113,13 @@ export const approveOneMaster = (id: number) => {
 export const addOneMaster = (name: string, email:string, arrayCurrentCities:number[]) => {
     return async (dispatch: Dispatch<AdminMasterAction | AuthAction>) => {
         try {
+            const citiesId=JSON.stringify(arrayCurrentCities)
             dispatch(fetchStart(true))
-            const response = await $api.post(`/masters/`, {name, email, cities_id:String(arrayCurrentCities)})
-            dispatch({
+            const response = await $api.post(`/masters/`, {name, email, cities_id:citiesId})
+            /*dispatch({
                 type: AdminMastersActionTypes.ADD_MASTER,
                 payload: {payload:response.data},
-            })
+            })*/
             dispatch(fetchStart(false))
         } catch (e) {
             dispatch(fetchStart(false))
