@@ -10,7 +10,7 @@ export const usePaginatorWithRedux = (callback:any, ActionCreator) => {
     const [offset, setOffset]=useState(0)
     const [limit, setLimit]=useState(3)
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(Number(event.target.value)===0) setLimit(10)
+        if(Number(event.target.value)<1) setLimit(1)
         else setLimit(Number(event.target.value));
     };
     const [currentPage, setCurrentPage]=useState<number>(1)

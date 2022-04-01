@@ -1,6 +1,6 @@
 import {NavBarLink} from "../types/mainInterfacesAndTypes";
 
-export const setLinks = (role: string | null) => {
+export const setLinks = (role: string | null, id: number|null) => {
     const adminLinks: NavBarLink[] = [
         {to: '/menu/cities', name: 'Города'},
         {to: '/menu/masters', name: 'Мастера'},
@@ -9,11 +9,11 @@ export const setLinks = (role: string | null) => {
     ]
     const masterLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},
-        {to: '/menu/myWorks', name: 'Заказы'}
+        {to: `/MyWorkplace/${id}`, name: 'Мое рабочее место'}
     ]
     const userLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},
-        {to: '/menu/myOrders', name: 'Заказы'}
+        {to: `/MyOffice/${id}`, name: 'Мой кабинет'}
     ]
     const defaultLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"}
@@ -22,7 +22,7 @@ export const setLinks = (role: string | null) => {
         case "ADMIN":
             return adminLinks;
             break;
-        case "Master":
+        case "MASTER":
             return masterLinks;
             break;
         case "USER":

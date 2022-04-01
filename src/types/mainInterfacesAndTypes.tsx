@@ -1,4 +1,5 @@
 import {Master} from "./adminMasterTypes";
+import {OrderInterface} from "../components/Admin/Order";
 
 export interface City {
     cityName: string,
@@ -26,6 +27,10 @@ export interface Clock {
 
 export type BooleanPayload = {
     payload: boolean
+}
+
+export type OrdersPayload = {
+    payload: OrderInterface[]
 }
 
 export type NumberPayload = {

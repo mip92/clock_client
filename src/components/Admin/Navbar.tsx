@@ -2,12 +2,11 @@ import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem, makeStyles} from '@material-ui/core'
 import {useDispatch} from "react-redux";
-import {logout} from "../../actionCreators/adminActionCreators";
+import {logout} from "../../actionCreators/authActionCreators";
 import Typography from "@material-ui/core/Typography";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {AccountCircle} from "@material-ui/icons";
 import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
-import {setLinks} from "../../utils/setLinks";
 
 const Navbar = () => {
     const useStyles = makeStyles({
@@ -17,12 +16,11 @@ const Navbar = () => {
     });
     const classes = useStyles();
     const {pages} = useTypedSelector(state => state.navbar)
-    const {token, role} = useTypedSelector(state => state.auth)
+    const {token, role, id} = useTypedSelector(state => state.auth)
     const dispatch = useDispatch();
     const history = useHistory()
     useEffect(() => {
-        const links = setLinks(role)
-        dispatch(setNavbarPages(links))
+        dispatch(setNavbarPages(role, id))
     }, [role])
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);

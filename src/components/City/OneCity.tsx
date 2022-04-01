@@ -36,6 +36,11 @@ const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
         activateInput(false)
     }
 
+    const changeCityPrice =(e)=>{
+        if (e.target.value < 1) setNewPriceOfCity(1)
+        else setNewPriceOfCity(e.target.value)
+    }
+
     useEffect(() => {
         activateInput(false)
     }, [currentPage])
@@ -63,7 +68,7 @@ const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
                 />
                 <Input
                     value={newPriceOfCity}
-                    onChange={(e)=>setNewPriceOfCity(Number(e.target.value))}
+                    onChange={(e)=>changeCityPrice(e)}
                     type='number'
                     placeholder="Цена за час"
                     color="primary"

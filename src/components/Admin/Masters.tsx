@@ -19,9 +19,9 @@ interface MastersProps {
     isFetch: boolean
 }
 
-const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
-    const [arrayCurrentCities, setArrayCurrentCities]=useState<number[]>([])
-    const {masters}=useTypedSelector(state => state.adminMaster)
+const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
+    const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>([])
+    const {masters} = useTypedSelector(state => state.adminMaster)
     const newMasterName = useInput('')
     const newMasterEmail = useInput('')
     const dispatch = useDispatch()
@@ -41,11 +41,11 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
         fetching()
     }, [limit, currentPage])
 
-    useEffect(()=>{
+    useEffect(() => {
         return () => {
             dispatch(setMasterName(''))
         };
-    },[])
+    }, [])
     if (isFetch || !cities || isLoading) return <div>Загрузка</div>
 
     return (
@@ -66,7 +66,6 @@ const Masters: React.FC<MastersProps> = ({isFetch,cities}) => {
                 {pagesArray.map((p: number, key: React.Key) => <span
                     className={currentPage === p ? s.page_current : s.page}
                     key={key}
-
                     onClick={() => changePage(p)}
                 >{p}</span>)}
                 <span style={{marginLeft: 30, padding: 5}}>Лимит</span>

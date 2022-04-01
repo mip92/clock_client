@@ -5,16 +5,16 @@ import {
     loginAuth,
     setAuthEmail,
     setAuthPassword
-} from "../../actionCreators/adminActionCreators";
+} from "../../actionCreators/authActionCreators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import s from "../../style/Login.module.css";
 import {useInput} from "../../hooks/useInput";
 import {useHistory} from "react-router-dom";
 
 const Login: React.FC = () => {
-    let history = useHistory();
+    const history = useHistory();
     const dispatch = useDispatch()
-    const {isFetch, error} = useTypedSelector(state => state.auth)
+    const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
     const email = useInput('admin@example.com')
     const password = useInput('passwordsecret')
     useEffect(() => {
@@ -25,8 +25,19 @@ const Login: React.FC = () => {
     }, [password.value])
 
     const login = async () => {
-        await dispatch(loginAuth(email.value, password.value, history))
+        await dispatch(loginAuth(email.value, password.value))
     }
+
+    useEffect(()=>{
+        console.log(3456)
+        switch (role) {
+            case "ADMIN": return history.push('/menu/orders')
+            case "USER": return history.push(`/myOffice/${id}`)
+            case "MASTER": return history.push(`/MyWorkplace/${id}`)
+        }
+
+    },[id])
+
     const onKeyDown=(e:React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         if (e.key ==="Enter"){
             e.preventDefault()

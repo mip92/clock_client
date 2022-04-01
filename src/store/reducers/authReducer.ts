@@ -8,7 +8,8 @@ const initState: AuthStateType = {
     authEmail: '',
     authPassword:'',
     status: 200,
-    role:''
+    role:'',
+    id: null
 }
 
 export const authReducer = (state = initState, action: AuthAction): AuthStateType => {
@@ -23,8 +24,8 @@ export const authReducer = (state = initState, action: AuthAction): AuthStateTyp
             return {...state, authPassword:action.payload.payload}
         case AuthActionTypes.SET_TOKEN:
             return {...state, token:action.payload.payload}
-        case AuthActionTypes.SET_ROLE:
-            return {...state, role:action.payload.payload}
+        case AuthActionTypes.SET_ROLE_AND_ID:
+            return {...state, role:action.payload.rolePayload, id:action.payload.idPayload}
         case AuthActionTypes.LOGIN:
             return {...state, token:action.payload.payload}
         case AuthActionTypes.LOGOUT:

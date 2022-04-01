@@ -22,11 +22,11 @@ export const fetchError = (error: string | null): FetchErrorAction => {
         payload: {payload: error}
     }
 }
-export const loginAuth = (email: string, password: string, history: any) => {
+export const loginAuth = (email: string, password: string) => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.post(`/admin/login`, {
+            const response = await $api.post(`/auth/login`, {
                 email,
                 password
             })
@@ -37,9 +37,9 @@ export const loginAuth = (email: string, password: string, history: any) => {
             dispatch(setRole(response.data.token))
             dispatch(fetchStart(false))
             localStorage.setItem('token', response.data.token);
-            history.push('/menu')
         } catch (e) {
             dispatch(fetchStart(false))
+            console.log(e)
             const error: string = JSON.parse(e.request.responseText).message
             dispatch(fetchError(error))
             setTimeout(async () => {
@@ -48,6 +48,39 @@ export const loginAuth = (email: string, password: string, history: any) => {
         }
     }
 }
+export interface IRigistrationData {
+    citiesId: number[],
+    email: string
+    isMaster: boolean
+    isRulesChecked: boolean
+    name: string
+    firstPassword: string
+    secondPassword: string
+}
+export const RigistrationAuth = (data: IRigistrationData) => {
+    return async (dispatch: Dispatch<AuthAction>) => {
+        try {
+            dispatch(fetchStart(true))
+            const response =await $api.post(`/auth/registration/`, data)
+            dispatch({
+                type: AuthActionTypes.LOGIN,
+                payload: {payload: response.data.token}
+            })
+            dispatch(setRole(response.data.token))
+            dispatch(fetchStart(false))
+            localStorage.setItem('token', response.data.token);
+        } catch (e) {
+            dispatch(fetchStart(false))
+            console.log(e)
+            const error: string = JSON.parse(e.request.responseText).message
+            dispatch(fetchError(error))
+            setTimeout(async () => {
+                dispatch(fetchError(null))
+            }, 2000)
+        }
+    }
+}
+
 export const logout = () => {
     localStorage.removeItem('token')
     return {
@@ -64,8 +97,8 @@ export const setAuthEmail = (email: string): SetAuthEmailAction => {
 
 export const setRole = (token: string | null): SetAuthRoleAction => {
     if (!token) return {
-        type: AuthActionTypes.SET_ROLE,
-        payload: {payload: null}
+        type: AuthActionTypes.SET_ROLE_AND_ID,
+        payload: {rolePayload: null, idPayload:null}
     }
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -74,8 +107,8 @@ export const setRole = (token: string | null): SetAuthRoleAction => {
     }).join(''));
     const obj = JSON.parse(jsonPayload)
     return {
-        type: AuthActionTypes.SET_ROLE,
-        payload: {payload: obj.role}
+        type: AuthActionTypes.SET_ROLE_AND_ID,
+        payload: {rolePayload: obj.role, idPayload:obj.id}
     }
 }
 
@@ -98,5 +131,4 @@ export const setToken = (): SetTokenAction => {
         payload: {payload: token}
     }
 }
-
 

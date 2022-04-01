@@ -8,7 +8,7 @@ import MyTable from "../utilits/MyTable";
 import Navbar from "./Navbar";
 import $api from "../../http";
 
-interface AxiosOrder {
+export interface AxiosOrder {
     rows: OrderInterface[],
     count: number
 }
