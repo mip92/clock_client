@@ -1,5 +1,5 @@
 import StepperContainer from "../components/Menu/StepperContainer";
-import Login from "../components/Admin/Login";
+import Login from "../components/Registration/Login";
 import Cities from "../components/City/Cities";
 import MastersContainer from "../components/Admin/MastersContainer";
 import Users from "../components/Admin/Users";

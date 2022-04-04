@@ -9,7 +9,6 @@ import $api from "../../http";
 import CitiesCheckBox from "../Admin/CitiesCheckBox";
 import {City} from "../../types/mainInterfacesAndTypes";
 import Typography from "@material-ui/core/Typography";
-import Navbar from "../Admin/Navbar";
 
 const initialState: City = {
     cityName: 'Загрузка',
@@ -139,7 +138,7 @@ const Registration: React.FC = () => {
                         onClick={() => registration()}>
                     Registration
                 </Button>
-                <div className={s.error}>{error}</div>
+                {/*<div className={s.error}>{error}</div>*/}
             </div>
         </div>
     );

@@ -69,7 +69,6 @@ const CitiesCheckBoxMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCur
                 result=[...result, cities[i].id]
             }
         }
-        console.log(result)
         setArrayCurrentCities(result)
     }, [cityName])
 

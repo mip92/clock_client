@@ -45,6 +45,16 @@ export type StringPayload = {
     payload: string
 }
 
+export interface MyError {
+    value :string,
+    msg:string,
+    param:string,
+    location:string
+}
+export type ErrorOrNullPayload={
+    payload: MyError | null
+}
+
 export type CityPayload = {
     payload: City
 }

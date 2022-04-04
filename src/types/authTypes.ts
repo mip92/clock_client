@@ -1,9 +1,15 @@
-import {BooleanPayload, NumberPayload, StringOrNullPayload, StringPayload} from "./mainInterfacesAndTypes";
+import {
+    BooleanPayload,
+    ErrorOrNullPayload, MyError,
+    NumberPayload,
+    StringOrNullPayload,
+    StringPayload
+} from "./mainInterfacesAndTypes";
 
 export interface AuthStateType {
     isAdminFound: boolean,
     isFetch: boolean,
-    error: null | string,
+    error: null | MyError,
     token: null | string,
     authEmail: string,
     authPassword: string,
@@ -65,7 +71,7 @@ export interface SetAuthPasswordAction {
 
 export interface FetchErrorAction {
     type: AuthActionTypes.FETCH_ERROR
-    payload: StringOrNullPayload
+    payload: ErrorOrNullPayload
 }
 
 export type AuthAction = FetchAction |

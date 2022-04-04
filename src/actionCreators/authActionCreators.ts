@@ -2,12 +2,12 @@ import {Dispatch} from "react"
 import {
     AuthAction,
     AuthActionTypes,
-    FetchAction,
-    FetchErrorAction,
+    FetchAction, FetchErrorAction,
     SetAuthEmailAction,
     SetAuthPasswordAction, SetAuthRoleAction, SetStatusCode, SetTokenAction
 } from "../types/authTypes"
 import $api from "../http";
+import {ErrorOrNullPayload, MyError} from "../types/mainInterfacesAndTypes";
 
 
 export const fetchStart = (bol: boolean): FetchAction => {
@@ -16,10 +16,10 @@ export const fetchStart = (bol: boolean): FetchAction => {
         payload: {payload: bol}
     }
 }
-export const fetchError = (error: string | null): FetchErrorAction => {
+export const fetchError = (error: MyError | null): FetchErrorAction  => {
     return {
         type: AuthActionTypes.FETCH_ERROR,
-        payload: {payload: error}
+        payload:{payload:error}
     }
 }
 export const loginAuth = (email: string, password: string) => {
@@ -39,12 +39,9 @@ export const loginAuth = (email: string, password: string) => {
             localStorage.setItem('token', response.data.token);
         } catch (e) {
             dispatch(fetchStart(false))
-            console.log(e)
-            const error: string = JSON.parse(e.request.responseText).message
+            const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
+            console.log(error)
             dispatch(fetchError(error))
-            setTimeout(async () => {
-                dispatch(fetchError(null))
-            }, 2000)
         }
     }
 }
@@ -71,12 +68,9 @@ export const RigistrationAuth = (data: IRigistrationData) => {
             localStorage.setItem('token', response.data.token);
         } catch (e) {
             dispatch(fetchStart(false))
-            console.log(e)
-            const error: string = JSON.parse(e.request.responseText).message
+            const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
+            console.log(error)
             dispatch(fetchError(error))
-            setTimeout(async () => {
-                dispatch(fetchError(null))
-            }, 2000)
         }
     }
 }
