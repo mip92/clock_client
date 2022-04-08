@@ -10,12 +10,13 @@ import RegistrationWithReactHookForm from "../components/Registration/Registrati
 import MyWorkplace from "../components/MyWorkplace/MyWorkplace";
 import MyOffice from "../components/MyOffice/MyOffice";
 import Blog from "../components/Blog/Blog";
+import ChangeEmail from "../components/MyWorkplace/ChangeEmail";
 
 export const createRoute = (role:string | null) => {
     const mainRouts: MyRoute[] = [
         {exact: true, path: "/", component: <StepperContainer/>},
         {exact: true, path: "/blog", component: <Blog/>},
-        {exact: false, path: "/login", component: <Login/>},
+        {exact: true, path: "/login", component: <Login/>},
         {exact: false, path: "/registration", component: <RegistrationWithReactHookForm/>},
     ]
     const adminRoutes: MyRoute[] = [
@@ -27,9 +28,11 @@ export const createRoute = (role:string | null) => {
     ]
     const userRoutes: MyRoute[] = [
         {exact: true, path: "/myOffice/:userId", component: <MyOffice/>},
+        {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
     ]
     const masterRoutes: MyRoute[]=[
         {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkplace/>},
+        {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
     ]
     const error = {exact: false, path: "*", component: <Error404/>}
     switch (role) {

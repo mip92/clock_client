@@ -4,7 +4,7 @@ import {
     AuthActionTypes,
     FetchAction, FetchErrorAction,
     SetAuthEmailAction,
-    SetAuthPasswordAction, SetAuthRoleAction, SetStatusCode, SetTokenAction
+    SetAuthNameAction, SetAuthRoleAction, SetStatusCode, SetTokenAction
 } from "../types/authTypes"
 import $api from "../http";
 import {ErrorOrNullPayload, MyError} from "../types/mainInterfacesAndTypes";
@@ -34,9 +34,37 @@ export const loginAuth = (email: string, password: string) => {
                 type: AuthActionTypes.LOGIN,
                 payload: {payload: response.data.token}
             })
+            dispatch(setAuthEmail(email))
+            dispatch(setAuthName(response.data.name))
             dispatch(setRole(response.data.token))
             dispatch(fetchStart(false))
             localStorage.setItem('token', response.data.token);
+        } catch (e) {
+            dispatch(fetchStart(false))
+            const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
+            console.log(error)
+            dispatch(fetchError(error))
+        }
+    }
+}
+export const changeEmailAuth = (currentEmail: string, newEmail: string, password: string, role:string|null) => {
+    return async (dispatch: Dispatch<AuthAction>) => {
+        try {
+            dispatch(fetchStart(true))
+            const response = await $api.post(`/auth/changeEmail`, {
+                currentEmail,
+                newEmail,
+                password,
+                role
+            })
+            dispatch({
+                type: AuthActionTypes.LOGIN,
+                payload: {payload: response.data.token}
+            })
+            dispatch(setRole(response.data.token))
+            dispatch(fetchStart(false))
+            localStorage.setItem('token', response.data.token);
+
         } catch (e) {
             dispatch(fetchStart(false))
             const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
@@ -66,10 +94,10 @@ export const RigistrationAuth = (data: IRigistrationData) => {
             dispatch(setRole(response.data.token))
             dispatch(fetchStart(false))
             localStorage.setItem('token', response.data.token);
+            dispatch(fetchError(null))
         } catch (e) {
             dispatch(fetchStart(false))
             const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
-            console.log(error)
             dispatch(fetchError(error))
         }
     }
@@ -106,10 +134,10 @@ export const setRole = (token: string | null): SetAuthRoleAction => {
     }
 }
 
-export const setAuthPassword = (password: string): SetAuthPasswordAction => {
+export const setAuthName = (naame: string): SetAuthNameAction => {
     return {
-        type: AuthActionTypes.SET_ADMIN_PASSWORD,
-        payload: {payload: password}
+        type: AuthActionTypes.SET_ADMIN_NAME,
+        payload: {payload: naame}
     }
 }
 export const setStatus = (code: number): SetStatusCode => {

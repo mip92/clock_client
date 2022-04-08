@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {OrderInterface} from "../Admin/Order";
 import {Button, Paper, Table, TableContainer, Typography} from "@material-ui/core";
-import Statuses from "../MyOffice/Statuses";
+import Statuses from "./Statuses";
+
 
 interface active {
     name: string
@@ -55,7 +56,7 @@ interface ProductTableProps {
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
     const [activeSort, setActiveSort] = useState<active>({name: '', down: false})
     const {items, requestSort, sortConfig} = useSortableData(products, 'ascending');
-    const btnConfig = ['dateTime', 'userEmail', 'userName', 'cityName', 'clockSize', 'dealPrice', 'totalPrice']
+    const btnConfig = ['dateTime', 'masterEmail', 'masterName', 'cityName', 'clockSize', 'dealPrice', 'totalPrice']
 
     return (
         <TableContainer component={Paper}>
@@ -81,8 +82,8 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                 {items.map((item) => (
                     <tr key={item.orderId}>
                         <td>{getString(item.dateTime)}</td>
-                        <td>{item.userEmail}</td>
-                        <td>{item.userName}</td>
+                        <td>{item.masterEmail}</td>
+                        <td>{item.masterName}</td>
                         <td>{item.cityName}</td>
                         <td>{item.clockSize}</td>
                         <td>{item.dealPrice}</td>
@@ -100,11 +101,11 @@ interface OrdersProps {
     orders: OrderInterface[] | null
 }
 
-const WorkplaceTable: React.FC<OrdersProps> = ({orders}) => {
+const OfficeTable: React.FC<OrdersProps> = ({orders}) => {
     return (
         <div>
             {orders && <ProductTable products={orders}/>}
         </div>
     );
 }
-export default WorkplaceTable
+export default OfficeTable

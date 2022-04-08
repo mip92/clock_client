@@ -11,8 +11,8 @@ export interface AuthStateType {
     isFetch: boolean,
     error: null | MyError,
     token: null | string,
+    authName: string,
     authEmail: string,
-    authPassword: string,
     status: number,
     role: null | string,
     id: null | number,
@@ -22,9 +22,10 @@ export enum AuthActionTypes {
     FETCH_START = "FETCH_START",
     FETCH_ERROR = "FETCH_ERROR",
     SET_ADMIN_EMAIL = "SET_ADMIN_EMAIL",
-    SET_ADMIN_PASSWORD="SET_ADMIN_PASSWORD",
+    SET_ADMIN_NAME="SET_ADMIN_NAME",
     SET_TOKEN="SET_TOKEN",
     SET_ROLE_AND_ID="SET_ROLE_AND_ID",
+    CHANGE_EMAIL="CHANGE_EMAIL",
     LOGIN="LOGIN",
     LOGOUT="LOGOUT",
     STATUS="STATUS"
@@ -64,8 +65,8 @@ export interface SetAuthRoleAction{
     payload: {rolePayload: string | null, idPayload:number | null}
 }
 
-export interface SetAuthPasswordAction {
-    type: AuthActionTypes.SET_ADMIN_PASSWORD;
+export interface SetAuthNameAction {
+    type: AuthActionTypes.SET_ADMIN_NAME;
     payload: StringPayload
 }
 
@@ -77,7 +78,7 @@ export interface FetchErrorAction {
 export type AuthAction = FetchAction |
     FetchErrorAction |
     SetAuthEmailAction |
-    SetAuthPasswordAction |
+    SetAuthNameAction |
     LoginAction |
     SetTokenAction |
     LogoutAction |

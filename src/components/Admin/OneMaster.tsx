@@ -4,10 +4,9 @@ import {Master} from "../../types/adminMasterTypes";
 import CachedIcon from '@material-ui/icons/Cached';
 import s from "../../style/Master.module.css"
 import {useInput} from "../../hooks/useInput";
-import {approveOneMaster, changeMaster, delOneMaster} from "../../actionCreators/adminMasterActionCreators";
+import {approveOneMaster, delOneMaster} from "../../actionCreators/adminMasterActionCreators";
 import MyAlert from "../utilits/MyAlert";
 import ChangeMaster from "./ChangeMaster";
-import {Button} from "@material-ui/core";
 import ApproveButton from "../utilits/ApproveButton";
 
 interface MasterProps {

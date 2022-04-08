@@ -59,6 +59,11 @@ export type CityPayload = {
     payload: City
 }
 
+export type CitiesPayload = {
+    payload: City[]
+}
+
+
 export type MasterPayload = {
     payload: Master
 }

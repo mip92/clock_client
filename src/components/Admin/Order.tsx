@@ -12,6 +12,8 @@ export interface OrderInterface {
     masterName: string,
     cityId: number| null,
     cityName: string,
+    dealPrice: number | null,
+    statusId: number | null,
 }
 
 interface OrderProps {

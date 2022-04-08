@@ -6,10 +6,12 @@ interface InputWithErrorProps {
     error: string,
     reg: any,
     cn: string,
-    type: string
+    type: string,
+    label?: string,
+    defaultValue?: string | number,
 }
 
-const InputWithError: React.FC<InputWithErrorProps> = ({placeholder, error, reg, cn, type}) => {
+const InputWithError: React.FC<InputWithErrorProps> = ({placeholder, label,defaultValue, error, reg, cn, type}) => {
     const[isError, setError]=useState<boolean>(false)
     useEffect(()=>{
         if (error) setError(true)
@@ -18,11 +20,12 @@ const InputWithError: React.FC<InputWithErrorProps> = ({placeholder, error, reg,
 
     return(
         <TextField
-            label={placeholder}
+            label={label}
             type={type}
             className={cn}
             error={isError}
-            id="standard-error-helper-text"
+            defaultValue={defaultValue}
+            id={placeholder}
             placeholder={placeholder}
             {...reg}
             helperText={error}

@@ -6,9 +6,9 @@ import {addOneCity, fetchCities, setCityName} from "../../actionCreators/adminCi
 import s from "../../style/Cities.module.css";
 import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import MyModal from "../utilits/MyModal";
-import Navbar from '../Admin/Navbar';
+import AddCityWithReactHookForm from './AddCityWithReactHookForm';
+
 
 const Cities: React.FC = () => {
     const {cities, pagesArray} = useTypedSelector(state => state.adminCity)
@@ -19,20 +19,14 @@ const Cities: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [price, setPrice] = useState<number>(0)
 
-    const handlerChangePrice = (e) => {
-        if (e.target.value < 1) setPrice(1)
-        else setPrice(e.target.value)
-    }
+
     useEffect(() => {
         dispatch(fetchCities(offset, limit))
     }, [currentPage, limit])
     useEffect((): void => {
         dispatch(setCityName(newCity.value))
     }, [newCity.value])
-    const addCity = (): void => {
-        dispatch(addOneCity(newCity.value, price))
-        newCity.changeInput('')
-    }
+
     const changePage = (page: number) => {
         setOffset(page * limit - limit)
         setCurrentPage(page)
@@ -42,6 +36,7 @@ const Cities: React.FC = () => {
         if (Number(event.target.value) === 0) setLimit(10)
         else setLimit(Number(event.target.value));
     };
+    const [isOpen ,setIsOpen]=useState(false)
 
     return (
         <div>
@@ -53,7 +48,7 @@ const Cities: React.FC = () => {
                 <div>Удалить</div>
             </div>
             <div>
-                {cities && cities.map((c, key) => <OneCity currentPage={currentPage} key={key} city={c}/>)}
+                {cities && cities.map((c, key) => <OneCity isOpen={isOpen} setIsOpen={setIsOpen} currentPage={currentPage} key={key} city={c}/>)}
                 <div className={s.page_wrapper}>
                     {pagesArray.map((p, key) => <span
                         className={currentPage === p ? s.page_current : s.page}
@@ -72,26 +67,7 @@ const Cities: React.FC = () => {
                 </div>
             </div>
             <MyModal name='Добавить город'>
-                <div className={s.wrapper}>
-                    <div>
-                        <Input value={newCity.value}
-                               onChange={newCity.onChange}
-                               placeholder="Название города"
-                               color="primary"
-                               inputProps={{'aria-label': 'description'}}
-                               className={s.name}
-                        />
-                        <Input value={price}
-                               onChange={(e) => handlerChangePrice(e)}
-                               type='number'
-                               placeholder="Цена за час"
-                               color="primary"
-                               inputProps={{'aria-label': 'description'}}
-                               className={s.name}
-                        />
-                    </div>
-                    <AddCircleOutlineIcon style={{cursor: "pointer"}} onClick={addCity}/>
-                </div>
+                <AddCityWithReactHookForm newCity={newCity} price={price} setPrice={setPrice}/>
             </MyModal>
         </div>
     );

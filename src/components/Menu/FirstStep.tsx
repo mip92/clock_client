@@ -5,15 +5,19 @@ import ClockSize from "./ClockSize";
 import {FormContext} from "../../context/formContext";
 import s from "../../style/FirstStep.module.css"
 import MyDate from "./MyDate"
-import {City, Time} from "../../types/mainInterfacesAndTypes";
+import {City} from "../../types/mainInterfacesAndTypes";
 import $api from "../../http";
+import {useFetching} from "../../hooks/useFetching";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import RegistrationAlert from "./RegistrationAlert";
+import {useDispatch} from "react-redux";
+import {fetchCities, setCurrentCity, setCurrentTime} from "../../actionCreators/orderActionCreators";
 
 const FirstStep: React.FC = () => {
+    const {token} = useTypedSelector(state => state.auth)
+    const {cities, currentCity, currentTime, time} = useTypedSelector(state => state.order)
+    const dispatch = useDispatch()
     const {
-        currentCity,
-        setCurrentCity,
-        currentTime,
-        setCurrentTime,
         email,
         name,
     } = useContext(FormContext)
@@ -26,63 +30,10 @@ const FirstStep: React.FC = () => {
         price: 0
     }
     const [error, setError] = useState<boolean | null>(null)
-    const [cities, setCities] = useState<City[]>([initialState])
     const [loading, setLoading] = useState<boolean>(false)
-    const time: Time[] = [
-        {
-            "id": 8,
-            "time": "8:00",
-        },
-        {
-            "id": 9,
-            "time": "9:00",
-        },
-        {
-            "id": 10,
-            "time": "10:00",
-        },
-        {
-            "id": 11,
-            "time": "11:00",
-        },
-        {
-            "id": 12,
-            "time": "12:00",
-        },
-        {
-            "id": 13,
-            "time": "13:00",
-        },
-        {
-            "id": 14,
-            "time": "14:00",
-        },
-        {
-            "id": 15,
-            "time": "15:00",
-        },
-        {
-            "id": 16,
-            "time": "16:00",
-        },
-        {
-            "id": 17,
-            "time": "17:00",
-        },
-        {
-            "id": 18,
-            "time": "18:00",
-        },
-        {
-            "id": 19,
-            "time": "19:00",
-        },
-        {
-            "id": 20,
-            "time": "20:00",
-        },
-    ]
-    const findCities = async (offset: number, limit: number): Promise<void> => {
+    const [openAlert, setOpenAlert] = React.useState(false);
+
+    /*const findCities = async (offset: number, limit: number): Promise<void> => {
         try {
             setLoading(true)
             const response = await $api.get(`/cities?offset=${offset}&limit=${limit}`)
@@ -95,13 +46,40 @@ const FirstStep: React.FC = () => {
                 setError(null)
             }, 2000)
         }
-    }
+    }*/
     useEffect(() => {
-        findCities(0, 50)
+        dispatch(fetchCities(0, 50))
     }, [])
     useEffect(() => {
-        setCurrentCity(cities[0] && cities[0].id)
+        dispatch(setCurrentCity(cities[0] && cities[0].id))
     }, [cities])
+
+
+
+    const [findUser, isLoading, errorfindUser, setUserError] = useFetching(async () => {
+        const res = await $api.post(`/users/findUser`, {
+            email: email.value,
+        })
+        console.log(res)
+    })
+    const [valueChange, setValueChange] = useState<boolean>()
+
+    useEffect(() => {
+        setValueChange(true)
+        setTimeout(() => {
+            setValueChange(false)
+        }, 5000)
+    }, [email.value])
+
+    useEffect(() => {
+        if (!valueChange) findUser()
+    }, [valueChange])
+    useEffect(() => {
+        if (errorfindUser == 'User with this email is already registered' && !token) setOpenAlert(true)
+        return () => setOpenAlert(false)
+    }, [errorfindUser])
+
+
     return (
         <Card className={s.wrapper}>
             <Input
@@ -125,7 +103,6 @@ const FirstStep: React.FC = () => {
             </div>
             <div className={s.city}>
                 <MultilineTextFields current={currentCity}
-                                     setCurrent={setCurrentCity}
                                      label={"Город"}
                                      cities={cities}/>
             </div>
@@ -138,10 +115,10 @@ const FirstStep: React.FC = () => {
                 marginRight: 'auto'
             }}>
                 <MultilineTextFields current={currentTime}
-                                     setCurrent={setCurrentTime}
                                      label={"Время"}
                                      time={time}/>
             </div>
+            <RegistrationAlert open={openAlert}/>
         </Card>
     )
 }

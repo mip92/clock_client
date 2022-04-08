@@ -72,30 +72,30 @@ const CitiesCheckBoxMultySelectReactHookForm: FC<CitiesCheckBoxProps> = ({cities
                 result=[...result, cities[i].id]
             }
         }
-        console.log(result)
         setArrayCurrentCities(result)
     }, [cityName])
 
     const onSubmit = handleSubmit(async data => {
         let result=[]
+
         for (let i = 0; i <cities.length; i++) {
             if(data.citiesId.includes(cities[i].cityName)) { // @ts-ignore
                 result=[...result, cities[i].id]
             }
         }
+        console.log(result)
         setArrayCurrentCities(result)
         }
     );
-
     useEffect(() => {
         if (error?.param) {
-            console.log(123123123123)
             setError(error.param, {
                 type: "server error",
                 message: error.msg
             });
         }
     }, [error])
+
 
     return (
         <div onClick={onSubmit}>
@@ -111,6 +111,7 @@ const CitiesCheckBoxMultySelectReactHookForm: FC<CitiesCheckBoxProps> = ({cities
                             labelId="LabelCities"
                             label="cities"
                             multiple
+                            error={watch("citiesId")?.length==0 && error?.value?.length==0}
                             input={<Input id="select-multiple-chip"/>}
                             renderValue={(selected) => (
                                 <div className={classes.chips}>
@@ -130,16 +131,7 @@ const CitiesCheckBoxMultySelectReactHookForm: FC<CitiesCheckBoxProps> = ({cities
                     </FormControl>
                 )}
             />
-            {/*<FormControl >
-                <Button
-                    type="submit"
-                    variant="contained"
-                    onClick={onSubmit}
-                    >
-                    Submit
-                </Button>
-            </FormControl>*/}
-            <div style={{color: "red"}}>{error?.msg}</div>
+            {watch("citiesId")?.length==0 && error?.value?.length==0 &&<div style={{color: "red"}}>{error?.msg}</div>}
         </div>
     );
 };

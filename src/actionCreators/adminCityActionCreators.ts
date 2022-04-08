@@ -8,7 +8,7 @@ import {
 } from "../types/adminCityTypes";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import $api from "../http";
-
+import {MyError} from "../types/mainInterfacesAndTypes";
 
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
@@ -16,10 +16,10 @@ export const fetchStart = (bol: boolean): FetchAction => {
         payload: {payload: bol}
     }
 }
-export const fetchError = (error?: string | null): FetchErrorAction => {
+export const fetchError = (error: MyError | null): FetchErrorAction  => {
     return {
         type: AdminCitiesActionTypes.FETCH_ERROR,
-        payload: {payload: error || "An error occurred while loading"}
+        payload:{payload:error}
     }
 }
 
@@ -86,33 +86,33 @@ export const addOneCity = (city: string, price: number) => {
                 payload: {payload: response.data},
             })
             dispatch(fetchStart(false))
+            dispatch(fetchError(null))
         } catch (e) {
             dispatch(fetchStart(false))
-            const error = JSON.parse(e.request.responseText).message[0]
+            let error: MyError
+            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
+            else error = JSON.parse(e.request.responseText)
             dispatch(fetchError(error))
-            setTimeout(async () => {
-                dispatch(fetchError(null))
-            }, 2000)
         }
     }
 }
-export const changeCityName = (id: number, city: string) => {
+export const changeCityName = (id: number, city: string, price: number, activateInput:any, setIsOpen:any) => {
     return async (dispatch: Dispatch<AdminCitiesAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.put(`/cities/${id}`, {cityName: city})
+            const response = await $api.put(`/cities/${id}`, {cityName: city, price})
             dispatch({
                 type: AdminCitiesActionTypes.CHANGE_CITY_NAME,
                 city: {payload: response.data}
             })
             dispatch(fetchStart(false))
+            dispatch(fetchError(null))
+            activateInput(false)
+            setIsOpen(false)
         } catch (e) {
             dispatch(fetchStart(false))
-            const error = JSON.parse(e.request.responseText).message[0]
+            const error: MyError= JSON.parse(e.request.responseText).errors[0]
             dispatch(fetchError(error))
-            setTimeout(async () => {
-                dispatch(fetchError(null))
-            }, 2000)
         }
     }
 }

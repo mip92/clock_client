@@ -51,15 +51,14 @@ const App: React.FC = () => {
     },[token])
 
     useEffect(()=>{
-        console.log(123)
         setRoutes(createRoute(role))
     },[role])
 
 
     const [routes, setRoutes] = useState<MyRoute[]>(createRoute(role))
-    useEffect(() => {
+    /*useEffect(() => {
         setRoutes(createRoute(role))
-    }, [token])
+    }, [token])*/
 
     return (
         <MuiPickersUtilsProvider utils={MomentUtils}>

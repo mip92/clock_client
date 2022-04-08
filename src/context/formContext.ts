@@ -6,10 +6,10 @@ import {Clock} from "../types/mainInterfacesAndTypes";
 export const FormContext = createContext({
     currentMaster:1,
     setCurrentMaster: (currentMaster: number)=>{},
-    currentCity: 1,
-    setCurrentCity: (currencyCity: number)=>{},
-    currentTime: 1,
-    setCurrentTime: (currencyTime: number)=>{},
+    /*currentCity: 1,
+    setCurrentCity: (currencyCity: number)=>{},*/
+    /*currentTime: 1,
+    setCurrentTime: (currencyTime: number)=>{},*/
     currentDay: 1,
     setCurrentDay: (currencyDay: number)=>{},
     clockSize: {

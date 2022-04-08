@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Button} from "@material-ui/core";
 import {useDispatch} from "react-redux";
-import {loginAuth} from "../../actionCreators/authActionCreators";
+import {changeEmailAuth, loginAuth} from "../../actionCreators/authActionCreators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import s from "../../style/Login.module.css";
 import {useHistory} from "react-router-dom";

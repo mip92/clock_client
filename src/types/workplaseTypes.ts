@@ -1,10 +1,4 @@
-import {
-    BooleanPayload,
-    NumberPayload,
-    OrdersPayload,
-    StringOrNullPayload,
-    StringPayload
-} from "./mainInterfacesAndTypes";
+import {OrdersPayload} from "./mainInterfacesAndTypes";
 import {OrderInterface} from "../components/Admin/Order";
 
 export interface WorkplaseStateType {

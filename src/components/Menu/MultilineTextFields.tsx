@@ -2,6 +2,8 @@ import React from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import {City, Time} from "../../types/mainInterfacesAndTypes";
+import {useDispatch} from "react-redux";
+import {setCurrentCity, setCurrentTime} from "../../actionCreators/orderActionCreators";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -18,8 +20,7 @@ interface MultilineTextFieldsListProps {
     label: string;
     cities?: City[] | undefined
     time?: Time[] | undefined
-    current: number,
-    setCurrent: (arg0: number) => void
+    current: number | null,
 }
 
 const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
@@ -27,11 +28,12 @@ const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
                                                                          cities,
                                                                          time,
                                                                          current,
-                                                                         setCurrent
                                                                      }) => {
     const classes = useStyles();
+    const dispatch =useDispatch()
     const change = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrent(Number(event.target.value));
+        cities && dispatch(setCurrentCity(+event.target.value));
+        time && dispatch(setCurrentTime(+event.target.value));
     };
     return (
         <form className={classes.root} noValidate autoComplete="off">

@@ -1,4 +1,6 @@
 import {NavbarAction, NavbarActionTypes, NavbarStateType} from "../../types/navbarTypes";
+import StepperContainer from "../../components/Menu/StepperContainer";
+import {NavBarLink} from "../../types/mainInterfacesAndTypes";
 
 const initState: NavbarStateType = {
     pages: [{to: '/blog', name: "Blog"}]

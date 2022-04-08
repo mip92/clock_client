@@ -1,45 +1,37 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {changeCityName, delOneCity} from "../../actionCreators/adminCityActionCreators";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import {delOneCity} from "../../actionCreators/adminCityActionCreators";
 import CachedIcon from '@material-ui/icons/Cached';
-import CheckIcon from '@material-ui/icons/Check';
 import s from "../../style/City.module.css"
-import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
 import MyAlert from "../utilits/MyAlert";
 import {City} from '../../types/mainInterfacesAndTypes'
+import ChangeCityWithReactHookForm from "./ChangeCityWithReactHookForm";
 
 
 interface CityProps {
     city: City,
-    currentPage: number
+    currentPage: number,
+    isOpen:boolean,
+    setIsOpen: any
 }
 
-const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
+const OneCity: React.FC<CityProps> = ({city, currentPage, isOpen, setIsOpen}) => {
     const [isInputActivate, activateInput] = useState<boolean>(false)
-    const newNameOfCity = useInput('')
-    const [newPriceOfCity, setNewPriceOfCity] = useState<number>(0)
     const dispatch = useDispatch()
-
+    const newNameOfCity = useInput('')
     const delCity = (): void => {
         dispatch(delOneCity(city.id))
     }
 
     const constChangeCityName = (): void => {
-        newNameOfCity.changeInput(city.cityName)
-        activateInput(true)
+        if (!isOpen) {
+            newNameOfCity.changeInput(city.cityName)
+            activateInput(true)
+            setIsOpen(true)
+        }
     }
 
-    const cnangeCityNameEventListener = (): void => {
-        dispatch(changeCityName(city.id, newNameOfCity.value))
-        activateInput(false)
-    }
-
-    const changeCityPrice =(e)=>{
-        if (e.target.value < 1) setNewPriceOfCity(1)
-        else setNewPriceOfCity(e.target.value)
-    }
 
     useEffect(() => {
         activateInput(false)
@@ -55,29 +47,12 @@ const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
                          text={`Вы точно хотите удалить ${city.cityName} из списка городов`}/>
             </div>
         );
-    } else
-        return (
-            <div className={s.wrapper}>
-                <Input
-                    value={newNameOfCity.value}
-                    onChange={newNameOfCity.onChange}
-                    placeholder="Название города"
-                    color="primary"
-                    inputProps={{'aria-label': 'description'}}
-                    className={s.name}
-                />
-                <Input
-                    value={newPriceOfCity}
-                    onChange={(e)=>changeCityPrice(e)}
-                    type='number'
-                    placeholder="Цена за час"
-                    color="primary"
-                    inputProps={{'aria-label': 'description'}}
-                    className={s.name}
-                />
-                <CheckIcon onClick={() => cnangeCityNameEventListener()} style={{cursor: "pointer"}}/>
-                <HighlightOffIcon style={{cursor: "pointer"}} onClick={delCity}/>
-            </div>
-        );
+    } else return (<ChangeCityWithReactHookForm newNameOfCity={newNameOfCity}
+                                                delCity={delCity}
+                                                city={city}
+                                                activateInput={activateInput}
+                                                isOpen={isOpen}
+                                                setIsOpen={setIsOpen}
+    />);
 }
 export default OneCity

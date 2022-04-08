@@ -13,6 +13,8 @@ const initState: WorkplaseStateType = {
         masterName: '',
         cityId: null,
         cityName: '',
+        dealPrice: null,
+        statusId : null
     }]
 }
 

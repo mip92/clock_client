@@ -6,7 +6,7 @@ const initState: AuthStateType = {
     error: null,
     token: null,
     authEmail: '',
-    authPassword:'',
+    authName:'',
     status: 200,
     role:'',
     id: null
@@ -20,8 +20,8 @@ export const authReducer = (state = initState, action: AuthAction): AuthStateTyp
             return {...state, isFetch:false, error:action.payload.payload}
         case AuthActionTypes.SET_ADMIN_EMAIL:
             return {...state, authEmail:action.payload.payload}
-        case AuthActionTypes.SET_ADMIN_PASSWORD:
-            return {...state, authPassword:action.payload.payload}
+        case AuthActionTypes.SET_ADMIN_NAME:
+            return {...state, authName:action.payload.payload}
         case AuthActionTypes.SET_TOKEN:
             return {...state, token:action.payload.payload}
         case AuthActionTypes.SET_ROLE_AND_ID:
@@ -29,7 +29,7 @@ export const authReducer = (state = initState, action: AuthAction): AuthStateTyp
         case AuthActionTypes.LOGIN:
             return {...state, token:action.payload.payload}
         case AuthActionTypes.LOGOUT:
-            return {...state, token:null, role:null}
+            return {...initState}
         case AuthActionTypes.STATUS:
             return {...state, status:action.payload.payload}
         default:

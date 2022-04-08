@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {AccountCircle} from "@material-ui/icons";
 import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
+import ChangeEmail from "../MyWorkplace/ChangeEmail";
 
 const Navbar = () => {
     const useStyles = makeStyles({
@@ -33,6 +34,11 @@ const Navbar = () => {
     }
     const handleChange = (event) => {
         setAuth(event.target.checked);
+    };
+
+    const changeEmailHandler = () => {
+        setAnchorEl(null);
+        teleport('/changeEmail')
     };
 
     const handleMenu = (event) => {
@@ -90,7 +96,7 @@ const Navbar = () => {
                                 </Button>}
                             </div>
                         }
-                        {auth && (
+                        {token && (
                             <div>
                                 <IconButton
                                     aria-label="account of current user"
@@ -116,7 +122,7 @@ const Navbar = () => {
                                     open={Boolean(anchorEl)}
                                     onClose={handleClose}
                                 >
-                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                    <MenuItem onClick={changeEmailHandler}>Change Email</MenuItem>
                                     <MenuItem onClick={handleClose}>My account</MenuItem>
                                 </Menu>
                             </div>
