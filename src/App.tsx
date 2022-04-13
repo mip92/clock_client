@@ -10,7 +10,7 @@ import {createRoute} from "./utils/createRoutes";
 import moment from 'moment'
 import MomentUtils from "@date-io/moment";
 import Navbar from "./components/Admin/Navbar";
-
+import FileUploaderContainer from "./components/Menu/FilesUploader/FileUploaderContainer";
 
 export const theme = createTheme({
     palette: {
@@ -54,8 +54,8 @@ const App: React.FC = () => {
         setRoutes(createRoute(role))
     },[role])
 
-
     const [routes, setRoutes] = useState<MyRoute[]>(createRoute(role))
+
     /*useEffect(() => {
         setRoutes(createRoute(role))
     }, [token])*/
@@ -72,6 +72,7 @@ const App: React.FC = () => {
                                                        exact={r.exact}/>
                         )}
                     </Switch>
+                    <FileUploaderContainer/>
                 </div>
             </ThemeProvider>
         </MuiPickersUtilsProvider>

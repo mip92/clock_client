@@ -14,14 +14,17 @@ interface AlertChangeStatusProps{
     setOpenAlert: Dispatch<SetStateAction<boolean>>
     changeStatus: MyStatus
     setCurrentStatus: Dispatch<SetStateAction<MyStatus>>
-    orderId: number | null
+    orderId: number | null,
+    statuses: MyStatus[] | null
 }
 
-const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, setOpenAlert, changeStatus, setCurrentStatus, orderId}) => {
+const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, statuses, setOpenAlert, changeStatus, setCurrentStatus, orderId}) => {
     const [fetchChangeStatus, isLoading, errorChangeStatus, setError] = useFetching(async () => {
-        const res = await $api.put<MyStatus>(`/status/${orderId}`,{statusId:changeStatus.id})
+        const res = await $api.put(`/status/${orderId}`,{status:changeStatus.name})
         const orderStatus = res.data
-        orderStatus && setCurrentStatus(orderStatus)
+        const newStatus =statuses?.find(s => s?.name == orderStatus)
+        // @ts-ignore
+        orderStatus && setCurrentStatus(newStatus)
         setOpenAlert(false)
     })
     const handleConfirm = () => {

@@ -1,125 +1,156 @@
 import MultilineTextFields from "./MultilineTextFields";
-import React, {useContext, useEffect, useState} from "react";
-import {Card, Input} from "@material-ui/core";
-import ClockSize from "./ClockSize";
-import {FormContext} from "../../context/formContext";
+import React, {useEffect, useState} from "react";
+import {Button, Card} from "@material-ui/core";
 import s from "../../style/FirstStep.module.css"
-import MyDate from "./MyDate"
-import {City} from "../../types/mainInterfacesAndTypes";
 import $api from "../../http";
 import {useFetching} from "../../hooks/useFetching";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import RegistrationAlert from "./RegistrationAlert";
+import RegistrationAlert from "../Registration/RegistrationAlert";
 import {useDispatch} from "react-redux";
-import {fetchCities, setCurrentCity, setCurrentTime} from "../../actionCreators/orderActionCreators";
+import {fetchCities, setOrder} from "../../actionCreators/orderActionCreators";
+import InputWithError from "../Registration/InputWithError";
+import {useForm} from "react-hook-form";
+import * as Yup from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
+import ClockSize from "./ClockSize";
+import {FormInputDate} from "./FormInputDate";
+import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
+import {Master} from "../../types/adminMasterTypes";
+import {log} from "util";
 
-const FirstStep: React.FC = () => {
+const FirstStep = ({setActiveStep, setMasters}) => {
     const {token} = useTypedSelector(state => state.auth)
-    const {cities, currentCity, currentTime, time} = useTypedSelector(state => state.order)
+    const {cities, time} = useTypedSelector(state => state.order)
     const dispatch = useDispatch()
-    const {
-        email,
-        name,
-    } = useContext(FormContext)
+    const [date, setDate] = useState<MaterialUiPickersDate>(null);
 
-    const initialState: City = {
-        cityName: 'Загрузка',
-        createdAt: '',
-        id: 0,
-        updatedAt: '',
-        price: 0
-    }
-    const [error, setError] = useState<boolean | null>(null)
-    const [loading, setLoading] = useState<boolean>(false)
+
     const [openAlert, setOpenAlert] = React.useState(false);
 
-    /*const findCities = async (offset: number, limit: number): Promise<void> => {
-        try {
-            setLoading(true)
-            const response = await $api.get(`/cities?offset=${offset}&limit=${limit}`)
-            setCities(response.data.rows)
-            setLoading(false)
-        } catch (e) {
-            const err = JSON.parse(e.request.responseText).message[0]
-            setError(err)
-            setTimeout(async () => {
-                setError(null)
-            }, 2000)
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .required('Email is required')
+            .email('Email is invalid'),
+        name: Yup.string()
+            .min(6, 'Password must be at least 6 characters')
+            .required('Password is required'),
+        checkbox: Yup.string()
+            .oneOf(["big", "small", "middle"], "You must accept the terms and conditions").nullable(),
+        currentCity: Yup.string().required('Current city is required'),
+        currentTime: Yup.string().required('Current time is required'),
+        fieldName: Yup.string().required('Date time is required'),
+    });
+
+    function getKeyByValue(checkbox: string, value: boolean) {
+        if (checkbox === 'small') return 1
+        else if (checkbox === 'middle') return 2
+        else if (checkbox === 'big') return 3
+    }
+
+    const [isLoadingFindMaster, setIsLoading] = useState<boolean>(false);
+    const [error, setFetchError] = useState<string>('');
+    const formOptions = {resolver: yupResolver(validationSchema)};
+    const {register, getValues, setValue, handleSubmit, watch, formState: {errors}, setError, control} = useForm(formOptions);
+    const onSubmit = handleSubmit(async data => {
+            try {
+                let clock = getKeyByValue(data.checkbox, true);
+                let dateWithTime = new Date(data.fieldName)
+                data.currentTime && dateWithTime.setHours(data.currentTime)
+                dateWithTime.setMinutes(0)
+                const res = await $api.post(`/masters/getFreeMasters/`, {
+                    cityId: data.currentCity,
+                    dateTime: dateWithTime,
+                    clockSize: clock,
+                    email: data.email,
+                    name: data.name
+                })
+                dispatch(setOrder(data.currentCity, dateWithTime, clock, data.email, data.name))
+                const masters: Master[] = res.data
+                setMasters(masters)
+                setActiveStep(1)
+            } catch (e) {
+                if (e.response.data.message) setFetchError(e.response.data.message);
+                else setFetchError(e.message);
+            } finally {
+                setIsLoading(false)
+            }
         }
-    }*/
+    );
+
     useEffect(() => {
         dispatch(fetchCities(0, 50))
     }, [])
-    useEffect(() => {
-        dispatch(setCurrentCity(cities[0] && cities[0].id))
-    }, [cities])
-
-
 
     const [findUser, isLoading, errorfindUser, setUserError] = useFetching(async () => {
-        const res = await $api.post(`/users/findUser`, {
-            email: email.value,
-        })
-        console.log(res)
+        return await $api.get(`/users/findUser?email=${watch("email")}`)
     })
-    const [valueChange, setValueChange] = useState<boolean>()
 
-    useEffect(() => {
-        setValueChange(true)
-        setTimeout(() => {
-            setValueChange(false)
-        }, 5000)
-    }, [email.value])
-
-    useEffect(() => {
-        if (!valueChange) findUser()
-    }, [valueChange])
     useEffect(() => {
         if (errorfindUser == 'User with this email is already registered' && !token) setOpenAlert(true)
         return () => setOpenAlert(false)
     }, [errorfindUser])
 
-
     return (
-        <Card className={s.wrapper}>
-            <Input
-                value={email.value}
-                onChange={email.onChange}
-                placeholder="Ваша почта"
-                color="primary"
-                inputProps={{'aria-label': 'description'}}
-                className={s.email}
-            />
-            <Input
-                value={name.value}
-                onChange={name.onChange}
-                placeholder="Ваша имя"
-                color="primary"
-                inputProps={{'aria-label': 'description'}}
-                className={s.name}
-            />
-            <div className={s.size}>
-                <ClockSize/>
-            </div>
-            <div className={s.city}>
-                <MultilineTextFields current={currentCity}
-                                     label={"Город"}
-                                     cities={cities}/>
-            </div>
-            <div className={s.date}>
-                <MyDate/>
-            </div>
-
-            <div className={s.time} style={{
-                marginLeft: 'auto',
-                marginRight: 'auto'
-            }}>
-                <MultilineTextFields current={currentTime}
-                                     label={"Время"}
-                                     time={time}/>
-            </div>
-            <RegistrationAlert open={openAlert}/>
-        </Card>
+        <form onSubmit={onSubmit}>
+            <Card className={s.wrapper}>
+                <InputWithError
+                    onBlur={findUser}
+                    cn={s.email}
+                    type="email"
+                    placeholder="Email"
+                    color="primary"
+                    reg={register('email')}
+                    error={errors.email?.message}/>
+                <InputWithError
+                    cn={s.name}
+                    type="text"
+                    placeholder="Your name"
+                    color="primary"
+                    reg={register('name')}
+                    error={errors.name?.message}/>
+                <div className={s.size}>
+                    <ClockSize register={register} error={errors.checkbox?.message}/>
+                </div>
+                {cities ?
+                    <div className={s.city}>
+                        <MultilineTextFields register={register('currentCity')}
+                                             label={"Город"}
+                                             cities={cities}
+                                             error={errors.currentCity?.message}/>
+                    </div>
+                    :
+                    <div>
+                        Загрузка
+                    </div>
+                }
+                <div className={s.date}>
+                    <FormInputDate register={register}
+                                   getValues={getValues}
+                                   setValue={setValue}
+                                   date={date}
+                                   setDate={setDate}
+                                   error={errors.fieldName?.message}/>
+                </div>
+                <div className={s.time}>
+                    <MultilineTextFields register={register('currentTime')}
+                                         label={"Время"}
+                                         time={time}
+                                         error={errors.currentTime?.message}/>
+                </div>
+                <div className={s.buttons}>
+                    <Button variant="contained"
+                            color='primary'
+                            disabled={true}>
+                        Назад</Button>
+                    <div style={{color: 'red'}}>{error}</div>
+                    <Button variant="contained"
+                            color='primary'
+                            type='submit'>
+                        Далее</Button>
+                </div>
+                <RegistrationAlert open={openAlert}/>
+            </Card>
+        </form>
     )
 }
 

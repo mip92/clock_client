@@ -5,11 +5,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import {Typography} from "@material-ui/core";
 
-const RegistrationAlert=({open})=> {
+
+const RegistrationAlert = ({open}) => {
     const history = useHistory();
-
     return (
         <div>
             <Dialog
@@ -24,9 +25,25 @@ const RegistrationAlert=({open})=> {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="primary" variant="contained" onClick ={()=>history.push('/login')}>
+                    {/*<Link
+                        to={{
+                            pathname: "/login",
+                            search: "?sort=name",
+                            hash: "#the-hash",
+                            state: { fromDashboard: true }
+                        }}
+                    />*/}
+                    <Typography>
+                        <Link
+                            to={{
+                                pathname: "/login",
+                                state: { fromDashboard: true }
+                            }}
+                        >Login</Link>
+                    </Typography>
+                    {/*<Button color="primary" variant="contained" onClick ={()=>history.push('/login')}>
                         Login
-                    </Button>
+                    </Button>*/}
                 </DialogActions>
             </Dialog>
         </div>

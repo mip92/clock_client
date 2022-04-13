@@ -1,5 +1,6 @@
 import {Master} from "./adminMasterTypes";
 import {OrderInterface} from "../components/Admin/Order";
+import {Order} from "../store/reducers/workplaceReducer";
 
 export interface City {
     cityName: string,
@@ -30,7 +31,7 @@ export type BooleanPayload = {
 }
 
 export type OrdersPayload = {
-    payload: OrderInterface[]
+    payload: Order[]
 }
 
 export type NumberPayload = {

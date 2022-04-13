@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.13.0",
+    "@date-io/date-fns": "^2.13.1",
     "@date-io/moment": "1.0.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -19,6 +20,7 @@
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "react": "^17.0.2",
+    "react-datepicker": "2.14.0",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.29.0",
     "react-redux": "^7.2.4",
@@ -53,6 +55,8 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "react-datepicker": "^4.7.0",
+    "react-multi-date-picker": "^3.3.0",
     "redux-devtools-extension": "^2.13.9"
   }
 }

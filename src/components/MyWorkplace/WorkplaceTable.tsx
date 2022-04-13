@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import {OrderInterface} from "../Admin/Order";
 import {Button, Paper, Table, TableContainer, Typography} from "@material-ui/core";
 import Statuses from "../MyOffice/Statuses";
+import {Order} from "../../store/reducers/workplaceReducer";
+import {log} from "util";
 
 interface active {
     name: string
     down: boolean
 }
 
-const useSortableData = (items: OrderInterface[], config) => {
+const useSortableData = (items: Order[], config) => {
     const [sortConfig, setSortConfig] = useState(config);
     const sortedItems = React.useMemo(() => {
 
@@ -49,14 +51,13 @@ const getString = (date) => {
 }
 
 interface ProductTableProps {
-    products: OrderInterface[]
+    products: Order[]
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
     const [activeSort, setActiveSort] = useState<active>({name: '', down: false})
     const {items, requestSort, sortConfig} = useSortableData(products, 'ascending');
     const btnConfig = ['dateTime', 'userEmail', 'userName', 'cityName', 'clockSize', 'dealPrice', 'totalPrice']
-
     return (
         <TableContainer component={Paper}>
             <Typography variant="h5">My orders</Typography>
@@ -79,15 +80,15 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                 <tbody>
 
                 {items.map((item) => (
-                    <tr key={item.orderId}>
-                        <td>{getString(item.dateTime)}</td>
-                        <td>{item.userEmail}</td>
-                        <td>{item.userName}</td>
-                        <td>{item.cityName}</td>
+                    <tr key={item.id}>
+                        <td>{getString(item.master_busyDate.dateTime)}</td>
+                        <td>{item.user.email}</td>
+                        <td>{item.user.name}</td>
+                        <td>{item.originalCityName}</td>
                         <td>{item.clockSize}</td>
                         <td>{item.dealPrice}</td>
                         <td>{(item.dealPrice && item?.clockSize) && item.dealPrice * item?.clockSize}</td>
-                        <td><Statuses orderId={item.orderId} currentStatusId={item.statusId}/></td>
+                       <td><Statuses orderId={item.id} status={item.status}/></td>
                     </tr>
                 ))}
                 </tbody>
@@ -97,7 +98,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
 };
 
 interface OrdersProps {
-    orders: OrderInterface[] | null
+    orders: Order[] | null
 }
 
 const WorkplaceTable: React.FC<OrdersProps> = ({orders}) => {

@@ -1,13 +1,12 @@
 import {Dispatch} from "react"
 import $api from "../http";
-import {MyError} from "../types/mainInterfacesAndTypes";
+import {MyError, Time} from "../types/mainInterfacesAndTypes";
 import {
     FetchAction,
     FetchErrorAction,
     OrderAction,
     OrderActionTypes,
-    SetCurrentCity,
-    SetCurrentTime
+SetOrder
 } from "../types/orderTypes";
 
 
@@ -24,19 +23,20 @@ export const fetchError = (error: MyError | null): FetchErrorAction  => {
     }
 }
 
-export const setCurrentCity = (city: number): SetCurrentCity  => {
+export const setOrder= (cityId:number, dateTime, clockSize, email, name): SetOrder  => {
     return {
-        type: OrderActionTypes.SET_CURRENT_CITY,
-        payload:{payload:city}
+        type: OrderActionTypes.SET_ORDER,
+        payload:{
+                currentCity : cityId,
+                dateTime: dateTime,
+                clockSize: clockSize,
+                email:email,
+                name: name,
+        }
     }
 }
 
-export const setCurrentTime = (time: number): SetCurrentTime  => {
-    return {
-        type: OrderActionTypes.SET_CURRENT_TIME,
-        payload:{payload:time}
-    }
-}
+
 
 export const fetchCities = (offset: number, limit: number) => {
     return async (dispatch: Dispatch<OrderAction>) => {

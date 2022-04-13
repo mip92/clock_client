@@ -7,6 +7,10 @@ const initState: OrderStateType = {
     isFetch: false,
     error: null,
     currentCity: 1,
+    dateTime: null,
+    clockSize: null,
+    email:'',
+    name:'',
     time: [
     {"id": 8, "time": "8:00"},
     {"id": 9, "time": "9:00"},
@@ -22,7 +26,6 @@ const initState: OrderStateType = {
     {"id": 19, "time": "19:00"},
     {"id": 20, "time": "20:00"}
     ],
-    currentTime: 1,
 }
 
 export const orderReducer = (state = initState, action: OrderAction): OrderStateType => {
@@ -33,10 +36,12 @@ export const orderReducer = (state = initState, action: OrderAction): OrderState
             return {...state, isFetch:false, error:action.payload.payload}
         case OrderActionTypes.SET_CITIES:
             return {...state, cities:action.payload.payload}
-        case OrderActionTypes.SET_CURRENT_CITY:
-            return {...state, currentCity:action.payload.payload}
-        case OrderActionTypes.SET_CURRENT_TIME:
-            return {...state, currentTime:action.payload.payload}
+        case OrderActionTypes.SET_ORDER:
+            return {...state, currentCity:action.payload.currentCity,
+                dateTime:action.payload.dateTime,
+                clockSize:action.payload.clockSize,
+                email:action.payload.email,
+                name:action.payload.name}
         default:
             return state
     }

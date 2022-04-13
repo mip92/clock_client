@@ -51,7 +51,10 @@ export const changeEmailAuth = (currentEmail: string, newEmail: string, password
     return async (dispatch: Dispatch<AuthAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.post(`/auth/changeEmail`, {
+            let url
+            if (role=="MASTER") url=`/masters/changeEmail`
+            else if (role=="USER") url=`/users/changeEmail`
+            const response = await $api.put(url, {
                 currentEmail,
                 newEmail,
                 password,

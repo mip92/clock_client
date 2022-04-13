@@ -9,9 +9,11 @@ interface InputWithErrorProps {
     type: string,
     label?: string,
     defaultValue?: string | number,
+    color?: string,
+    onBlur?:Function
 }
 
-const InputWithError: React.FC<InputWithErrorProps> = ({placeholder, label,defaultValue, error, reg, cn, type}) => {
+const InputWithError: React.FC<InputWithErrorProps> = ({placeholder, label,defaultValue, error, reg, cn, type, color,onBlur}) => {
     const[isError, setError]=useState<boolean>(false)
     useEffect(()=>{
         if (error) setError(true)
@@ -20,6 +22,7 @@ const InputWithError: React.FC<InputWithErrorProps> = ({placeholder, label,defau
 
     return(
         <TextField
+            color={color}
             label={label}
             type={type}
             className={cn}
@@ -29,6 +32,7 @@ const InputWithError: React.FC<InputWithErrorProps> = ({placeholder, label,defau
             placeholder={placeholder}
             {...reg}
             helperText={error}
+            onBlur={onBlur}
         />
     )
 };

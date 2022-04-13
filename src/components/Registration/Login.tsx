@@ -13,6 +13,10 @@ import Typography from "@material-ui/core/Typography";
 
 const Login: React.FC = () => {
     const history = useHistory();
+    let prevLocation;
+    history.listen(nextLocation => {
+        prevLocation = nextLocation;
+    });
     const dispatch = useDispatch()
     const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
     const validationSchema = Yup.object().shape({
@@ -25,7 +29,8 @@ const Login: React.FC = () => {
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
-
+/*history.goBack()*/
+    console.log(history)
     const onSubmit = handleSubmit(async data => {
         await dispatch(loginAuth(data.email, data.password))
         }
@@ -40,6 +45,7 @@ const Login: React.FC = () => {
     }, [error])
 
     useEffect(()=>{
+        if (prevLocation='/' && id) return history.push('/')
         switch (role) {
             case "ADMIN": return history.push('/menu/orders')
             case "USER": return history.push(`/myOffice/${id}`)

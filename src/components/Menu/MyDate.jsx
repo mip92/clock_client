@@ -9,7 +9,6 @@ const MyDate = () => {
             <DatePicker value={date} onChange={setDate}
                         label="Дата"
             />
-            
         </div>
     );
 }

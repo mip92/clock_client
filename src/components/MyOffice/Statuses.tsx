@@ -7,6 +7,7 @@ import Select from '@material-ui/core/Select';
 import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
 import AlertChangeStatus from "./AlertChangeStatus";
+import {log} from "util";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -21,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-
 export interface MyStatus {
     createdAt: string
     id: number
@@ -33,23 +33,33 @@ interface ResponseStatuses {
     count: number | null
     rows: MyStatus[]
 }
-interface StatusesProps{
-    currentStatusId: number | null,
+
+interface StatusesProps {
+    status: string,
     orderId: number | null
 }
-const Statuses: React.FC<StatusesProps> = ({currentStatusId, orderId}) => {
+
+const Statuses: React.FC<StatusesProps> = ({status, orderId}) => {
     const classes = useStyles();
     const [currentStatus, setCurrentStatus] = React.useState({} as MyStatus);
-    const [statuses, setStatuses] = useState<MyStatus[] | null>()
+    const [statuses, setStatuses] = useState<MyStatus[] | null>([]as MyStatus[])
     const [findStatuses, isLoading, errorfindStatuses, setFindStatusesError] = useFetching(async () => {
-        const res = await $api.get<ResponseStatuses>(`/status`)
-        const orderStatus = res.data.rows.find(s => s.id === currentStatusId)
+        const res = await $api.get(`/status`)
+        let arr = [] as MyStatus[]
+        let k = 1
+        for (var key in res.data) {
+            arr.push({createdAt: "", updatedAt: "", id: k, name: key})
+            k++
+        }
+        console.log(arr)
+
+        const orderStatus = arr.find(s => s.name === status)
         orderStatus && setCurrentStatus(orderStatus)
-        setStatuses(res.data.rows)
+        setStatuses(arr)
     })
     useEffect(() => {
         findStatuses()
-        return ()=>setStatuses(null)
+        return () => setStatuses(null)
     }, [])
 
     const [openAlert, setOpenAlert] = React.useState(false);
@@ -84,6 +94,7 @@ const Statuses: React.FC<StatusesProps> = ({currentStatusId, orderId}) => {
                                openAlert={openAlert}
                                setOpenAlert={setOpenAlert}
                                orderId={orderId}
+                               statuses={statuses}
             />
         </div>
     );

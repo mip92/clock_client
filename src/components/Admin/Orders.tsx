@@ -1,59 +1,14 @@
-/*
-import React, {useEffect} from 'react';
-import s from "../../style/Orders.module.css";
-import {Input} from "@material-ui/core";
-import {usePaginator} from "../../hooks/usePaginator";
-import {OrderInterface} from "./Order";
-import MyTable from "../utilits/MyTable";
-import $api from "../../http";
-
-export interface AxiosOrder {
-    rows: OrderInterface[],
-    count: number
-}
-
-const Orders: React.FC = () => {
-    const [offset, limit, handleChange, changePage, currentPage, orders, isLoading, error, pagesArray, getOrders] = usePaginator(async () => {
-        return await $api.get<AxiosOrder>(`/order?offset=${offset}&limit=${limit}`)
-    })
-    useEffect(() => {
-        getOrders()
-    }, [limit, currentPage])
-
-    return (
-        <div>
-            <h3>Список заказов</h3>
-            <MyTable rows={orders}/>
-            <div>
-                <div className={s.page_wrapper}>
-                    {pagesArray.map((p, key) => <span
-                        className={currentPage === p ? s.page_current : s.page}
-                        key={key}
-                        onClick={() => changePage(p)}
-                    >{p}</span>)}
-                    <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
-                    <Input
-                        style={{width: 20}}
-                        value={limit}
-                        onChange={handleChange}
-                        placeholder="Заказов в поле"
-                        color="primary"
-                        inputProps={{'aria-label': 'description'}}
-                    />
-                </div>
-            </div>
-        </div>
-    );
-}
-export default Orders*/
-
-
 import React, {useEffect, useState} from 'react';
-import {OrderInterface} from "../Admin/Order";
-import {Button, Paper, Table, TableContainer, Typography} from "@material-ui/core";
+import {Button, Input, Paper, Table, TableContainer, Typography} from "@material-ui/core";
 import Statuses from "../MyOffice/Statuses";
 import $api from "../../http";
 import {usePaginator} from "../../hooks/usePaginator";
+import {Order} from "../../store/reducers/workplaceReducer";
+import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
+import {setOrders} from "../../actionCreators/workplaseActionCreators";
+import OfficeTable from "../MyOffice/OfficeTable";
+import s from "../../style/MyWorkplace.module.css";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 
 interface active {
@@ -61,7 +16,7 @@ interface active {
     down: boolean
 }
 
-const useSortableData = (items: OrderInterface[], config) => {
+const useSortableData = (items: Order[], config) => {
     const [sortConfig, setSortConfig] = useState(config);
     const sortedItems = React.useMemo(() => {
 
@@ -102,7 +57,18 @@ const getString = (date) => {
 }
 
 interface ProductTableProps {
-    products: OrderInterface[]
+    products: Order[]
+}
+
+interface OrdersProps {
+    orders: Order[] | null
+}
+const MyTable: React.FC<OrdersProps> = ({orders}) => {
+    return (
+        <div>
+            {orders && <ProductTable products={orders}/>}
+        </div>
+    );
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
@@ -132,17 +98,17 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                 <tbody>
 
                 {items.map((item) => (
-                    <tr key={item.orderId}>
-                        <td>{getString(item.dateTime)}</td>
-                        <td>{item.masterEmail}</td>
-                        <td>{item.masterName}</td>
-                        <td>{item.userEmail}</td>
-                        <td>{item.userName}</td>
-                        <td>{item.cityName}</td>
+                    <tr key={item.id}>
+                        <td>{item.master_busyDate.dateTime}</td>
+                        <td>{item.master.email}</td>
+                        <td>{item.master.name}</td>
+                        <td>{item.user.email}</td>
+                        <td>{item.user.name}</td>
+                        <td>{item.originalCityName}</td>
                         <td>{item.clockSize}</td>
                         <td>{item.dealPrice}</td>
                         <td>{(item.dealPrice && item?.clockSize) && item.dealPrice * item?.clockSize}</td>
-                        <td><Statuses orderId={item.orderId} currentStatusId={item.statusId}/></td>
+                        <td><Statuses orderId={item.id} status={item.status}/></td>
                     </tr>
                 ))}
                 </tbody>
@@ -152,22 +118,40 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
 };
 
 export interface AxiosOrder {
-    rows: OrderInterface[],
+    rows: Order[],
     count: number
 }
 
 
 const Orders: React.FC = () => {
-    const [offset, limit, handleChange, changePage, currentPage, orders, isLoading, error, pagesArray, getOrders] = usePaginator(async () => {
+    const {orders}=useTypedSelector(state => state.workplase)
+    const {offset, limit, handleChange, changePage, currentPage, isLoading, error, pagesArray, fetching} = usePaginatorWithRedux(async () => {
         return await $api.get<AxiosOrder>(`/order?offset=${offset}&limit=${limit}`)
-    })
+    }, setOrders)
     useEffect(() => {
-        getOrders()
+        fetching()
     }, [limit, currentPage])
+
+    if (isLoading) return <div>Загрузка</div>
     return (
         <div>
-            {orders && <ProductTable products={orders}/>}
+            <MyTable orders={orders}/>
+            {pagesArray.map((p: number, key: React.Key) => <span
+                className={currentPage === p ? s.page_current : s.page}
+                key={key}
+                onClick={() => changePage(p)}
+            >{p}</span>)}
+            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+            <Input
+                style={{width: 40}}
+                type='number'
+                value={limit}
+                onChange={handleChange}
+                placeholder="Городов в поле"
+                color="primary"
+                inputProps={{'aria-label': 'description'}}
+            />
         </div>
-    );
+    )
 }
 export default Orders

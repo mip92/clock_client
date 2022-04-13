@@ -1,8 +1,8 @@
 import {OrdersPayload} from "./mainInterfacesAndTypes";
-import {OrderInterface} from "../components/Admin/Order";
+import {Order} from "../store/reducers/workplaceReducer";
 
 export interface WorkplaseStateType {
-    orders: OrderInterface[] | null,
+    orders: Order[] | null,
 }
 
 export enum WorkplaseActionTypes {

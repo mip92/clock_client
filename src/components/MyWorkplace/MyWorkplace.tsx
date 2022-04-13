@@ -13,7 +13,7 @@ const MyWorkplace = () => {
     const {masterId} = useParams<{masterId :string}>();
     const {orders}=useTypedSelector(state => state.workplase)
     const {offset, limit, handleChange, changePage, currentPage, isLoading, error, pagesArray, fetching} = usePaginatorWithRedux(async () => {
-        return await $api.get<AxiosOrder>(`/order/getMastersOrders?offset=${offset}&limit=${limit}&masterId=${masterId}`)
+        return await $api.get<AxiosOrder>(`/order?offset=${offset}&limit=${limit}&masterId=${masterId}`)
     }, setOrders)
     useEffect(() => {
         fetching()

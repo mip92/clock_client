@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {OrderInterface} from "../Admin/Order";
 import {Button, Paper, Table, TableContainer, Typography} from "@material-ui/core";
 import Statuses from "./Statuses";
+import {Order} from "../../store/reducers/workplaceReducer";
 
 
 interface active {
@@ -9,7 +10,7 @@ interface active {
     down: boolean
 }
 
-const useSortableData = (items: OrderInterface[], config) => {
+const useSortableData = (items: Order[], config) => {
     const [sortConfig, setSortConfig] = useState(config);
     const sortedItems = React.useMemo(() => {
 
@@ -50,13 +51,13 @@ const getString = (date) => {
 }
 
 interface ProductTableProps {
-    products: OrderInterface[]
+    products: Order[]
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
     const [activeSort, setActiveSort] = useState<active>({name: '', down: false})
     const {items, requestSort, sortConfig} = useSortableData(products, 'ascending');
-    const btnConfig = ['dateTime', 'masterEmail', 'masterName', 'cityName', 'clockSize', 'dealPrice', 'totalPrice']
+    const btnConfig = ['dateTime', 'masterEmail', 'masterName', 'cityName', 'clockSize', 'dealPrice', 'totalPrice', "status"]
 
     return (
         <TableContainer component={Paper}>
@@ -74,21 +75,20 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                                 {btn} {activeSort.name == btn && (activeSort.down == false ? '▲' : "▼")}
                             </Button>
                         </th>)}
-                    <th>Статус</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 {items.map((item) => (
-                    <tr key={item.orderId}>
-                        <td>{getString(item.dateTime)}</td>
-                        <td>{item.masterEmail}</td>
-                        <td>{item.masterName}</td>
-                        <td>{item.cityName}</td>
+                    <tr key={item.id}>
+                        <td>{getString(item.master_busyDate.dateTime)}</td>
+                        <td>{item.master.email}</td>
+                        <td>{item.master.name}</td>
+                        <td>{item.originalCityName}</td>
                         <td>{item.clockSize}</td>
                         <td>{item.dealPrice}</td>
                         <td>{(item.dealPrice && item?.clockSize) && item.dealPrice * item?.clockSize}</td>
-                        <td><Statuses orderId={item.orderId} currentStatusId={item.statusId}/></td>
+                        <td>{item.status}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -98,7 +98,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
 };
 
 interface OrdersProps {
-    orders: OrderInterface[] | null
+    orders: Order[] | null
 }
 
 const OfficeTable: React.FC<OrdersProps> = ({orders}) => {

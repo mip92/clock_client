@@ -9,15 +9,17 @@ export interface OrderStateType {
     cities: City[],
     currentCity : number | null,
     time: Time[],
-    currentTime : number | null,
+    dateTime: Date | null,
+    clockSize: number | null,
+    email:string,
+    name:string,
 }
 
 export enum OrderActionTypes {
     FETCH_START = "FETCH_START",
     FETCH_ERROR = "FETCH_ERROR",
     SET_CITIES = "SET_CITIES",
-    SET_CURRENT_CITY="SET_CURRENT_CITY",
-    SET_CURRENT_TIME="SET_CURRENT_TIME",
+    SET_ORDER="SET_ORDER"
 }
 
 export interface FetchAction {
@@ -35,19 +37,19 @@ export interface SetCities {
     payload: CitiesPayload
 }
 
-export interface SetCurrentCity {
-    type: OrderActionTypes.SET_CURRENT_CITY;
-    payload: NumberPayload
+export interface SetOrder {
+    type: OrderActionTypes.SET_ORDER;
+    payload: {
+        currentCity : number
+        dateTime: Date,
+        clockSize: number,
+        email:string,
+        name:string,
+    }
 }
 
-export interface SetCurrentTime {
-    type: OrderActionTypes.SET_CURRENT_TIME;
-    payload: NumberPayload
-}
 
 
 export type OrderAction = FetchAction |
     FetchErrorAction |
-    SetCities |
-    SetCurrentCity |
-    SetCurrentTime
+    SetCities | SetOrder

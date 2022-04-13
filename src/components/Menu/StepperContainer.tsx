@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
-import MyStepper from "./MyStepper";
+import React, {useState} from 'react';
 import {FormContext} from "../../context/formContext";
 import {useInput} from "../../hooks/useInput";
-import {City, Clock} from "../../types/mainInterfacesAndTypes";
-import Navbar from "../Admin/Navbar";
+import {Clock} from "../../types/mainInterfacesAndTypes";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
+import MyStepper from "./MySteper";
 
 const StepperContainer: React.FC = () => {
     const {authEmail, authName}=useTypedSelector(state => state.auth)
@@ -17,7 +16,9 @@ const StepperContainer: React.FC = () => {
     });
     const email = useInput(authEmail || '')
     const name = useInput(authName || '')
-    const [date, setDate] = useState<Date>(new Date());
+    const today =new Date()
+    const tomorrow =new Date(today.setDate(today.getDate() + 1))
+    const [date, setCurrentDate] = useState<Date>(tomorrow);
     return (
         <FormContext.Provider value={{
             currentMaster,
@@ -29,10 +30,11 @@ const StepperContainer: React.FC = () => {
             email,
             name,
             date,
-            setDate,
+            setCurrentDate: setCurrentDate,
         }}>
             <div>
-                <MyStepper/>
+               {/* <MyStepper/>*/}
+               <MyStepper/>
             </div>
         </FormContext.Provider>
     );
