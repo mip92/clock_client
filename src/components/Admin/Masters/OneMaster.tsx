@@ -2,21 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {Master} from "../../../types/adminMasterTypes";
 import CachedIcon from '@material-ui/icons/Cached';
-<<<<<<< HEAD:src/components/Admin/OneMaster.tsx
-import s from "../../style/Master.module.css"
-import {useInput} from "../../hooks/useInput";
-import {approveOneMaster, changeMaster, delOneMaster} from "../../actionCreators/adminMasterActionCreators";
-import MyAlert from "../utilits/MyAlert";
-import ChangeMaster from "./ChangeMaster";
-import {Button} from "@material-ui/core";
-=======
 import s from "../../../style/Master.module.css"
 import {useInput} from "../../../hooks/useInput";
 import {approveOneMaster, delOneMaster} from "../../../actionCreators/adminMasterActionCreators";
 import MyAlert from "../../utilits/MyAlert";
-import ChangeMaster from "./ChangeMaster";
 import ApproveButton from "../../utilits/ApproveButton";
->>>>>>> registration:src/components/Admin/Masters/OneMaster.tsx
+import {Button} from "@material-ui/core";
+import ChangeMaster from "./ChangeMaster";
 
 interface MasterProps {
     master: Master,
@@ -57,14 +49,11 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
                     <CachedIcon onClick={constChangeMasterName} style={{cursor: "pointer"}}/>
                     <MyAlert handler={delMaster}
                              text={`Вы точно хотите удалить ${master.name} из списка мастеров`}/>
-<<<<<<< HEAD:src/components/Admin/OneMaster.tsx
                              <Button style={master.isApproved?{backgroundColor:"lightgreen"}:{backgroundColor:"lightpink"}}
                                      onClick={approveMaster}>
                                  Подтвердить
                              </Button>
-=======
                              <ApproveButton isApproved={master.isApproved} approveMaster={approveMaster}/>
->>>>>>> registration:src/components/Admin/Masters/OneMaster.tsx
                 </div>
             </div>
         );

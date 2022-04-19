@@ -7,23 +7,17 @@ import Orders from "../components/Admin/Orders/Orders";
 import Error404 from "../components/utilits/Error404";
 import {MyRoute} from "../App";
 import Registration from "../components/Registration/Registration";
-<<<<<<< HEAD
-=======
 import MyWorkplace from "../components/MyWorkplace/MyWorkplace";
 import MyOffice from "../components/MyOffice/MyOffice";
 import Blog from "../components/Blog/Blog";
 import ChangeEmail from "../components/MyWorkplace/ChangeEmail";
->>>>>>> registration
+
 
 export const createRoute = (role:string | null) => {
     const mainRouts: MyRoute[] = [
         {exact: true, path: "/", component: <StepperContainer/>},
-<<<<<<< HEAD
-        {exact: false, path: "/login", component: <Login/>},
-=======
         {exact: true, path: "/blog", component: <Blog/>},
         {exact: true, path: "/login", component: <Login/>},
->>>>>>> registration
         {exact: false, path: "/registration", component: <Registration/>},
     ]
     const adminRoutes: MyRoute[] = [
@@ -31,12 +25,7 @@ export const createRoute = (role:string | null) => {
         {exact: false, path: "/menu/masters", component: <MastersContainer/>},
         {exact: false, path: "/menu/users", component: <Users/>},
         {exact: false, path: "/menu/orders", component: <Orders/>},
-<<<<<<< HEAD
-        {exact: false, path: "/menu", component: <Orders />},
-
-=======
-        {exact: false, path: "/menu", component: <Orders/>},
->>>>>>> registration
+        {exact: false, path: "/menu", component: <Orders/>}
     ]
     const userRoutes: MyRoute[] = [
         {exact: true, path: "/myOffice/:userId", component: <MyOffice/>},

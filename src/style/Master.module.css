@@ -1,10 +1,9 @@
 .wrapper {
     display: grid;
-<<<<<<< HEAD
-    grid-template-columns: 200px 200px 200px 70px 70px 100px;
-=======
+
+   /* grid-template-columns: 200px 200px 200px 70px 70px 100px;*/
+
     grid-template-columns: 200px 200px 200px 70px 70px 120px;
->>>>>>> registration
 }
 .page_wrapper{
     margin-top: 20px;

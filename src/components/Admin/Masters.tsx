@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import OneMaster from "./OneMaster"
 import s from "../../style/Master.module.css";
 import {Input} from "@material-ui/core";
 import {useInput} from "../../hooks/useInput";
@@ -14,6 +13,7 @@ import {City} from "../../types/mainInterfacesAndTypes";
 import $api from "../../http";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import CitiesCheckBox from "./Cities/CitiesCheckBox";
+import OneMaster from "./Masters/OneMaster";
 
 interface MastersProps {
     cities: City[],

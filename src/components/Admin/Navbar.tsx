@@ -8,11 +8,11 @@ import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem} fro
 //import Container from '@mui/material/Container';
 //import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
-import {logout} from "../../actionCreators/adminActionCreators";
 import Typography from "@material-ui/core/Typography";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {AccountCircle} from "@material-ui/icons";
 import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
+import {logout} from "../../actionCreators/authActionCreators";
 
 const Navbar = ({children}) => {
     const {pages} = useTypedSelector(state => state.navbar)

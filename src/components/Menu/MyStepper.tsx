@@ -15,8 +15,6 @@ import {Link} from "react-router-dom";
 
 const MyStepper: React.FC = () => {
     const {
-        currentCity,
-        currentTime,
         clockSize,
         currentMaster,
         email,
@@ -28,13 +26,13 @@ const MyStepper: React.FC = () => {
     const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
         let dateWithTime = new Date(date)
-        dateWithTime.setHours(currentTime)
+       // dateWithTime.setHours(currentTime)
         dateWithTime.setMinutes(0)
         await $api.post(`/order/`, {
             email: email.value,
             name: name.value,
             clockSize: clock,
-            cityId: currentCity,
+            //cityId: currentCity,
             dateTime: dateWithTime,
             masterId: currentMaster
         })
@@ -43,14 +41,14 @@ const MyStepper: React.FC = () => {
     useEffect(() => {
         setError('')
         setFindMasterError('')
-    }, [email.value, name.value, clockSize, currentCity, currentMaster, currentTime, date])
+    }, [email.value, name.value, clockSize, currentMaster, date])
     const [findMaster, isLoadingMaster, errorfindMaster, setFindMasterError] = useFetching(async () => {
         let clock = getKeyByValue(clockSize, true);
         let dateWithTime = new Date(date)
-        dateWithTime.setHours(currentTime)
+        //dateWithTime.setHours(currentTime)
         dateWithTime.setMinutes(0)
         const res = await $api.post(`/masters/getFreeMasters/`, {
-            cityId: currentCity,
+            //cityId: currentCity,
             dateTime: dateWithTime,
             clockSize: clock,
             email: email.value,
@@ -94,8 +92,12 @@ const MyStepper: React.FC = () => {
                                         className={s.typography}
                             >Заявка на услуги мастера</Typography>
                             <StepWrapper activeStep={activeStep} steps={steps}>
-                                {activeStep === 0 && <FirstStep/>}
-                                {activeStep === 1 && <SecondStep masters={masters}/>}
+                                {activeStep === 0 && <FirstStep
+                                    setMasters={setMasters}
+                                    next={next}
+                                    tempFiles={tempFiles}
+                                    addTempFiles={addTempFiles}/>}
+                                {activeStep === 1 && <SecondStep back={back} next={next} masters={masters}/>}
                                 {activeStep === 2 && <div style={{textAlign: "center"}}>
                                     Вам на почту отправлено письмо, подтвердите заказ мастера
                                     <Button variant="contained"

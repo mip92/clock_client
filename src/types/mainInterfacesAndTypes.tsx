@@ -35,13 +35,10 @@ export type BooleanPayload = {
     payload: boolean
 }
 
-<<<<<<< HEAD
-=======
 export type OrdersPayload = {
     payload: Order[]
 }
 
->>>>>>> registration
 export type NumberPayload = {
     payload: number
 }

@@ -1,15 +1,11 @@
 import React, {useEffect} from 'react';
 import {Button, Input} from "@material-ui/core";
 import {useDispatch} from "react-redux";
-import {
-    loginAuth,
-    setAuthEmail,
-    setAuthPassword
-} from "../../actionCreators/adminActionCreators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import s from "../../style/Login.module.css";
 import {useInput} from "../../hooks/useInput";
 import {useHistory} from "react-router-dom";
+import {loginAuth, setAuthEmail} from "../../actionCreators/authActionCreators";
 
 const Login: React.FC = () => {
     let history = useHistory();
@@ -20,12 +16,12 @@ const Login: React.FC = () => {
     useEffect(() => {
         dispatch(setAuthEmail(email.value))
     }, [email.value])
-    useEffect(() => {
+    /*useEffect(() => {
         dispatch(setAuthPassword(email.value))
-    }, [password.value])
+    }, [password.value])*/
 
     const login = async () => {
-        await dispatch(loginAuth(email.value, password.value, history))
+        await dispatch(loginAuth(email.value, password.value))
     }
     const onKeyDown=(e:React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         if (e.key ==="Enter"){

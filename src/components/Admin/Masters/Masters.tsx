@@ -1,19 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import OneMaster from "./OneMaster"
 import s from "../../../style/Master.module.css";
 import {Input} from "@material-ui/core";
-import {useInput} from "../../../hooks/useInput";
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {addOneMaster, setMaster, setMasterName} from "../../../actionCreators/adminMasterActionCreators";
 import {Master} from "../../../types/adminMasterTypes";
 import MyModal from "../../utilits/MyModal";
 import {City} from "../../../types/mainInterfacesAndTypes";
 import $api from "../../../http";
-import CitiesCheckBox from "../Cities/CitiesCheckBox";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {usePaginatorWithRedux} from "../../../hooks/usePaginatorWithRedux";
 import CreateMaster from "./CreateMaster";
+import OneMaster from "./OneMaster";
 
 interface MastersProps {
     cities: City[],
