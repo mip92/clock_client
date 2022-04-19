@@ -72,7 +72,7 @@ export interface SetAuthNameAction {
 
 export interface FetchErrorAction {
     type: AuthActionTypes.FETCH_ERROR
-    payload: ErrorOrNullPayload | StringOrNullPayload
+    payload: ErrorOrNullPayload
 }
 
 export type AuthAction = FetchAction |

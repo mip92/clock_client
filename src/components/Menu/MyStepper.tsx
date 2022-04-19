@@ -3,74 +3,73 @@ import {theme} from "../../App";
 import Typography from "@material-ui/core/Typography";
 import React, {useContext, useEffect, useState} from "react";
 import StepWrapper from "./StepWrapper";
-import FirstStep from "./FirstStep";
 import s from "../../style/Steper.module.css"
 import {FormContext} from "../../context/formContext";
 import SecondStep from "./SecondStep";
 import {Master} from "../../types/adminMasterTypes";
 import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
-import Registration from "../Registration/Registration";
-import {Link} from "react-router-dom";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import FourthStep from "./FourthStep";
+import FirstStep from "./FirstStep";
+import axios from "axios";
+import {picture} from "../../types/mainInterfacesAndTypes";
+
 
 const MyStepper: React.FC = () => {
-    const {
-        clockSize,
-        currentMaster,
-        email,
-        name,
-        date
-    } = useContext(FormContext)
+    const {currentMaster, date} = useContext(FormContext)
+    const {currentCity, clockSize,dateTime,email,name}=useTypedSelector(state => state.order)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
-    const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setError] = useFetching(async () => {
-        let clock = getKeyByValue(clockSize, true);
-        let dateWithTime = new Date(date)
-       // dateWithTime.setHours(currentTime)
-        dateWithTime.setMinutes(0)
-        await $api.post(`/order/`, {
-            email: email.value,
-            name: name.value,
-            clockSize: clock,
-            //cityId: currentCity,
-            dateTime: dateWithTime,
-            masterId: currentMaster
-        })
-        setActiveStep(2)
-    })
-    useEffect(() => {
-        setError('')
-        setFindMasterError('')
-    }, [email.value, name.value, clockSize, currentMaster, date])
-    const [findMaster, isLoadingMaster, errorfindMaster, setFindMasterError] = useFetching(async () => {
-        let clock = getKeyByValue(clockSize, true);
-        let dateWithTime = new Date(date)
-        //dateWithTime.setHours(currentTime)
-        dateWithTime.setMinutes(0)
-        const res = await $api.post(`/masters/getFreeMasters/`, {
-            //cityId: currentCity,
-            dateTime: dateWithTime,
-            clockSize: clock,
-            email: email.value,
-            name: name.value
-        })
+    const [tempFiles, addTempFiles] = useState<picture[]>([] as picture[])
+    const [error, setError] = useState<boolean>(false)
+    /* const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setChooseAMasterError] = useFetching(async () => {
+         setActiveStep(2)
+     })*/
 
-        const masters: Master[] = res.data
-        setMasters(masters)
-        setActiveStep(1)
-    })
+    const sendPicture = async (picture) => {
+        try {
+            const response1 = await $api.post(`/order/`, {
+                email: email,
+                name: name,
+                clockSize: clockSize,
+                cityId: currentCity,
+                dateTime: dateTime,
+                masterId: currentMaster
+            })
+            let formData = new FormData;
+            if (picture) {
+                console.log(picture)
+                for (let i = 0; i < picture.length; i++) {
+                    formData.append(`picture${i}`, picture[i]);
+                }
+            }
+            const response2 = await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
+                formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+            setActiveStep(2)
+        }catch (e) {
+            console.log(e)
+        }
+    }
+
+    /*useEffect(() => {
+        //setChooseAMasterError('')
+        //setFindMasterError('')
+    }, [clockSize, currentCity, currentMaster, dateTime, date])*/
+
     const back = (): void => {
         setActiveStep(prev => prev - 1)
         if (activeStep <= 0) setActiveStep(0)
     }
 
     const next = (): void => {
-        if (activeStep === 0) {
-            findMaster()
-        }
-        if (activeStep === 1) {
-            chooseAMaster()
-        }
+        setActiveStep(prev => prev + 1)
+        if (activeStep === 1) sendPicture(tempFiles)
+        //else if(activeStep === 2) sendPicture(tempFiles)
     }
 
     function getKeyByValue(object: any, value: boolean) {
@@ -80,7 +79,7 @@ const MyStepper: React.FC = () => {
         if (v === 'big') return 3
     }
 
-    const steps: string[] = ["Форма", "Выбор мастере", "Подтверждение заказа"]
+    const steps: string[] = ["Р¤РѕСЂРјР°", "Р’С‹Р±РѕСЂ РјР°СЃС‚РµСЂРµ", "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ Р·Р°РєР°Р·Р°"]
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -90,38 +89,32 @@ const MyStepper: React.FC = () => {
                             <Typography variant="h6"
                                         color={'secondary'}
                                         className={s.typography}
-                            >Заявка на услуги мастера</Typography>
+                            >Р—Р°СЏРІРєР° РЅР° СѓСЃР»СѓРіРё РјР°СЃС‚РµСЂР°</Typography>
                             <StepWrapper activeStep={activeStep} steps={steps}>
-                                {activeStep === 0 && <FirstStep
-                                    setMasters={setMasters}
-                                    next={next}
-                                    tempFiles={tempFiles}
-                                    addTempFiles={addTempFiles}/>}
-                                {activeStep === 1 && <SecondStep back={back} next={next} masters={masters}/>}
-                                {activeStep === 2 && <div style={{textAlign: "center"}}>
-                                    Вам на почту отправлено письмо, подтвердите заказ мастера
-                                    <Button variant="contained"
-                                            color='primary'
-                                            onClick={() => setActiveStep(0)}>
-                                        На главную</Button>
-                                </div>}
-
+                                {activeStep === 0 && <FirstStep next={next} setMasters={setMasters}
+                                                                tempFiles={tempFiles}
+                                                                addTempFiles={addTempFiles}
+                                />}
+                                {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
+                                {activeStep === 2 && <FourthStep setActiveStep={setActiveStep}/>}
                             </StepWrapper>
                             <Grid>
-                                {activeStep !== 2 && <div className={s.buttons}>
-                                    <Button variant="contained"
+                                {/* {activeStep !== 2 && activeStep !== 0 && */}<div className={s.buttons}>
+                                {/*<Button variant="contained"
                                             color='primary'
                                             disabled={activeStep === 0}
                                             onClick={back}>
-                                        Назад</Button>
-                                    <div style={{color: 'red'}}>{errorChooseAMaster || errorfindMaster}</div>
+                                        РќР°Р·Р°Рґ</Button>
+                                    <div style={{color: 'red'}}>{errorChooseAMaster}</div>
                                     <Button variant="contained"
                                             color='primary'
-                                            disabled={email.value === '' || name.value === '' || activeStep === 2}
+                                            disabled={ activeStep === 3}
                                             onClick={() => next()}>
-                                        Далее</Button>
-                                </div>
-                                }
+                                        Р”Р°Р»РµРµ</Button>*/}
+                                {/*<Button title="Submit" onPress={handleSubmit(onSubmit)} />*/}
+
+                            </div>
+
                             </Grid>
                         </List>
                     </Card>
