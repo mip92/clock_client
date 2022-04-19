@@ -18,47 +18,46 @@ interface MultilineTextFieldsListProps {
     label: string;
     cities?: City[] | undefined
     time?: Time[] | undefined
-    current: number,
-    setCurrent: (arg0: number) => void
+    register: any,
+    error: string,
 }
 
 const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
                                                                          label,
                                                                          cities,
                                                                          time,
-                                                                         current,
-                                                                         setCurrent
+                                                                         register,
+                                                                         error
                                                                      }) => {
     const classes = useStyles();
-    const change = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrent(Number(event.target.value));
-    };
     return (
-        <form className={classes.root} noValidate autoComplete="off">
+        <div className={classes.root}>
             <div>
                 <TextField
-                    id={'standard-select-currency-native'+label}
+                    helperText={error}
+                    id={'standard-select-currency-native' + label}
                     select
                     label={label}
-                    value={current}
-                    onChange={change}
+                    error={!!error}
+                    {...register}
+                    defaultValue={0}
                     SelectProps={{
                         native: true,
                     }}
                 >
                     {cities && cities.map((option, key) => (
-                        <option key={'cities'+key} value={option.id}>
+                        <option key={'cities' + key} value={option.id}>
                             {option.cityName}
                         </option>
                     ))}
                     {time && time.map((option, key) => (
-                        <option key={'time'+key} value={option.id}>
+                        <option key={'time' + key} value={option.id}>
                             {option.time}
                         </option>
                     ))}
                 </TextField>
             </div>
-        </form>
+        </div>
     );
 }
 export default MultilineTextFields

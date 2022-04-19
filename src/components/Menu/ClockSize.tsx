@@ -1,53 +1,50 @@
-import React, {useContext} from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import React from 'react';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import s from "../../style/ClockSize.module.css"
-import {FormContext} from "../../context/formContext";
-import {Card, Typography} from "@material-ui/core";
-import {Clock} from "../../types/mainInterfacesAndTypes";
+import Typography from "@material-ui/core/Typography";
+import {Card} from "@material-ui/core";
 
-const ClockSize: React.FC = () => {
-    const {clockSize, setClockSize} = useContext(FormContext)
-    const arr: Clock[] = [
-        {small: true, middle: false, big: false},
-        {small: false, middle: true, big: false},
-        {small: false, middle: false, big: true}
-    ]
-    const handleChange = (obj: Clock) => {
-        setClockSize(obj);
-    }
-    const {small, middle, big} = clockSize;
-
+const ClockSize = ({register, error}) => {
     return (
-        <div className={s.size}>
-            <Card className={s.card} variant="elevation">
-                <Typography variant="h6" color={'secondary'}>
-                    Размер часов
-                </Typography>
-                <FormControlLabel
-                    labelPlacement="top"
-                    control={<Checkbox checked={small}
-                                       onChange={() => handleChange(arr[0])}
-                                       name="small"/>}
-                    label={<QueryBuilderIcon fontSize="small"/>}
-                />
-                <FormControlLabel
-                    labelPlacement="top"
-                    control={<Checkbox checked={middle}
-                                       onChange={() => handleChange(arr[1])}
-                                       name="middle"/>}
-                    label={<QueryBuilderIcon fontSize="medium"/>}
-                />
-                <FormControlLabel
-                    labelPlacement="top"
-                    control={<Checkbox checked={big}
-                                       onChange={() => handleChange(arr[2])}
-                                       name="big"/>}
-                    label={<QueryBuilderIcon fontSize="large"/>}
-                />
-            </Card>
-        </div>
+        <Card>
+            <Typography variant="subtitle1"
+                        color={'secondary'}
+                        className={s.typography}
+            >Размер часов</Typography>
+            <div className={s.size}>
+                <label htmlFor="small">
+                    <input
+                        {...register('checkbox')}
+                        type="radio"
+                        name="checkbox"
+                        value="small"
+                        id="ted-lasso"
+                    /> <br/>
+                    <QueryBuilderIcon fontSize="small"/>
+                </label>
+                <label htmlFor="middle">
+                    <input
+                        {...register('checkbox')}
+                        type="radio"
+                        name="checkbox"
+                        value="middle"
+                        id="got"
+                    /><br/>
+                    <QueryBuilderIcon fontSize="medium"/>
+                </label>
+                <label htmlFor="big">
+                    <input
+                        {...register('checkbox')}
+                        type="radio"
+                        name="checkbox"
+                        value="big"
+                        id="breadking-bad"
+                    /><br/>
+                    <QueryBuilderIcon fontSize="large"/>
+                </label>
+            </div>
+            <div className={s.error}>{error}</div>
+        </Card>
     );
 }
 export default ClockSize

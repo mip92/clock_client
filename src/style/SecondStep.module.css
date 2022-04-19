@@ -3,3 +3,11 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+.buttons {
+    grid-area: 5 / 2 / 6 / 3;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+

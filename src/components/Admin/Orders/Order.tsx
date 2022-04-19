@@ -1,17 +1,19 @@
 import React from 'react';
-import s from "../../style/Order.module.css";
+import s from "../../../style/Order.module.css";
 export interface OrderInterface {
-    orderId: number,
+    orderId: number | null,
     dateTime: string,
-    clockSize: number,
-    userId: number,
+    clockSize: number| null,
+    userId: number| null,
     userEmail: string,
     userName: string,
-    masterId: number,
+    masterId: number| null,
     masterEmail: string,
     masterName: string,
-    cityId: number,
+    cityId: number| null,
     cityName: string,
+    dealPrice: number | null,
+    statusId: number | null,
 }
 
 interface OrderProps {

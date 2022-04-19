@@ -1,0 +1,46 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: auto 500px auto;
+    grid-template-rows: auto 70px 70px 70px 70px auto auto auto;
+}
+
+.typography{
+    text-align: center;
+    grid-area: 1 / 2 / 2 / 3;
+    padding-top: 20px;
+}
+.email {
+    text-align: center;
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.name{
+    text-align: center;
+    grid-area: 3 / 2 / 4 / 3;
+}
+
+.firstPassword {
+    text-align: center;
+    grid-area: 4 / 2 / 5 / 3;
+}
+
+.secondPassword {
+    text-align: center;
+    grid-area: 5 / 2 / 6 / 3;
+}
+
+.checkboxes{
+    text-align: center;
+    grid-area: 6 / 2 / 7 / 3;
+}
+
+.btn{
+    text-align: center;
+    grid-area: 7 / 2 / 8 / 3;
+}
+
+.error{
+    text-align: center;
+    grid-area: 8 / 2 / 9 / 3;
+    color: red;
+}

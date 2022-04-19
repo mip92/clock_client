@@ -9,6 +9,7 @@ import {
 } from "../types/adminMasterTypes";
 import {AuthAction, AuthActionTypes} from "../types/authTypes";
 import $api from "../http";
+import {MyError} from "../types/mainInterfacesAndTypes";
 
 
 
@@ -18,10 +19,10 @@ export const fetchStart = (bol: boolean): FetchAction => {
         payload: {payload:bol}
     }
 }
-export const fetchError = (error?: string | null): FetchErrorAction => {
+export const fetchError = (error?: any): FetchErrorAction => {
     return {
         type: AdminMastersActionTypes.FETCH_ERROR,
-        payload:{payload:error || "An error occurred while loading"}
+        payload:{payload:error}
     }
 }
 
@@ -110,14 +111,19 @@ export const approveOneMaster = (id: number) => {
         }
     }
 }
-export const addOneMaster = (name: string, email:string, arrayCurrentCities:number[]) => {
+/*export const addOneMaster = (name: string, email:string, arrayCurrentCities:number[]) => {
     return async (dispatch: Dispatch<AdminMasterAction | AuthAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.post(`/masters/`, {name, email, cities_id:String(arrayCurrentCities)})
+            const response = await $api.get(`/masters/approve/${id}`, {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            )
             dispatch({
-                type: AdminMastersActionTypes.ADD_MASTER,
-                payload: {payload:response.data},
+                type: AdminMastersActionTypes.APPROVE_MASTER,
+                payload: {payload: response.data.master},
             })
             dispatch(fetchStart(false))
         } catch (e) {
@@ -137,19 +143,53 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
             }, 2000)
         }
     }
+}*/
+export const addOneMaster = (name: string, email:string, arrayCurrentCities:number[]) => {
+    return async (dispatch: Dispatch<AdminMasterAction | AuthAction>) => {
+        try {
+            const citiesId=JSON.stringify(arrayCurrentCities)
+            dispatch(fetchStart(true))
+            const response = await $api.post(`/masters/`, {name, email, citiesId:citiesId})
+/*            dispatch({
+                type: AdminMastersActionTypes.ADD_MASTER,
+                payload: {payload:response.data},
+            })*/
+            dispatch(fetchStart(false))
+        } catch (e) {
+            dispatch(fetchStart(false))
+/*            if(e.request.status===401) {
+                localStorage.removeItem('token')
+                localStorage.removeItem('time')
+                return dispatch({
+                    type: AuthActionTypes.SET_TOKEN,
+                    payload:  {payload: null}
+                })
+            }*/
+            let error: MyError
+            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
+            else error = JSON.parse(JSON.parse(e.request.responseText).message)
+            console.log(error)
+            dispatch(fetchError(error))
+        }
+    }
 }
-export const changeMaster = (id:number, name:string, email:string, cities_id:number[]) => {
+export const changeMaster = (id:number, name:string, email:string, cities_id:number[], activateInput: Function) => {
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.put(`/masters/`, {id,name,email,cities_id:String(cities_id)})
+            const response = await $api.put(`/masters/`, {id,name,email,citiesId:String(cities_id)})
             dispatch({
                 type: AdminMastersActionTypes.CHANGE_MASTER_NAME,
                 master:{payload: response.data}
             })
             dispatch(fetchStart(false))
+            activateInput(false)
         } catch (e) {
-            dispatch(fetchStart(false))
+            let error: MyError
+            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
+            else error = JSON.parse(JSON.parse(e.request.responseText).message)
+            console.log(error)
+            dispatch(fetchError(error))
         }
     }
 }

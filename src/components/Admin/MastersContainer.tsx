@@ -8,12 +8,7 @@ import axios from "axios";
 import $api from "../../http";
 
 const MastersContainer = () => {
-    const [cities, setCities] = useState<City[]>([{
-        cityName: '',
-        createdAt: '',
-        updatedAt: '',
-        id: 0,
-    }])
+    const [cities, setCities] = useState<City[]>([])
     const [fetching, isFetch, error] = useFetching(async () => {
         const response = await $api.get(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)

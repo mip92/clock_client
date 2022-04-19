@@ -19,13 +19,13 @@ const Navbar = ({children}) => {
     const {token} = useTypedSelector(state => state.auth)
     const dispatch = useDispatch();
     const history = useHistory()
-    useEffect(() => {
+/*    useEffect(() => {
         if (!token) dispatch(setNavbarPages([{
             to: '/',
             name: "abc"
         }]))
 
-    }, [token])
+    }, [token])*/
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const teleport = (to) => {

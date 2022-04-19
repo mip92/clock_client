@@ -1,6 +1,6 @@
-import React, {Dispatch, FC, SetStateAction, useState} from 'react';
-import {Checkbox, FormGroup} from "@material-ui/core";
-import {City} from "../../types/mainInterfacesAndTypes";
+import React, {Dispatch, FC, SetStateAction} from 'react';
+import {FormGroup} from "@material-ui/core";
+import {City} from "../../../types/mainInterfacesAndTypes";
 import OneCheckBox from "./OneCheckBox";
 
 interface CitiesCheckBoxProps {

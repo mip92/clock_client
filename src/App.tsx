@@ -4,12 +4,12 @@ import {createTheme} from '@material-ui/core/styles'
 import {Route, Switch} from "react-router-dom";
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import {useDispatch} from "react-redux";
-import {setToken} from "./actionCreators/adminActionCreators";
+import {setRole, setToken} from "./actionCreators/authActionCreators";
 import {useTypedSelector} from "./hooks/useTypedSelector";
 import {createRoute} from "./utils/createRoutes";
 import moment from 'moment'
 import MomentUtils from "@date-io/moment";
-
+import Navbar from "./components/utilits/Navbar";
 
 export const theme = createTheme({
     palette: {
@@ -20,7 +20,11 @@ export const theme = createTheme({
             main: '#f57c00',
         },
     },
+    typography:{
+
+    }
 });
+
 
 export interface MyRoute {
     exact: boolean;
@@ -35,19 +39,33 @@ moment.updateLocale('en',{
 
 const App: React.FC = () => {
     const dispatch = useDispatch()
+    const {token, role} = useTypedSelector(state => state.auth)
+
     useEffect(() => {
         dispatch(setToken())
     }, [])
-    const {token} = useTypedSelector(state => state.auth)
-    const [routes, setRoutes] = useState<MyRoute[]>(createRoute(token))
-    useEffect(() => {
-        setRoutes(createRoute(token))
-    }, [token])
+
+
+    useEffect(()=>{
+        dispatch(setRole(token))
+    },[token])
+
+
+    useEffect(()=>{
+        setRoutes(createRoute(role))
+    },[role])
+
+    const [routes, setRoutes] = useState<MyRoute[]>(createRoute(role))
+
+   /* useEffect(() => {
+        setRoutes(createRoute(role))
+    }, [token])*/
 
     return (
         <MuiPickersUtilsProvider utils={MomentUtils}>
             <ThemeProvider theme={theme}>
                 <div className="App">
+                    <Navbar/>
                     <Switch>
                         {routes.map((r, key) => <Route key={key}
                                                        path={r.path}

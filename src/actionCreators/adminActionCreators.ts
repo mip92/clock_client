@@ -5,7 +5,7 @@ import {
     FetchAction,
     FetchErrorAction,
     SetAuthEmailAction,
-    SetAuthPasswordAction, SetStatusCode, SetTokenAction
+    SetStatusCode, SetTokenAction
 } from "../types/authTypes"
 import $api from "../http";
 
@@ -16,7 +16,7 @@ export const fetchStart = (bol: boolean): FetchAction => {
         payload: {payload: bol}
     }
 }
-export const fetchError = (error: string | null): FetchErrorAction => {
+export const fetchError = (error: string | null)/*: FetchErrorAction*/ => {
     return {
         type: AuthActionTypes.FETCH_ERROR,
         payload: {payload: error}
@@ -61,12 +61,12 @@ export const setAuthEmail = (email: string): SetAuthEmailAction => {
     }
 }
 
-export const setAuthPassword = (password: string): SetAuthPasswordAction => {
+/*export const setAuthPassword = (password: string): SetAuthPasswordAction => {
     return {
         type: AuthActionTypes.SET_ADMIN_PASSWORD,
         payload: {payload: password}
     }
-}
+}*/
 export const setStatus = (code: number): SetStatusCode => {
     return {
         type: AuthActionTypes.STATUS,

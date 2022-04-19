@@ -1,11 +1,12 @@
-import {BooleanPayload, City, CityPayload, StringPayload} from "./mainInterfacesAndTypes";
+import {BooleanPayload, City, CityPayload, ErrorOrNullPayload, MyError, StringPayload} from "./mainInterfacesAndTypes";
+import {AuthActionTypes} from "./authTypes";
 
 export interface AdminCitiesStateType {
     cities: City[]
     citiesCount:number
     newCity: string
     isFetch: boolean
-    error: string | null
+    error: null | MyError,
     totalPages: number
     pagesArray: number[]
 }
@@ -28,7 +29,7 @@ export interface FetchAction {
 
 export interface FetchErrorAction {
     type: AdminCitiesActionTypes.FETCH_ERROR;
-    payload: StringPayload
+    payload: ErrorOrNullPayload
 }
 
 type FetchCitiesActionPayload = {

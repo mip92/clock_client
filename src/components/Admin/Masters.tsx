@@ -12,8 +12,8 @@ import {Master} from "../../types/adminMasterTypes";
 import MyModal from "../utilits/MyModal";
 import {City} from "../../types/mainInterfacesAndTypes";
 import $api from "../../http";
-import CitiesCheckBox from "./CitiesCheckBox";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
+import CitiesCheckBox from "./Cities/CitiesCheckBox";
 
 interface MastersProps {
     cities: City[],
