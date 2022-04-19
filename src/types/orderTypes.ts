@@ -1,25 +1,26 @@
 import {
-    BooleanPayload, CitiesPayload, City, CityPayload,
-    ErrorOrNullPayload, MyError, NumberPayload, Time
+    BooleanPayload, CitiesPayload, City,
+    ErrorOrNullPayload, MyError, picture, Time
 } from "./mainInterfacesAndTypes";
 
 export interface OrderStateType {
     isFetch: boolean,
     error: null | MyError,
     cities: City[],
-    currentCity : number | null,
+    currentCity: number | null,
     time: Time[],
     dateTime: Date | null,
     clockSize: number | null,
-    email:string,
-    name:string,
+    email: string,
+    name: string,
+    pictures: picture[]
 }
 
 export enum OrderActionTypes {
     FETCH_START = "FETCH_START",
     FETCH_ERROR = "FETCH_ERROR",
     SET_CITIES = "SET_CITIES",
-    SET_ORDER="SET_ORDER"
+    SET_ORDER = "SET_ORDER"
 }
 
 export interface FetchAction {
@@ -40,14 +41,14 @@ export interface SetCities {
 export interface SetOrder {
     type: OrderActionTypes.SET_ORDER;
     payload: {
-        currentCity : number
+        currentCity: number
         dateTime: Date,
         clockSize: number,
-        email:string,
-        name:string,
+        email: string,
+        name: string,
+        pictures: picture[]
     }
 }
-
 
 
 export type OrderAction = FetchAction |

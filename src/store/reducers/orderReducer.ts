@@ -1,5 +1,5 @@
 
-import {City, MyError, Time} from "../../types/mainInterfacesAndTypes";
+import {City, MyError, picture, Time} from "../../types/mainInterfacesAndTypes";
 import {OrderAction, OrderActionTypes, OrderStateType} from "../../types/orderTypes";
 
 const initState: OrderStateType = {
@@ -11,6 +11,7 @@ const initState: OrderStateType = {
     clockSize: null,
     email:'',
     name:'',
+    pictures: [] as picture[],
     time: [
     {"id": 8, "time": "8:00"},
     {"id": 9, "time": "9:00"},
@@ -41,7 +42,9 @@ export const orderReducer = (state = initState, action: OrderAction): OrderState
                 dateTime:action.payload.dateTime,
                 clockSize:action.payload.clockSize,
                 email:action.payload.email,
-                name:action.payload.name}
+                name:action.payload.name,
+                pictures:action.payload.pictures
+            }
         default:
             return state
     }

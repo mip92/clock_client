@@ -1,27 +1,19 @@
 import React from 'react';
-import Files from "./Files";
-import {picture} from "./FileUploaderContainer";
-
-
+import {picture} from "../../../types/mainInterfacesAndTypes";
 
 interface IFileUploadProps {
     accept: string;
-    addTempFile: Function;
-    tempFile: picture[]
+    addTempFiles: Function;
+    tempFiles: picture[]
 }
 
-const FilesUpload: React.FC<IFileUploadProps> = ({ tempFile, addTempFile, accept, children}) => {
+const FilesUpload: React.FC<IFileUploadProps> = ({ tempFiles, addTempFiles, accept, children}) => {
     const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Object.keys(e != null && e.target != null && e.target.files != null && e.target.files).map((i) => e != null && e.target != null && e.target.files != null && e.target.files[i]);
-        addTempFile(files)
+        addTempFiles(files)
         e.target.value = '';
-    }
-
-    const onDelete = (name) => {
-        const arr =tempFile.filter((item => item.name !== name))
-        addTempFile(arr)
     }
 
     return (
@@ -37,7 +29,6 @@ const FilesUpload: React.FC<IFileUploadProps> = ({ tempFile, addTempFile, accept
                 />
                 {children}
             </div>
-            <Files imgs={tempFile}  onDelete={onDelete}/>
         </div>
     );
 };

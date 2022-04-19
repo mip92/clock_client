@@ -1,5 +1,5 @@
 import {Master} from "./adminMasterTypes";
-import {OrderInterface} from "../components/Admin/Order";
+import {OrderInterface} from "../components/Admin/Orders/Order";
 import {Order} from "../store/reducers/workplaceReducer";
 
 export interface City {
@@ -24,6 +24,11 @@ export interface Clock {
     small:boolean,
     middle: boolean,
     big: boolean,
+}
+
+export interface picture {
+    name: string;
+    size: number
 }
 
 export type BooleanPayload = {

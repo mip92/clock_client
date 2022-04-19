@@ -1,4 +1,11 @@
-import {BooleanPayload, City, MasterPayload, StringPayload} from "./mainInterfacesAndTypes";
+import {
+    BooleanPayload,
+    City,
+    ErrorOrNullPayload,
+    MasterPayload,
+    MyError,
+    StringPayload
+} from "./mainInterfacesAndTypes";
 
 export interface Master {
     id: number,
@@ -17,7 +24,7 @@ export interface AdminMasterStateType {
     masters: Master[]
     newMaster: string
     isFetch: boolean
-    error: string | null
+    error:  null | MyError,
 }
 
 export enum AdminMastersActionTypes {
@@ -39,7 +46,7 @@ export interface FetchAction {
 
 export interface FetchErrorAction {
     type: AdminMastersActionTypes.FETCH_ERROR;
-    payload: StringPayload
+    payload: ErrorOrNullPayload
 }
 
 type FetchMastersActionPayload = {

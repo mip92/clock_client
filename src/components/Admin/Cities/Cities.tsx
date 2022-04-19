@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import OneCity from "./OneCity"
-import {addOneCity, fetchCities, setCityName} from "../../actionCreators/adminCityActionCreators";
-import s from "../../style/Cities.module.css";
+import {addOneCity, fetchCities, setCityName} from "../../../actionCreators/adminCityActionCreators";
+import s from "../../../style/Cities.module.css";
 import {Input} from "@material-ui/core";
-import {useInput} from "../../hooks/useInput";
-import MyModal from "../utilits/MyModal";
-import AddCityWithReactHookForm from './AddCityWithReactHookForm';
+import {useInput} from "../../../hooks/useInput";
+import MyModal from "../../utilits/MyModal";
+import AddCity from './AddCity';
 
 
 const Cities: React.FC = () => {
@@ -67,7 +67,7 @@ const Cities: React.FC = () => {
                 </div>
             </div>
             <MyModal name='Добавить город'>
-                <AddCityWithReactHookForm newCity={newCity} price={price} setPrice={setPrice}/>
+                <AddCity newCity={newCity} price={price} setPrice={setPrice}/>
             </MyModal>
         </div>
     );

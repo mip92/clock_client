@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import s from "../../style/City.module.css";
+import s from "../../../style/City.module.css";
 import {Button, Input} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import {changeCityName} from "../../actionCreators/adminCityActionCreators";
+import {changeCityName} from "../../../actionCreators/adminCityActionCreators";
 import {useDispatch} from "react-redux";
 import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
-import {loginAuth} from "../../actionCreators/authActionCreators";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import InputWithError from "../Registration/InputWithError";
-import {City} from "../../types/mainInterfacesAndTypes";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
+import InputWithError from "../../Registration/InputWithError";
+import {City} from "../../../types/mainInterfacesAndTypes";
 
 interface ChangeCityProps {
     city: City,
@@ -22,13 +21,13 @@ interface ChangeCityProps {
     setIsOpen: any
 }
 
-const ChangeCityWithReactHookForm:React.FC<ChangeCityProps> = ({activateInput, city, delCity, isOpen, setIsOpen}) => {
+const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity, isOpen, setIsOpen}) => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
     const validationSchema = Yup.object().shape({
         cityName: Yup.string().min(3, 'City name must be longer than 3 characters')
             .required('City name is required'),
-        price: Yup.number()/*.required('Price of city is required').positive().integer(),*/
+        price: Yup.number().required('Price of city is required').positive().integer(),
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
@@ -67,4 +66,4 @@ const ChangeCityWithReactHookForm:React.FC<ChangeCityProps> = ({activateInput, c
     );
 };
 
-export default ChangeCityWithReactHookForm;
+export default ChangeCity;

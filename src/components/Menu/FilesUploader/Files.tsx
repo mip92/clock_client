@@ -1,6 +1,7 @@
 import React from 'react';
 import OneFile from "./OneFile";
-import {picture} from "./FileUploaderContainer";
+import s from "../../../style/Files.module.css"
+import {picture} from "../../../types/mainInterfacesAndTypes";
 
 interface FilesProps{
     imgs: picture[]
@@ -10,7 +11,7 @@ interface FilesProps{
 
 const Files: React.FC<FilesProps> = ({imgs, onDelete}) => {
     return (
-        <div>
+        <div className={s.file}>
             {imgs.map((i,key)=><OneFile key={key} img={i} onDelete={onDelete}/>)}
         </div>
     );

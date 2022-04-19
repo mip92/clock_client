@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import Masters from "./Masters";
-import {MasterContext} from "../../context/masterContext";
-import {City} from "../../types/mainInterfacesAndTypes";
-import {useFetching} from "../../hooks/useFetching";
-import $api from "../../http";
+import {MasterContext} from "../../../context/masterContext";
+import {City} from "../../../types/mainInterfacesAndTypes";
+import {useFetching} from "../../../hooks/useFetching";
+import $api from "../../../http";
 
 
 

@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
 import $api from "../../http";
-import {AxiosOrder} from "../Admin/Orders";
+import {AxiosOrder} from "../Admin/Orders/Orders";
 import {setOrders} from "../../actionCreators/workplaseActionCreators";
 import s from "../../style/MyWorkplace.module.css";
 import {Input} from "@material-ui/core";

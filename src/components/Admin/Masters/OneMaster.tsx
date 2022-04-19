@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {Master} from "../../types/adminMasterTypes";
+import {Master} from "../../../types/adminMasterTypes";
 import CachedIcon from '@material-ui/icons/Cached';
-import s from "../../style/Master.module.css"
-import {useInput} from "../../hooks/useInput";
-import {approveOneMaster, delOneMaster} from "../../actionCreators/adminMasterActionCreators";
-import MyAlert from "../utilits/MyAlert";
+import s from "../../../style/Master.module.css"
+import {useInput} from "../../../hooks/useInput";
+import {approveOneMaster, delOneMaster} from "../../../actionCreators/adminMasterActionCreators";
+import MyAlert from "../../utilits/MyAlert";
 import ChangeMaster from "./ChangeMaster";
-import ApproveButton from "../utilits/ApproveButton";
+import ApproveButton from "../../utilits/ApproveButton";
 
 interface MasterProps {
     master: Master,

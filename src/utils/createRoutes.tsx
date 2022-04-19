@@ -1,12 +1,12 @@
 import StepperContainer from "../components/Menu/StepperContainer";
 import Login from "../components/Registration/Login";
-import Cities from "../components/City/Cities";
-import MastersContainer from "../components/Admin/MastersContainer";
-import Users from "../components/Admin/Users";
-import Orders from "../components/Admin/Orders";
+import Cities from "../components/Admin/Cities/Cities";
+import MastersContainer from "../components/Admin/Masters/MastersContainer";
+import Users from "../components/Admin/Users/Users";
+import Orders from "../components/Admin/Orders/Orders";
 import Error404 from "../components/utilits/Error404";
 import {MyRoute} from "../App";
-import RegistrationWithReactHookForm from "../components/Registration/RegistrationWithReactHookForm";
+import Registration from "../components/Registration/Registration";
 import MyWorkplace from "../components/MyWorkplace/MyWorkplace";
 import MyOffice from "../components/MyOffice/MyOffice";
 import Blog from "../components/Blog/Blog";
@@ -17,7 +17,7 @@ export const createRoute = (role:string | null) => {
         {exact: true, path: "/", component: <StepperContainer/>},
         {exact: true, path: "/blog", component: <Blog/>},
         {exact: true, path: "/login", component: <Login/>},
-        {exact: false, path: "/registration", component: <RegistrationWithReactHookForm/>},
+        {exact: false, path: "/registration", component: <Registration/>},
     ]
     const adminRoutes: MyRoute[] = [
         {exact: false, path: "/menu/cities", component: <Cities/>},

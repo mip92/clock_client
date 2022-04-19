@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {AccountCircle} from "@material-ui/icons";
 import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
-import ChangeEmail from "../MyWorkplace/ChangeEmail";
 
 const Navbar = () => {
     const useStyles = makeStyles({

@@ -20,7 +20,8 @@
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "react": "^17.0.2",
-    "react-datepicker": "2.14.0",
+
+    "react-datepicker": "^4.7.0",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.29.0",
     "react-redux": "^7.2.4",
@@ -29,7 +30,9 @@
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "typescript": "^4.3.5",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+
+    "react-multi-date-picker": "^3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -55,8 +58,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "react-datepicker": "^4.7.0",
-    "react-multi-date-picker": "^3.3.0",
     "redux-devtools-extension": "^2.13.9"
   }
 }

@@ -6,7 +6,7 @@ import {
     FetchErrorAction,
     OrderAction,
     OrderActionTypes,
-SetOrder
+    SetOrder
 } from "../types/orderTypes";
 
 
@@ -16,26 +16,26 @@ export const fetchStart = (bol: boolean): FetchAction => {
         payload: {payload: bol}
     }
 }
-export const fetchError = (error: MyError | null): FetchErrorAction  => {
+export const fetchError = (error: MyError | null): FetchErrorAction => {
     return {
         type: OrderActionTypes.FETCH_ERROR,
-        payload:{payload:error}
+        payload: {payload: error}
     }
 }
 
-export const setOrder= (cityId:number, dateTime, clockSize, email, name): SetOrder  => {
+export const setOrder = (cityId: number, dateTime, clockSize, email, name, pictures): SetOrder => {
     return {
         type: OrderActionTypes.SET_ORDER,
-        payload:{
-                currentCity : cityId,
-                dateTime: dateTime,
-                clockSize: clockSize,
-                email:email,
-                name: name,
+        payload: {
+            currentCity: cityId,
+            dateTime: dateTime,
+            clockSize: clockSize,
+            email: email,
+            name: name,
+            pictures: pictures
         }
     }
 }
-
 
 
 export const fetchCities = (offset: number, limit: number) => {

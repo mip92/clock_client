@@ -1,5 +1,5 @@
 import React from 'react';
-import s from "../../style/Order.module.css";
+import s from "../../../style/Order.module.css";
 export interface OrderInterface {
     orderId: number | null,
     dateTime: string,

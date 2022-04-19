@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Input, Paper, Table, TableContainer, Typography} from "@material-ui/core";
-import Statuses from "../MyOffice/Statuses";
-import $api from "../../http";
-import {usePaginator} from "../../hooks/usePaginator";
-import {Order} from "../../store/reducers/workplaceReducer";
-import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
-import {setOrders} from "../../actionCreators/workplaseActionCreators";
-import OfficeTable from "../MyOffice/OfficeTable";
-import s from "../../style/MyWorkplace.module.css";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
+import Statuses from "../../MyOffice/Statuses";
+import $api from "../../../http";
+import {Order} from "../../../store/reducers/workplaceReducer";
+import {usePaginatorWithRedux} from "../../../hooks/usePaginatorWithRedux";
+import {setOrders} from "../../../actionCreators/workplaseActionCreators";
+import s from "../../../style/MyWorkplace.module.css";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 
 interface active {

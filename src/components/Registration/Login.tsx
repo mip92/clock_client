@@ -29,7 +29,6 @@ const Login: React.FC = () => {
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
-/*history.goBack()*/
     console.log(history)
     const onSubmit = handleSubmit(async data => {
         await dispatch(loginAuth(data.email, data.password))

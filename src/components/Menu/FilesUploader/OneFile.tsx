@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from "@material-ui/core";
 import s from "../../../style/OneFile.module.css"
-import {picture} from "./FileUploaderContainer";
+import {picture} from "../../../types/mainInterfacesAndTypes";
 
 interface OneFileProps{
     img:picture
@@ -15,7 +15,7 @@ const OneFile:React.FC<OneFileProps> = ({img, onDelete}) => {
     },[img])
     return (
         <div>
-            <img width={'219.4px'} src={URL.createObjectURL(img)}/>
+            <img width={'150px'} src={URL.createObjectURL(img)}/>
             {img && <div>{img.name}</div>}
             {img && <div className={pictireSise && img.size>1048576 ? s.error : s.div}> {pictireSise + ' Mб'}
             </div>}

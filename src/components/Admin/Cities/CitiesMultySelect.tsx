@@ -9,9 +9,9 @@ import {
     useTheme,
     Input, Chip, MenuItem, Button
 } from "@material-ui/core";
-import {City} from "../../types/mainInterfacesAndTypes";
+import {City} from "../../../types/mainInterfacesAndTypes";
 import {Controller, useForm} from "react-hook-form";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,7 +58,7 @@ interface CitiesCheckBoxProps {
     setArrayCurrentCities: any
 }
 
-const CitiesCheckBoxMultySelectReactHookForm: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCities}) => {
+const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCities}) => {
     const {error} = useTypedSelector(state => state.auth)
     const classes = useStyles();
     const theme = useTheme();
@@ -83,7 +83,6 @@ const CitiesCheckBoxMultySelectReactHookForm: FC<CitiesCheckBoxProps> = ({cities
                 result=[...result, cities[i].id]
             }
         }
-        console.log(result)
         setArrayCurrentCities(result)
         }
     );
@@ -98,7 +97,7 @@ const CitiesCheckBoxMultySelectReactHookForm: FC<CitiesCheckBoxProps> = ({cities
 
 
     return (
-        <div onClick={onSubmit}>
+        <div onBlur={onSubmit}>
             <Controller
                 name="citiesId"
                 control={control}
@@ -136,4 +135,4 @@ const CitiesCheckBoxMultySelectReactHookForm: FC<CitiesCheckBoxProps> = ({cities
     );
 };
 
-export default CitiesCheckBoxMultySelectReactHookForm;
+export default CitiesMultySelect;

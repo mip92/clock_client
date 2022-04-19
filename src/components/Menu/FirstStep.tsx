@@ -16,24 +16,22 @@ import ClockSize from "./ClockSize";
 import {FormInputDate} from "./FormInputDate";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {Master} from "../../types/adminMasterTypes";
-import {log} from "util";
+import FileUploaderContainer from "./FilesUploader/FileUploaderContainer";
+import Files from "./FilesUploader/Files";
 
-const FirstStep = ({setActiveStep, setMasters}) => {
-    const {token} = useTypedSelector(state => state.auth)
+const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
+    const {token, authName, authEmail} = useTypedSelector(state => state.auth)
     const {cities, time} = useTypedSelector(state => state.order)
     const dispatch = useDispatch()
     const [date, setDate] = useState<MaterialUiPickersDate>(null);
-
-
     const [openAlert, setOpenAlert] = React.useState(false);
-
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .required('Email is required')
             .email('Email is invalid'),
         name: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
+            .min(6, 'Name must be at least 6 characters')
+            .required('Name is required').default('some string'),
         checkbox: Yup.string()
             .oneOf(["big", "small", "middle"], "You must accept the terms and conditions").nullable(),
         currentCity: Yup.string().required('Current city is required'),
@@ -41,10 +39,16 @@ const FirstStep = ({setActiveStep, setMasters}) => {
         fieldName: Yup.string().required('Date time is required'),
     });
 
+
     function getKeyByValue(checkbox: string, value: boolean) {
         if (checkbox === 'small') return 1
         else if (checkbox === 'middle') return 2
         else if (checkbox === 'big') return 3
+    }
+
+    const onDelete = (name) => {
+        const arr =tempFiles.filter((item => item.name !== name))
+        addTempFiles(arr)
     }
 
     const [isLoadingFindMaster, setIsLoading] = useState<boolean>(false);
@@ -59,15 +63,15 @@ const FirstStep = ({setActiveStep, setMasters}) => {
                 dateWithTime.setMinutes(0)
                 const res = await $api.post(`/masters/getFreeMasters/`, {
                     cityId: data.currentCity,
-                    dateTime: dateWithTime,
+                    dateTime: String(dateWithTime),
                     clockSize: clock,
                     email: data.email,
                     name: data.name
                 })
-                dispatch(setOrder(data.currentCity, dateWithTime, clock, data.email, data.name))
+                dispatch(setOrder(data.currentCity, String(dateWithTime), clock, data.email, data.name, tempFiles))
                 const masters: Master[] = res.data
                 setMasters(masters)
-                setActiveStep(1)
+                next()
             } catch (e) {
                 if (e.response.data.message) setFetchError(e.response.data.message);
                 else setFetchError(e.message);
@@ -89,6 +93,22 @@ const FirstStep = ({setActiveStep, setMasters}) => {
         if (errorfindUser == 'User with this email is already registered' && !token) setOpenAlert(true)
         return () => setOpenAlert(false)
     }, [errorfindUser])
+
+
+    useEffect(() => {
+        authEmail && setValue("email", authEmail, {
+            shouldValidate: true,
+            shouldDirty: true
+        })
+        authName && setValue("name", authName, {
+            shouldValidate: true,
+            shouldDirty: true
+        })
+        setValue("currentCity", '1', {
+            shouldValidate: true,
+            shouldDirty: true
+        })
+    }, [cities])
 
     return (
         <form onSubmit={onSubmit}>
@@ -136,6 +156,15 @@ const FirstStep = ({setActiveStep, setMasters}) => {
                                          label={"Время"}
                                          time={time}
                                          error={errors.currentTime?.message}/>
+                </div>
+                <div className={s.picturesBtn}>
+                    <FileUploaderContainer tempFiles={tempFiles}
+                                           addTempFiles={addTempFiles}
+                                           setError={setError}
+                    />
+                </div>
+                <div className={s.pictures}>
+                    <Files imgs={tempFiles}  onDelete={onDelete}/>
                 </div>
                 <div className={s.buttons}>
                     <Button variant="contained"

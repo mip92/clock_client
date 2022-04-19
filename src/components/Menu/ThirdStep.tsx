@@ -1,32 +1,31 @@
 import React from 'react';
-import {Button} from "@material-ui/core";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {useHistory} from "react-router-dom";
+import FileUploaderContainer from "./FilesUploader/FileUploaderContainer";
+import {Button, Card} from "@material-ui/core";
+import s from "../../style/SecondStep.module.css";
 
-const ThirdStep = () => {
-    const history = useHistory();
-    const {token, id} = useTypedSelector(state => state.auth)
-    if (token) {
-        return (
-            <div style={{textAlign: "center"}}>
-                Вам на почту отправлено письмо, подтвердите заказ мастера
+const ThirdStep = ({tempFile, addTempFile, setError, back, next}) => {
+    return (
+        <div>
+            {/*<Card className={s.wrapper}>
+                <FileUploaderContainer tempFile={tempFile}
+                                       addTempFile={addTempFile}
+                                       setError={setError}
+                />
+
+            </Card>
+            <div className={s.buttons}>
                 <Button variant="contained"
                         color='primary'
-                        onClick={() => history.push(`/myOffice/${id}`)}>
-                    Перейти к моим заказам</Button>
-            </div>
-        )
-    }else return (
-        <div style={{textAlign: "center"}}>
-            Вам на почту отправленно письмо с дальнейшими указаниями
-            <Button variant="contained"
-                    color='primary'
-                    onClick={() => history.push(`/`)}>
-                На главную</Button>
+                        onClick={() => back()}>
+                    Назад</Button>
+                <div style={{color: 'red'}}></div>
+                <Button variant="contained"
+                        color='primary'
+                        onClick={() => next()}>
+                    Далее</Button>
+            </div>*/}
         </div>
-
-    )
-
+    );
 };
 
 export default ThirdStep;

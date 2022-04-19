@@ -9,8 +9,7 @@ import {useTypedSelector} from "./hooks/useTypedSelector";
 import {createRoute} from "./utils/createRoutes";
 import moment from 'moment'
 import MomentUtils from "@date-io/moment";
-import Navbar from "./components/Admin/Navbar";
-import FileUploaderContainer from "./components/Menu/FilesUploader/FileUploaderContainer";
+import Navbar from "./components/utilits/Navbar";
 
 export const theme = createTheme({
     palette: {
@@ -50,15 +49,16 @@ const App: React.FC = () => {
         dispatch(setRole(token))
     },[token])
 
+
     useEffect(()=>{
         setRoutes(createRoute(role))
     },[role])
 
     const [routes, setRoutes] = useState<MyRoute[]>(createRoute(role))
 
-    /*useEffect(() => {
+    useEffect(() => {
         setRoutes(createRoute(role))
-    }, [token])*/
+    }, [token])
 
     return (
         <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -72,7 +72,6 @@ const App: React.FC = () => {
                                                        exact={r.exact}/>
                         )}
                     </Switch>
-                    <FileUploaderContainer/>
                 </div>
             </ThemeProvider>
         </MuiPickersUtilsProvider>

@@ -51,7 +51,6 @@ const Statuses: React.FC<StatusesProps> = ({status, orderId}) => {
             arr.push({createdAt: "", updatedAt: "", id: k, name: key})
             k++
         }
-        console.log(arr)
 
         const orderStatus = arr.find(s => s.name === status)
         orderStatus && setCurrentStatus(orderStatus)

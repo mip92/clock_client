@@ -1,147 +1,147 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Input} from "@material-ui/core";
-import {useInput} from "../../hooks/useInput";
+import React, {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
+import {Checkbox, Input} from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import s from "../../style/Registration.module.css";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import {useFetching} from "../../hooks/useFetching";
-import $api from "../../http";
-import CitiesCheckBox from "../Admin/CitiesCheckBox";
-import {City} from "../../types/mainInterfacesAndTypes";
 import Typography from "@material-ui/core/Typography";
+import $api from "../../http";
+import {City} from "../../types/mainInterfacesAndTypes";
+import * as Yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {useDispatch} from "react-redux";
+import {IRigistrationData, RigistrationAuth} from "../../actionCreators/authActionCreators";
+import {useHistory} from "react-router-dom";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import InputWithError from "./InputWithError";
+import CitiesMultySelect from "../Admin/Cities/CitiesMultySelect";
 
-const initialState: City = {
-    cityName: 'Загрузка',
-    createdAt: '',
-    id: 0,
-    updatedAt: '',
-    price: 0
-}
 const Registration: React.FC = () => {
-    const email = useInput('')
-    const name = useInput('')
-    const firstPassword = useInput('')
-    const secondPassword = useInput('')
-    const [disabledBtn, setDisabledBtn] = useState<boolean>(false)
-    const [isRulesChecked, setIsRulesChecked] = useState<boolean>(false)
-    const [isMaster, setIsMaster] = useState<boolean>(false)
+    const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
     const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>([])
-    const [cities, setCities] = useState<City[]>([initialState])
-    useEffect(() => {
-        setDisabledBtn(false)
-        setError("")
-    }, [email.value, name.value, firstPassword.value, secondPassword.value, isRulesChecked, isMaster])
-
+    const [cities, setCities] = useState<City[]>([])
+    const [isSeeCities, setIsSeeCities] = useState(false)
+    const history = useHistory();
     const findCities = async (offset: number, limit: number): Promise<void> => {
         try {
             const response = await $api.get(`/cities?offset=${offset}&limit=${limit}`)
             setCities(response.data.rows)
         } catch (e) {
             const err = JSON.parse(e.request.responseText).message[0]
-            console.log(err)
         }
     }
     useEffect(() => {
         findCities(0, 50)
     }, [])
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        if (e.key === "Enter") {
-            e.preventDefault()
-            registration()
+
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .required('Email is required')
+            .email('Email is invalid'),
+        name: Yup.string()
+            .required('First Name is required')
+            .min(3, 'Name must be at least 3 characters'),
+        firstPassword: Yup.string()
+            .min(6, 'Password must be at least 6 characters')
+            .required('Password is required'),
+        secondPassword: Yup.string()
+            .oneOf([Yup.ref('firstPassword'), null], 'Passwords must match')
+            .required('Confirm Password is required'),
+        isRulesChecked: Yup.boolean()
+            .oneOf([true], 'Rules is required'),
+    });
+    const dispatch = useDispatch()
+    const formOptions = {resolver: yupResolver(validationSchema)};
+    const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
+    const onSubmit = handleSubmit(async data => {
+            const newData: IRigistrationData = {
+                citiesId: arrayCurrentCities,
+                email: data.email,
+                isMaster: data.isMaster,
+                isRulesChecked: data.isRulesChecked,
+                name: data.name,
+                firstPassword: data.firstPassword,
+                secondPassword: data.secondPassword
+            }
+            dispatch(RigistrationAuth(newData))
         }
-    }
-    const handleChangeCheckBox = (func) => {
-        func(prevState => !prevState)
-    }
-
-    const [registration, isLoading, error, setError] = useFetching(async () => {
-        const res = await $api.post(`/auth/registration/`, {
-            firstPassword: firstPassword.value,
-            secondPassword: secondPassword.value,
-            email: email.value,
-            name: name.value,
-            isRulesChecked,
-            isMaster,
-            citiesId: arrayCurrentCities
-        })
-    })
-    return (
-        <div>
-            <div className={s.wrapper}>
-                <Typography variant="h6"
-                            color={'secondary'}
-                            className={s.typography}
-                >Регистрация</Typography>
-                <Input
-                    onKeyDown={(e) => onKeyDown(e)}
-                    value={email.value}
-                    onChange={email.onChange}
-                    placeholder="Email"
-                    color="primary"
-                    inputProps={{'aria-label': 'description'}}
-                    className={s.email}
-                />
-                <Input
-                    onKeyDown={(e) => onKeyDown(e)}
-                    value={name.value}
-                    onChange={name.onChange}
-                    placeholder="Name"
-                    color="primary"
-                    inputProps={{'aria-label': 'description'}}
-                    className={s.name}
-                />
-                <Input
-                    onKeyDown={(e) => onKeyDown(e)}
-                    value={firstPassword.value}
-                    onChange={firstPassword.onChange}
-                    placeholder="Password"
-                    color="primary"
-                    type='password'
-                    inputProps={{'aria-label': 'description'}}
-                    className={s.firstPassword}
-                />
-                <Input
-                    onKeyDown={(e) => onKeyDown(e)}
-                    value={secondPassword.value}
-                    onChange={secondPassword.onChange}
-                    placeholder="Repeat password"
-                    color="primary"
-                    type='password'
-                    inputProps={{'aria-label': 'description'}}
-                    className={s.secondPassword}
-                />
-                <div className={s.checkboxes}>
-                    <FormControlLabel
-                        value="start"
-                        control={<Checkbox checked={isRulesChecked}
-                                           onChange={() => handleChangeCheckBox(setIsRulesChecked)}/>}
-                        label="Agree with the service rules"
-                        labelPlacement="start"
-                    />
-                    <FormControlLabel
-                        value="start"
-                        control={<Checkbox checked={isMaster}
-                                           onChange={() => handleChangeCheckBox(setIsMaster)}/>}
-                        label="I am the clock master"
-                        labelPlacement="start"
-                    />
-                    {isMaster && <CitiesCheckBox cities={cities}
-                                                 arrayCurrentCities={arrayCurrentCities}
-                                                 setArrayCurrentCities={setArrayCurrentCities}
-                    />}
-                </div>
-                <Button variant="contained"
-                        color='primary'
-                        className={s.btn}
-                        disabled={disabledBtn}
-                        onClick={() => registration()}>
-                    Registration
-                </Button>
-                {/*<div className={s.error}>{error}</div>*/}
-            </div>
-        </div>
     );
-};
+    useEffect(() => {
+        setIsSeeCities(value => !value)
+    }, [watch("isMaster")])
 
+    useEffect(() => {
+        if (error?.param) {
+            setError(error.param, {
+                type: "server error",
+                message: error.msg
+            });
+        }
+    }, [error])
+
+    useEffect(() => {
+        switch (role) {
+            case "ADMIN":
+                return history.push('/menu/orders')
+            case "USER":
+                return history.push(`/myOffice/${id}`)
+            case "MASTER":
+                return history.push(`/MyWorkplace/${id}`)
+        }
+
+    }, [id])
+
+    return (
+        <form onSubmit={onSubmit} className={s.wrapper}>
+            <Typography variant="h6"
+                        color={'secondary'}
+                        className={s.typography}
+            >Регистрация</Typography>
+            <InputWithError
+                cn={s.email}
+                type="email"
+                placeholder="Email"
+                reg={register("email")}
+                error={errors.email?.message}/>
+            <InputWithError
+                cn={s.name}
+                type="text"
+                placeholder="Name"
+                reg={register("name")}
+                error={errors.name?.message}/>
+            <InputWithError
+                cn={s.firstPassword}
+                type="password"
+                placeholder="Password"
+                reg={register("firstPassword")}
+                error={errors.firstPassword?.message}/>
+            <InputWithError
+                cn={s.secondPassword}
+                type="password"
+                placeholder="Repeat password"
+                reg={register("secondPassword")}
+                error={errors.secondPassword?.message}/>
+            <div className={s.checkboxes}>
+                <FormControlLabel
+                    control={<Checkbox {...register("isRulesChecked")} />}
+                    labelPlacement="start"
+                    label={errors.isRulesChecked?.message ?
+                        `Agree with the service rules (${errors.isRulesChecked?.message})`
+                        : "Agree with the service rules"}/>
+                <FormControlLabel
+                    control={<Checkbox {...register("isMaster")}/>}
+                    label="I am the clock master"
+                    labelPlacement="start"
+                />
+                {isSeeCities && <CitiesMultySelect cities={cities}
+                                                   setArrayCurrentCities={setArrayCurrentCities}
+                />}
+            </div>
+            <Input type="submit"
+                   color='primary'
+                   className={s.btn}/>
+        </form>
+    );
+}
 export default Registration;

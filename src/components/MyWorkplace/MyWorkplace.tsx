@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
 import $api from "../../http";
 import s from "../../style/MyWorkplace.module.css";
-import {AxiosOrder} from "../Admin/Orders";
+import {AxiosOrder} from "../Admin/Orders/Orders";
 import {setOrders} from "../../actionCreators/workplaseActionCreators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {Input} from "@material-ui/core";
@@ -13,7 +13,7 @@ const MyWorkplace = () => {
     const {masterId} = useParams<{masterId :string}>();
     const {orders}=useTypedSelector(state => state.workplase)
     const {offset, limit, handleChange, changePage, currentPage, isLoading, error, pagesArray, fetching} = usePaginatorWithRedux(async () => {
-        return await $api.get<AxiosOrder>(`/order?offset=${offset}&limit=${limit}&masterId=${masterId}`)
+         return masterId && await $api.get<AxiosOrder>(`/order?offset=${offset}&limit=${limit}&masterId=${masterId}`)
     }, setOrders)
     useEffect(() => {
         fetching()

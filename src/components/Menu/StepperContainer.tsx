@@ -33,7 +33,6 @@ const StepperContainer: React.FC = () => {
             setCurrentDate: setCurrentDate,
         }}>
             <div>
-               {/* <MyStepper/>*/}
                <MyStepper/>
             </div>
         </FormContext.Provider>

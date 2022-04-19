@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {delOneCity} from "../../actionCreators/adminCityActionCreators";
+import {delOneCity} from "../../../actionCreators/adminCityActionCreators";
 import CachedIcon from '@material-ui/icons/Cached';
-import s from "../../style/City.module.css"
-import {useInput} from "../../hooks/useInput";
-import MyAlert from "../utilits/MyAlert";
-import {City} from '../../types/mainInterfacesAndTypes'
-import ChangeCityWithReactHookForm from "./ChangeCityWithReactHookForm";
+import s from "../../../style/City.module.css"
+import {useInput} from "../../../hooks/useInput";
+import MyAlert from "../../utilits/MyAlert";
+import {City} from '../../../types/mainInterfacesAndTypes'
+import ChangeCity from "./ChangeCity";
 
 
 interface CityProps {
@@ -47,12 +47,12 @@ const OneCity: React.FC<CityProps> = ({city, currentPage, isOpen, setIsOpen}) =>
                          text={`Вы точно хотите удалить ${city.cityName} из списка городов`}/>
             </div>
         );
-    } else return (<ChangeCityWithReactHookForm newNameOfCity={newNameOfCity}
-                                                delCity={delCity}
-                                                city={city}
-                                                activateInput={activateInput}
-                                                isOpen={isOpen}
-                                                setIsOpen={setIsOpen}
+    } else return (<ChangeCity newNameOfCity={newNameOfCity}
+                               delCity={delCity}
+                               city={city}
+                               activateInput={activateInput}
+                               isOpen={isOpen}
+                               setIsOpen={setIsOpen}
     />);
 }
 export default OneCity

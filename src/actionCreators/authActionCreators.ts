@@ -95,6 +95,8 @@ export const RigistrationAuth = (data: IRigistrationData) => {
                 payload: {payload: response.data.token}
             })
             dispatch(setRole(response.data.token))
+            dispatch(setAuthEmail(response.data.email))
+            dispatch(setAuthName(response.data.name))
             dispatch(fetchStart(false))
             localStorage.setItem('token', response.data.token);
             dispatch(fetchError(null))

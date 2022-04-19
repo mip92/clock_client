@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
-import s from "../../style/Cities.module.css";
+import s from "../../../style/Cities.module.css";
 import {Button, Input} from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import InputWithError from "../Registration/InputWithError";
+import InputWithError from "../../Registration/InputWithError";
 import {useForm} from "react-hook-form";
 import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {addOneCity} from "../../actionCreators/adminCityActionCreators";
+import {addOneCity} from "../../../actionCreators/adminCityActionCreators";
 import {useDispatch} from "react-redux";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 interface AddCityProps {
     newCity:any,
@@ -16,7 +16,7 @@ interface AddCityProps {
     setPrice : any
 }
 
-const AddCityWithReactHookForm:React.FC<AddCityProps> = ({newCity, price, setPrice}) => {
+const AddCity:React.FC<AddCityProps> = ({newCity, price, setPrice}) => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch=useDispatch()
     const validationSchema = Yup.object().shape({
@@ -74,4 +74,4 @@ const AddCityWithReactHookForm:React.FC<AddCityProps> = ({newCity, price, setPri
     );
 };
 
-export default AddCityWithReactHookForm;
+export default AddCity;
