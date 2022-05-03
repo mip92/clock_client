@@ -26,6 +26,7 @@ const MyStepper: React.FC = () => {
    /* const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setChooseAMasterError] = useFetching(async () => {
         setActiveStep(2)
     })*/
+    const [orderId, setOrderId]=useState<number>()
 
     const sendPicture = async (picture) => {
         try {
@@ -37,6 +38,7 @@ const MyStepper: React.FC = () => {
                 dateTime: dateTime,
                 masterId: currentMaster
             })
+            setOrderId(response1.data.id)
             let formData = new FormData;
             if (picture) {
                 console.log(picture)
@@ -96,7 +98,7 @@ const MyStepper: React.FC = () => {
                                                                 addTempFiles={addTempFiles}
                                                                 />}
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
-                                {activeStep === 2 && <FourthStep setActiveStep={setActiveStep}/>}
+                                {activeStep === 2 && <FourthStep orderId={orderId} setActiveStep={setActiveStep}/>}
                             </StepWrapper>
                             <Grid>
                                {/* {activeStep !== 2 && activeStep !== 0 && */}<div className={s.buttons}>

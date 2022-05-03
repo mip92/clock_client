@@ -10,6 +10,7 @@ import {createRoute} from "./utils/createRoutes";
 import moment from 'moment'
 import MomentUtils from "@date-io/moment";
 import Navbar from "./components/utilits/Navbar";
+import {PayPalScriptProvider} from "@paypal/react-paypal-js";
 
 export const theme = createTheme({
     palette: {
@@ -20,9 +21,7 @@ export const theme = createTheme({
             main: '#f57c00',
         },
     },
-    typography:{
-
-    }
+    typography: {}
 });
 
 
@@ -31,9 +30,10 @@ export interface MyRoute {
     path: string;
     component: JSX.Element
 }
-moment.updateLocale('en',{
-    week:{
-        dow:1
+
+moment.updateLocale('en', {
+    week: {
+        dow: 1
     }
 })
 
@@ -46,36 +46,41 @@ const App: React.FC = () => {
     }, [])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(setRole(token))
-    },[token])
+    }, [token])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         setRoutes(createRoute(role))
-    },[role])
+    }, [role])
 
     const [routes, setRoutes] = useState<MyRoute[]>(createRoute(role))
 
-   /* useEffect(() => {
-        setRoutes(createRoute(role))
-    }, [token])*/
+    /* useEffect(() => {
+         setRoutes(createRoute(role))
+     }, [token])*/
+    const payPalId: string = process.env.REACT_APP_CLIENT_PAYPAL_ID || ''
+    const currency = "USD"
 
     return (
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-            <ThemeProvider theme={theme}>
-                <div className="App">
-                    <Navbar/>
-                    <Switch>
-                        {routes.map((r, key) => <Route key={key}
-                                                       path={r.path}
-                                                       render={() => r.component}
-                                                       exact={r.exact}/>
-                        )}
-                    </Switch>
-                </div>
-            </ThemeProvider>
-        </MuiPickersUtilsProvider>
+        <PayPalScriptProvider options={{"client-id": payPalId, components: "buttons", currency: currency}}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+                <ThemeProvider theme={theme}>
+                    <div className="App">
+                        <Navbar/>
+                        <Switch>
+                            {routes.map((r, key) => <Route key={key}
+                                                           path={r.path}
+                                                           render={() => r.component}
+                                                           exact={r.exact}/>
+                            )}
+                        </Switch>
+                    </div>
+                </ThemeProvider>
+            </MuiPickersUtilsProvider>
+        </PayPalScriptProvider>
+
     );
 }
 
