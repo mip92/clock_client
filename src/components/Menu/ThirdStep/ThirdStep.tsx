@@ -3,15 +3,12 @@ import {Button, Card} from "@material-ui/core";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useHistory} from "react-router-dom";
 import s from "../../../style/FourthStep.module.css";
-import {PayPalContext} from "../../../context/payPalContect";
 
 const ThirdStep = () => {
-    const {currency} = useContext(PayPalContext)
     const history = useHistory();
     const goTo = (path) => {
         history.push(path)
     }
-    const amount = 500
     const {token, id} = useTypedSelector(state => state.auth)
     if (token) {
         return (
