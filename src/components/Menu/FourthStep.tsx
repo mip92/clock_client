@@ -6,7 +6,7 @@ import s from "../../style/FourthStep.module.css";
 import ButtonWrapper from "./PayPal/ButtonWrapper";
 import {PayPalContext} from "../../context/payPalContect";
 
-const FourthStep = ({setActiveStep, orderId}) => {
+const FourthStep = ({setActiveStep, orderId, dealPrice}) => {
     const {currency} = useContext(PayPalContext)
     /*""react-datepicker": "2.14.0",,*/
     const history = useHistory();
@@ -19,7 +19,7 @@ const FourthStep = ({setActiveStep, orderId}) => {
             <div className={s.wrapper}>
                 <Card style={{textAlign: "center"}}>
                     Вам на почту отправлено письмо, подтвердите заказ мастера
-                    <ButtonWrapper currency={currency} amount={50} showSpinner={true} orderId={orderId}/>
+                    <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
                 </Card>
                 <Button variant="contained"
                         color='primary'
@@ -32,6 +32,7 @@ const FourthStep = ({setActiveStep, orderId}) => {
         <div className={s.wrapper}>
             <Card style={{textAlign: "center"}}>
                 Вам на почту отправленно письмо с дальнейшими указаниями
+                <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
             </Card>
             <Button variant="contained"
                     color='primary'

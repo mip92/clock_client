@@ -7,7 +7,6 @@ import s from "../../style/Steper.module.css"
 import {FormContext} from "../../context/formContext";
 import SecondStep from "./SecondStep";
 import {Master} from "../../types/adminMasterTypes";
-import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import FourthStep from "./FourthStep";
@@ -27,6 +26,7 @@ const MyStepper: React.FC = () => {
         setActiveStep(2)
     })*/
     const [orderId, setOrderId]=useState<number>()
+    const [dealPrice, setDealPrice]=useState<number>()
 
     const sendPicture = async (picture) => {
         try {
@@ -39,6 +39,7 @@ const MyStepper: React.FC = () => {
                 masterId: currentMaster
             })
             setOrderId(response1.data.id)
+            setDealPrice(response1.data.dealPrice)
             let formData = new FormData;
             if (picture) {
                 console.log(picture)
@@ -98,7 +99,7 @@ const MyStepper: React.FC = () => {
                                                                 addTempFiles={addTempFiles}
                                                                 />}
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
-                                {activeStep === 2 && <FourthStep orderId={orderId} setActiveStep={setActiveStep}/>}
+                                {activeStep === 2 && <FourthStep dealPrice={dealPrice} orderId={orderId} setActiveStep={setActiveStep}/>}
                             </StepWrapper>
                             <Grid>
                                {/* {activeStep !== 2 && activeStep !== 0 && */}<div className={s.buttons}>
