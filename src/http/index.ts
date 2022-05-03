@@ -18,7 +18,6 @@ $api.interceptors.response.use((config) => {
 }))
 
 $api.interceptors.request.use((config) => {
-    // @ts-ignore
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     return config;
 })

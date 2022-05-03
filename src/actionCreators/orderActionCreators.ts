@@ -9,7 +9,6 @@ import {
     SetOrder
 } from "../types/orderTypes";
 
-
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
         type: OrderActionTypes.FETCH_START,
@@ -36,7 +35,6 @@ export const setOrder = (cityId: number, dateTime, clockSize, email, name, pictu
         }
     }
 }
-
 
 export const fetchCities = (offset: number, limit: number) => {
     return async (dispatch: Dispatch<OrderAction>) => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Master} from "../../types/adminMasterTypes";
-import s from "../../style/FormMaster.module.css";
+import {Master} from "../../../types/adminMasterTypes";
+import s from "../../../style/FormMaster.module.css";
 import {Card} from "@material-ui/core";
 
 interface MasterProps {

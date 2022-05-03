@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from "../../../style/City.module.css";
 import {Button, Input} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
@@ -15,13 +15,11 @@ import {City} from "../../../types/mainInterfacesAndTypes";
 interface ChangeCityProps {
     city: City,
     activateInput: React.Dispatch<React.SetStateAction<boolean>>,
-    delCity: ()=>void,
-    newNameOfCity: any,
-    isOpen:boolean,
-    setIsOpen: any
+    delCity: Function,
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity, isOpen, setIsOpen}) => {
+const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity, setIsOpen}) => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
     const validationSchema = Yup.object().shape({
@@ -61,7 +59,7 @@ const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity, isO
                 reg={register("price")}
                 error={errors.price?.message}/>
             <Button type="submit" color='secondary' className={s.btn}><CheckIcon/></Button>
-            <HighlightOffIcon style={{cursor: "pointer"}} onClick={delCity}/>
+            <HighlightOffIcon style={{cursor: "pointer"}} onClick={()=>delCity}/>
         </form>
     );
 };

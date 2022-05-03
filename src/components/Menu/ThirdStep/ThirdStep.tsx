@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, Card} from "@material-ui/core";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useHistory} from "react-router-dom";
-import s from "../../style/FourthStep.module.css";
+import s from "../../../style/FourthStep.module.css";
+import {PayPalContext} from "../../../context/payPalContect";
 
-const FourthStep = ({setActiveStep}) => {
-    /*""react-datepicker": "2.14.0",,*/
+const ThirdStep = () => {
+    const {currency} = useContext(PayPalContext)
     const history = useHistory();
     const goTo = (path) => {
         history.push(path)
     }
+    const amount = 500
     const {token, id} = useTypedSelector(state => state.auth)
     if (token) {
         return (
@@ -41,4 +43,4 @@ const FourthStep = ({setActiveStep}) => {
 
 };
 
-export default FourthStep;
+export default ThirdStep;

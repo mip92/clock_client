@@ -83,7 +83,7 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Order photos"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"OneOrder photos"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <FormControl component="fieldset">

@@ -2,30 +2,24 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import OneCity from "./OneCity"
-import {addOneCity, fetchCities, setCityName} from "../../../actionCreators/adminCityActionCreators";
+import {fetchCities} from "../../../actionCreators/adminCityActionCreators";
 import s from "../../../style/Cities.module.css";
 import {Input} from "@material-ui/core";
-import {useInput} from "../../../hooks/useInput";
 import MyModal from "../../utilits/MyModal";
 import AddCity from './AddCity';
 
 
 const Cities: React.FC = () => {
     const {cities, pagesArray} = useTypedSelector(state => state.adminCity)
-    const newCity = useInput('')
     const dispatch = useDispatch()
-    const [offset, setOffset] = useState(0)
-    const [limit, setLimit] = useState(5)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [price, setPrice] = useState<number>(0)
-
+    const [offset, setOffset] = useState<number>(0)
+    const [limit, setLimit] = useState<number>(5)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [isOpen ,setIsOpen]=useState<boolean>(false)
 
     useEffect(() => {
         dispatch(fetchCities(offset, limit))
     }, [currentPage, limit])
-    useEffect((): void => {
-        dispatch(setCityName(newCity.value))
-    }, [newCity.value])
 
     const changePage = (page: number) => {
         setOffset(page * limit - limit)
@@ -36,7 +30,6 @@ const Cities: React.FC = () => {
         if (Number(event.target.value) === 0) setLimit(10)
         else setLimit(Number(event.target.value));
     };
-    const [isOpen ,setIsOpen]=useState(false)
 
     return (
         <div>
@@ -67,7 +60,7 @@ const Cities: React.FC = () => {
                 </div>
             </div>
             <MyModal name='Добавить город'>
-                <AddCity newCity={newCity} price={price} setPrice={setPrice}/>
+                <AddCity/>
             </MyModal>
         </div>
     );

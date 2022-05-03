@@ -13,25 +13,22 @@ interface CityProps {
     city: City,
     currentPage: number,
     isOpen:boolean,
-    setIsOpen: any
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const OneCity: React.FC<CityProps> = ({city, currentPage, isOpen, setIsOpen}) => {
     const [isInputActivate, activateInput] = useState<boolean>(false)
     const dispatch = useDispatch()
-    const newNameOfCity = useInput('')
-    const delCity = (): void => {
+    const delCity = () => {
         dispatch(delOneCity(city.id))
     }
 
     const constChangeCityName = (): void => {
         if (!isOpen) {
-            newNameOfCity.changeInput(city.cityName)
             activateInput(true)
             setIsOpen(true)
         }
     }
-
 
     useEffect(() => {
         activateInput(false)
@@ -47,11 +44,9 @@ const OneCity: React.FC<CityProps> = ({city, currentPage, isOpen, setIsOpen}) =>
                          text={`Вы точно хотите удалить ${city.cityName} из списка городов`}/>
             </div>
         );
-    } else return (<ChangeCity newNameOfCity={newNameOfCity}
-                               delCity={delCity}
+    } else return (<ChangeCity delCity={delCity}
                                city={city}
                                activateInput={activateInput}
-                               isOpen={isOpen}
                                setIsOpen={setIsOpen}
     />);
 }

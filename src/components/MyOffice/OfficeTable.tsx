@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {OrderInterface} from "../Admin/Orders/Order";
+import {OrderInterface} from "../Admin/Orders/OneOrder";
 import {Button, Paper, Table, TableContainer, Typography} from "@material-ui/core";
 import Statuses from "./Statuses";
 import {Order} from "../../store/reducers/workplaceReducer";
+import {useSortableData} from "../../hooks/useSortableData";
 
 
 interface active {
@@ -10,40 +11,7 @@ interface active {
     down: boolean
 }
 
-const useSortableData = (items: Order[], config) => {
-    const [sortConfig, setSortConfig] = useState(config);
-    const sortedItems = React.useMemo(() => {
 
-        let sortableItems = [...items];
-        if (sortConfig !== null) {
-            sortableItems.sort((a, b) => {
-                if (a[sortConfig.key] < b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? -1 : 1;
-                }
-                if (a[sortConfig.key] > b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? 1 : -1;
-                }
-                return 0;
-            });
-        }
-        return sortableItems;
-    }, [items, sortConfig]);
-
-    const requestSort = (key, activeSort, setActiveSort) => {
-        //setActiveSort (prevState => ({name:prevState.name, down:!prevState.down}))
-        if (activeSort.name == key) setActiveSort(prevState => ({name: prevState.name, down: !prevState.down}))
-        else if (activeSort.name !== key) setActiveSort({name: key, down: true})
-        let direction = 'ascending';
-        if (
-            sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending'
-        ) {
-            direction = 'descending';
-        }
-        setSortConfig({key, direction});
-    };
-
-    return {items: sortedItems, requestSort, sortConfig};
-};
 
 const getString = (date) => {
     const d = new Date(date)

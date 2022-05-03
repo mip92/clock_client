@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import {City, Time} from "../../types/mainInterfacesAndTypes";
+import {City, Time} from "../../../types/mainInterfacesAndTypes";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

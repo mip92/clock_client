@@ -1,25 +1,31 @@
 import MultilineTextFields from "./MultilineTextFields";
 import React, {useEffect, useState} from "react";
 import {Button, Card} from "@material-ui/core";
-import s from "../../style/FirstStep.module.css"
-import $api from "../../http";
-import {useFetching} from "../../hooks/useFetching";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import RegistrationAlert from "../Registration/RegistrationAlert";
+import s from "../../../style/FirstStep.module.css"
+import $api from "../../../http";
+import {useFetching} from "../../../hooks/useFetching";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
+import RegistrationAlert from "../../Registration/RegistrationAlert";
 import {useDispatch} from "react-redux";
-import {fetchCities, setOrder} from "../../actionCreators/orderActionCreators";
-import InputWithError from "../Registration/InputWithError";
+import {fetchCities, setOrder} from "../../../actionCreators/orderActionCreators";
+import InputWithError from "../../Registration/InputWithError";
 import {useForm} from "react-hook-form";
 import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import ClockSize from "./ClockSize";
 import {FormInputDate} from "./FormInputDate";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
-import {Master} from "../../types/adminMasterTypes";
+import {Master} from "../../../types/adminMasterTypes";
 import FileUploaderContainer from "./FilesUploader/FileUploaderContainer";
 import Files from "./FilesUploader/Files";
 
-const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
+interface FirstStepProps{
+    setMasters: React.Dispatch<React.SetStateAction<Master[]>>,
+    next :Function,
+    tempFiles:File[],
+    addTempFiles: React.Dispatch<React.SetStateAction<File[]>>
+}
+const FirstStep:React.FC<FirstStepProps> = ({setMasters, next, tempFiles, addTempFiles}) => {
     const {token, authName, authEmail} = useTypedSelector(state => state.auth)
     const {cities, time} = useTypedSelector(state => state.order)
     const dispatch = useDispatch()
@@ -39,8 +45,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
         fieldName: Yup.string().required('Date time is required'),
     });
 
-
-    function getKeyByValue(checkbox: string, value: boolean) {
+    function getKeyByValue(checkbox: string) {
         if (checkbox === 'small') return 1
         else if (checkbox === 'middle') return 2
         else if (checkbox === 'big') return 3
@@ -57,7 +62,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
     const {register, getValues, setValue, handleSubmit, watch, formState: {errors}, setError, control} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             try {
-                let clock = getKeyByValue(data.checkbox, true);
+                let clock = getKeyByValue(data.checkbox);
                 let dateWithTime = new Date(data.fieldName)
                 data.currentTime && dateWithTime.setHours(data.currentTime)
                 dateWithTime.setMinutes(0)
@@ -164,7 +169,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                     />
                 </div>
                 <div className={s.pictures}>
-                    <Files imgs={tempFiles}  onDelete={onDelete}/>
+                    <Files pictures={tempFiles}  onDelete={onDelete}/>
                 </div>
                 <div className={s.buttons}>
                     <Button variant="contained"

@@ -11,17 +11,23 @@ import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import InputWithError from "../../Registration/InputWithError";
-import {changeCityName} from "../../../actionCreators/adminCityActionCreators";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
+import {Master} from "../../../types/adminMasterTypes";
+import {City} from "../../../types/mainInterfacesAndTypes";
 
-const ChangeMaster = ({master, activateInput, delMaster, newNameOfMaster, newEmailOfMaster}) => {
-    const arr = []
-    // @ts-ignore
-    master.cities.map(c => arr.push(c.id))
-    const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>(arr)
+interface ChangeMasterProps {
+    master: Master,
+    activateInput: React.Dispatch<React.SetStateAction<boolean>>,
+    delMaster: Function
+}
+
+const ChangeMaster:React.FC<ChangeMasterProps> = ({master, activateInput, delMaster}) => {
     const dispatch = useDispatch()
     const {cities} = useContext(MasterContext)
     const {error}=useTypedSelector(state => state.adminMaster)
+    const citiesId: number[] = []
+    master.cities.map((city:City) => citiesId.push(city.id))
+    const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>(citiesId)
     const validationSchema = Yup.object().shape({
         newNameOfMaster: Yup.string().min(6, 'Master name must be longer than 6 characters')
             .required('Master name is required'),
@@ -63,7 +69,7 @@ const ChangeMaster = ({master, activateInput, delMaster, newNameOfMaster, newEma
     }, [error])
 
     useEffect(() => {
-        if (errors.param = 'citiesId' && errors.value !== arrayCurrentCities) {
+        if (errors.param === 'citiesId' && errors.value !== arrayCurrentCities) {
             dispatch(fetchError(null))
         }
     }, [arrayCurrentCities])

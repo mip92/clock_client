@@ -16,28 +16,31 @@ interface MasterProps {
 }
 
 const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
-    const [current, setCurrent] = useState(1);
-    const [isInputActivate, activateInput] = useState(false)
-
     const dispatch = useDispatch()
+    const [isInputActivate, activateInput] = useState<boolean>(false)
+    //const newNameOfMaster = useInput('')
+    //const newEmailOfMaster = useInput('')
+
     const delMaster = () => {
         dispatch(delOneMaster(master.id))
     }
-    const newNameOfMaster = useInput('')
-    const newEmailOfMaster = useInput('')
+
     const constChangeMasterName = () => {
-        newNameOfMaster.changeInput(master.name)
-        newEmailOfMaster.changeInput(master.email)
+        //newNameOfMaster.changeInput(master.name)
+        //newEmailOfMaster.changeInput(master.email)
         activateInput(true)
     }
+
+    const approveMaster = ()=>{
+        dispatch(approveOneMaster(master.id))
+    }
+
     useEffect(() => {
         activateInput(false)
     }, [currentPage])
+
     if (!master.cities) {
         return <div>Загрузка</div>
-    }
-    const approveMaster = ()=>{
-        dispatch(approveOneMaster(master.id))
     }
     if (!isInputActivate) {
         return (
@@ -49,10 +52,10 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
                     <CachedIcon onClick={constChangeMasterName} style={{cursor: "pointer"}}/>
                     <MyAlert handler={delMaster}
                              text={`Вы точно хотите удалить ${master.name} из списка мастеров`}/>
-                             <Button style={master.isApproved?{backgroundColor:"lightgreen"}:{backgroundColor:"lightpink"}}
+                             {/*<Button style={master.isApproved?{backgroundColor:"lightgreen"}:{backgroundColor:"lightpink"}}
                                      onClick={approveMaster}>
                                  Подтвердить
-                             </Button>
+                             </Button>*/}
                              <ApproveButton isApproved={master.isApproved} approveMaster={approveMaster}/>
                 </div>
             </div>
@@ -61,8 +64,6 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
         master={master}
         activateInput={activateInput}
         delMaster={delMaster}
-        newEmailOfMaster={newEmailOfMaster}
-        newNameOfMaster={newNameOfMaster}
     />
 }
 export default OneMaster

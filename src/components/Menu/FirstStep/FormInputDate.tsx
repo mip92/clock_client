@@ -1,8 +1,5 @@
-import React, {useEffect, useState} from "react";
-import DateFnsUtils from "@date-io/date-fns";
-import { KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
-import {Controller, useForm} from "react-hook-form";
-import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
+import React, {useEffect} from "react";
+import { KeyboardDatePicker} from "@material-ui/pickers";
 const DATE_FORMAT = "dd-MMM-yy";
 
 export const FormInputDate = ({date, setDate, register, getValues, setValue, error}) => {

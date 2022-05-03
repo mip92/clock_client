@@ -1,33 +1,26 @@
-import {Button, Card, Grid, List, ThemeProvider} from '@material-ui/core';
+import {Card, Grid, List, ThemeProvider} from '@material-ui/core';
 import {theme} from "../../App";
 import Typography from "@material-ui/core/Typography";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import StepWrapper from "./StepWrapper";
 import s from "../../style/Steper.module.css"
 import {FormContext} from "../../context/formContext";
-import SecondStep from "./SecondStep";
+import SecondStep from "./SecondStep/SecondStep";
 import {Master} from "../../types/adminMasterTypes";
-import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import FourthStep from "./FourthStep";
-import FirstStep from "./FirstStep";
+import ThirdStep from "./ThirdStep/ThirdStep";
+import FirstStep from "./FirstStep/FirstStep";
 import axios from "axios";
-import {picture} from "../../types/mainInterfacesAndTypes";
-
 
 const MyStepper: React.FC = () => {
     const {currentMaster, date} = useContext(FormContext)
-    const {currentCity, clockSize,dateTime,email,name}=useTypedSelector(state => state.order)
+    const {currentCity, clockSize, dateTime, email, name} = useTypedSelector(state => state.order)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
-    const [tempFiles, addTempFiles] = useState<picture[]>([] as picture[])
-    const [error, setError] = useState<boolean>(false)
-   /* const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setChooseAMasterError] = useFetching(async () => {
-        setActiveStep(2)
-    })*/
+    const [tempFiles, addTempFiles] = useState<File[]>([])
 
-    const sendPicture = async (picture) => {
+    const sendPicture = async (pictures: File[]) => {
         try {
             const response1 = await $api.post(`/order/`, {
                 email: email,
@@ -38,12 +31,9 @@ const MyStepper: React.FC = () => {
                 masterId: currentMaster
             })
             let formData = new FormData;
-            if (picture) {
-                console.log(picture)
-                for (let i = 0; i < picture.length; i++) {
-                    formData.append(`picture${i}`, picture[i]);
-                }
-            }
+            pictures && pictures.forEach((picture, index) => {
+                formData.append(`picture${index}`, picture);
+            })
             const response2 = await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
                 formData, {
                     headers: {
@@ -51,7 +41,7 @@ const MyStepper: React.FC = () => {
                     }
                 })
             setActiveStep(2)
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
     }
@@ -72,12 +62,12 @@ const MyStepper: React.FC = () => {
         //else if(activeStep === 2) sendPicture(tempFiles)
     }
 
-    function getKeyByValue(object: any, value: boolean) {
+    /*function getKeyByValue(object: any, value: boolean) {
         let v = Object.keys(object).find(key => object[key] === value);
         if (v === 'small') return 1
         if (v === 'middle') return 2
         if (v === 'big') return 3
-    }
+    }*/
 
     const steps: string[] = ["Форма", "Выбор мастере", "Подтверждение заказа"]
     return (
@@ -94,12 +84,13 @@ const MyStepper: React.FC = () => {
                                 {activeStep === 0 && <FirstStep next={next} setMasters={setMasters}
                                                                 tempFiles={tempFiles}
                                                                 addTempFiles={addTempFiles}
-                                                                />}
+                                />}
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
-                                {activeStep === 2 && <FourthStep setActiveStep={setActiveStep}/>}
+                                {activeStep === 2 && <ThirdStep/>}
                             </StepWrapper>
                             <Grid>
-                               {/* {activeStep !== 2 && activeStep !== 0 && */}<div className={s.buttons}>
+                                {/* {activeStep !== 2 && activeStep !== 0 && */}
+                                <div className={s.buttons}>
                                     {/*<Button variant="contained"
                                             color='primary'
                                             disabled={activeStep === 0}

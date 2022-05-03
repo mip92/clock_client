@@ -20,7 +20,7 @@
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "react": "^17.0.2",
-
+    "@paypal/react-paypal-js": "^7.6.0",
     "react-datepicker": "^4.7.0",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.29.0",

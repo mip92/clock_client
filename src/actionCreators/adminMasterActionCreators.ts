@@ -7,11 +7,9 @@ import {
     FetchErrorAction, Master,
     SetMasterNameAction, SetMastersAction
 } from "../types/adminMasterTypes";
-import {AuthAction, AuthActionTypes} from "../types/authTypes";
+import {AuthAction} from "../types/authTypes";
 import $api from "../http";
 import {MyError} from "../types/mainInterfacesAndTypes";
-
-
 
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
@@ -54,12 +52,14 @@ export const fetchMasters = () => {
         }
     }
 }
+
 export const setMaster = (masters: Master[]):  SetMastersAction=> {
     return {
         type: AdminMastersActionTypes.SET_MASTERS,
         payload: {payload:masters}
     }
 }
+
 export const delOneMaster = (id: number) => {
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
@@ -149,7 +149,7 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
         try {
             const citiesId=JSON.stringify(arrayCurrentCities)
             dispatch(fetchStart(true))
-            const response = await $api.post(`/masters/`, {name, email, citiesId:citiesId})
+            await $api.post(`/masters/`, {name, email, citiesId:citiesId})
 /*            dispatch({
                 type: AdminMastersActionTypes.ADD_MASTER,
                 payload: {payload:response.data},
@@ -166,7 +166,7 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
                 })
             }*/
             let error: MyError
-            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
+            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')===true)  error = JSON.parse(e.request.responseText).errors[0]
             else error = JSON.parse(JSON.parse(e.request.responseText).message)
             console.log(error)
             dispatch(fetchError(error))
@@ -177,7 +177,8 @@ export const changeMaster = (id:number, name:string, email:string, cities_id:num
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.put(`/masters/`, {id,name,email,citiesId:String(cities_id)})
+            const citiesId=JSON.stringify(cities_id)
+            const response = await $api.put(`/masters/`, {id,name,email,citiesId/*:String(cities_id)*/})
             dispatch({
                 type: AdminMastersActionTypes.CHANGE_MASTER_NAME,
                 master:{payload: response.data}
@@ -186,7 +187,7 @@ export const changeMaster = (id:number, name:string, email:string, cities_id:num
             activateInput(false)
         } catch (e) {
             let error: MyError
-            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
+            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')===true)  error = JSON.parse(e.request.responseText).errors[0]
             else error = JSON.parse(JSON.parse(e.request.responseText).message)
             console.log(error)
             dispatch(fetchError(error))

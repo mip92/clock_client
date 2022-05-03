@@ -34,7 +34,7 @@ export const fetchCities = (offset: number, limit: number) => {
     return async (dispatch: Dispatch<AdminCitiesAction>) => {
         try {
             dispatch(fetchStart(true))
-            let response = await $api.get(`/cities?offset=${offset}&limit=${limit}`)
+            const response = await $api.get(`/cities?offset=${offset}&limit=${limit}`)
             dispatch({
                 type: AdminCitiesActionTypes.FETCH_CITIES,
                 payload: {
@@ -90,7 +90,7 @@ export const addOneCity = (city: string, price: number) => {
         } catch (e) {
             dispatch(fetchStart(false))
             let error: MyError
-            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
+            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')===true)  error = JSON.parse(e.request.responseText).errors[0]
             else error = JSON.parse(e.request.responseText)
             dispatch(fetchError(error))
         }

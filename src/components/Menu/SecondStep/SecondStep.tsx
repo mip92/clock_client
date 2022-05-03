@@ -1,9 +1,9 @@
 import React, {useContext} from "react";
 import {Button, Card} from "@material-ui/core";
-import s from "../../style/SecondStep.module.css"
-import {Master} from "../../types/adminMasterTypes";
+import s from "../../../style/SecondStep.module.css"
+import {Master} from "../../../types/adminMasterTypes";
 import FormMaster from "./FormMaster";
-import {FormContext} from "../../context/formContext";
+import {FormContext} from "../../../context/formContext";
 
 interface MastersProps {
     masters: Master[],

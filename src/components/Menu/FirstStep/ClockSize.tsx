@@ -1,6 +1,6 @@
 import React from 'react';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
-import s from "../../style/ClockSize.module.css"
+import s from "../../../style/ClockSize.module.css"
 import Typography from "@material-ui/core/Typography";
 import {Card} from "@material-ui/core";
 

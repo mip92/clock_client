@@ -10,19 +10,13 @@ import {addOneCity} from "../../../actionCreators/adminCityActionCreators";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
-interface AddCityProps {
-    newCity:any,
-    price: number,
-    setPrice : any
-}
-
-const AddCity:React.FC<AddCityProps> = ({newCity, price, setPrice}) => {
+const AddCity:React.FC = () => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch=useDispatch()
     const validationSchema = Yup.object().shape({
         city: Yup.string().min(3, 'City name must be longer than 3 characters')
             .required('City name is required'),
-        price: Yup.number()/*.required('Price of city is required').positive().integer(),*/
+        price: Yup.number().required('Price of city is required').positive().integer()
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
@@ -33,23 +27,12 @@ const AddCity:React.FC<AddCityProps> = ({newCity, price, setPrice}) => {
 
     useEffect(() => {
         if (error?.param) {
-            console.log(456)
             setError(error.param, {
                 type: "server error",
                 message: error.msg
             });
         }
     }, [error])
-
-    /*const addCity = (): void => {
-        dispatch(addOneCity(newCity.value, price))
-        newCity.changeInput('')
-    }*/
-
-    /*const handlerChangePrice = (e) => {
-        if (e.target.value < 1) setPrice(1)
-        else setPrice(e.target.value)
-    }*/
 
     return (
         <div>

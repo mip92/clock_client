@@ -7,7 +7,7 @@ import {
     createStyles,
     Theme,
     useTheme,
-    Input, Chip, MenuItem, Button
+    Input, Chip, MenuItem
 } from "@material-ui/core";
 import {City} from "../../../types/mainInterfacesAndTypes";
 import {Controller, useForm} from "react-hook-form";

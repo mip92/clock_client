@@ -1,17 +1,16 @@
 import React from 'react';
-import {picture} from "../../../types/mainInterfacesAndTypes";
+import {picture} from "../../../../types/mainInterfacesAndTypes";
 
 interface IFileUploadProps {
     accept: string;
     addTempFiles: Function;
-    tempFiles: picture[]
 }
 
-const FilesUpload: React.FC<IFileUploadProps> = ({ tempFiles, addTempFiles, accept, children}) => {
+const FilesUpload: React.FC<IFileUploadProps> = ({addTempFiles, accept, children}) => {
     const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = Object.keys(e != null && e.target != null && e.target.files != null && e.target.files).map((i) => e != null && e.target != null && e.target.files != null && e.target.files[i]);
+        const files: File[] = Object.keys(e != null && e.target != null && e.target.files != null && e.target.files).map((i) => e != null && e.target != null && e.target.files != null && e.target.files[i]);
         addTempFiles(files)
         e.target.value = '';
     }

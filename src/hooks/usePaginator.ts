@@ -1,20 +1,18 @@
 import React, {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
-import {MyError} from "../types/mainInterfacesAndTypes";
-import $api from "../http";
 
 export const usePaginator = (func) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
-    const [offset, setOffset] = useState(0)
-    const [limit, setLimit] = useState(3)
+    const [offset, setOffset] = useState<number>(0)
+    const [limit, setLimit] = useState<number>(3)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [objects, setObjects] = useState<any>([{}])
+    const [pagesArray, setPagesArray] = useState<Array<number>>([])
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (Number(event.target.value) === 0) setLimit(10)
         else setLimit(Number(event.target.value));
     };
-    const [currentPage, setCurrentPage] = useState(1)
-    const [objects, setObjects] = useState<any>([{}])
-    const [pagesArray, setPagesArray] = useState<Array<number>>([])
     const changePage = (page: number) => {
         setOffset(page * limit - limit)
         setCurrentPage(page)
@@ -44,7 +42,7 @@ export const usePaginator = (func) => {
             setPagesArray(pa)
         })
         p.catch(e => {
-                console.log(e)
+                //console.log(e)
                 if (e.response.data.message) setError(e.response.data.message);
                 else setError(e.message);
             }
