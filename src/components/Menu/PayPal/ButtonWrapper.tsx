@@ -1,5 +1,7 @@
 import React, {useEffect} from "react";
 import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
+import axios from "axios";
+import $api from "../../../http";
 
 const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
     const style = {"layout": "vertical"};
@@ -34,9 +36,13 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
                                 },
                             ],
                         })
-                        .then((orderId) => {
-                            console.log(orderId)
-                            return orderId;
+                        .then((payPalOrderId) => {
+                            $api.post(`http://localhost:5000/api/payPal/created/${orderId}`, {
+                                payPalOrderId
+                            }).then((response) => {
+                                console.log(response.data.message)
+                            })
+                            return payPalOrderId;
                         });
                 }}
                 // @ts-ignore
