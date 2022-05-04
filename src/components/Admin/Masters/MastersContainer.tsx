@@ -5,9 +5,6 @@ import {City} from "../../../types/mainInterfacesAndTypes";
 import {useFetching} from "../../../hooks/useFetching";
 import $api from "../../../http";
 
-
-
-
 interface AxiosCityResponse{
     count: number,
     rows: City[]

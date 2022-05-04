@@ -1,25 +1,26 @@
 .wrapper {
     display: grid;
-
-   /* grid-template-columns: 200px 200px 200px 70px 70px 100px;*/
-
-    grid-template-columns: 200px 200px 200px 70px 70px 120px;
+    grid-template-columns: 120px 270px 200px 70px 70px 130px;
 }
 .page_wrapper{
     margin-top: 20px;
     display: flex;
 }
-.page{
+.page, .limit{
     padding: 5px;
     border: 1px solid #f57c00;
     cursor: pointer;
 }
-.page_current{
+.page_current, .page_limit{
     padding: 5px;
     cursor: pointer;
     background: #f57c00;
     font-weight: bold;
+    border-top: 50px;
 }
 .error{
     color:red
+}
+.button{
+    margin-top: 10px;
 }

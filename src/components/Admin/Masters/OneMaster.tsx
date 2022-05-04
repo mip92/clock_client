@@ -49,10 +49,6 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
                     <CachedIcon onClick={constChangeMasterName} style={{cursor: "pointer"}}/>
                     <MyAlert handler={delMaster}
                              text={`Вы точно хотите удалить ${master.name} из списка мастеров`}/>
-                             <Button style={master.isApproved?{backgroundColor:"lightgreen"}:{backgroundColor:"lightpink"}}
-                                     onClick={approveMaster}>
-                                 Подтвердить
-                             </Button>
                              <ApproveButton isApproved={master.isApproved} approveMaster={approveMaster}/>
                 </div>
             </div>
