@@ -21,7 +21,6 @@ interface MastersProps {
 
 const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
     const {masters} = useTypedSelector(state => state.adminMaster)
-    //const {cities} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
     const {
         offset,
@@ -39,7 +38,7 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
         setSelect,
         select
     } = usePaginatorWithReduxLimit(async () => {
-        return await $api.get(`/masters?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&cities=${currentArray}`)
+        return await $api.get(`/masters?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&cities=${currentArray}&filter=${inputValue}`)
     }, setMaster)
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     useEffect(() => {
