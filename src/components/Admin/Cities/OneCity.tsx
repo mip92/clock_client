@@ -8,15 +8,12 @@ import MyAlert from "../../utilits/MyAlert";
 import {City} from '../../../types/mainInterfacesAndTypes'
 import ChangeCity from "./ChangeCity";
 
-
 interface CityProps {
     city: City,
     currentPage: number,
-    isOpen:boolean,
-    setIsOpen: any
 }
 
-const OneCity: React.FC<CityProps> = ({city, currentPage, isOpen, setIsOpen}) => {
+const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
     const [isInputActivate, activateInput] = useState<boolean>(false)
     const dispatch = useDispatch()
     const newNameOfCity = useInput('')
@@ -25,11 +22,11 @@ const OneCity: React.FC<CityProps> = ({city, currentPage, isOpen, setIsOpen}) =>
     }
 
     const constChangeCityName = (): void => {
-        if (!isOpen) {
+      //  if (!isOpen) {
             newNameOfCity.changeInput(city.cityName)
             activateInput(true)
-            setIsOpen(true)
-        }
+     /*       setIsOpen(true)
+        }*/
     }
 
 
@@ -51,8 +48,7 @@ const OneCity: React.FC<CityProps> = ({city, currentPage, isOpen, setIsOpen}) =>
                                delCity={delCity}
                                city={city}
                                activateInput={activateInput}
-                               isOpen={isOpen}
-                               setIsOpen={setIsOpen}
+
     />);
 }
 export default OneCity

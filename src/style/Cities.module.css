@@ -4,7 +4,7 @@
 }
 .title{
     display: grid;
-    grid-template-columns: 200px 100px 100px 70px;
+    grid-template-columns: 200px 130px 100px 70px;
 }
 .page_wrapper{
     margin-top: 20px;

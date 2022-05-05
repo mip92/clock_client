@@ -3,12 +3,13 @@ import {
     AdminCitiesAction,
     AdminCitiesActionTypes,
     FetchAction,
-    FetchErrorAction,
+    FetchErrorAction, SetCitiesAction,
     SetCityNameAction
 } from "../types/adminCityTypes";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import $api from "../http";
-import {MyError} from "../types/mainInterfacesAndTypes";
+import {City, MyError} from "../types/mainInterfacesAndTypes";
+import {AdminMastersActionTypes, Master, SetMastersAction} from "../types/adminMasterTypes";
 
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
@@ -27,6 +28,13 @@ export const setCityName = (cityName: string): SetCityNameAction => {
     return {
         type: AdminCitiesActionTypes.SET_CITY_NAME,
         payload: {payload: cityName}
+    }
+}
+
+export const setCities = (cities: City[]):  SetCitiesAction=> {
+    return {
+        type: AdminCitiesActionTypes.SET_CITIES,
+        payload: {payload:cities}
     }
 }
 
@@ -96,7 +104,7 @@ export const addOneCity = (city: string, price: number) => {
         }
     }
 }
-export const changeCityName = (id: number, city: string, price: number, activateInput:any, setIsOpen:any) => {
+export const changeCityName = (id: number, city: string, price: number, activateInput:any) => {
     return async (dispatch: Dispatch<AdminCitiesAction>) => {
         try {
             dispatch(fetchStart(true))
@@ -108,7 +116,7 @@ export const changeCityName = (id: number, city: string, price: number, activate
             dispatch(fetchStart(false))
             dispatch(fetchError(null))
             activateInput(false)
-            setIsOpen(false)
+           // setIsOpen(false)
         } catch (e) {
             dispatch(fetchStart(false))
             const error: MyError= JSON.parse(e.request.responseText).errors[0]

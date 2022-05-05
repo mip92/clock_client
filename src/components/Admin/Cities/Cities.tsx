@@ -1,18 +1,43 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import OneCity from "./OneCity"
-import {addOneCity, fetchCities, setCityName} from "../../../actionCreators/adminCityActionCreators";
+import {setCities} from "../../../actionCreators/adminCityActionCreators";
 import s from "../../../style/Cities.module.css";
-import {Input} from "@material-ui/core";
-import {useInput} from "../../../hooks/useInput";
+import {Button, Input} from "@material-ui/core";
 import MyModal from "../../utilits/MyModal";
 import AddCity from './AddCity';
+import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
+import $api from "../../../http";
+import {setMaster, setMasterName} from "../../../actionCreators/adminMasterActionCreators";
+import {useDispatch} from "react-redux";
 
 
 const Cities: React.FC = () => {
-    const {cities, pagesArray} = useTypedSelector(state => state.adminCity)
-    const newCity = useInput('')
+    const dispatch = useDispatch()
+    const {cities} = useTypedSelector(state => state.adminCity)
+    const {
+        offset,
+        changePage,
+        currentPage,
+        isLoading,
+        error,
+        pagesArray,
+        fetching,
+        limitArray,
+        currentLimit,
+        changeLimit,
+        sortBy,
+        select,
+        inputValue,
+        setInputValue,
+        sortHandler
+    } = usePaginatorWithReduxLimit(async () => {
+        return await $api.get(`/cities?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filter=${inputValue}`)
+    }, setCities, "cityName")
+    useEffect(() => {
+        fetching()
+    }, [currentLimit, currentPage, sortBy, select])
+    /*const newCity = useInput('')
     const dispatch = useDispatch()
     const [offset, setOffset] = useState(0)
     const [limit, setLimit] = useState(5)
@@ -36,39 +61,50 @@ const Cities: React.FC = () => {
         if (Number(event.target.value) === 0) setLimit(10)
         else setLimit(Number(event.target.value));
     };
-    const [isOpen ,setIsOpen]=useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const sortHandler = (value: string) => {
 
+    }*/
     return (
         <div>
             <h3>Список городов</h3>
+            <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+            <Button onClick={() => fetching()}>Выбрать фильтры</Button>
             <div className={s.title}>
-                <div>Название города</div>
-                <div>Цена за час</div>
+                <Button onClick={() => sortHandler('cityName')}>
+                    Название города{sortBy == 'cityName' && select == "ASC" ? '▲' : '▼'}
+                </Button>
+                <Button onClick={() => sortHandler('price')}>
+                    Цена за час{sortBy == 'price' && select == "ASC" ? '▲' : '▼'}
+                </Button>
                 <div>Редактировать</div>
                 <div>Удалить</div>
             </div>
             <div>
-                {cities && cities.map((c, key) => <OneCity isOpen={isOpen} setIsOpen={setIsOpen} currentPage={currentPage} key={key} city={c}/>)}
+                {cities && cities.map((c, key) => <OneCity
+                                                           currentPage={currentPage} key={key} city={c}/>)}
                 <div className={s.page_wrapper}>
-                    {pagesArray.map((p, key) => <span
-                        className={currentPage === p ? s.page_current : s.page}
-                        key={key}
-                        onClick={() => changePage(p)}
-                    >{p}</span>)}
+                    {
+                        pagesArray.map((p: number, key: React.Key) => <span
+                            className={currentPage === p ? s.page_current : s.page}
+                            key={key}
+                            onClick={() => changePage(p)}
+                        >{p}</span>)
+                    }
                     <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
-                    <Input
-                        style={{width: 20}}
-                        value={limit}
-                        onChange={handleChange}
-                        placeholder="Городов в поле"
-                        color="primary"
-                        inputProps={{'aria-label': 'description'}}
-                    />
+
+                    {
+                        limitArray.map((l, key: React.Key) => <span
+                            className={currentLimit === l ? s.page_limit : s.limit}
+                            key={key}
+                            onClick={() => changeLimit(l)}
+                        >{l}</span>)
+                    }
+                    <MyModal name='Добавить город'>
+                        <AddCity/>
+                    </MyModal>
                 </div>
             </div>
-            <MyModal name='Добавить город'>
-                <AddCity newCity={newCity} price={price} setPrice={setPrice}/>
-            </MyModal>
         </div>
     );
 }

@@ -10,13 +10,7 @@ import {addOneCity} from "../../../actionCreators/adminCityActionCreators";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
-interface AddCityProps {
-    newCity:any,
-    price: number,
-    setPrice : any
-}
-
-const AddCity:React.FC<AddCityProps> = ({newCity, price, setPrice}) => {
+const AddCity:React.FC = () => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch=useDispatch()
     const validationSchema = Yup.object().shape({

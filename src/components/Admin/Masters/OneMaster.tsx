@@ -16,7 +16,6 @@ interface MasterProps {
 }
 
 const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
-    const [current, setCurrent] = useState(1);
     const [isInputActivate, activateInput] = useState(false)
 
     const dispatch = useDispatch()
