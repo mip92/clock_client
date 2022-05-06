@@ -1,6 +1,6 @@
 .wrapper {
      display: grid;
-     grid-template-columns: 140px 270px 200px 70px 70px 150px;
+     grid-template-columns: 140px 270px 100px 70px 70px 150px;
  }
 .page_wrapper{
     margin-top: 20px;
@@ -24,15 +24,10 @@
 .button{
     margin-top: 10px;
 }
-/*.timelineItem {
-    height:400px;
-    margin-top: 0px;
-    width: 900px;
-}*/
 .timelineItem {
     background: #fff;
     border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-    width: 900px;
+    width: 800px;
 }
 
 @keyframes placeHolderShimmer {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import OneCity from "./OneCity"
 import {setCities} from "../../../actionCreators/adminCityActionCreators";
@@ -8,7 +8,6 @@ import MyModal from "../../utilits/MyModal";
 import AddCity from './AddCity';
 import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
 import $api from "../../../http";
-import {setMaster, setMasterName} from "../../../actionCreators/adminMasterActionCreators";
 import {useDispatch} from "react-redux";
 
 
@@ -68,42 +67,51 @@ const Cities: React.FC = () => {
     return (
         <div>
             <h3>Список городов</h3>
-            <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-            <Button onClick={() => fetching()}>Выбрать фильтры</Button>
-            <div className={s.title}>
-                <Button onClick={() => sortHandler('cityName')}>
-                    Название города{sortBy == 'cityName' && select == "ASC" ? '▲' : '▼'}
-                </Button>
-                <Button onClick={() => sortHandler('price')}>
-                    Цена за час{sortBy == 'price' && select == "ASC" ? '▲' : '▼'}
-                </Button>
-                <div>Редактировать</div>
-                <div>Удалить</div>
-            </div>
             <div>
-                {cities && cities.map((c, key) => <OneCity
-                                                           currentPage={currentPage} key={key} city={c}/>)}
-                <div className={s.page_wrapper}>
-                    {
-                        pagesArray.map((p: number, key: React.Key) => <span
-                            className={currentPage === p ? s.page_current : s.page}
-                            key={key}
-                            onClick={() => changePage(p)}
-                        >{p}</span>)
-                    }
-                    <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
-
-                    {
-                        limitArray.map((l, key: React.Key) => <span
-                            className={currentLimit === l ? s.page_limit : s.limit}
-                            key={key}
-                            onClick={() => changeLimit(l)}
-                        >{l}</span>)
-                    }
-                    <MyModal name='Добавить город'>
-                        <AddCity/>
-                    </MyModal>
+                <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
+                <div className={s.title}>
+                    <Button onClick={() => sortHandler('cityName')}>
+                        Название города{sortBy == 'cityName' && select == "ASC" ? '▲' : '▼'}
+                    </Button>
+                    <Button onClick={() => sortHandler('price')}>
+                        Цена за час{sortBy == 'price' && select == "ASC" ? '▲' : '▼'}
+                    </Button>
+                    <div>Редактировать</div>
+                    <div>Удалить</div>
                 </div>
+                {!cities || isLoading ?
+                    <div>
+                        <div className={s.timelineItem}>
+                            <div className={s.animatedBackground}>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    <div>
+                        {cities && cities.map((c, key) => <OneCity
+                            currentPage={currentPage} key={key} city={c}/>)}
+                    </div>
+                }
+            </div>
+            {
+                pagesArray.map((p: number, key: React.Key) => <span
+                    className={currentPage === p ? s.page_current : s.page}
+                    key={key}
+                    onClick={() => changePage(p)}
+                >{p}</span>)
+            }
+            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+            {limitArray.map((l, key: React.Key) => <span
+                className={currentLimit === l ? s.page_limit : s.limit}
+                key={key}
+                onClick={() => changeLimit(l)}
+            >{l}</span>)
+            }
+            <div className={s.button}>
+                <MyModal name='Добавить город'>
+                    <AddCity/>
+                </MyModal>
             </div>
         </div>
     );

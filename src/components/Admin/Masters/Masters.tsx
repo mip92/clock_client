@@ -111,7 +111,6 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                 >{p}</span>)
             }
             <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
-
             {
                 limitArray.map((l, key: React.Key) => <span
                     className={currentLimit === l ? s.page_limit : s.limit}
@@ -125,7 +124,6 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                 </MyModal>
             </div>
         </div>
-    )
-        ;
+    );
 }
 export default Masters

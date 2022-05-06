@@ -8,7 +8,6 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [offset, setOffset] = useState(0)
-    const [limit, setLimit] = useState(10)
     const [select, setSelect]=useState('ASC')
     const limitArray = [10, 25, 50]
     const [currentLimit, changeLimit] = useState<number>(limitArray[0])
@@ -17,11 +16,11 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
     const [pagesArray, setPagesArray] = useState<Array<number>>([])
     const [inputValue, setInputValue]=useState<string>('')
     const sortHandler = (value: string) => {
-        if (value === sortBy) select == "ASC" ? setSelect("DESC") : setSelect("ASC")
+        /*if (value === sortBy)*/ select == "ASC" ? setSelect("DESC") : setSelect("ASC")
         setSortBy(value)
     }
     const changePage = (page: number) => {
-        setOffset(page * limit - limit)
+        setOffset(page * currentLimit - currentLimit)
         setCurrentPage(page)
     }
     const fetching = async (...args: any[]): Promise<void> => {
@@ -29,9 +28,9 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
             setIsLoading(true)
             const res = await callback(args)
             setIsLoading(false)
-            // @ts-ignore
+
             dispatch(ActionCreatorFind(res.data.rows))
-            let tp: number = getPageCount(res.data.count, limit)
+            let tp: number = getPageCount(res.data.count, currentLimit)
             let pa: Array<number> = getPagesArray(tp)
             setPagesArray(pa)
         } catch (e) {

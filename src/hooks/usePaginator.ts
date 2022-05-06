@@ -1,25 +1,28 @@
 import React, {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {MyError} from "../types/mainInterfacesAndTypes";
-import $api from "../http";
 
-export const usePaginator = (func) => {
+export const usePaginator = (func, initialSortBy:string) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<MyError>();
     const [offset, setOffset] = useState(0)
-    const [limit, setLimit] = useState(3)
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (Number(event.target.value) === 0) setLimit(10)
-        else setLimit(Number(event.target.value));
-    };
+    const limitArray = [10, 25, 50]
+    const [select, setSelect]=useState('ASC')
+    const [currentLimit, changeLimit] = useState<number>(limitArray[0])
     const [currentPage, setCurrentPage] = useState(1)
     const [objects, setObjects] = useState<any>([{}])
     const [pagesArray, setPagesArray] = useState<Array<number>>([])
+    const [sortBy, setSortBy] = useState<string>(initialSortBy)
+    const [inputValue, setInputValue]=useState<string>('')
+    const sortHandler = (value: string) => {
+        /*if (value === sortBy)*/ select == "ASC" ? setSelect("DESC") : setSelect("ASC")
+        setSortBy(value)
+    }
     const changePage = (page: number) => {
-        setOffset(page * limit - limit)
+        setOffset(page * currentLimit - currentLimit)
         setCurrentPage(page)
     }
-    const deLObject = (id: number) => {
+    const delObject = (id: number) => {
         let result = objects.filter(function (item: any) {
             return item.id !== id
         })
@@ -39,7 +42,7 @@ export const usePaginator = (func) => {
         setIsLoading(true)
         const p = func().then((res) => {
             setObjects(res.data.rows)
-            let tp: number = getPageCount(res.data.count, limit)
+            let tp: number = getPageCount(res.data.count, currentLimit)
             let pa: Array<number> = getPagesArray(tp)
             setPagesArray(pa)
         })
@@ -51,6 +54,24 @@ export const usePaginator = (func) => {
         )
     }
 
-    return [offset, limit, handleChange, changePage, currentPage, objects, isLoading, error, pagesArray, fetching, deLObject, updateObject]
+    return { offset,
+        changePage,
+        currentPage,
+        isLoading,
+        error,
+        pagesArray,
+        fetching,
+        limitArray,
+        currentLimit,
+        changeLimit,
+        sortBy,
+        select,
+        inputValue,
+        setInputValue,
+        sortHandler,
+        objects,
+        delObject,
+        updateObject
+    }
 
 }

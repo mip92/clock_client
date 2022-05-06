@@ -62,10 +62,6 @@ const ChangeUser = ({deleteUser, user, activateInput, updateUser, error}) => {
                 placeholder="email"
                 reg={register("newEmailOfUser")}
                 error={errors.newEmailOfUser?.message}/>
-            <div className={s.role}>
-                {user.role}
-            </div>
-
             <Button className={s.btn} style={{cursor: "pointer"}} type='submit'>
                 <CheckIcon/>
             </Button>
