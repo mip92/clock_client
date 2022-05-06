@@ -2,21 +2,21 @@ import React, {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {useDispatch} from "react-redux";
 
-
 export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, initialSortBy) => {
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [offset, setOffset] = useState(0)
-    const [select, setSelect]=useState('ASC')
+    const [select, setSelect] = useState<"ASC" | "DESC">('ASC')
     const limitArray = [10, 25, 50]
     const [currentLimit, changeLimit] = useState<number>(limitArray[0])
     const [sortBy, setSortBy] = useState<string>(initialSortBy)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [pagesArray, setPagesArray] = useState<Array<number>>([])
-    const [inputValue, setInputValue]=useState<string>('')
+    const [inputValue, setInputValue] = useState<string>('')
     const sortHandler = (value: string) => {
-        /*if (value === sortBy)*/ select == "ASC" ? setSelect("DESC") : setSelect("ASC")
+        /*if (value === sortBy)*/
+        select == "ASC" ? setSelect("DESC") : setSelect("ASC")
         setSortBy(value)
     }
     const changePage = (page: number) => {

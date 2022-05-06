@@ -2,20 +2,21 @@ import React, {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {MyError} from "../types/mainInterfacesAndTypes";
 
-export const usePaginator = (func, initialSortBy:string) => {
+export const usePaginator = (func, initialSortBy: string) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<MyError>();
     const [offset, setOffset] = useState(0)
     const limitArray = [10, 25, 50]
-    const [select, setSelect]=useState('ASC')
+    const [select, setSelect] = useState<"ASC" | "DESC">('ASC')
     const [currentLimit, changeLimit] = useState<number>(limitArray[0])
     const [currentPage, setCurrentPage] = useState(1)
     const [objects, setObjects] = useState<any>([{}])
     const [pagesArray, setPagesArray] = useState<Array<number>>([])
     const [sortBy, setSortBy] = useState<string>(initialSortBy)
-    const [inputValue, setInputValue]=useState<string>('')
+    const [inputValue, setInputValue] = useState<string>('')
     const sortHandler = (value: string) => {
-        /*if (value === sortBy)*/ select == "ASC" ? setSelect("DESC") : setSelect("ASC")
+        /*if (value === sortBy)*/
+        select == "ASC" ? setSelect("DESC") : setSelect("ASC")
         setSortBy(value)
     }
     const changePage = (page: number) => {
@@ -45,16 +46,19 @@ export const usePaginator = (func, initialSortBy:string) => {
             let tp: number = getPageCount(res.data.count, currentLimit)
             let pa: Array<number> = getPagesArray(tp)
             setPagesArray(pa)
+            setIsLoading(false)
+            p.catch(e => {
+                    console.log(e)
+                    if (e.response.data.message) setError(e.response.data.message);
+                    else setError(e.message);
+                }
+            )
         })
-        p.catch(e => {
-                console.log(e)
-                if (e.response.data.message) setError(e.response.data.message);
-                else setError(e.message);
-            }
-        )
     }
 
-    return { offset,
+
+    return {
+        offset,
         changePage,
         currentPage,
         isLoading,

@@ -1,17 +1,10 @@
 import React, {useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem} from '@material-ui/core'
-//import AppBar from '@mui/material/AppBar';
-//import Box from '@mui/material/Box';
-//import Toolbar from '@mui/material/Toolbar';
-//import Typography from '@mui/material/Typography';
-//import Container from '@mui/material/Container';
-//import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {AccountCircle} from "@material-ui/icons";
-import {setNavbarPages} from "../../actionCreators/navbarActionCreators";
 import {logout} from "../../actionCreators/authActionCreators";
 
 const Navbar = ({children}) => {

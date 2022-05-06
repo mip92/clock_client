@@ -9,6 +9,7 @@ import AddCity from './AddCity';
 import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
 import $api from "../../../http";
 import {useDispatch} from "react-redux";
+import ColumnButton from "../ColumnButton";
 
 
 const Cities: React.FC = () => {
@@ -71,12 +72,8 @@ const Cities: React.FC = () => {
                 <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
                 <Button onClick={() => fetching()}>Выбрать фильтры</Button>
                 <div className={s.title}>
-                    <Button onClick={() => sortHandler('cityName')}>
-                        Название города{sortBy == 'cityName' && select == "ASC" ? '▲' : '▼'}
-                    </Button>
-                    <Button onClick={() => sortHandler('price')}>
-                        Цена за час{sortBy == 'price' && select == "ASC" ? '▲' : '▼'}
-                    </Button>
+                    <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'cityName'} select={select}/>
+                    <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'price'} select={select} />
                     <div>Редактировать</div>
                     <div>Удалить</div>
                 </div>

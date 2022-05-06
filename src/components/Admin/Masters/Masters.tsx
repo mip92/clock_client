@@ -13,6 +13,7 @@ import OneMaster from "./OneMaster";
 import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
 import {Button, Input} from "@material-ui/core";
 import CitiesMultySelect from "../Cities/CitiesMultySelect";
+import ColumnButton from "../ColumnButton";
 
 interface MastersProps {
     cities: City[],
@@ -69,13 +70,8 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                 <Button onClick={() => fetching()}>Выбрать фильтры</Button>
 
                 <div className={s.wrapper}>
-                    <Button onClick={() => sortHandler('name')}>
-                        Имя мастера{sortBy == 'name' && select == "ASC" ? '▲' : '▼'}
-                    </Button>
-                    <Button
-                        onClick={() => sortHandler('email')}>
-                        Почта{sortBy == 'email' && select == "ASC" ? '▲' : '▼'}
-                    </Button>
+                    <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'name'} select={select}/>
+                    <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'email'} select={select}/>
                     <div>Города</div>
                     <div>Изменить</div>
                     <div>Удалить</div>

@@ -11,6 +11,7 @@ import MyWorkplace from "../components/MyWorkplace/MyWorkplace";
 import MyOffice from "../components/MyOffice/MyOffice";
 import Blog from "../components/Blog/Blog";
 import ChangeEmail from "../components/MyWorkplace/ChangeEmail";
+import MyOrders from "../components/Admin/Orders/MyOrders";
 
 
 export const createRoute = (role:string | null) => {
@@ -24,7 +25,7 @@ export const createRoute = (role:string | null) => {
         {exact: false, path: "/menu/cities", component: <Cities/>},
         {exact: false, path: "/menu/masters", component: <MastersContainer/>},
         {exact: false, path: "/menu/users", component: <Users/>},
-        {exact: false, path: "/menu/orders", component: <Orders/>},
+        {exact: false, path: "/menu/orders", component: <MyOrders/>},
         {exact: false, path: "/menu", component: <Orders/>}
     ]
     const userRoutes: MyRoute[] = [
