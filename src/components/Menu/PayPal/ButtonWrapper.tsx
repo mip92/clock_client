@@ -2,8 +2,10 @@ import React, {useEffect} from "react";
 import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
 import axios from "axios";
 import $api from "../../../http";
+import {useHistory} from "react-router-dom";
 
 const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
+    const history = useHistory();
     const style = {"layout": "vertical"};
     const [{options, isPending}, dispatch] = usePayPalScriptReducer();
     useEffect(() => {
@@ -49,7 +51,7 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
                 onApprove={(data, actions) => {
                     if (actions.order) return actions.order.capture().then((order) => {
                         console.log(order);
-                    });
+                    }).then(()=>history.push('/completed'));
                 }}
                 onError={(err) => {
                     console.log(err)
