@@ -53,7 +53,7 @@ export interface Order {
     master_busyDate: MasterBusyDate,
 }
 
-const initState: InitialStateI = {
+export const initStateWorkPlace: InitialStateI = {
     orders: [{
         id: null,
         clockSize: null,
@@ -104,7 +104,7 @@ const initState: InitialStateI = {
     }]
 }
 
-export const workplaseReducer = (state = initState, action: WorkplaseAction): WorkplaseStateType => {
+export const workplaseReducer = (state = initStateWorkPlace, action: WorkplaseAction): InitialStateI => {
     switch (action.type) {
         case WorkplaseActionTypes.SET_ORDERS:
             return {...state, orders: action.payload.payload}

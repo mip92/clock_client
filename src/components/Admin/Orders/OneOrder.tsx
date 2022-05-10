@@ -17,7 +17,7 @@ const OneOrder = ({order, statuses}) => {
             <td>{order.clockSize}</td>
             <td>{order.dealPrice}</td>
             <td>{(order.dealPrice && order?.clockSize) && order.dealPrice * order?.clockSize}</td>
-            <td><Statuses orderId={order.id} status={order.status} statuses={statuses}/></td>
+            <td><Statuses key={`${order.id}`+ `${order.status}`} orderId={order.id} status={order.status} statuses={statuses}/></td>
         </tr>
     );
 };

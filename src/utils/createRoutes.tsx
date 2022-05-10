@@ -6,12 +6,11 @@ import Users from "../components/Admin/Users/Users";
 import Error404 from "../components/utilits/Error404";
 import {MyRoute} from "../App";
 import Registration from "../components/Registration/Registration";
-import MyWorkplace from "../components/MyWorkplace/MyWorkplace";
 import MyOffice from "../components/MyOffice/MyOffice";
 import Blog from "../components/Blog/Blog";
 import ChangeEmail from "../components/MyWorkplace/ChangeEmail";
 import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
-import MyOrders from "../components/Admin/Orders/MyOrders";
+import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 
 
 export const createRoute = (role:string | null) => {
@@ -33,7 +32,7 @@ export const createRoute = (role:string | null) => {
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
     ]
     const masterRoutes: MyRoute[]=[
-        {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkplace/>},
+        {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkPlaceContainer/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
     ]
     const error = {exact: false, path: "*", component: <Error404/>}

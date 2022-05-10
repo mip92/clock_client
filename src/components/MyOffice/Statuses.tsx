@@ -37,13 +37,16 @@ interface ResponseStatuses {
 interface StatusesProps {
     status: string,
     orderId: number | null
-    statuses:MyStatus[]
+    statuses: MyStatus[]
 }
 
 const Statuses: React.FC<StatusesProps> = ({status, orderId, statuses}) => {
     const classes = useStyles();
     const [currentStatus, setCurrentStatus] = React.useState({} as MyStatus);
-
+    useEffect(() => {
+        const orderStatus = statuses.find(s => s.name === status)
+        orderStatus && setCurrentStatus(orderStatus)
+    }, [statuses])
 
     const [openAlert, setOpenAlert] = React.useState(false);
     const [changeStatus, setOrderStatus] = React.useState({} as MyStatus);
@@ -52,6 +55,7 @@ const Statuses: React.FC<StatusesProps> = ({status, orderId, statuses}) => {
         orderStatus && setOrderStatus(orderStatus)
         setOpenAlert(true)
     };
+    if (!currentStatus.name) return <div>Загрузка</div>
     return (
         <div>
             <FormControl className={classes.formControl}>
