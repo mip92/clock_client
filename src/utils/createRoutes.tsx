@@ -13,8 +13,6 @@ import PayPalCompleted from "../components/Menu/PayPal/PayPalCompleted";
 import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 
-
-
 export const createRoute = (role:string | null) => {
     const mainRouts: MyRoute[] = [
         {exact: true, path: "/", component: <StepperContainer/>},
