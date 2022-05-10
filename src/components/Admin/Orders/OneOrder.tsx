@@ -1,7 +1,7 @@
 import React from 'react';
 import Statuses from "../../MyOffice/Statuses";
 
-const OneOrder = ({order}) => {
+const OneOrder = ({order, statuses}) => {
     const getString = (date) => {
         const d = new Date(date)
         return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} ${d.getHours()}:00`
@@ -17,7 +17,7 @@ const OneOrder = ({order}) => {
             <td>{order.clockSize}</td>
             <td>{order.dealPrice}</td>
             <td>{(order.dealPrice && order?.clockSize) && order.dealPrice * order?.clockSize}</td>
-            <td><Statuses orderId={order.id} status={order.status}/></td>
+            <td><Statuses orderId={order.id} status={order.status} statuses={statuses}/></td>
         </tr>
     );
 };
