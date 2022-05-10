@@ -39,6 +39,8 @@ export const adminCitiesReducer = (state = initState, action: AdminCitiesAction)
                     }
                 )
             }
+        case AdminCitiesActionTypes.SET_CITIES:
+            return {...state, cities: action.payload.payload}
         default:
             return state
     }

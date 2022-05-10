@@ -12,7 +12,7 @@ export const rootReducer=combineReducers(
         adminCity: adminCitiesReducer,
         adminMaster: adminMasterReducer,
         navbar: navbarReducer,
-        workplase: workplaseReducer,
+        workPlase: workplaseReducer,
         order: orderReducer
     }
 )

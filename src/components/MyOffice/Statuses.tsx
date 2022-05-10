@@ -37,29 +37,16 @@ interface ResponseStatuses {
 interface StatusesProps {
     status: string,
     orderId: number | null
+    statuses: MyStatus[]
 }
 
-const Statuses: React.FC<StatusesProps> = ({status, orderId}) => {
+const Statuses: React.FC<StatusesProps> = ({status, orderId, statuses}) => {
     const classes = useStyles();
     const [currentStatus, setCurrentStatus] = React.useState({} as MyStatus);
-    const [statuses, setStatuses] = useState<MyStatus[] | null>([]as MyStatus[])
-    const [findStatuses, isLoading, errorfindStatuses, setFindStatusesError] = useFetching(async () => {
-        const res = await $api.get(`/status`)
-        let arr = [] as MyStatus[]
-        let k = 1
-        for (var key in res.data) {
-            arr.push({createdAt: "", updatedAt: "", id: k, name: key})
-            k++
-        }
-
-        const orderStatus = arr.find(s => s.name === status)
-        orderStatus && setCurrentStatus(orderStatus)
-        setStatuses(arr)
-    })
     useEffect(() => {
-        findStatuses()
-        return () => setStatuses(null)
-    }, [])
+        const orderStatus = statuses.find(s => s.name === status)
+        orderStatus && setCurrentStatus(orderStatus)
+    }, [statuses])
 
     const [openAlert, setOpenAlert] = React.useState(false);
     const [changeStatus, setOrderStatus] = React.useState({} as MyStatus);
@@ -68,9 +55,8 @@ const Statuses: React.FC<StatusesProps> = ({status, orderId}) => {
         orderStatus && setOrderStatus(orderStatus)
         setOpenAlert(true)
     };
-
-    if (isLoading) return (<div>Загрузка</div>)
-    else return (
+    if (!currentStatus.name) return <div>Загрузка</div>
+    return (
         <div>
             <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">Status</InputLabel>

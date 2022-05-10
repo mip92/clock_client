@@ -1,4 +1,12 @@
-import {BooleanPayload, City, CityPayload, ErrorOrNullPayload, MyError, StringPayload} from "./mainInterfacesAndTypes";
+import {
+    BooleanPayload,
+    CitiesPayload,
+    City,
+    CityPayload,
+    ErrorOrNullPayload,
+    MyError,
+    StringPayload
+} from "./mainInterfacesAndTypes";
 import {AuthActionTypes} from "./authTypes";
 
 export interface AdminCitiesStateType {
@@ -17,6 +25,7 @@ export enum AdminCitiesActionTypes {
     FETCH_CITIES = 'FETCH_CITIES',
     DELETE_CITY = "DELETE_CITY",
     SET_CITY_NAME = "SET_CITY_NAME",
+    SET_CITIES = "SET_CITIES",
     ADD_CITY="ADD_CITY",
     CHANGE_CITY_NAME= "CHANGE_CITY_NAME",
 }
@@ -44,6 +53,13 @@ export interface FetchCitiesAction {
     payload: FetchCitiesActionPayload
 }
 
+
+
+export interface SetCitiesAction {
+    type: AdminCitiesActionTypes.SET_CITIES;
+    payload: CitiesPayload
+}
+
 export interface DeleteCityAction {
     type: AdminCitiesActionTypes.DELETE_CITY;
     payload: CityPayload
@@ -59,6 +75,7 @@ export interface AddCityAction {
     payload: CityPayload
 }
 
+
 export interface ChangeCityNameAction{
     type: AdminCitiesActionTypes.CHANGE_CITY_NAME;
     city: CityPayload,
@@ -70,4 +87,5 @@ export type AdminCitiesAction = FetchAction |
     DeleteCityAction |
     SetCityNameAction |
     AddCityAction |
-    ChangeCityNameAction
+    ChangeCityNameAction |
+    SetCitiesAction

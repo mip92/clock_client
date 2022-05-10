@@ -17,11 +17,9 @@ interface ChangeCityProps {
     activateInput: React.Dispatch<React.SetStateAction<boolean>>,
     delCity: ()=>void,
     newNameOfCity: any,
-    isOpen:boolean,
-    setIsOpen: any
 }
 
-const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity, isOpen, setIsOpen}) => {
+const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity}) => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
     const validationSchema = Yup.object().shape({
@@ -32,7 +30,7 @@ const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity, isO
     const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
-            dispatch(await changeCityName(city.id, data.cityName, data.price, activateInput, setIsOpen))
+            dispatch(await changeCityName(city.id, data.cityName, data.price, activateInput))
         }
     )
     useEffect(() => {

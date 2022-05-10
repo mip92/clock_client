@@ -1,30 +1,49 @@
 import React, {useEffect, useState} from 'react';
-import WorkplaceTable from './WorkplaceTable';
-import {useParams} from "react-router-dom";
-import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
-import $api from "../../http";
-import s from "../../style/MyWorkplace.module.css";
-import {setOrders} from "../../actionCreators/workplaseActionCreators";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {Button, Input} from "@material-ui/core";
-import ColumnButton from "../Admin/ColumnButton";
-import {usePaginatorWithReduxLimit} from "../../hooks/usePaginatorWithReduxLimit";
-import {AxiosGetRange, AxiosOrder, DealPrice, TotalPrice} from "../Admin/Orders/MyOrders";
-import {MyStatus} from "../MyOffice/Statuses";
-import {useFetching} from "../../hooks/useFetching";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
+import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
+import $api from "../../../http";
+import {initStateWorkPlace, Order} from "../../../store/reducers/workplaceReducer";
+import {setOrders} from "../../../actionCreators/workplaseActionCreators";
+import {Button} from "@material-ui/core";
+import s from "../../../style/Cities.module.css";
+import ColumnButton from "../ColumnButton";
+import OneOrder from "./OneOrder";
+import {useFetching} from "../../../hooks/useFetching";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
-import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
-import OneOrder from "../Admin/Orders/OneOrder";
-import OrderFilters from "../Admin/Orders/OrderFilters";
-import OneMsterOrder from "./OneMasterOrder";
+import {City} from "../../../types/mainInterfacesAndTypes";
+import {MyStatus} from "../../MyOffice/Statuses";
+import OrderFilters from "./OrderFilters";
 
-const MyWorkplace = ({cities, isFetch, statuses}) => {
-    const {masterId} = useParams<{ masterId: string }>();
+export interface DealPrice {
+    minDealPrice: number,
+    maxDealPrice: number
+}
 
-    const THButtons = ['dateTime', 'userEmail', 'userName', 'city', 'clockSize', 'dealPrice', 'totalPrice', 'status']
+export interface TotalPrice {
+    minTotalPrice: number,
+    maxTotalPrice: number
+}
 
+export interface AxiosOrder {
+    rows: Order[],
+    count: number
+}
+
+interface MyOrdersProps {
+    cities: City[],
+    isFetch: boolean,
+    statuses: MyStatus[] | null
+}
+
+export interface AxiosGetRange {
+    minDealPrice: number,
+    maxDealPrice: number,
+    minTotalPrice: number,
+    maxTotalPrice: number,
+}
+
+const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
     const {orders} = useTypedSelector(state => state.workPlase)
-    const [status, setStatus] = useState<MyStatus[]>([]);
     const [rangeDealPrice, setRangeDealPrice] = useState<DealPrice>({} as DealPrice)
     const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([]);
     const [rangeTotalPrice, setRangeTotalPrice] = useState<TotalPrice>({} as TotalPrice)
@@ -32,7 +51,10 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
     const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
+    const [userValue, setUserValue,] = useState<string>('')
     const [clockSize, setClockSize] = useState<string[]>([]);
+    const [status, setStatus] = useState<MyStatus[]>([]);
+    const THButtons = ['dateTime', 'masterEmail', 'masterName', 'userEmail', 'userName', 'city', 'clockSize', 'dealPrice', 'totalPrice', 'status']
 
     const {
         offset,
@@ -55,12 +77,12 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
         status.map((s) => {
             return st.push(s.name)
         })
-        const url = `/order?offset=${offset}&limit=${currentLimit}&masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${clockSize}&status=${st}`
+        const url = `/order?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filterMaster=${inputValue}&filterUser=${userValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${clockSize}&status=${st}`
         return await $api.get<AxiosOrder>(url)
-    }, setOrders, "userName")
+    }, setOrders, "masterName")
 
     const [getRange, isFetchRange, errorRange] = useFetching(async () => {
-        $api.get<AxiosGetRange>(`/order/minMax/${masterId}`).then((response) => {
+        $api.get<AxiosGetRange>(`/order/minMax`).then((response) => {
             setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
             setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
             setCurrentRangeDeal([response.data.minDealPrice, response.data.maxDealPrice])
@@ -68,10 +90,9 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
         })
     })
 
+
     useEffect(() => {
-        console.log(1111111)
-        console.log(rangeDealPrice, rangeTotalPrice)
-        if (rangeDealPrice && rangeTotalPrice) fetching()
+        if (!rangeDealPrice && !rangeTotalPrice) fetching()
     }, [currentLimit, currentPage, sortBy, select])
 
     useEffect(() => {
@@ -80,9 +101,9 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
         }
     }, [currentRangeDeal])
 
-    if (isLoading) return <div>Загрузка</div>
     return (
         <div>
+            <h3>Список заказов</h3>
             <div>
                 <OrderFilters cities={cities} clockSize={clockSize} currentRangeDeal={currentRangeDeal}
                               currentRangeTotal={currentRangeTotal}
@@ -91,8 +112,8 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                               setArrayCurrentCities={setArrayCurrentCities} setClockSize={setClockSize}
                               setCurrentRangeDeal={setCurrentRangeDeal} setCurrentRangeTotal={setCurrentRangeTotal}
                               setDateFinish={setDateFinish} setDateStart={setDateStart} setInputValue={setInputValue}
-                              setStatus={setStatus}  statuses={statuses}
-                               status={status}/>
+                              setStatus={setStatus} setUserValue={setUserValue} statuses={statuses}
+                              userValue={userValue} status={status}/>
                 <Button onClick={() => fetching()}>Выбрать фильтры</Button>
                 <table>
                     <tbody>
@@ -110,7 +131,7 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                             </th>
                         </tr>
                         :
-                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={key}
+                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneOrder key={key}
                                                                                                      order={order}
                                                                                                      statuses={statuses}/>)
                     }
@@ -135,4 +156,4 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
     );
 };
 
-export default MyWorkplace;
+export default MyOrders;

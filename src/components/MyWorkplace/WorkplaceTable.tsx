@@ -101,7 +101,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                             <td onClick={() => openPictures(item.id)}>{item.clockSize}</td>
                             <td onClick={() => openPictures(item.id)}>{item.dealPrice}</td>
                             <td onClick={() => openPictures(item.id)}>{(item.dealPrice && item?.clockSize) && item.dealPrice * item?.clockSize}</td>
-                            <td><Statuses orderId={item.id} status={item.status}/></td>
+                            {/*<td><Statuses orderId={item.id} status={item.status}/></td>*/}
                         </tr>
                     ))}
                     </tbody>
