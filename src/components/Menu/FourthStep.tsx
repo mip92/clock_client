@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Button, Card} from "@material-ui/core";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useHistory} from "react-router-dom";
 import s from "../../style/FourthStep.module.css";
+import ButtonWrapper from "./PayPal/ButtonWrapper";
+import {PayPalContext} from "../../context/payPalContect";
 
-const FourthStep = ({setActiveStep}) => {
+const FourthStep = ({setActiveStep, orderId, dealPrice}) => {
+    const {currency} = useContext(PayPalContext)
     /*""react-datepicker": "2.14.0",,*/
     const history = useHistory();
     const goTo = (path) => {
@@ -16,6 +19,7 @@ const FourthStep = ({setActiveStep}) => {
             <div className={s.wrapper}>
                 <Card style={{textAlign: "center"}}>
                     Вам на почту отправлено письмо, подтвердите заказ мастера
+                    <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
                 </Card>
                 <Button variant="contained"
                         color='primary'
@@ -28,6 +32,7 @@ const FourthStep = ({setActiveStep}) => {
         <div className={s.wrapper}>
             <Card style={{textAlign: "center"}}>
                 Вам на почту отправленно письмо с дальнейшими указаниями
+                <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
             </Card>
             <Button variant="contained"
                     color='primary'

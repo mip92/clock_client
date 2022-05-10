@@ -11,6 +11,7 @@ import MyWorkplace from "../components/MyWorkplace/MyWorkplace";
 import MyOffice from "../components/MyOffice/MyOffice";
 import Blog from "../components/Blog/Blog";
 import ChangeEmail from "../components/MyWorkplace/ChangeEmail";
+import PayPalCompleted from "../components/Menu/PayPal/PayPalCompleted";
 
 
 export const createRoute = (role:string | null) => {
@@ -19,6 +20,7 @@ export const createRoute = (role:string | null) => {
         {exact: true, path: "/blog", component: <Blog/>},
         {exact: true, path: "/login", component: <Login/>},
         {exact: false, path: "/registration", component: <Registration/>},
+        {exact: false, path: "/completed", component: <PayPalCompleted/>},
     ]
     const adminRoutes: MyRoute[] = [
         {exact: false, path: "/menu/cities", component: <Cities/>},
