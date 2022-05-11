@@ -79,13 +79,17 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
             getRange()
         }
     }, [currentRangeDeal])
-    const getExcel = () =>{
+
+    const download = () => {
         const st: string[] = []
         status.map((s) => {
             return st.push(s.name)
         })
         const url = `/order/getExcel?masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${clockSize}&status=${st}`
-        $api.get<AxiosOrder>(url)
+        $api.get(url).then((response) => {
+            window.location.href = response.data;
+            }
+        )
     }
 
 
@@ -100,10 +104,11 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                               setArrayCurrentCities={setArrayCurrentCities} setClockSize={setClockSize}
                               setCurrentRangeDeal={setCurrentRangeDeal} setCurrentRangeTotal={setCurrentRangeTotal}
                               setDateFinish={setDateFinish} setDateStart={setDateStart} setInputValue={setInputValue}
-                              setStatus={setStatus}  statuses={statuses}
-                               status={status}/>
+                              setStatus={setStatus} statuses={statuses}
+                              status={status}/>
                 <Button onClick={() => fetching()}>Выбрать фильтры</Button>
-                <Button onClick={() => getExcel()}>Получить Excel</Button>
+                <Button onClick={() => download()}>Скачать</Button>
+
                 <table>
                     <tbody>
                     <tr>
@@ -121,8 +126,8 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                         </tr>
                         :
                         orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={key}
-                                                                                                     order={order}
-                                                                                                     statuses={statuses}/>)
+                                                                                                          order={order}
+                                                                                                          statuses={statuses}/>)
                     }
                     </tbody>
                 </table>
