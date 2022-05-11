@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import WorkplaceTable from './WorkplaceTable';
 import {useParams} from "react-router-dom";
-import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
 import $api from "../../http";
 import s from "../../style/MyWorkplace.module.css";
 import {setOrders} from "../../actionCreators/workplaseActionCreators";
@@ -14,15 +12,12 @@ import {MyStatus} from "../MyOffice/Statuses";
 import {useFetching} from "../../hooks/useFetching";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
-import OneOrder from "../Admin/Orders/OneOrder";
 import OrderFilters from "../Admin/Orders/OrderFilters";
 import OneMsterOrder from "./OneMasterOrder";
 
 const MyWorkplace = ({cities, isFetch, statuses}) => {
     const {masterId} = useParams<{ masterId: string }>();
-
     const THButtons = ['dateTime', 'userEmail', 'userName', 'city', 'clockSize', 'dealPrice', 'totalPrice', 'status']
-
     const {orders} = useTypedSelector(state => state.workPlase)
     const [status, setStatus] = useState<MyStatus[]>([]);
     const [rangeDealPrice, setRangeDealPrice] = useState<DealPrice>({} as DealPrice)
@@ -69,8 +64,6 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
     })
 
     useEffect(() => {
-        console.log(1111111)
-        console.log(rangeDealPrice, rangeTotalPrice)
         if (rangeDealPrice && rangeTotalPrice) fetching()
     }, [currentLimit, currentPage, sortBy, select])
 
@@ -84,6 +77,7 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
     return (
         <div>
             <div>
+                <h2>Filters</h2>
                 <OrderFilters cities={cities} clockSize={clockSize} currentRangeDeal={currentRangeDeal}
                               currentRangeTotal={currentRangeTotal}
                               dateFinish={dateFinish} dateStart={dateStart} inputValue={inputValue}
@@ -91,10 +85,17 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                               setArrayCurrentCities={setArrayCurrentCities} setClockSize={setClockSize}
                               setCurrentRangeDeal={setCurrentRangeDeal} setCurrentRangeTotal={setCurrentRangeTotal}
                               setDateFinish={setDateFinish} setDateStart={setDateStart} setInputValue={setInputValue}
-                              setStatus={setStatus}  statuses={statuses}
-                               status={status}/>
-                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
+                              setStatus={setStatus} statuses={statuses}
+                              status={status}/>
+                <Button style={{marginTop: '10px'}} variant="contained" color="primary" onClick={() => fetching()}>Выбрать
+                    фильтры</Button>
+
                 <table>
+                    <thead>
+                    <tr>
+                        <th colSpan={8}><h2>Orders</h2></th>
+                    </tr>
+                    </thead>
                     <tbody>
                     <tr>
                         {THButtons.map((name, key) =>
@@ -111,8 +112,8 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                         </tr>
                         :
                         orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={key}
-                                                                                                     order={order}
-                                                                                                     statuses={statuses}/>)
+                                                                                                          order={order}
+                                                                                                          statuses={statuses}/>)
                     }
                     </tbody>
                 </table>
@@ -124,7 +125,7 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                     onClick={() => changePage(p)}
                 >{p}</span>)
             }
-            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+            <span className={s.limitArray}>Лимит</span>
             {limitArray.map((l, key: React.Key) => <span
                 className={currentLimit === l ? s.page_limit : s.limit}
                 key={key}

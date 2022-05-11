@@ -1,11 +1,17 @@
-.page{
+.page, .limit {
     padding: 5px;
     border: 1px solid #f57c00;
     cursor: pointer;
 }
-.page_current{
+
+.page_current, .page_limit {
     padding: 5px;
     cursor: pointer;
     background: #f57c00;
     font-weight: bold;
+}
+
+.limitArray {
+    margin-left: 30px;
+    padding: 5px
 }

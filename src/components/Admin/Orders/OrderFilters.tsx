@@ -1,6 +1,6 @@
 import React from 'react';
 import CitiesMultySelect from "../Cities/CitiesMultySelect";
-import {Input} from "@material-ui/core";
+import {Input, TextField} from "@material-ui/core";
 import RangeSlider from "./RangeSlider";
 import DateStart from "./DateStart";
 import MultipleSelect from "./MultySelect";
@@ -9,6 +9,7 @@ import {City} from "../../../types/mainInterfacesAndTypes";
 import {DealPrice, TotalPrice} from "./MyOrders";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {MyStatus} from "../../MyOffice/Statuses";
+import s from '../../../style/OrderFilters.module.css'
 
 interface OrderFiltersProps {
     cities: City[],
@@ -20,7 +21,7 @@ interface OrderFiltersProps {
     rangeDealPrice: DealPrice,
     currentRangeDeal: number[],
     setCurrentRangeDeal: React.Dispatch<React.SetStateAction<number[]>>,
-    rangeTotalPrice : TotalPrice,
+    rangeTotalPrice: TotalPrice,
     currentRangeTotal: number[],
     setCurrentRangeTotal: React.Dispatch<React.SetStateAction<number[]>>,
     dateStart: MaterialUiPickersDate,
@@ -29,58 +30,82 @@ interface OrderFiltersProps {
     setDateFinish: React.Dispatch<React.SetStateAction<MaterialUiPickersDate>>
     clockSize: string[],
     setClockSize: React.Dispatch<React.SetStateAction<string[]>>,
-    statuses :MyStatus[] | null,
+    statuses: MyStatus[] | null,
     setStatus: React.Dispatch<React.SetStateAction<MyStatus[]>>,
     status: MyStatus[]
 }
 
 const OrderFilters: React.FC<OrderFiltersProps> = ({
-                          cities,
-                          setArrayCurrentCities,
-                          inputValue,
-                          userValue,
-                          setInputValue,
-                          setUserValue,
-                          rangeDealPrice,
-                          currentRangeDeal,
-                          setCurrentRangeDeal,
-                          rangeTotalPrice,
-                          currentRangeTotal,
-                          setCurrentRangeTotal,
-                          dateStart,
-                          setDateStart,
-                          dateFinish,
-                          setDateFinish,
-                          clockSize,
-                          setClockSize,
-                          statuses,
-                          setStatus,
-                          status
-                      }) => {
+                                                       cities,
+                                                       setArrayCurrentCities,
+                                                       inputValue,
+                                                       userValue,
+                                                       setInputValue,
+                                                       setUserValue,
+                                                       rangeDealPrice,
+                                                       currentRangeDeal,
+                                                       setCurrentRangeDeal,
+                                                       rangeTotalPrice,
+                                                       currentRangeTotal,
+                                                       setCurrentRangeTotal,
+                                                       dateStart,
+                                                       setDateStart,
+                                                       dateFinish,
+                                                       setDateFinish,
+                                                       clockSize,
+                                                       setClockSize,
+                                                       statuses,
+                                                       setStatus,
+                                                       status
+                                                   }) => {
     return (
-        <div>
-            <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
-            <Input placeholder={userValue? "Master name or email" :"User name or email"} value={inputValue}
-                   onChange={(e) => setInputValue(e.target.value)}/>
-            {userValue && setUserValue && <Input placeholder="User name or email" value={userValue}
-                   onChange={(e) => setUserValue(e.target.value)}/>}
-            <RangeSlider name="Deal Price"
-                         min={rangeDealPrice.minDealPrice}
-                         max={rangeDealPrice.maxDealPrice}
-                         currentRange={currentRangeDeal}
-                         setCurrentRange={setCurrentRangeDeal}/>
-            <RangeSlider name="Total Price"
-                         min={rangeTotalPrice.minTotalPrice}
-                         max={rangeTotalPrice.maxTotalPrice}
-                         currentRange={currentRangeTotal}
-                         setCurrentRange={setCurrentRangeTotal}/>
-            <DateStart date={dateStart} setDate={setDateStart} label='date start sort'/>
-            <DateStart date={dateFinish} setDate={setDateFinish} label='date finish sort'/>
-            <MultipleSelect name="Clock size" arr={['1', '2', '3']} correctName={clockSize}
-                            setCorrectName={setClockSize}/>
-            <MultipleSelectObject name="Status" arr={statuses} correctName={status} setCorrectName={setStatus}/>
+        <div className={s.wrapper}>
+            <div className={s.item}>
+                <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
+            </div>
+            <div className={s.item}>
+                <MultipleSelect name="Clock size" arr={['1', '2', '3']} correctName={clockSize}
+                                setCorrectName={setClockSize}/>
+            </div>
+            <div className={s.item}>
+                <MultipleSelectObject name="Status" arr={statuses} correctName={status} setCorrectName={setStatus}/>
+            </div>
+            <div className={s.name}>
+                <TextField label={userValue ? "Master name or email" : "User name or email"}
+                           placeholder={userValue ? "Master name or email" : "User name or email"}
+                           value={inputValue}
+                           onChange={(e) => setInputValue(e.target.value)}/>
+            </div>
+
+            {userValue && setUserValue &&
+            <div className={s.item}>
+                <Input placeholder="User name or email" value={userValue}
+                       onChange={(e) => setUserValue(e.target.value)}/>
+            </div>}
+
+            <div className={s.range}>
+                <RangeSlider name="Deal Price"
+                             min={rangeDealPrice.minDealPrice}
+                             max={rangeDealPrice.maxDealPrice}
+                             currentRange={currentRangeDeal}
+                             setCurrentRange={setCurrentRangeDeal}/>
+            </div>
+            <div className={s.range}>
+                <RangeSlider name="Total Price"
+                             min={rangeTotalPrice.minTotalPrice}
+                             max={rangeTotalPrice.maxTotalPrice}
+                             currentRange={currentRangeTotal}
+                             setCurrentRange={setCurrentRangeTotal}/>
+            </div>
+            <div className={s.date}>
+                <DateStart date={dateStart} setDate={setDateStart} label='Date start sort'/>
+            </div>
+            <div className={s.date}>
+                <DateStart date={dateFinish} setDate={setDateFinish} label='Date finish sort'/>
+            </div>
+
         </div>
     );
-};
-
+}
+;
 export default OrderFilters;
