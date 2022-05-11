@@ -79,6 +79,15 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
             getRange()
         }
     }, [currentRangeDeal])
+    const getExcel = () =>{
+        const st: string[] = []
+        status.map((s) => {
+            return st.push(s.name)
+        })
+        const url = `/order/getExcel?masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${clockSize}&status=${st}`
+        $api.get<AxiosOrder>(url)
+    }
+
 
     if (isLoading) return <div>Загрузка</div>
     return (
@@ -94,6 +103,7 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                               setStatus={setStatus}  statuses={statuses}
                                status={status}/>
                 <Button onClick={() => fetching()}>Выбрать фильтры</Button>
+                <Button onClick={() => getExcel()}>Получить Excel</Button>
                 <table>
                     <tbody>
                     <tr>

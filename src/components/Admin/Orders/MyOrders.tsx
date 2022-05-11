@@ -82,7 +82,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
     }, setOrders, "masterName")
 
     const [getRange, isFetchRange, errorRange] = useFetching(async () => {
-        $api.get<AxiosGetRange>(`/order/minMax`).then((response) => {
+        $api.get<AxiosGetRange>(`/order/minMax/all`).then((response) => {
             setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
             setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
             setCurrentRangeDeal([response.data.minDealPrice, response.data.maxDealPrice])

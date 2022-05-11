@@ -4,6 +4,8 @@ import CachedIcon from '@material-ui/icons/Cached';
 import s from "../../../style/Master.module.css"
 import ChangeUser from "./ChangeUser";
 import {MyError} from "../../../types/mainInterfacesAndTypes";
+import {useDispatch} from "react-redux";
+import $api from "../../../http";
 
 export interface User {
     id: number,
@@ -20,11 +22,23 @@ interface UserProps {
 }
 
 const OneUser: React.FC<UserProps> = ({user, error, deleteUser, updateUser}) => {
+    const dispatch =useDispatch()
     const [isInputActivate, activateInput] = useState(false)
 
     const constChangeUserName = () => {
         activateInput(true)
     }
+
+    const deleteOneUser = () => {
+        try {
+            $api.delete(`/users/${user.id}`).then(()=>{
+                deleteUser(user.id)
+            })
+        }catch (e) {
+            console.log(e)
+        }
+    }
+
 
     if (!isInputActivate) {
         return (
@@ -33,7 +47,7 @@ const OneUser: React.FC<UserProps> = ({user, error, deleteUser, updateUser}) => 
                     <div>{user.name}</div>
                     <div>{user.email}</div>
                     <CachedIcon onClick={constChangeUserName} style={{cursor: "pointer"}}/>
-                    <HighlightOffIcon style={{cursor: "pointer"}} onClick={() => deleteUser(user.id)}/>
+                    <HighlightOffIcon style={{cursor: "pointer"}} onClick={() => deleteOneUser()}/>
                 </div>
             </div>
         )
