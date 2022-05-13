@@ -14,6 +14,7 @@ import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
 import OrderFilters from "../Admin/Orders/OrderFilters";
 import OneMsterOrder from "./OneMasterOrder";
+import {currentTotal} from "../../utils/currentTotal";
 
 const MyWorkplace = ({cities, isFetch, statuses}) => {
     const {masterId} = useParams<{ masterId: string }>();
@@ -23,9 +24,9 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
     const {orders} = useTypedSelector(state => state.workPlase)
     const [status, setStatus] = useState<MyStatus[]>([]);
     const [rangeDealPrice, setRangeDealPrice] = useState<DealPrice>({} as DealPrice)
-    const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([]);
+    const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([0,0]);
     const [rangeTotalPrice, setRangeTotalPrice] = useState<TotalPrice>({} as TotalPrice)
-    const [currentRangeTotal, setCurrentRangeTotal] = useState<number[]>([]);
+    const [currentRangeTotal, setCurrentRangeTotal] = useState<number[]>([0,0]);
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
     const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
@@ -46,7 +47,9 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
         select,
         inputValue,
         setInputValue,
-        sortHandler
+        sortHandler,
+        total,
+        length
     } = usePaginatorWithReduxLimit(async () => {
         const st: string[] = []
         status.map((s) => {
@@ -70,7 +73,7 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
     }, [currentLimit, currentPage, sortBy, select])
 
     useEffect(() => {
-        if (currentRangeDeal.length === 0) {
+        if (currentRangeDeal.length === 0 || currentRangeDeal == [0,0,0,0]) {
             getRange()
         }
     }, [currentRangeDeal])
@@ -87,8 +90,6 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
         )
     }
 
-
-    if (isLoading) return <div>Загрузка</div>
     return (
         <div>
             <div>
@@ -115,9 +116,9 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                         )}
                     </tr>
                     {!orders || isLoading || isFetchRange || isFetch ?
-                        <tr className={s.timelineItem}>
-                            <th className={s.animatedBackground}>
-                            </th>
+                        <tr  className={s.timelineItem}>
+                            <td colSpan={8} className={s.animatedBackground}>
+                            </td>
                         </tr>
                         :
                         orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={key}
@@ -141,6 +142,9 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
                 onClick={() => changeLimit(l)}
             >{l}</span>)
             }
+            <span style={{marginLeft: 30, padding: 5}}>
+                Показано {length} из {total}
+            </span>
         </div>
     );
 };
