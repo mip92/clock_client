@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import s from "../../../style/Cities.module.css";
-import {Button, Input} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import InputWithError from "../../Registration/InputWithError";
 import {useForm} from "react-hook-form";

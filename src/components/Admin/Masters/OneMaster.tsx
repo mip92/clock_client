@@ -7,7 +7,6 @@ import {useInput} from "../../../hooks/useInput";
 import {approveOneMaster, delOneMaster} from "../../../actionCreators/adminMasterActionCreators";
 import MyAlert from "../../utilits/MyAlert";
 import ApproveButton from "../../utilits/ApproveButton";
-import {Button} from "@material-ui/core";
 import ChangeMaster from "./ChangeMaster";
 
 interface MasterProps {

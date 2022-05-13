@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import {OrderInterface} from "../Admin/Orders/Order";
 import {Button, Paper, Table, TableContainer, Typography} from "@material-ui/core";
-import Statuses from "./Statuses";
 import {Order} from "../../store/reducers/workplaceReducer";
 
 

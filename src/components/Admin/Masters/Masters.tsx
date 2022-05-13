@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import s from "../../../style/Masters.module.css";
-import {delOneMaster, setMaster, setMasterName} from "../../../actionCreators/adminMasterActionCreators";
+import {setMaster, setMasterName} from "../../../actionCreators/adminMasterActionCreators";
 import {Master} from "../../../types/adminMasterTypes";
 import MyModal from "../../utilits/MyModal";
 import {City} from "../../../types/mainInterfacesAndTypes";

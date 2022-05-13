@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Button, Card, List} from "@material-ui/core";
+import {Button, List} from "@material-ui/core";
 import FilesUpload from "./FileUploader";
 import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined";
 

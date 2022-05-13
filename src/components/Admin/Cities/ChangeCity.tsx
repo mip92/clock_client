@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from "../../../style/City.module.css";
-import {Button, Input} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {changeCityName} from "../../../actionCreators/adminCityActionCreators";

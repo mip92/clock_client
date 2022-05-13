@@ -1,7 +1,4 @@
 import React from 'react';
-import FileUploaderContainer from "./FilesUploader/FileUploaderContainer";
-import {Button, Card} from "@material-ui/core";
-import s from "../../style/SecondStep.module.css";
 
 const ThirdStep = ({tempFile, addTempFile, setError, back, next}) => {
     return (
