@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    /*ustify-content: space-between;*/
+    align-content: space-around;
+}
+.item{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 200px;
+}
+.name{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 200px;
+    margin-top: 8px;
+}
+.range{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 200px;
+    margin-top:10px
+}
+.date{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 200px;
+    margin-top:7px
+}

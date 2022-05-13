@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import WorkplaceTable from './WorkplaceTable';
 import {useParams} from "react-router-dom";
-import {usePaginatorWithRedux} from "../../hooks/usePaginatorWithRedux";
 import $api from "../../http";
 import s from "../../style/MyWorkplace.module.css";
 import {setOrders} from "../../actionCreators/workplaseActionCreators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {Button, Input} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import ColumnButton from "../Admin/ColumnButton";
 import {usePaginatorWithReduxLimit} from "../../hooks/usePaginatorWithReduxLimit";
 import {AxiosGetRange, AxiosOrder, DealPrice, TotalPrice} from "../Admin/Orders/MyOrders";
@@ -14,7 +12,6 @@ import {MyStatus} from "../MyOffice/Statuses";
 import {useFetching} from "../../hooks/useFetching";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
-import OneOrder from "../Admin/Orders/OneOrder";
 import OrderFilters from "../Admin/Orders/OrderFilters";
 import OneMsterOrder from "./OneMasterOrder";
 
@@ -69,8 +66,6 @@ const MyWorkplace = ({cities, isFetch, statuses}) => {
     })
 
     useEffect(() => {
-        console.log(1111111)
-        console.log(rangeDealPrice, rangeTotalPrice)
         if (rangeDealPrice && rangeTotalPrice) fetching()
     }, [currentLimit, currentPage, sortBy, select])
 
