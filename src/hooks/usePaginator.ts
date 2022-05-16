@@ -57,7 +57,7 @@ export const usePaginator = (func, initialSortBy: string) => {
     }
 
 
-    return {
+    return [
         offset,
         changePage,
         currentPage,
@@ -76,6 +76,6 @@ export const usePaginator = (func, initialSortBy: string) => {
         objects,
         delObject,
         updateObject
-    }
+    ]
 
 }

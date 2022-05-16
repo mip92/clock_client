@@ -5,17 +5,18 @@ import {picture} from "../../../types/mainInterfacesAndTypes";
 
 interface OneFileProps{
     img:picture
-    onDelete: Function
+    onDelete: Function,
+    index:number
 }
 
-const OneFile:React.FC<OneFileProps> = ({img, onDelete}) => {
+const OneFile:React.FC<OneFileProps> = ({img, index, onDelete}) => {
     const [pictireSise, setPictureSize]=useState<number>()
     useEffect(()=>{
         setPictureSize((Math.round((img.size / 1048576) * 100) / 100))
     },[img])
     return (
-        <div>
-            <img width={'150px'} src={URL.createObjectURL(img)}/>
+        <div className={index > 4 ? s.item : s.photo}>
+            <img className={index > 4 ? s.itemPhoto : s.photo} width={'150px'} src={URL.createObjectURL(img)}/>
             {img && <div>{img.name}</div>}
             {img && <div className={pictireSise && img.size>1048576 ? s.error : s.div}> {pictireSise + ' Mб'}
             </div>}

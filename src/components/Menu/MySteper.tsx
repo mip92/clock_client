@@ -41,10 +41,11 @@ const MyStepper: React.FC = () => {
             setOrderId(response1.data.id)
             setDealPrice(response1.data.dealPrice)
             let formData = new FormData;
-            if (picture) {
-                console.log(picture)
-                for (let i = 0; i < picture.length; i++) {
-                    formData.append(`picture${i}`, picture[i]);
+            const p =picture.slice(0, 5)
+            if (p) {
+                console.log(p)
+                for (let i = 0; i < p.length; i++) {
+                    formData.append(`picture${i}`, p[i]);
                 }
             }
             const response2 = await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,

@@ -4,6 +4,7 @@ import {useFetching} from "../../../hooks/useFetching";
 import $api from "../../../http";
 import MyOrders from "./MyOrders";
 import {MyStatus} from "../../MyOffice/Statuses";
+import {log} from "util";
 
 interface AxiosCityResponse{
     count: number,
@@ -28,20 +29,16 @@ const OrdersContainer = () => {
     const [statuses, setStatuses] = useState<MyStatus[] | null>([]as MyStatus[])
     const [findStatuses, isLoading, errorfindStatuses, setFindStatusesError] = useFetching(async () => {
         const res = await $api.get(`/status`)
-        let arr = [] as MyStatus[]
+        let arr:MyStatus[] = []
         let k = 1
-        for (var key in res.data) {
+        const keys = Object.keys(res.data);
+        keys.forEach(key => {
             arr.push({createdAt: "", updatedAt: "", id: k, name: key})
             k++
-        }
-        /*const orderStatus = arr.find(s => s.name === status)
-        orderStatus && setCurrentStatus(orderStatus)*/
+        });
         setStatuses(arr)
     })
-/*    useEffect(() => {
-        findStatuses()
-        return () => setStatuses(null)
-    }, [])*/
+
     return (<MyOrders statuses={statuses} cities={cities} isFetch={isFetch || isLoading}/>);
 };
 

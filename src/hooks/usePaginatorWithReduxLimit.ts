@@ -33,7 +33,8 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
             dispatch(ActionCreatorFind(res.data.rows))
             console.log(res.data.count)
             setTotal(res.data.count)
-            setLength(res?.rows?.length)
+
+            setLength(res?.data?.rows?.length)
             let tp: number = getPageCount(res.data.count, currentLimit)
             let pa: Array<number> = getPagesArray(tp)
             setPagesArray(pa)

@@ -12,6 +12,7 @@ const FilesUpload: React.FC<IFileUploadProps> = ({ tempFiles, addTempFiles, acce
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Object.keys(e != null && e.target != null && e.target.files != null && e.target.files).map((i) => e != null && e.target != null && e.target.files != null && e.target.files[i]);
+        //const f =files.slice(0, 5)
         addTempFiles(files)
         e.target.value = '';
     }

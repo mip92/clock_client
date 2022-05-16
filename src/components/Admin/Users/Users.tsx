@@ -7,15 +7,15 @@ import $api from "../../../http";
 import ColumnButton from "../ColumnButton";
 
 const Users: React.FC = () => {
-    const {
+    const [
         offset,
         changePage,
         currentPage,
         isLoading,
         error,
-        pagesArray,
+        pages,
         fetching,
-        limitArray,
+        limits,
         currentLimit,
         changeLimit,
         sortBy,
@@ -23,9 +23,10 @@ const Users: React.FC = () => {
         inputValue,
         setInputValue,
         sortHandler,
-        objects, delObject,
+        users,
+        delObject,
         updateObject
-    } = usePaginator(() => $api.get(`/users?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filter=${inputValue}`), 'name')
+    ] = usePaginator(() => $api.get(`/users?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filter=${inputValue}`), 'name')
 
     useEffect(() => {
         fetching()
@@ -52,14 +53,14 @@ const Users: React.FC = () => {
                     </div>
                     :
                     <div>
-                        {objects && objects.map((u: User, key: React.Key) => <OneUser deleteUser={delObject}
+                        {users && users.map((u: User, key: React.Key) => <OneUser deleteUser={delObject}
                                                                                       updateUser={updateObject}
                                                                                       key={key} user={u}
                                                                                       error={error}/>)}
                     </div>
                 }
                 {
-                    pagesArray.map((p: number, key: React.Key) => <span
+                    pages.map((p: number, key: React.Key) => <span
                         className={currentPage === p ? s.page_current : s.page}
                         key={key}
                         onClick={() => changePage(p)}
@@ -67,7 +68,7 @@ const Users: React.FC = () => {
                 }
                 <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
                 {
-                    limitArray.map((l, key: React.Key) => <span
+                    limits.map((l, key: React.Key) => <span
                         className={currentLimit === l ? s.page_limit : s.limit}
                         key={key}
                         onClick={() => changeLimit(l)}
