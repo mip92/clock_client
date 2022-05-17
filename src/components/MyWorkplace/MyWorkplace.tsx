@@ -27,7 +27,7 @@ const MyWorkplace = ({cities,
                          setCurrentRangeTotal}) => {
     const {masterId} = useParams<{ masterId: string }>();
 
-    const THButtons = ['dateTime', 'userEmail', 'userName', 'city', 'clockSize', 'dealPrice', 'totalPrice', 'status']
+    const THButtons = ['dateTime', 'userEmail', 'userName', 'city', 'clockSize', 'dealPrice', 'totalPrice', 'status', 'pictires']
 
     const {orders} = useTypedSelector(state => state.workPlase)
     const [status, setStatus] = useState<MyStatus[]>([]);
