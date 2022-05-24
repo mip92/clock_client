@@ -168,7 +168,6 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
             let error: MyError
             if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
             else error = JSON.parse(JSON.parse(e.request.responseText).message)
-            console.log(error)
             dispatch(fetchError(error))
         }
     }
@@ -188,7 +187,6 @@ export const changeMaster = (id:number, name:string, email:string, cities_id:num
             let error: MyError
             if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
             else error = JSON.parse(JSON.parse(e.request.responseText).message)
-            console.log(error)
             dispatch(fetchError(error))
         }
     }

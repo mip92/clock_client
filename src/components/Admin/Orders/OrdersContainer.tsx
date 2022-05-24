@@ -4,7 +4,6 @@ import {useFetching} from "../../../hooks/useFetching";
 import $api from "../../../http";
 import MyOrders from "./MyOrders";
 import {MyStatus} from "../../MyOffice/Statuses";
-import {log} from "util";
 
 interface AxiosCityResponse{
     count: number,

@@ -9,7 +9,6 @@ import ColumnButton from "../Admin/ColumnButton";
 import {usePaginatorWithReduxLimit} from "../../hooks/usePaginatorWithReduxLimit";
 import {AxiosGetRange, AxiosOrder, DealPrice, TotalPrice} from "../Admin/Orders/MyOrders";
 import {MyStatus} from "../MyOffice/Statuses";
-import {useFetching} from "../../hooks/useFetching";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
 import OrderFilters from "../Admin/Orders/OrderFilters";
@@ -65,7 +64,6 @@ const MyWorkplace = ({cities,
 
 
     useEffect(() => {
-        console.log(currentRangeTotal)
         if (!isFetch && currentRangeTotal[0]!=undefined) fetching()
     }, [currentLimit, currentPage, sortBy, select, currentRangeTotal])
 

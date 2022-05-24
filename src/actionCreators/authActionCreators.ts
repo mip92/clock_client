@@ -42,7 +42,6 @@ export const loginAuth = (email: string, password: string) => {
         } catch (e) {
             dispatch(fetchStart(false))
             const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
-            console.log(error)
             dispatch(fetchError(error))
         }
     }
@@ -71,7 +70,6 @@ export const changeEmailAuth = (currentEmail: string, newEmail: string, password
         } catch (e) {
             dispatch(fetchStart(false))
             const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
-            console.log(error)
             dispatch(fetchError(error))
         }
     }

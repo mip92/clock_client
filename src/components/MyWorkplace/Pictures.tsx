@@ -69,14 +69,10 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
             const response = await $api.delete(`/picture/${open.id}`, {
                 data: {picturesId: arr}
             })
-            console.log(response)
         } catch (e) {
-            //if (e.request.statuse = 404) setIsNotFound(true)
-            console.log(e.request.responseText)
         }
     }
     useEffect(() => {
-        console.log(open.id)
         open.id && fetch()
     }, [])
     return (

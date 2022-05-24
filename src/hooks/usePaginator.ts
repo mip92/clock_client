@@ -48,7 +48,6 @@ export const usePaginator = (func, initialSortBy: string) => {
             setPagesArray(pa)
             setIsLoading(false)
             p.catch(e => {
-                    console.log(e)
                     if (e.response.data.message) setError(e.response.data.message);
                     else setError(e.message);
                 }

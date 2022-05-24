@@ -8,7 +8,6 @@ import {useHistory} from "react-router-dom";
 import {loginAuth, setAuthEmail} from "../../actionCreators/authActionCreators";
 
 const Login: React.FC = () => {
-    let history = useHistory();
     const dispatch = useDispatch()
     const {isFetch, error} = useTypedSelector(state => state.auth)
     const email = useInput('')

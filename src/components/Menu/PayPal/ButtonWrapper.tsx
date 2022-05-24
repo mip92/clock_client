@@ -41,7 +41,6 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
                             $api.post(`http://localhost:5000/api/payPal/created/${orderId}`, {
                                 payPalOrderId
                             }).then((response) => {
-                                console.log(response.data.message)
                             })
                             return payPalOrderId;
                         });
@@ -49,11 +48,9 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
                 // @ts-ignore
                 onApprove={(data, actions) => {
                     if (actions.order) return actions.order.capture().then((order) => {
-                        console.log(order);
                     }).then(()=>history.push('/completed'));
                 }}
                 onError={(err) => {
-                    console.log(err)
                 }}
             />
         </>

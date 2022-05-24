@@ -43,10 +43,12 @@ const MyStepper: React.FC = () => {
             let formData = new FormData;
             const p =picture.slice(0, 5)
             if (p) {
-                console.log(p)
-                for (let i = 0; i < p.length; i++) {
+                p.forEach((picture, index)=>{
+                    formData.append(`picture${index}`, picture);
+                })
+       /*         for (let i = 0; i < p.length; i++) {
                     formData.append(`picture${i}`, p[i]);
-                }
+                }*/
             }
             const response2 = await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
                 formData, {

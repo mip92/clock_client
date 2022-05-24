@@ -31,7 +31,6 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
             setIsLoading(false)
 
             dispatch(ActionCreatorFind(res.data.rows))
-            console.log(res.data.count)
             setTotal(res.data.count)
 
             setLength(res?.data?.rows?.length)
@@ -39,7 +38,6 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
             let pa: Array<number> = getPagesArray(tp)
             setPagesArray(pa)
         } catch (e) {
-            console.log(e)
             if (e.response.data.message) setError(e.response.data.message);
             else setError(e.message);
             /*setTimeout(async () => {

@@ -9,7 +9,6 @@ import {
 import {getPageCount, getPagesArray} from "../utils/pages";
 import $api from "../http";
 import {City, MyError} from "../types/mainInterfacesAndTypes";
-import {AdminMastersActionTypes, Master, SetMastersAction} from "../types/adminMasterTypes";
 
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
