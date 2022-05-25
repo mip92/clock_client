@@ -11,7 +11,7 @@ interface AxiosCityResponse{
 }
 
 const OrdersContainer = () => {
-    const [cities, setCities] = useState<City[]>([] as City[])
+    const [cities, setCities] = useState<City[]>([])
     const [fetching, isFetch, error] = useFetching(async () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
@@ -25,23 +25,19 @@ const OrdersContainer = () => {
         };
     }, [])
 
-    const [statuses, setStatuses] = useState<MyStatus[] | null>([]as MyStatus[])
+    const [statuses, setStatuses] = useState<MyStatus[] | null>([])
     const [findStatuses, isLoading, errorfindStatuses, setFindStatusesError] = useFetching(async () => {
         const res = await $api.get(`/status`)
-        let arr = [] as MyStatus[]
+        let arr:MyStatus[] = []
         let k = 1
-        for (var key in res.data) {
+        const keys = Object.keys(res.data);
+        keys.forEach(key => {
             arr.push({createdAt: "", updatedAt: "", id: k, name: key})
             k++
-        }
-        /*const orderStatus = arr.find(s => s.name === status)
-        orderStatus && setCurrentStatus(orderStatus)*/
+        });
         setStatuses(arr)
     })
-/*    useEffect(() => {
-        findStatuses()
-        return () => setStatuses(null)
-    }, [])*/
+
     return (<MyOrders statuses={statuses} cities={cities} isFetch={isFetch || isLoading}/>);
 };
 

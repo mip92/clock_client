@@ -7,7 +7,6 @@ import {
     MyError,
     StringPayload
 } from "./mainInterfacesAndTypes";
-import {AuthActionTypes} from "./authTypes";
 
 export interface AdminCitiesStateType {
     cities: City[]

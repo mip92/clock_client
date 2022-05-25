@@ -14,8 +14,7 @@ import InputWithError from "../../Registration/InputWithError";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 const ChangeMaster = ({master, activateInput, delMaster, newNameOfMaster, newEmailOfMaster}) => {
-    const arr = []
-    // @ts-ignore
+    const arr :number[] = []
     master.cities.map(c => arr.push(c.id))
     const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>(arr)
     const dispatch = useDispatch()

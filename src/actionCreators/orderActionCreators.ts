@@ -52,7 +52,6 @@ export const fetchCities = (offset: number, limit: number) => {
         } catch (e) {
             dispatch(fetchStart(false))
             const err = JSON.parse(e.request.responseText).message[0]
-            console.log(err)
             dispatch(fetchError(err))
         }
     }

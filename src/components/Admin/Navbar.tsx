@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useState} from 'react';
 import {useHistory} from "react-router-dom";
 import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem} from '@material-ui/core'
 import {useDispatch} from "react-redux";
@@ -19,8 +19,8 @@ const Navbar = ({children}) => {
         }]))
 
     }, [token])*/
-    const [auth, setAuth] = React.useState(true);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [auth, setAuth] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
     const teleport = (to) => {
         history.push(to);
     };

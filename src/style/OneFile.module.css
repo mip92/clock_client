@@ -1,3 +1,12 @@
 .error{
  color:red
 }
+
+.itemPhoto {
+ opacity:0.25;
+ background-color:black;
+}
+
+.item{
+  border: 2px solid red;
+}

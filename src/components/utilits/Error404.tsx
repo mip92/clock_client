@@ -8,7 +8,6 @@ const Error404= () => {
     const {token,status} = useTypedSelector(state => state.auth)
     const history =useHistory()
     const dispatch =useDispatch()
-    console.log(9999999999)
     useEffect(()=>{
         if ((!token) && (status==401)){
             dispatch(setStatus(200))

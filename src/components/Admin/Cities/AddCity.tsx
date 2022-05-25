@@ -27,7 +27,6 @@ const AddCity:React.FC = () => {
 
     useEffect(() => {
         if (error?.param) {
-            console.log(456)
             setError(error.param, {
                 type: "server error",
                 message: error.msg

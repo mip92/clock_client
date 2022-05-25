@@ -14,8 +14,9 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [pagesArray, setPagesArray] = useState<Array<number>>([])
     const [inputValue, setInputValue] = useState<string>('')
+    const [total, setTotal] = useState<number>(0)
+    const [length, setLength]= useState<number>(0)
     const sortHandler = (value: string) => {
-        /*if (value === sortBy)*/
         select == "ASC" ? setSelect("DESC") : setSelect("ASC")
         setSortBy(value)
     }
@@ -30,6 +31,9 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
             setIsLoading(false)
 
             dispatch(ActionCreatorFind(res.data.rows))
+            setTotal(res.data.count)
+
+            setLength(res?.data?.rows?.length)
             let tp: number = getPageCount(res.data.count, currentLimit)
             let pa: Array<number> = getPagesArray(tp)
             setPagesArray(pa)
@@ -59,6 +63,8 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
         select,
         inputValue,
         setInputValue,
-        sortHandler
+        sortHandler,
+        total,
+        length
     }
 }

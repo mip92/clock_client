@@ -16,7 +16,7 @@ interface PicturesProps {
 }
 
 interface Picture {
-    url:string
+    url: string
     createdAt: string
     id: number
     path: string
@@ -28,51 +28,53 @@ interface OrderPicture {
     id: number
     orderId: number
     picture: Picture
-    url:string
+    url: string
 }
 
 export interface pictureData {
     path: string,
-    url:string
+    url: string
     id: number
 }
 
 const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
-    const [urls, setPictures] = useState<pictureData[]>([] as pictureData[])
+    const [urls, setPictures] = useState<pictureData[]>([])
     const [isNotFound, setIsNotFound] = useState<boolean>(false)
 
     const fetch = async () => {
         try {
             const response = await $api.get<OrderPicture[]>(`/picture/${open.id}`)
             response.data.map((orderPicture) => setPictures(prevState =>
-                [...prevState, {path: orderPicture.picture.path, id: orderPicture.picture.id, url: orderPicture.picture.url}]))
+                [...prevState, {
+                    path: orderPicture.picture.path,
+                    id: orderPicture.picture.id,
+                    url: orderPicture.picture.url
+                }]))
         } catch (e) {
             if (e.request.statuse = 404) setIsNotFound(true)
             console.log(e.request.responseText)
         }
     }
-    const [state, setState] = React.useState({});
+    const [state, setState] = useState({});
     const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
+        setState({...state, [event.target.name]: event.target.checked});
     };
 
-    const onDelete=async ()=>{
+
+    const onDelete = async () => {
         try {
-            let arr=[] as string[]
-            for (var key in state) {
-                if (state[key]==true) arr.push(key)
-            }
-            const response = await $api.delete(`/picture/${open.id}`,{
-                data:{picturesId: arr}
+            let arr:string[] = []
+            const entries = Object.entries(state);
+            entries.forEach((p)=>{
+                if (p[1] === true) arr.push(p[0])
             })
-            console.log(response)
+            const response = await $api.delete(`/picture/${open.id}`, {
+                data: {picturesId: arr}
+            })
         } catch (e) {
-            //if (e.request.statuse = 404) setIsNotFound(true)
-            console.log(e.request.responseText)
         }
     }
     useEffect(() => {
-        console.log(open.id)
         open.id && fetch()
     }, [])
     return (
@@ -87,16 +89,19 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <FormControl component="fieldset">
-                        {urls && urls.map((u, key) =>
-                            <FormControlLabel
-                                key={key}
-                                value="top"
-                                checked={state[u.id] || !!''}
-                                onChange={handleChange}
-                                control={<Checkbox color="primary" />}
-                                label={<MyPicture picture={u}/>}
-                                name={String(u.id)}
-                            />
+                            {urls && urls.map((u, key) =>
+                                <div>
+                                    <FormControlLabel
+                                        key={key}
+                                        value="top"
+                                        checked={state[u.id] || !!''}
+                                        onChange={handleChange}
+                                        control={<Checkbox color="primary"/>}
+                                        name={String(u.id)}
+                                        label={''}
+                                    />
+                                    <MyPicture picture={u}/>
+                                </div>
                             )}
                         </FormControl>
                         {isNotFound && <div>Pictures is not found</div>}

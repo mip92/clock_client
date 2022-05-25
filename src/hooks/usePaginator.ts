@@ -23,7 +23,7 @@ export const usePaginator = (func, initialSortBy: string) => {
         setOffset(page * currentLimit - currentLimit)
         setCurrentPage(page)
     }
-    const delObject = (id: number) => {
+    const removeObject = (id: number) => {
         let result = objects.filter(function (item: any) {
             return item.id !== id
         })
@@ -48,7 +48,6 @@ export const usePaginator = (func, initialSortBy: string) => {
             setPagesArray(pa)
             setIsLoading(false)
             p.catch(e => {
-                    console.log(e)
                     if (e.response.data.message) setError(e.response.data.message);
                     else setError(e.message);
                 }
@@ -57,7 +56,7 @@ export const usePaginator = (func, initialSortBy: string) => {
     }
 
 
-    return {
+    return [
         offset,
         changePage,
         currentPage,
@@ -74,8 +73,8 @@ export const usePaginator = (func, initialSortBy: string) => {
         setInputValue,
         sortHandler,
         objects,
-        delObject,
+        removeObject,
         updateObject
-    }
+    ]
 
 }

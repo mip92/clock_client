@@ -54,13 +54,6 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
         };
     }, [])
 
-    /*    if (isFetch || !cities || isLoading) return (
-            <div className={s.timelineItem}>
-                <div className={s.animatedBackground}>
-
-                </div>
-            </div>
-        )*/
     return (
         <div>
             <h3>Список мастеров</h3>

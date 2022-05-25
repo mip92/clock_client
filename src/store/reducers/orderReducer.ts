@@ -1,5 +1,5 @@
 
-import {City, MyError, picture, Time} from "../../types/mainInterfacesAndTypes";
+import {City, picture} from "../../types/mainInterfacesAndTypes";
 import {OrderAction, OrderActionTypes, OrderStateType} from "../../types/orderTypes";
 
 const initState: OrderStateType = {

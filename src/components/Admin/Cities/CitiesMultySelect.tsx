@@ -66,23 +66,27 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
     const {control, handleSubmit, watch, formState: {errors}, setError} = useForm();
 
     useEffect(() => {
-        let result=[]
-        for (let i = 0; i <cities.length; i++) {
+        let result: number[]=[]
+        cities.forEach((c)=>{
+            if(cityName.includes(c.cityName)) {
+                result=[...result, c.id]
+            }
+        })
+        /*for (let i = 0; i <cities.length; i++) {
             if(cityName.includes(cities[i].cityName)) { // @ts-ignore
                 result=[...result, cities[i].id]
             }
-        }
+        }*/
         setArrayCurrentCities(result)
     }, [cityName])
 
     const onSubmit = handleSubmit(async data => {
-        let result=[]
-
-        for (let i = 0; i <cities.length; i++) {
-            if(data.citiesId.includes(cities[i].cityName)) { // @ts-ignore
-                result=[...result, cities[i].id]
+        let result: number[]=[]
+        cities.forEach((c)=>{
+            if(cityName.includes(c.cityName)) {
+                result=[...result, c.id]
             }
-        }
+        })
         setArrayCurrentCities(result)
         }
     );
@@ -94,8 +98,6 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
             });
         }
     }, [error])
-
-
     return (
         <div onBlur={onSubmit}>
             <Controller

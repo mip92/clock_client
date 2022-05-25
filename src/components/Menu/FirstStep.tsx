@@ -24,7 +24,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
     const {cities, time} = useTypedSelector(state => state.order)
     const dispatch = useDispatch()
     const [date, setDate] = useState<MaterialUiPickersDate>(null);
-    const [openAlert, setOpenAlert] = React.useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .required('Email is required')

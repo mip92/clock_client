@@ -20,8 +20,7 @@ const MyStepper: React.FC = () => {
     const {currentCity, clockSize,dateTime,email,name}=useTypedSelector(state => state.order)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
-    const [tempFiles, addTempFiles] = useState<picture[]>([] as picture[])
-    const [error, setError] = useState<boolean>(false)
+    const [tempFiles, addTempFiles] = useState<picture[]>([])
    /* const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setChooseAMasterError] = useFetching(async () => {
         setActiveStep(2)
     })*/
@@ -41,11 +40,14 @@ const MyStepper: React.FC = () => {
             setOrderId(response1.data.id)
             setDealPrice(response1.data.dealPrice)
             let formData = new FormData;
-            if (picture) {
-                console.log(picture)
-                for (let i = 0; i < picture.length; i++) {
-                    formData.append(`picture${i}`, picture[i]);
-                }
+            const p =picture.slice(0, 5)
+            if (p) {
+                p.forEach((picture, index)=>{
+                    formData.append(`picture${index}`, picture);
+                })
+       /*         for (let i = 0; i < p.length; i++) {
+                    formData.append(`picture${i}`, p[i]);
+                }*/
             }
             const response2 = await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
                 formData, {
