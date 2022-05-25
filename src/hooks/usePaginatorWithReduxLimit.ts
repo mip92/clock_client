@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {useDispatch} from "react-redux";
 
@@ -17,7 +17,7 @@ export const usePaginatorWithReduxLimit = (callback: any, ActionCreatorFind, ini
     const [total, setTotal] = useState<number>(0)
     const [length, setLength]= useState<number>(0)
     const sortHandler = (value: string) => {
-        select == "ASC" ? setSelect("DESC") : setSelect("ASC")
+        select === "ASC" ? setSelect("DESC") : setSelect("ASC")
         setSortBy(value)
     }
     const changePage = (page: number) => {

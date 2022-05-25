@@ -1,4 +1,4 @@
-import {WorkplaseAction, WorkplaseActionTypes, WorkplaseStateType} from "../../types/workplaseTypes";
+import {WorkplaseAction, WorkplaseActionTypes} from "../../types/workplaseTypes";
 import {City} from "../../types/mainInterfacesAndTypes";
 
 interface InitialStateI {

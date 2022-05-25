@@ -41,7 +41,7 @@ const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
                 <div>{city.price}</div>
                 <CachedIcon onClick={constChangeCityName} style={{cursor: "pointer"}}/>
                 <MyAlert handler={delCity}
-                         text={`Вы точно хотите удалить ${city.cityName} из списка городов`}/>
+                         text={`Are you sure you want to delete ${city.cityName} from the list of cities`}/>
             </div>
         );
     } else return (<ChangeCity newNameOfCity={newNameOfCity}

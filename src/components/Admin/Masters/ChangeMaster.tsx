@@ -61,7 +61,7 @@ const ChangeMaster = ({master, activateInput, delMaster, newNameOfMaster, newEma
     }, [error])
 
     useEffect(() => {
-        if (errors.param = 'citiesId' && errors.value !== arrayCurrentCities) {
+        if (errors.param === 'citiesId' && errors.value !== arrayCurrentCities) {
             dispatch(fetchError(null))
         }
     }, [arrayCurrentCities])
@@ -91,7 +91,7 @@ const ChangeMaster = ({master, activateInput, delMaster, newNameOfMaster, newEma
                 <CheckIcon style={{cursor: "pointer"}}/>
             </Button>
             <MyAlert handler={delMaster}
-                     text={`Вы точно хотите удалить ${master.name} из списка мастеров`}/>
+                     text={`Are you sure you want to remove ${master.name} from the list of masters`}/>
         </form>
     );
 };

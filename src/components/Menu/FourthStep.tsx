@@ -6,9 +6,8 @@ import s from "../../style/FourthStep.module.css";
 import ButtonWrapper from "./PayPal/ButtonWrapper";
 import {PayPalContext} from "../../context/payPalContect";
 
-const FourthStep = ({setActiveStep, orderId, dealPrice}) => {
+const FourthStep = ({orderId, dealPrice}) => {
     const {currency} = useContext(PayPalContext)
-    /*""react-datepicker": "2.14.0",,*/
     const history = useHistory();
     const goTo = (path) => {
         history.push(path)

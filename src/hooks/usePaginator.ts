@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {MyError} from "../types/mainInterfacesAndTypes";
 
@@ -16,7 +16,7 @@ export const usePaginator = (func, initialSortBy: string) => {
     const [inputValue, setInputValue] = useState<string>('')
     const sortHandler = (value: string) => {
         /*if (value === sortBy)*/
-        select == "ASC" ? setSelect("DESC") : setSelect("ASC")
+        select === "ASC" ? setSelect("DESC") : setSelect("ASC")
         setSortBy(value)
     }
     const changePage = (page: number) => {

@@ -52,6 +52,10 @@ const MyWorkPlaceContainer = () => {
             setCurrentRangeTotal([response.data.minTotalPrice, response.data.maxTotalPrice])
         })
     })
+    const clockSizes:MyStatus[] = [
+        {id: 1, name: 'small', createdAt:'', updatedAt:''},
+        {id: 2, name: 'middle',  createdAt:'', updatedAt:''},
+        {id: 3, name: 'big',  createdAt:'', updatedAt:''},]
 
     useEffect(() => {
         if (currentRangeDeal.length === 0 || currentRangeDeal == []) {
@@ -67,7 +71,8 @@ const MyWorkPlaceContainer = () => {
                          setCurrentRangeDeal={setCurrentRangeDeal}
                          setCurrentRangeTotal={setCurrentRangeTotal}
                          isFetch={isFetch || isFetchRange || isLoading}
-                         statuses={statuses}/>);
+                         statuses={statuses}
+                         clockSizes={clockSizes}/>);
 };
 
 export default MyWorkPlaceContainer;

@@ -4,7 +4,6 @@ import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import s from "../../style/Login.module.css";
 import {useInput} from "../../hooks/useInput";
-import {useHistory} from "react-router-dom";
 import {loginAuth, setAuthEmail} from "../../actionCreators/authActionCreators";
 
 const Login: React.FC = () => {
@@ -15,10 +14,6 @@ const Login: React.FC = () => {
     useEffect(() => {
         dispatch(setAuthEmail(email.value))
     }, [email.value])
-    /*useEffect(() => {
-        dispatch(setAuthPassword(email.value))
-    }, [password.value])*/
-
     const login = async () => {
         await dispatch(loginAuth(email.value, password.value))
     }
@@ -30,7 +25,7 @@ const Login: React.FC = () => {
     }
     if (isFetch) return (
         <div className={s.wrapper}>
-            <div className={s.password}>Загрузка</div>
+            <div className={s.password}>Loading...</div>
         </div>
     )
     return (

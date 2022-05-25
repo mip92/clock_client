@@ -1,4 +1,3 @@
-
 import {City, picture} from "../../types/mainInterfacesAndTypes";
 import {OrderAction, OrderActionTypes, OrderStateType} from "../../types/orderTypes";
 

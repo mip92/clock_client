@@ -21,13 +21,10 @@ export const setLinks = (role: string | null, id: number|null) => {
     switch (role) {
         case "ADMIN":
             return adminLinks;
-            break;
         case "MASTER":
             return masterLinks;
-            break;
         case "USER":
             return userLinks;
-            break;
         default:
             return defaultLinks
     }

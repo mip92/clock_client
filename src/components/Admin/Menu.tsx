@@ -7,8 +7,8 @@ const Menu:React.FC = () => {
     const history = useHistory()
     return (
         <Navbar >
-            Ресурс недоступен
-            <Button onClick={() => history.push('/login')}>Войти</Button>
+            Resource unavailable
+            <Button onClick={() => history.push('/login')}>Login</Button>
         </Navbar>
     )
 }

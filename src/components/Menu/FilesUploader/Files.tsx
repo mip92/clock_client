@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import OneFile from "./OneFile";
 import s from "../../../style/Files.module.css"
 import {picture} from "../../../types/mainInterfacesAndTypes";
@@ -10,7 +10,6 @@ interface FilesProps {
 }
 
 const Files: React.FC<FilesProps> = ({imgs, onDelete}) => {
-
     return (
         <div>
             <div className={s.file}>

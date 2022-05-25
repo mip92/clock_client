@@ -31,8 +31,8 @@ const ChangeEmail = () => {
 
     const onSubmit = handleSubmit(async data => {
             await dispatch(changeEmailAuth(data.currentEmail, data.newEmail, data.password, role))
-            if (role == "USER") history.push(`/MyOffice/${id}`)
-            else if (role == "MASTER") history.push(`/MyOffice/${id}`)
+            if (role === "USER") history.push(`/MyOffice/${id}`)
+            else if (role === "MASTER") history.push(`/MyOffice/${id}`)
         }
     );
 

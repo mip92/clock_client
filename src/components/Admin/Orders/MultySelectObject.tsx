@@ -57,7 +57,6 @@ interface MultipleSelectObjectProps {
 const MultipleSelectObject:React.FC<MultipleSelectObjectProps> = ({name, setCorrectName, correctName, arr}) => {
     const classes = useStyles();
     const theme = useTheme();
-
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setCorrectName(event.target.value as string[]);
     };
@@ -75,8 +74,8 @@ const MultipleSelectObject:React.FC<MultipleSelectObjectProps> = ({name, setCorr
                     input={<Input />}
                     MenuProps={MenuProps}
                 >
-                    {arr.map((size) => (
-                        <MenuItem key={size} value={size} style={getStyles(size.name, correctName, theme)}>
+                    {arr.map((size, key) => (
+                        <MenuItem key={key} value={size} style={getStyles(size.name, correctName, theme)}>
                             {size.name}
                         </MenuItem>
                     ))}

@@ -10,13 +10,15 @@ const OneMsterOrder = ({order, statuses}) => {
     const openPictures = (id) => {
         setOpen({status: true, id})
     }
-    const getString = (date) => {
-        const d = new Date(date)
-        return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} ${d.getHours()}:00`
+    const getString = (date: Date) => {
+        /*const d = new Date(date)
+        return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} ${d.getHours()}:00`*/
+        return new Date(date).toLocaleString()
     }
     return (
         <tr>
             <td>{getString(order.master_busyDate.dateTime)}</td>
+            {/*<td>{order.master_busyDate.dateTime}</td>*/}
             <td>{order.user.email}</td>
             <td>{order.user.name}</td>
             <td>{order.originalCityName}</td>

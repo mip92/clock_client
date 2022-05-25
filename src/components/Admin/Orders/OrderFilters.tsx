@@ -3,7 +3,6 @@ import CitiesMultySelect from "../Cities/CitiesMultySelect";
 import {Input, TextField} from "@material-ui/core";
 import RangeSlider from "./RangeSlider";
 import DateStart from "./DateStart";
-import MultipleSelect from "./MultySelect";
 import MultipleSelectObject from "./MultySelectObject";
 import {City} from "../../../types/mainInterfacesAndTypes";
 import {DealPrice, TotalPrice} from "./MyOrders";
@@ -28,11 +27,12 @@ interface OrderFiltersProps {
     setDateStart: React.Dispatch<React.SetStateAction<MaterialUiPickersDate>>
     dateFinish: MaterialUiPickersDate,
     setDateFinish: React.Dispatch<React.SetStateAction<MaterialUiPickersDate>>
-    clockSize: string[],
-    setClockSize: React.Dispatch<React.SetStateAction<string[]>>,
+    clockSize: MyStatus[],
+    setClockSize: React.Dispatch<React.SetStateAction<MyStatus[]>>,
     statuses: MyStatus[] | null,
     setStatus: React.Dispatch<React.SetStateAction<MyStatus[]>>,
-    status: MyStatus[]
+    status: MyStatus[],
+    clockSizes: MyStatus[] | null,
 }
 
 const OrderFilters: React.FC<OrderFiltersProps> = ({
@@ -53,19 +53,19 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                                                        dateFinish,
                                                        setDateFinish,
                                                        clockSize,
+                                                       clockSizes,
                                                        setClockSize,
                                                        statuses,
                                                        setStatus,
                                                        status
                                                    }) => {
-        return (
+    return (
             <div className={s.wrapper}>
                 <div className={s.item}>
                     <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
                 </div>
                 <div className={s.item}>
-                    <MultipleSelect name="Clock size" arr={['1', '2', '3']} correctName={clockSize}
-                                    setCorrectName={setClockSize}/>
+                    <MultipleSelectObject name="Clock size" arr={clockSizes} correctName={clockSize} setCorrectName={setClockSize}/>
                 </div>
                 <div className={s.item}>
                     <MultipleSelectObject name="Status" arr={statuses} correctName={status} setCorrectName={setStatus}/>

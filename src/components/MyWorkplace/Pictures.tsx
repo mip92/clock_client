@@ -104,7 +104,7 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                                 </div>
                             )}
                         </FormControl>
-                        {isNotFound && <div>Pictures is not found</div>}
+                        {isNotFound && <div>Pictures was not uploaded</div>}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

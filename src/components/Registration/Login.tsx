@@ -43,7 +43,7 @@ const Login: React.FC = () => {
     }, [error])
 
     useEffect(()=>{
-        if (prevLocation=='/' && id) return history.push('/')
+        if (prevLocation==='/' && id) return history.push('/')
         switch (role) {
             case "ADMIN": return history.push('/menu/orders')
             case "USER": return history.push(`/myOffice/${id}`)

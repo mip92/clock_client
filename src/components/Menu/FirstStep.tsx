@@ -160,7 +160,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 <div className={s.picturesBtn}>
                     <FileUploaderContainer tempFiles={tempFiles}
                                            addTempFiles={addTempFiles}
-                                           setError={setError}
+                                           setError={setFetchError}
                     />
                 </div>
                 <div className={s.pictures}>
@@ -174,7 +174,9 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                     <div style={{color: 'red'}}>{error}</div>
                     <Button variant="contained"
                             color='primary'
-                            type='submit'>
+                            type='submit'
+                            disabled={!!error}
+                    >
                         Next</Button>
                 </div>
                 <RegistrationAlert open={openAlert}/>

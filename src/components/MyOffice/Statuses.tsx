@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -27,11 +27,6 @@ export interface MyStatus {
     updatedAt: string
 }
 
-interface ResponseStatuses {
-    count: number | null
-    rows: MyStatus[]
-}
-
 interface StatusesProps {
     status: string,
     orderId: number | null
@@ -46,14 +41,14 @@ const Statuses: React.FC<StatusesProps> = ({status, orderId, statuses}) => {
         orderStatus && setCurrentStatus(orderStatus)
     }, [statuses])
 
-    const [openAlert, setOpenAlert] = React.useState(false);
-    const [changeStatus, setOrderStatus] = React.useState({} as MyStatus);
+    const [openAlert, setOpenAlert] = useState(false);
+    const [changeStatus, setOrderStatus] = useState({} as MyStatus);
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const orderStatus = statuses && statuses.find(s => s.name === event.target.value)
         orderStatus && setOrderStatus(orderStatus)
         setOpenAlert(true)
     };
-    if (!currentStatus.name) return <div>Загрузка</div>
+    if (!currentStatus.name) return <div>Loading...</div>
     return (
         <div>
             <FormControl className={classes.formControl}>

@@ -49,7 +49,7 @@ const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, statuses
                         Disagree
                     </Button>
                     <Button onClick={handleConfirm} color="primary" autoFocus>
-                        Подтвердить
+                        Confirm
                     </Button>
                 </DialogActions>
             </Dialog>

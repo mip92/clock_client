@@ -12,14 +12,6 @@ const Navbar = ({children}) => {
     const {token} = useTypedSelector(state => state.auth)
     const dispatch = useDispatch();
     const history = useHistory()
-/*    useEffect(() => {
-        if (!token) dispatch(setNavbarPages([{
-            to: '/',
-            name: "abc"
-        }]))
-
-    }, [token])*/
-    const [auth, setAuth] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
     const teleport = (to) => {
         history.push(to);
@@ -28,9 +20,6 @@ const Navbar = ({children}) => {
         dispatch(logout())
         teleport('/login')
     }
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
-    };
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -87,37 +76,7 @@ const Navbar = ({children}) => {
                                 </Button>}
                             </div>
                         }
-                        {auth && (
-                            <div>
-                                <IconButton
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    onClick={handleMenu}
-                                    color="inherit"
-                                >
-                                    <AccountCircle/>
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
-                                >
-                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                                </Menu>
-                            </div>
-                        )}
+
                     </Toolbar>
                 </Container>
             </AppBar>

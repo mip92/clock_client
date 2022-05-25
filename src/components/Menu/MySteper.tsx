@@ -1,7 +1,7 @@
 import {Card, Grid, List, ThemeProvider} from '@material-ui/core';
 import {theme} from "../../App";
 import Typography from "@material-ui/core/Typography";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import StepWrapper from "./StepWrapper";
 import s from "../../style/Steper.module.css"
 import {FormContext} from "../../context/formContext";
@@ -21,9 +21,6 @@ const MyStepper: React.FC = () => {
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
     const [tempFiles, addTempFiles] = useState<picture[]>([])
-   /* const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setChooseAMasterError] = useFetching(async () => {
-        setActiveStep(2)
-    })*/
     const [orderId, setOrderId]=useState<number>()
     const [dealPrice, setDealPrice]=useState<number>()
 
@@ -45,9 +42,6 @@ const MyStepper: React.FC = () => {
                 p.forEach((picture, index)=>{
                     formData.append(`picture${index}`, picture);
                 })
-       /*         for (let i = 0; i < p.length; i++) {
-                    formData.append(`picture${i}`, p[i]);
-                }*/
             }
             const response2 = await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
                 formData, {
@@ -101,7 +95,7 @@ const MyStepper: React.FC = () => {
                                                                 addTempFiles={addTempFiles}
                                                                 />}
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
-                                {activeStep === 2 && <FourthStep dealPrice={dealPrice} orderId={orderId} setActiveStep={setActiveStep}/>}
+                                {activeStep === 2 && <FourthStep dealPrice={dealPrice} orderId={orderId}/>}
                             </StepWrapper>
                             <Grid>
                                {/* {activeStep !== 2 && activeStep !== 0 && */}<div className={s.buttons}>

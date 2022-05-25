@@ -11,6 +11,7 @@ const FileUploaderContainer = ({tempFiles, addTempFiles, setError}) => {
         tempFiles.forEach((tf)=>{
             if (tf.size > 1048576) err = true
         })
+        if(tempFiles.length>5) err = true
 /*        for (let i = 0; i < tempFiles.length; i++) {
             if (tempFiles[i].size > 1048576) err = true
         }*/

@@ -31,7 +31,7 @@ const CreateMaster = ({cities}) => {
         }
     }, [error])
     useEffect(() => {
-        if (errors.param = 'citiesId' && errors.value !== arrayCurrentCities) {
+        if (errors.param === 'citiesId' && errors.value !== arrayCurrentCities) {
             dispatch(fetchError(null))
         }
     }, [errors.citiesId])

@@ -18,7 +18,7 @@ const MyOffice = () => {
         fetching()
     }, [limit, currentPage])
 
-    if (isLoading) return <div>Загрузка</div>
+    if (isLoading) return <div>Loading...</div>
     return (
         <div>
             <OfficeTable orders={orders}/>
@@ -33,7 +33,7 @@ const MyOffice = () => {
                 type='number'
                 value={limit}
                 onChange={handleChange}
-                placeholder="Городов в поле"
+                placeholder="Cities in the field"
                 color="primary"
                 inputProps={{'aria-label': 'description'}}
             />

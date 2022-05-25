@@ -16,6 +16,10 @@ const OrdersContainer = () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
     })
+    const clockSizes:MyStatus[] = [
+        {id: 1, name: 'small', createdAt:'', updatedAt:''},
+        {id: 2, name: 'middle',  createdAt:'', updatedAt:''},
+        {id: 3, name: 'big',  createdAt:'', updatedAt:''},]
     useEffect(() => {
         fetching()
         findStatuses()
@@ -38,7 +42,7 @@ const OrdersContainer = () => {
         setStatuses(arr)
     })
 
-    return (<MyOrders statuses={statuses} cities={cities} isFetch={isFetch || isLoading}/>);
+    return (<MyOrders statuses={statuses} cities={cities} isFetch={isFetch || isLoading} clockSizes={clockSizes}/>);
 };
 
 export default OrdersContainer;

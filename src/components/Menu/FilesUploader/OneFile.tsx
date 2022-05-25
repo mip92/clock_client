@@ -15,7 +15,7 @@ const OneFile:React.FC<OneFileProps> = ({img, index, onDelete}) => {
         setPictureSize((Math.round((img.size / 1048576) * 100) / 100))
     },[img])
     return (
-        <div className={index > 4 ? s.item : s.photo}>
+        <div className={(index > 4 ||  img.size>1048576) ? s.item : s.photo}>
             <img className={index > 4 ? s.itemPhoto : s.photo} width={'150px'} src={URL.createObjectURL(img)}/>
             {img && <div>{img.name}</div>}
             {img && <div className={pictireSise && img.size>1048576 ? s.error : s.div}> {pictireSise + ' Mб'}
