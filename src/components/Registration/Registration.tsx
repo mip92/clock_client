@@ -97,7 +97,7 @@ const Registration: React.FC = () => {
             <Typography variant="h6"
                         color={'secondary'}
                         className={s.typography}
-            >Регистрация</Typography>
+            >Registration</Typography>
             <InputWithError
                 cn={s.email}
                 type="email"

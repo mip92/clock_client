@@ -5,7 +5,7 @@ import { KeyboardDatePicker} from "@material-ui/pickers";
 
 export const FormInputDate = ({date, setDate, register, getValues, setValue, error}) => {
 
-    const value = getValues('fieldName') as Date;;
+    const value = getValues('fieldName') as Date;
     useEffect(() => {
         register('fieldName');
     }, [register]);
@@ -17,7 +17,7 @@ export const FormInputDate = ({date, setDate, register, getValues, setValue, err
         <KeyboardDatePicker
             helperText={error}
             error={!!error}
-            label='Дата'
+            label='Date'
             value={date}
             onChange={(date) => {
                 setDate(date);

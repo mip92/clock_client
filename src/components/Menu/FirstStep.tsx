@@ -134,13 +134,13 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 {cities ?
                     <div className={s.city}>
                         <MultilineTextFields register={register('currentCity')}
-                                             label={"Город"}
+                                             label={"City"}
                                              cities={cities}
                                              error={errors.currentCity?.message}/>
                     </div>
                     :
                     <div>
-                        Загрузка
+                        Loading...
                     </div>
                 }
                 <div className={s.date}>
@@ -153,7 +153,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 </div>
                 <div className={s.time}>
                     <MultilineTextFields register={register('currentTime')}
-                                         label={"Время"}
+                                         label={"Time"}
                                          time={time}
                                          error={errors.currentTime?.message}/>
                 </div>
@@ -170,12 +170,12 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                     <Button variant="contained"
                             color='primary'
                             disabled={true}>
-                        Назад</Button>
+                        Back</Button>
                     <div style={{color: 'red'}}>{error}</div>
                     <Button variant="contained"
                             color='primary'
                             type='submit'>
-                        Далее</Button>
+                        Next</Button>
                 </div>
                 <RegistrationAlert open={openAlert}/>
             </Card>

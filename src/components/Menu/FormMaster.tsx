@@ -12,9 +12,9 @@ interface MasterProps {
 const FormMaster: React.FC<MasterProps> = ({master, setCurrentMaster, currentMaster}) => {
     return (
         <Card className={s.wrapper} onClick={()=>setCurrentMaster(master.id)} style={currentMaster===master.id ? {background: '#ffe0b2'}:{background:'white'}}>
-            <div>Имя: {master.name}</div>
-            <div>Почта: {master.email}</div>
-            <div>Рейтинг: {master.rating}</div>
+            <div>Name: {master.name}</div>
+            <div>E-Mail: {master.email}</div>
+            <div>Rating: {master.rating}</div>
         </Card>
     );
 };

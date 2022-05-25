@@ -21,7 +21,7 @@ const FileUploaderContainer = ({tempFiles, addTempFiles, setError}) => {
         <List>
             <FilesUpload accept="image/*" tempFiles={tempFiles} addTempFiles={addTempFiles}>
                 <Button variant="contained"
-                        color="primary"><PhotoLibraryOutlinedIcon/> Выбрать фотографии</Button>
+                        color="primary"><PhotoLibraryOutlinedIcon/>Select photos</Button>
             </FilesUpload>
         </List>
     );

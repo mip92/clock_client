@@ -84,7 +84,7 @@ const MyStepper: React.FC = () => {
         if (v === 'big') return 3
     }
 
-    const steps: string[] = ["Форма", "Выбор мастере", "Подтверждение заказа"]
+    const steps: string[] = ["Form", "Master select", "Confirmation"]
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -94,7 +94,7 @@ const MyStepper: React.FC = () => {
                             <Typography variant="h6"
                                         color={'secondary'}
                                         className={s.typography}
-                            >Заявка на услуги мастера</Typography>
+                            >Application for the services of a master</Typography>
                             <StepWrapper activeStep={activeStep} steps={steps}>
                                 {activeStep === 0 && <FirstStep next={next} setMasters={setMasters}
                                                                 tempFiles={tempFiles}

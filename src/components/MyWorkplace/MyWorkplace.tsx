@@ -91,8 +91,8 @@ const MyWorkplace = ({cities,
                               setDateFinish={setDateFinish} setDateStart={setDateStart} setInputValue={setInputValue}
                               setStatus={setStatus} statuses={statuses}
                               status={status}/>
-                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
-                <Button onClick={() => download()}>Скачать</Button>
+                <Button onClick={() => fetching()}>Select filters</Button>
+                <Button onClick={() => download()}>Download excel</Button>
 
                 <table>
                     <tbody>
@@ -125,9 +125,10 @@ const MyWorkplace = ({cities,
                     onClick={() => changePage(p)}
                 >{p}</span>)
             }
+
             {currentPage !==pagesArray.length && <span onClick={() => changePage(currentPage+1)} className={s.page}>Next</span>}
 
-            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+            <span style={{marginLeft: 30, padding: 5}}>Limit</span>
             {limitArray.map((l, key: React.Key) => <span
                 className={currentLimit === l ? s.page_limit : s.limit}
                 key={key}
