@@ -14,7 +14,6 @@ export const usePaginatorWithRedux = (callback:any, ActionCreator) => {
         else setLimit(Number(event.target.value));
     };
     const [currentPage, setCurrentPage]=useState<number>(1)
-    /*const [objects, setObjects]=useState<any>([{}])*/
     const [pagesArray, setPagesArray]=useState<Array<number>>([])
     const changePage=(page:number)=>{
         setOffset(page*limit-limit)
@@ -25,7 +24,6 @@ export const usePaginatorWithRedux = (callback:any, ActionCreator) => {
             setIsLoading(true)
             const res =await callback(args)
             setIsLoading(false)
-            // @ts-ignore
             dispatch(ActionCreator(res.data.rows))
             let tp:number=getPageCount(res.data.count,limit)
             let pa:Array<number>=getPagesArray(tp)

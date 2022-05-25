@@ -1,5 +1,4 @@
 import {Master} from "./adminMasterTypes";
-import {OrderInterface} from "../components/Admin/Orders/Order";
 import {Order} from "../store/reducers/workplaceReducer";
 
 export interface City {

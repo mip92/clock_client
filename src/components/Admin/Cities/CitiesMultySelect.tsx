@@ -98,8 +98,6 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
             });
         }
     }, [error])
-
-    console.log(cityName)
     return (
         <div onBlur={onSubmit}>
             <Controller

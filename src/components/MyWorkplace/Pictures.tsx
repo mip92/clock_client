@@ -38,7 +38,7 @@ export interface pictureData {
 }
 
 const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
-    const [urls, setPictures] = useState<pictureData[]>([] as pictureData[])
+    const [urls, setPictures] = useState<pictureData[]>([])
     const [isNotFound, setIsNotFound] = useState<boolean>(false)
 
     const fetch = async () => {
@@ -55,17 +55,19 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
             console.log(e.request.responseText)
         }
     }
-    const [state, setState] = React.useState({});
+    const [state, setState] = useState({});
     const handleChange = (event) => {
         setState({...state, [event.target.name]: event.target.checked});
     };
 
+
     const onDelete = async () => {
         try {
-            let arr = [] as string[]
-            for (var key in state) {
-                if (state[key] == true) arr.push(key)
-            }
+            let arr:string[] = []
+            const entries = Object.entries(state);
+            entries.forEach((p)=>{
+                if (p[1] === true) arr.push(p[0])
+            })
             const response = await $api.delete(`/picture/${open.id}`, {
                 data: {picturesId: arr}
             })

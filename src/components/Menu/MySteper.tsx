@@ -20,8 +20,7 @@ const MyStepper: React.FC = () => {
     const {currentCity, clockSize,dateTime,email,name}=useTypedSelector(state => state.order)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
-    const [tempFiles, addTempFiles] = useState<picture[]>([] as picture[])
-    const [error, setError] = useState<boolean>(false)
+    const [tempFiles, addTempFiles] = useState<picture[]>([])
    /* const [chooseAMaster, isLoadingChooseAMaster, errorChooseAMaster, setChooseAMasterError] = useFetching(async () => {
         setActiveStep(2)
     })*/

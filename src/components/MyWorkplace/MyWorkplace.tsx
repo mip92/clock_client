@@ -7,13 +7,12 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {Button} from "@material-ui/core";
 import ColumnButton from "../Admin/ColumnButton";
 import {usePaginatorWithReduxLimit} from "../../hooks/usePaginatorWithReduxLimit";
-import {AxiosGetRange, AxiosOrder, DealPrice, TotalPrice} from "../Admin/Orders/MyOrders";
+import {AxiosOrder} from "../Admin/Orders/MyOrders";
 import {MyStatus} from "../MyOffice/Statuses";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
 import OrderFilters from "../Admin/Orders/OrderFilters";
 import OneMsterOrder from "./OneMasterOrder";
-import {currentTotal} from "../../utils/currentTotal";
 
 const MyWorkplace = ({cities,
                          isFetch,

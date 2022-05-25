@@ -7,7 +7,7 @@ import {
     FetchErrorAction, Master,
     SetMasterNameAction, SetMastersAction
 } from "../types/adminMasterTypes";
-import {AuthAction, AuthActionTypes} from "../types/authTypes";
+import {AuthAction} from "../types/authTypes";
 import $api from "../http";
 import {MyError} from "../types/mainInterfacesAndTypes";
 
