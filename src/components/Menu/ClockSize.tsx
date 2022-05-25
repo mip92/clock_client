@@ -10,7 +10,7 @@ const ClockSize = ({register, error}) => {
             <Typography variant="subtitle1"
                         color={'secondary'}
                         className={s.typography}
-            >Размер часов</Typography>
+            >Clock size</Typography>
             <div className={s.size}>
                 <label htmlFor="small">
                     <input

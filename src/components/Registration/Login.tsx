@@ -62,7 +62,7 @@ const Login: React.FC = () => {
             <Typography variant="h6"
                         color={'secondary'}
                         className={s.typography}
-            >Авторизация</Typography>
+            >Authorization</Typography>
             <InputWithError
                 cn={s.email}
                 type="email"

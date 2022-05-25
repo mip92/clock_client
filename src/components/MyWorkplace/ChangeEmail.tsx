@@ -66,7 +66,7 @@ const ChangeEmail = () => {
 
     if (isFetch) return (
         <div className={s.wrapper}>
-            <div className={s.password}>Загрузка</div>
+            <div className={s.password}>Loading...</div>
         </div>
     )
     return (
@@ -74,7 +74,7 @@ const ChangeEmail = () => {
             <Typography variant="h6"
                         color={'secondary'}
                         className={s.typography}
-            >Замена почты</Typography>
+            >Change E-Mail</Typography>
             <InputWithError
                 cn={s.email}
                 type="email"
