@@ -69,7 +69,7 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                     <div>Edit</div>
                     <div>Remove</div>
                     <Button onClick={() => sortHandler("isApproved")}>
-                        Status{sortBy == 'isApproved' && select == "ASC" ? '▲' : '▼'}
+                        Status{sortBy === 'isApproved' && select === "ASC" ? '▲' : '▼'}
                     </Button>
                 </div>
                 {isFetch || !cities || isLoading ?
@@ -85,7 +85,7 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                             <OneMaster key={key}
                                        master={m}
                                        currentPage={currentPage}/>)}
-                        {masters.length == 0 &&
+                        {masters.length === 0 &&
                         <div style={{"marginBottom": '15px', color: 'red'}}>Masters not found</div>}
                     </div>
                 }

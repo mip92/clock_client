@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import s from "../../../style/Master.module.css";
-import {Button, Input} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import MyAlert from "../../utilits/MyAlert";
 import {changeMaster, fetchError} from "../../../actionCreators/adminMasterActionCreators";
@@ -13,7 +13,7 @@ import {useForm} from "react-hook-form";
 import InputWithError from "../../Registration/InputWithError";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
-const ChangeMaster = ({master, activateInput, delMaster, newNameOfMaster, newEmailOfMaster}) => {
+const ChangeMaster = ({master, activateInput, delMaster}) => {
     const arr :number[] = []
     master.cities.map(c => arr.push(c.id))
     const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>(arr)
@@ -26,7 +26,7 @@ const ChangeMaster = ({master, activateInput, delMaster, newNameOfMaster, newEma
         newEmailOfMaster: Yup.string().required('Email is required').email('Email is invalid'),
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
-    const {register, handleSubmit, setValue, watch, formState: {errors}, setError} = useForm(formOptions);
+    const {register, handleSubmit, setValue, formState: {errors}, setError} = useForm(formOptions);
     useEffect(() => {
         setValue("newNameOfMaster", master.name, {
             shouldValidate: true,

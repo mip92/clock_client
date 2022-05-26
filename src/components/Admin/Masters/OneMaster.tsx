@@ -55,8 +55,6 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
         master={master}
         activateInput={activateInput}
         delMaster={delMaster}
-        newEmailOfMaster={newEmailOfMaster}
-        newNameOfMaster={newNameOfMaster}
     />
 }
 export default OneMaster

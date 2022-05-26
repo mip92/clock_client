@@ -7,7 +7,7 @@ import {
     SetAuthNameAction, SetAuthRoleAction, SetStatusCode, SetTokenAction
 } from "../types/authTypes"
 import $api from "../http";
-import {ErrorOrNullPayload, MyError} from "../types/mainInterfacesAndTypes";
+import {MyError} from "../types/mainInterfacesAndTypes";
 
 
 export const fetchStart = (bol: boolean): FetchAction => {
@@ -51,8 +51,8 @@ export const changeEmailAuth = (currentEmail: string, newEmail: string, password
         try {
             dispatch(fetchStart(true))
             let url
-            if (role=="MASTER") url=`/masters/changeEmail`
-            else if (role=="USER") url=`/users/changeEmail`
+            if (role==="MASTER") url=`/masters/changeEmail`
+            else if (role==="USER") url=`/users/changeEmail`
             const response = await $api.put(url, {
                 currentEmail,
                 newEmail,

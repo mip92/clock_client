@@ -8,7 +8,7 @@ const OneCheckBox = ({city, array, setArray}) => {
     };
     useEffect(()=>{
         if (checked===true) setArray([...array, city.id])
-        else setArray(array.filter(a=>{if (a==city.id) return
+        else setArray(array.filter(a=>{if (a===city.id) return
         else return a}))
     },[checked])
 

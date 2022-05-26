@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {
     FormControl,
     InputLabel,
@@ -6,7 +6,6 @@ import {
     makeStyles,
     createStyles,
     Theme,
-    useTheme,
     Input, Chip, MenuItem
 } from "@material-ui/core";
 import {City} from "../../../types/mainInterfacesAndTypes";
@@ -44,14 +43,6 @@ const MenuProps = {
     },
 };
 
-function getStyles(name: string, personName: string[], theme: Theme) {
-    return {
-        fontWeight:
-            personName.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
 
 interface CitiesCheckBoxProps {
     cities: City[],
@@ -61,29 +52,12 @@ interface CitiesCheckBoxProps {
 const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCities}) => {
     const {error} = useTypedSelector(state => state.auth)
     const classes = useStyles();
-    const theme = useTheme();
-    const [cityName, setCityName] = useState<string[]>([]);
     const {control, handleSubmit, watch, formState: {errors}, setError} = useForm();
-
-    useEffect(() => {
-        let result: number[]=[]
-        cities.forEach((c)=>{
-            if(cityName.includes(c.cityName)) {
-                result=[...result, c.id]
-            }
-        })
-        /*for (let i = 0; i <cities.length; i++) {
-            if(cityName.includes(cities[i].cityName)) { // @ts-ignore
-                result=[...result, cities[i].id]
-            }
-        }*/
-        setArrayCurrentCities(result)
-    }, [cityName])
 
     const onSubmit = handleSubmit(async data => {
         let result: number[]=[]
         cities.forEach((c)=>{
-            if(cityName.includes(c.cityName)) {
+            if(data.citiesId.includes(c.cityName)) {
                 result=[...result, c.id]
             }
         })
@@ -112,7 +86,7 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
                             labelId="LabelCities"
                             label="cities"
                             multiple
-                            error={watch("citiesId")?.length==0 && error?.value?.length==0}
+                            error={watch("citiesId")?.length===0 && error?.value?.length===0}
                             input={<Input id="select-multiple-chip"/>}
                             renderValue={(selected) => (
                                 <div className={classes.chips}>
@@ -124,7 +98,7 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
                             MenuProps={MenuProps}
                         >
                             {cities.map((city, key) => (
-                                <MenuItem key={key} value={city.cityName} style={getStyles(city.cityName, cityName, theme)}>
+                                <MenuItem key={key} value={city.cityName}>
                                     {city.cityName}
                                 </MenuItem>
                             ))}
@@ -132,7 +106,7 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
                     </FormControl>
                 )}
             />
-            {watch("citiesId")?.length==0 && error?.value?.length==0 &&<div style={{color: "red"}}>{error?.msg}</div>}
+            {watch("citiesId")?.length===0 && error?.value?.length===0 &&<div style={{color: "red"}}>{error?.msg}</div>}
         </div>
     );
 };

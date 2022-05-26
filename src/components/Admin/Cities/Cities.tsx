@@ -8,19 +8,16 @@ import MyModal from "../../utilits/MyModal";
 import AddCity from './AddCity';
 import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
 import $api from "../../../http";
-import {useDispatch} from "react-redux";
 import ColumnButton from "../ColumnButton";
 
 
 const Cities: React.FC = () => {
-    const dispatch = useDispatch()
     const {cities} = useTypedSelector(state => state.adminCity)
     const {
         offset,
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -37,34 +34,6 @@ const Cities: React.FC = () => {
     useEffect(() => {
         fetching()
     }, [currentLimit, currentPage, sortBy, select])
-    /*const newCity = useInput('')
-    const dispatch = useDispatch()
-    const [offset, setOffset] = useState(0)
-    const [limit, setLimit] = useState(5)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [price, setPrice] = useState<number>(0)
-
-
-    useEffect(() => {
-        dispatch(fetchCities(offset, limit))
-    }, [currentPage, limit])
-    useEffect((): void => {
-        dispatch(setCityName(newCity.value))
-    }, [newCity.value])
-
-    const changePage = (page: number) => {
-        setOffset(page * limit - limit)
-        setCurrentPage(page)
-    }
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (Number(event.target.value) === 0) setLimit(10)
-        else setLimit(Number(event.target.value));
-    };
-    const [isOpen, setIsOpen] = useState(false)
-    const sortHandler = (value: string) => {
-
-    }*/
     return (
         <div>
             <h3>List of cities</h3>

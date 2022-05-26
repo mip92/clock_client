@@ -149,7 +149,7 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
         try {
             const citiesId=JSON.stringify(arrayCurrentCities)
             dispatch(fetchStart(true))
-            const response = await $api.post(`/masters/`, {name, email, citiesId:citiesId})
+            await $api.post(`/masters/`, {name, email, citiesId:citiesId})
 /*            dispatch({
                 type: AdminMastersActionTypes.ADD_MASTER,
                 payload: {payload:response.data},

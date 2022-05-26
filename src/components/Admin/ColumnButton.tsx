@@ -11,7 +11,7 @@ interface ColumnButtonProps {
 const ColumnButton: React.FC<ColumnButtonProps> = ({sortHandler, sortBy, name, select}) => {
     return (
         <Button onClick={() => sortHandler(name)}>
-            {name}{sortBy == name && select == "ASC" ? '▲' : '▼'}
+            {name}{sortBy === name && select === "ASC" ? '▲' : '▼'}
         </Button>
     );
 };
