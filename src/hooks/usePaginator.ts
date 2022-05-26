@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {MyError} from "../types/mainInterfacesAndTypes";
 
@@ -39,7 +39,7 @@ export const usePaginator = (func, initialSortBy: string) => {
         })
         setObjects(obj)
     }
-    const fetching = () => {
+    const fetching = useCallback( () => {
         setIsLoading(true)
         const p = func().then((res) => {
             setObjects(res.data.rows)
@@ -54,6 +54,7 @@ export const usePaginator = (func, initialSortBy: string) => {
             )
         })
     }
+    ,[])
 
 
     return [

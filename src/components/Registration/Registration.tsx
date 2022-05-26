@@ -92,6 +92,7 @@ const Registration: React.FC = () => {
 
     }, [id])
 
+    if(isFetch) return <div>Loading...</div>
     return (
         <form onSubmit={onSubmit} className={s.wrapper}>
             <Typography variant="h6"

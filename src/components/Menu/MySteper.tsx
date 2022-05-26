@@ -16,7 +16,7 @@ import {picture} from "../../types/mainInterfacesAndTypes";
 
 
 const MyStepper: React.FC = () => {
-    const {currentMaster, date} = useContext(FormContext)
+    const {currentMaster} = useContext(FormContext)
     const {currentCity, clockSize,dateTime,email,name}=useTypedSelector(state => state.order)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
@@ -36,14 +36,14 @@ const MyStepper: React.FC = () => {
             })
             setOrderId(response1.data.id)
             setDealPrice(response1.data.dealPrice)
-            let formData = new FormData;
+            let formData = new FormData();
             const p =picture.slice(0, 5)
             if (p) {
                 p.forEach((picture, index)=>{
                     formData.append(`picture${index}`, picture);
                 })
             }
-            const response2 = await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
+            await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
                 formData, {
                     headers: {
                         "Content-Type": "multipart/form-data"
@@ -55,11 +55,6 @@ const MyStepper: React.FC = () => {
         }
     }
 
-    /*useEffect(() => {
-        //setChooseAMasterError('')
-        //setFindMasterError('')
-    }, [clockSize, currentCity, currentMaster, dateTime, date])*/
-
     const back = (): void => {
         setActiveStep(prev => prev - 1)
         if (activeStep <= 0) setActiveStep(0)
@@ -68,15 +63,8 @@ const MyStepper: React.FC = () => {
     const next = (): void => {
         setActiveStep(prev => prev + 1)
         if (activeStep === 1) sendPicture(tempFiles)
-        //else if(activeStep === 2) sendPicture(tempFiles)
     }
 
-    function getKeyByValue(object: any, value: boolean) {
-        let v = Object.keys(object).find(key => object[key] === value);
-        if (v === 'small') return 1
-        if (v === 'middle') return 2
-        if (v === 'big') return 3
-    }
 
     const steps: string[] = ["Form", "Master select", "Confirmation"]
     return (

@@ -12,7 +12,7 @@ interface AxiosCityResponse{
 
 const MastersContainer = () => {
     const [cities, setCities] = useState<City[]>([] as City[])
-    const [fetching, isFetch, error] = useFetching(async () => {
+    const [fetching, isFetch] = useFetching(async () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
     })

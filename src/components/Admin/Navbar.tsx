@@ -1,10 +1,9 @@
 import React, { useState} from 'react';
 import {useHistory} from "react-router-dom";
-import {AppBar, Box, Toolbar, Container, Button, IconButton, Menu, MenuItem} from '@material-ui/core'
+import {AppBar, Box, Toolbar, Container, Button} from '@material-ui/core'
 import {useDispatch} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {AccountCircle} from "@material-ui/icons";
 import {logout} from "../../actionCreators/authActionCreators";
 
 const Navbar = ({children}) => {
@@ -12,7 +11,6 @@ const Navbar = ({children}) => {
     const {token} = useTypedSelector(state => state.auth)
     const dispatch = useDispatch();
     const history = useHistory()
-    const [anchorEl, setAnchorEl] = useState(null);
     const teleport = (to) => {
         history.push(to);
     };
@@ -21,13 +19,6 @@ const Navbar = ({children}) => {
         teleport('/login')
     }
 
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     return (
         <div>

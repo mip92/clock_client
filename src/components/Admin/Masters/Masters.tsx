@@ -28,7 +28,6 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -45,10 +44,9 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     useEffect(() => {
         fetching()
-    }, [currentLimit, currentPage, sortBy, select])
+    }, [currentLimit, currentPage, sortBy, select, fetching])
 
     useEffect(() => {
-
         return () => {
             dispatch(setMasterName(''))
         };

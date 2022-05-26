@@ -4,7 +4,7 @@ const PicturesPreloader = ({pictures}) => {
     if (pictures.length===0) return <div>Pictures was not uploaded</div>
     return (
         <div>
-            {pictures.map((p,key)=><img className={s.img}  key={key} src={`${process.env.REACT_APP_CLOUDINARY}/${p.picture.path}`}/>)}
+            {pictures.map((p,key)=><img alt="order_picture" className={s.img}  key={key} src={`${process.env.REACT_APP_CLOUDINARY}/${p.picture.path}`}/>)}
         </div>
     );
 };

@@ -62,7 +62,6 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSize
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -86,7 +85,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSize
         return await $api.get<AxiosOrder>(url)
     }, setOrders, "master name")
 
-    const [getRange, isFetchRange, errorRange] = useFetching(async () => {
+    const [getRange, isFetchRange] = useFetching(async () => {
         $api.get<AxiosGetRange>(`/order/minMax/all`).then((response) => {
             setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
             setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
@@ -98,7 +97,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSize
 
     useEffect(() => {
         /*if (!rangeDealPrice && !rangeTotalPrice) */fetching()
-    }, [currentLimit, currentPage, sortBy, select])
+    }, [currentLimit, currentPage, sortBy, select, fetching])
 
     useEffect(() => {
         if (currentRangeDeal.length === 0) {

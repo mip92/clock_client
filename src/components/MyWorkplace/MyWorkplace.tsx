@@ -13,6 +13,7 @@ import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
 import OrderFilters from "../Admin/Orders/OrderFilters";
 import OneMsterOrder from "./OneMasterOrder";
+import Pagination from "./Pagination";
 
 const MyWorkplace = ({
                          cities,
@@ -24,10 +25,11 @@ const MyWorkplace = ({
                          currentRangeTotal,
                          setCurrentRangeDeal,
                          setCurrentRangeTotal,
-                         clockSizes
+                         clockSizes,
+                         isFetchRange
                      }) => {
-    const {masterId} = useParams<{ masterId: string }>();
 
+    const {masterId} = useParams<{ masterId: string }>();
     const THButtons = ['date time', 'user email', 'user name', 'city', 'clock size', 'deal price', 'total price', 'status']
 
     const {orders} = useTypedSelector(state => state.workPlase)
@@ -37,13 +39,12 @@ const MyWorkplace = ({
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
     const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
 
-
+    console.log(currentRangeDeal[0])
     const {
         offset,
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -65,14 +66,16 @@ const MyWorkplace = ({
         clockSize.map((s) => {
             return cs.push(s.id)
         })
-        console.log(cs)
+
         const url = `/order?offset=${offset}&limit=${currentLimit}&masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
+        console.log(rangeTotalPrice.maxTotalPrice, rangeTotalPrice.minTotalPrice)
+        console.log(url)
         return await $api.get<AxiosOrder>(url)
     }, setOrders, "user name")
 
 
     useEffect(() => {
-        if (!isFetch && currentRangeTotal[0] != undefined) fetching()
+        fetching()
     }, [currentLimit, currentPage, sortBy, select])
 
 
@@ -92,7 +95,7 @@ const MyWorkplace = ({
             }
         )
     }
-
+if (isLoading) return <div>Loading...</div>
     return (
         <div>
             <div>
@@ -132,28 +135,15 @@ const MyWorkplace = ({
                     </tbody>
                 </table>
             </div>
-            {currentPage !== 1 && <span onClick={() => changePage(currentPage - 1)} className={s.page}>Prev</span>}
-            {
-                pagesArray.map((p: number, key: React.Key) => <span
-                    className={currentPage === p ? s.page_current : s.page}
-                    key={key}
-                    onClick={() => changePage(p)}
-                >{p}</span>)
-            }
-
-            {currentPage !== pagesArray.length &&
-            <span onClick={() => changePage(currentPage + 1)} className={s.page}>Next</span>}
-
-            <span style={{marginLeft: 30, padding: 5}}>Limit</span>
-            {limitArray.map((l, key: React.Key) => <span
-                className={currentLimit === l ? s.page_limit : s.limit}
-                key={key}
-                onClick={() => changeLimit(l)}
-            >{l}</span>)
-            }
-            <span style={{marginLeft: 30, padding: 5}}>
-                {`Showing ${length} of ${total}`}
-            </span>
+            <Pagination changeLimit={changeLimit}
+                        changePage={changePage}
+                        currentLimit={currentLimit}
+                        currentPage={currentPage}
+                        limitArray={limitArray}
+                        pagesArray={pagesArray}
+                        total={total}
+                        length={length}
+            />
         </div>
     );
 };

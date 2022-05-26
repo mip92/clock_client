@@ -22,7 +22,6 @@ const Navbar = () => {
     useEffect(() => {
         dispatch(setNavbarPages(role, id))
     }, [role])
-    const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const teleport = (to) => {
         history.push(to);
@@ -31,9 +30,6 @@ const Navbar = () => {
         dispatch(logout())
         teleport('/login')
     }
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
-    };
 
     const changeEmailHandler = () => {
         setAnchorEl(null);

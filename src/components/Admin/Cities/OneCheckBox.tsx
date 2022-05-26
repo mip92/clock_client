@@ -13,7 +13,7 @@ const OneCheckBox = ({city, array, setArray}) => {
     },[checked])
 
     useEffect(()=>{
-        if (array.length==0) setChecked(false)
+        if (array.length===0) setChecked(false)
     },[array])
 
 

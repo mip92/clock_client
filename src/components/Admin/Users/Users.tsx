@@ -30,7 +30,7 @@ const Users: React.FC = () => {
 
     useEffect(() => {
         fetching()
-    }, [currentLimit, currentPage, sortBy, select])
+    }, [currentLimit, currentPage, sortBy, select, fetching])
 
     return (
         <div>

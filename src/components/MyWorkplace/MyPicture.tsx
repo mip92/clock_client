@@ -15,7 +15,7 @@ const MyPicture: React.FC<PictureProps> = ({picture}) => {
         window.open(src,"Image","width=" + width + ",height=" + height);
     }
     return (
-        <img onClick={()=>openImageWindow(picture.url)} className={s.img} width={400} src={picture.url}/>
+        <img alt="order_photo" onClick={()=>openImageWindow(picture.url)} className={s.img} width={400} src={picture.url}/>
     )
 };
 

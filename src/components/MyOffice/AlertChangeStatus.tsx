@@ -19,10 +19,10 @@ interface AlertChangeStatusProps{
 }
 
 const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, statuses, setOpenAlert, changeStatus, setCurrentStatus, orderId}) => {
-    const [fetchChangeStatus, isLoading, errorChangeStatus, setError] = useFetching(async () => {
+    const [fetchChangeStatus, isLoading] = useFetching(async () => {
         const res = await $api.put(`/status/${orderId}`,{status:changeStatus.name})
         const orderStatus = res.data
-        const newStatus =statuses?.find(s => s?.name == orderStatus)
+        const newStatus =statuses?.find(s => s?.name === orderStatus)
         // @ts-ignore
         orderStatus && setCurrentStatus(newStatus)
         setOpenAlert(false)
@@ -30,6 +30,7 @@ const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, statuses
     const handleConfirm = () => {
         fetchChangeStatus()
     };
+    if (isLoading) return <div>Loading...</div>
     return (
         <div>
             <Dialog

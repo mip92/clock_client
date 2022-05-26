@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 const PayPalCompleted = () => {
-    const {token, id} = useTypedSelector(state => state.auth)
+    const {id} = useTypedSelector(state => state.auth)
     const history = useHistory();
     const goTo = (path) => {
         history.push(path)

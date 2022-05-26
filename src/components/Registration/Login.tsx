@@ -28,7 +28,7 @@ const Login: React.FC = () => {
             .required('Password is required'),
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
-    const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
+    const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
         await dispatch(loginAuth(data.email, data.password))
         }

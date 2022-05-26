@@ -6,7 +6,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import $api from "../../http";
 import {Button, Checkbox, FormControl, FormControlLabel} from "@material-ui/core";
-import Picture from './MyPicture';
 import MyPicture from "./MyPicture";
 import {StateOpenInterface} from "./WorkplaceTable";
 
@@ -15,7 +14,7 @@ interface PicturesProps {
     setOpen: Function
 }
 
-interface Picture {
+interface IPicture {
     url: string
     createdAt: string
     id: number
@@ -27,7 +26,7 @@ interface OrderPicture {
     createdAt: string
     id: number
     orderId: number
-    picture: Picture
+    picture: IPicture
     url: string
 }
 
@@ -51,7 +50,7 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                     url: orderPicture.picture.url
                 }]))
         } catch (e) {
-            if (e.request.statuse = 404) setIsNotFound(true)
+            if (e.request.statuse === 404) setIsNotFound(true)
             console.log(e.request.responseText)
         }
     }
@@ -68,7 +67,7 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
             entries.forEach((p)=>{
                 if (p[1] === true) arr.push(p[0])
             })
-            const response = await $api.delete(`/picture/${open.id}`, {
+            await $api.delete(`/picture/${open.id}`, {
                 data: {picturesId: arr}
             })
         } catch (e) {

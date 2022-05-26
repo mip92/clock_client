@@ -52,7 +52,7 @@ interface CitiesCheckBoxProps {
 const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCities}) => {
     const {error} = useTypedSelector(state => state.auth)
     const classes = useStyles();
-    const {control, handleSubmit, watch, formState: {errors}, setError} = useForm();
+    const {control, handleSubmit, watch, setError} = useForm();
 
     const onSubmit = handleSubmit(async data => {
         let result: number[]=[]

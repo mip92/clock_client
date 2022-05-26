@@ -16,7 +16,7 @@ const ChangeUser = ({deleteUser, user, activateInput, updateUser, error}) => {
         .required('User name is required'),
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
-    const {register, setValue, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
+    const {register, setValue, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             const response = await $api.put(`/users`, {
                     id: user.id,
