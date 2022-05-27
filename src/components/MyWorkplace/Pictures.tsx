@@ -51,7 +51,6 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                 }]))
         } catch (e) {
             if (e.request.statuse === 404) setIsNotFound(true)
-            console.log(e.request.responseText)
         }
     }
     const [state, setState] = useState({});
