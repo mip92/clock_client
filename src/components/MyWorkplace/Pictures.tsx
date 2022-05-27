@@ -65,6 +65,7 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
                 data: {picturesId: arr}
             })
             if (open.id !==null) dispatch (deletePictures(open.id, response.data.picturesId))
+            setOpen(false)
         } catch (e) {
         }
     }

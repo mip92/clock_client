@@ -126,13 +126,15 @@ export const workplaseReducer = (state = initStateWorkPlace, action: WorkplaseAc
         case WorkplaseActionTypes.SET_ORDERS:
             return {...state, orders: action.payload.payload}
         case WorkplaseActionTypes.DEL_PICTURES:
-            console.log(action.payload.payload.orderId)
-            return {...state, orders: state.orders.map(order=>{
-                    if (order.id===action.payload.payload.orderId)return {...order,
-                        orderPictures: state.orders[action.payload.payload.orderId].orderPictures.filter((orderPicture)=>{
-                            return orderPicture.picture.id!==action.payload.payload.arrayPictureId[0]
+            return {...state, orders: state.orders.map((order, index)=>{
+                    if (order.id===action.payload.payload.orderId) return {...order,
+                        orderPictures: state.orders[index].orderPictures.filter((orderPicture)=>{
+                            return orderPicture.picture.id!==action.payload.payload.arrayPictureId[0] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[1] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[2] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[3] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[4]
                         })}
-
                     return order
                 })}
         default:
