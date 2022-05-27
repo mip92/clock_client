@@ -85,7 +85,6 @@ const MyWorkplace = ({
         clockSize.map((s) => {
             return cs.push(s.id)
         })
-        console.log(cs)
         const url = `/order/getExcel?masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
         $api.get(url).then((response) => {
                 window.location.href = response.data;
