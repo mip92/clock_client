@@ -67,8 +67,6 @@ const MyWorkplace = ({
         })
 
         const url = `/order?offset=${offset}&limit=${currentLimit}&masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
-        console.log(rangeTotalPrice.maxTotalPrice, rangeTotalPrice.minTotalPrice)
-        console.log(url)
         return await $api.get<AxiosOrder>(url)
     }, setOrders, "user name")
 
