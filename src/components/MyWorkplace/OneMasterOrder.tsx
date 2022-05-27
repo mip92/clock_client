@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import Statuses from "../MyOffice/Statuses";
-import {StateOpenInterface} from "./WorkplaceTable";
 import Pictures from "./Pictures";
 import PicturesPreloader from "./PicturesPreloader";
 
-
+export interface StateOpenInterface{
+    status: boolean
+    id: number | null
+}
 const OneMsterOrder = ({order, statuses}) => {
     const [isOpen, setOpen] = useState<StateOpenInterface>({status: false, id: null})
     const openPictures = (id) => {
@@ -27,7 +29,7 @@ const OneMsterOrder = ({order, statuses}) => {
                           orderId={order.id} status={order.status}
                           statuses={statuses}/></td>
             <td onClick={() => openPictures(order.id)}>{<PicturesPreloader pictures={order.orderPictures}/>}</td>
-            {isOpen.status && <td><Pictures open={isOpen} setOpen={setOpen}/></td>}
+            {isOpen.status && <td><Pictures pictures={order.orderPictures} open={isOpen} setOpen={setOpen}/></td>}
         </tr>
     );
 };

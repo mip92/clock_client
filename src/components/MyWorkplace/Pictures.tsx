@@ -8,11 +8,13 @@ import $api from "../../http";
 import {Button, Checkbox, FormControl, FormControlLabel} from "@material-ui/core";
 import Picture from './MyPicture';
 import MyPicture from "./MyPicture";
-import {StateOpenInterface} from "./WorkplaceTable";
+import {StateOpenInterface} from "./OneMasterOrder";
+
 
 interface PicturesProps {
     open: StateOpenInterface
     setOpen: Function
+    pictures: any
 }
 
 interface Picture {
@@ -37,7 +39,7 @@ export interface pictureData {
     id: number
 }
 
-const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
+const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
     const [urls, setPictures] = useState<pictureData[]>([])
     const [isNotFound, setIsNotFound] = useState<boolean>(false)
 
@@ -51,7 +53,7 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                     url: orderPicture.picture.url
                 }]))
         } catch (e) {
-            if (e.request.statuse = 404) setIsNotFound(true)
+            if (e.request.statuse === 404) setIsNotFound(true)
             console.log(e.request.responseText)
         }
     }
@@ -74,6 +76,15 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
         } catch (e) {
         }
     }
+
+    const download = () => {
+        const url = `/order/getZip/${open.id}`
+        $api.get(url).then((response) => {
+                window.location.href = response.data;
+            }
+        )
+    }
+
     useEffect(() => {
         open.id && fetch()
     }, [])
@@ -108,9 +119,16 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onDelete} color="primary">
-                        Delete
-                    </Button>
+                    {pictures.length !== 0 &&
+                    <div>
+                        <Button onClick={onDelete} color="primary">
+                            Delete
+                        </Button>
+                        <Button onClick={() => download()}>
+                            Download zip
+                        </Button>
+                    </div>
+                    }
                 </DialogActions>
             </Dialog>
         </div>
