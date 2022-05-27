@@ -46,13 +46,6 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
     const handleChange = (event) => {
         setState({...state, [event.target.name]: event.target.checked});
     };
-    const download = () => {
-        const url = `/order/getZip/${open.id}`
-        $api.get(url).then((response) => {
-                window.location.href = response.data;
-            }
-        )
-    }
 
     const onDelete = async () => {
         try {
@@ -104,9 +97,6 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
                     <div>
                         <Button onClick={onDelete} color="primary">
                             Delete
-                        </Button>
-                        <Button onClick={() => download()}>
-                            Download zip
                         </Button>
                     </div>
                     }
