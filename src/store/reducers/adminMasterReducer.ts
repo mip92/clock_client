@@ -20,7 +20,7 @@ export const adminMasterReducer = (state = initState, action: AdminMasterAction)
             return {...state, masters: state.masters.filter(master => master.id !== action.payload.payload.id)}
         case AdminMastersActionTypes.APPROVE_MASTER:
             return {...state, masters: state.masters.map(m=>{
-                if (m.id==action.payload.payload.id)return {...m, isApproved:action.payload.payload.isApproved}
+                if (m.id==action.payload.payload.id) return {...m, isApproved:action.payload.payload.isApproved}
                 return m
                 })
                 /*state.masters.map(master => {

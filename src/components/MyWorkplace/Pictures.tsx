@@ -8,11 +8,14 @@ import $api from "../../http";
 import {Button, Checkbox, FormControl, FormControlLabel} from "@material-ui/core";
 import Picture from './MyPicture';
 import MyPicture from "./MyPicture";
-import {StateOpenInterface} from "./WorkplaceTable";
+import {StateOpenInterface} from "./OneMasterOrder";
+import {useDispatch} from "react-redux";
+import {deletePictures} from "../../actionCreators/workplaseActionCreators";
 
 interface PicturesProps {
     open: StateOpenInterface
     setOpen: Function
+    pictures: any
 }
 
 interface Picture {
@@ -37,46 +40,34 @@ export interface pictureData {
     id: number
 }
 
-const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
-    const [urls, setPictures] = useState<pictureData[]>([])
-    const [isNotFound, setIsNotFound] = useState<boolean>(false)
-
-    const fetch = async () => {
-        try {
-            const response = await $api.get<OrderPicture[]>(`/picture/${open.id}`)
-            response.data.map((orderPicture) => setPictures(prevState =>
-                [...prevState, {
-                    path: orderPicture.picture.path,
-                    id: orderPicture.picture.id,
-                    url: orderPicture.picture.url
-                }]))
-        } catch (e) {
-            if (e.request.statuse = 404) setIsNotFound(true)
-            console.log(e.request.responseText)
-        }
-    }
+const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
+    const dispatch =useDispatch()
     const [state, setState] = useState({});
     const handleChange = (event) => {
         setState({...state, [event.target.name]: event.target.checked});
     };
-
+    const download = () => {
+        const url = `/order/getZip/${open.id}`
+        $api.get(url).then((response) => {
+                window.location.href = response.data;
+            }
+        )
+    }
 
     const onDelete = async () => {
         try {
-            let arr:string[] = []
+            let arr: string[] = []
             const entries = Object.entries(state);
-            entries.forEach((p)=>{
+            entries.forEach((p) => {
                 if (p[1] === true) arr.push(p[0])
             })
             const response = await $api.delete(`/picture/${open.id}`, {
                 data: {picturesId: arr}
             })
+            if (open.id !==null) dispatch (deletePictures(open.id, response.data.picturesId))
         } catch (e) {
         }
     }
-    useEffect(() => {
-        open.id && fetch()
-    }, [])
     return (
         <div>
             <Dialog
@@ -89,28 +80,35 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <FormControl component="fieldset">
-                            {urls && urls.map((u, key) =>
+                            {pictures && pictures.map((picture, key) =>
                                 <div>
                                     <FormControlLabel
                                         key={key}
                                         value="top"
-                                        checked={state[u.id] || !!''}
+                                        checked={state[picture.picture.id] || !!''}
                                         onChange={handleChange}
                                         control={<Checkbox color="primary"/>}
-                                        name={String(u.id)}
+                                        name={String(picture.picture.id)}
                                         label={''}
                                     />
-                                    <MyPicture picture={u}/>
+                                    <MyPicture picture={picture.picture}/>
                                 </div>
                             )}
                         </FormControl>
-                        {isNotFound && <div>Pictures is not found</div>}
+                        {pictures.length === 0 && <div>Pictures was not uploaded</div>}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onDelete} color="primary">
-                        Delete
-                    </Button>
+                    {pictures.length !== 0 &&
+                    <div>
+                        <Button onClick={onDelete} color="primary">
+                            Delete
+                        </Button>
+                        <Button onClick={() => download()}>
+                            Download zip
+                        </Button>
+                    </div>
+                    }
                 </DialogActions>
             </Dialog>
         </div>

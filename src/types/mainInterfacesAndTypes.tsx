@@ -37,6 +37,12 @@ export type BooleanPayload = {
 export type OrdersPayload = {
     payload: Order[]
 }
+export type DelPicturesPayload = {
+    payload: {
+        orderId: number,
+        arrayPictureId:number[]
+    }
+}
 
 export type NumberPayload = {
     payload: number

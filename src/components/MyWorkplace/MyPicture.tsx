@@ -15,7 +15,10 @@ const MyPicture: React.FC<PictureProps> = ({picture}) => {
         window.open(src,"Image","width=" + width + ",height=" + height);
     }
     return (
-        <img onClick={()=>openImageWindow(picture.url)} className={s.img} width={400} src={picture.url}/>
+        <img onClick={()=>openImageWindow(picture.url)}
+             className={s.img}
+             width={400}
+             src={`${process.env.REACT_APP_CLOUDINARY}/${picture.path}`}/>
     )
 };
 

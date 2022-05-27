@@ -78,7 +78,7 @@ const MyWorkplace = ({cities,
             }
         )
     }
-
+    if (isLoading) return <div>Loading...</div>
     return (
         <div>
             <div>

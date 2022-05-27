@@ -1,4 +1,4 @@
-import {OrdersPayload} from "./mainInterfacesAndTypes";
+import {DelPicturesPayload, OrdersPayload} from "./mainInterfacesAndTypes";
 import {Order} from "../store/reducers/workplaceReducer";
 
 export interface WorkplaseStateType {
@@ -7,6 +7,7 @@ export interface WorkplaseStateType {
 
 export enum WorkplaseActionTypes {
     SET_ORDERS="SET_ORDERS",
+    DEL_PICTURES="DEL_PICTURES"
 }
 
 export interface SetOrderAction {
@@ -14,5 +15,9 @@ export interface SetOrderAction {
     payload: OrdersPayload
 }
 
+export interface DeletePicturesAction {
+    type: WorkplaseActionTypes.DEL_PICTURES;
+    payload: DelPicturesPayload
+}
 
-export type WorkplaseAction = SetOrderAction
+export type WorkplaseAction = SetOrderAction | DeletePicturesAction
