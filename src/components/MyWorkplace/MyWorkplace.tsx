@@ -39,7 +39,6 @@ const MyWorkplace = ({
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
     const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
 
-    console.log(currentRangeDeal[0])
     const {
         offset,
         changePage,
