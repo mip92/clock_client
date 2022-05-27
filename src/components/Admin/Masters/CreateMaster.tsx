@@ -39,7 +39,6 @@ const CreateMaster = ({cities}) => {
             dispatch(addOneMaster(data.name, data.email, arrayCurrentCities))
         }
     )
-    console.log(arrayCurrentCities)
     return (
         <form onSubmit={fetch} className={s.wrapper}>
             <div>
