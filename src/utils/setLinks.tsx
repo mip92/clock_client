@@ -1,4 +1,5 @@
 import {NavBarLink} from "../types/mainInterfacesAndTypes";
+import {Role} from "../enums/Roles";
 
 export const setLinks = (role: string | null, id: number|null) => {
     const adminLinks: NavBarLink[] = [
@@ -19,11 +20,11 @@ export const setLinks = (role: string | null, id: number|null) => {
         {to: '/blog', name: "Blog"}
     ]
     switch (role) {
-        case "ADMIN":
+        case Role.ADMIN:
             return adminLinks;
-        case "MASTER":
+        case Role.MASTER:
             return masterLinks;
-        case "USER":
+        case Role.USER:
             return userLinks;
         default:
             return defaultLinks

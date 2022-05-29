@@ -25,10 +25,6 @@ export interface Clock {
     big: boolean,
 }
 
-export interface picture {
-    name: string;
-    size: number
-}
 
 export type BooleanPayload = {
     payload: boolean

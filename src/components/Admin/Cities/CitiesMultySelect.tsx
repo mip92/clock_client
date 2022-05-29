@@ -55,13 +55,13 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
     const {control, handleSubmit, watch, setError} = useForm();
 
     const onSubmit = handleSubmit(async data => {
-        let result: number[]=[]
-        cities.forEach((c)=>{
-            if(data.citiesId.includes(c.cityName)) {
-                result=[...result, c.id]
-            }
-        })
-        setArrayCurrentCities(result)
+            let result: number[] = []
+            cities.forEach((c) => {
+                if (data.citiesId.includes(c.cityName)) {
+                    result = [...result, c.id]
+                }
+            })
+            setArrayCurrentCities(result)
         }
     );
     useEffect(() => {
@@ -78,7 +78,7 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
                 name="citiesId"
                 control={control}
                 defaultValue={[]}
-                render={({ field }) => (
+                render={({field}) => (
                     <FormControl className={classes.formControl}>
                         <InputLabel id="demo-mutiple-chip-label">City</InputLabel>
                         <Select
@@ -86,7 +86,7 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
                             labelId="LabelCities"
                             label="cities"
                             multiple
-                            error={watch("citiesId")?.length===0 && error?.value?.length===0}
+                            error={watch("citiesId")?.length === 0 && error?.value?.length === 0}
                             input={<Input id="select-multiple-chip"/>}
                             renderValue={(selected) => (
                                 <div className={classes.chips}>
@@ -106,7 +106,8 @@ const CitiesMultySelect: FC<CitiesCheckBoxProps> = ({cities, setArrayCurrentCiti
                     </FormControl>
                 )}
             />
-            {watch("citiesId")?.length===0 && error?.value?.length===0 &&<div style={{color: "red"}}>{error?.msg}</div>}
+            {watch("citiesId")?.length === 0 && error?.value?.length === 0 &&
+            <div style={{color: "red"}}>{error?.msg}</div>}
         </div>
     );
 };

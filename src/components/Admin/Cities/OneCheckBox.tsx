@@ -1,20 +1,19 @@
 import React, {useEffect} from 'react';
 import {Checkbox, FormControlLabel} from "@material-ui/core";
 
-const OneCheckBox = ({city, array, setArray}) => {
-    const [checked, setChecked] = React.useState(array.includes(city.id));
+const OneCheckBox = ({city, currentCities, setCurrentCities}) => {
+    const [checked, setChecked] = React.useState(currentCities.includes(city.id));
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
     };
     useEffect(()=>{
-        if (checked===true) setArray([...array, city.id])
-        else setArray(array.filter(a=>{if (a===city.id) return
-        else return a}))
+        if (checked) setCurrentCities([...currentCities, city.id])
+        else setCurrentCities(currentCities.filter(a => a !== city.id))
     },[checked])
 
     useEffect(()=>{
-        if (array.length===0) setChecked(false)
-    },[array])
+        if (currentCities===[]) setChecked(false)
+    },[currentCities])
 
 
     return (

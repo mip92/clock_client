@@ -10,6 +10,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import InputWithError from "./InputWithError";
 import Typography from "@material-ui/core/Typography";
+import {Role} from "../../enums/Roles";
 
 const Login: React.FC = () => {
     const history = useHistory();
@@ -30,7 +31,7 @@ const Login: React.FC = () => {
     const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
-        await dispatch(loginAuth(data.email, data.password))
+            await dispatch(loginAuth(data.email, data.password))
         }
     );
     useEffect(() => {
@@ -42,14 +43,17 @@ const Login: React.FC = () => {
         }
     }, [error])
 
-    useEffect(()=>{
-        if (prevLocation==='/' && id) return history.push('/')
+    useEffect(() => {
+        if (prevLocation === '/' && id) return history.push('/')
         switch (role) {
-            case "ADMIN": return history.push('/menu/orders')
-            case "USER": return history.push(`/myOffice/${id}`)
-            case "MASTER": return history.push(`/MyWorkplace/${id}`)
+            case Role.ADMIN:
+                return history.push('/menu/orders')
+            case Role.USER:
+                return history.push(`/myOffice/${id}`)
+            case Role.MASTER:
+                return history.push(`/MyWorkplace/${id}`)
         }
-    },[id])
+    }, [id])
 
     if (isFetch) return (
         <div className={s.wrapper}>

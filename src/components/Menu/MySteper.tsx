@@ -11,20 +11,17 @@ import $api from "../../http";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import FourthStep from "./FourthStep";
 import FirstStep from "./FirstStep";
-import axios from "axios";
-import {picture} from "../../types/mainInterfacesAndTypes";
-
 
 const MyStepper: React.FC = () => {
     const {currentMaster} = useContext(FormContext)
     const {currentCity, clockSize,dateTime,email,name}=useTypedSelector(state => state.order)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
-    const [tempFiles, addTempFiles] = useState<picture[]>([])
+    const [tempFiles, addTempFiles] = useState<File[]>([])
     const [orderId, setOrderId]=useState<number>()
     const [dealPrice, setDealPrice]=useState<number>()
 
-    const sendPicture = async (picture) => {
+    const sendPicture = async (pictures : File[]) => {
         try {
             const response1 = await $api.post(`/order/`, {
                 email: email,
@@ -37,13 +34,13 @@ const MyStepper: React.FC = () => {
             setOrderId(response1.data.id)
             setDealPrice(response1.data.dealPrice)
             let formData = new FormData();
-            const p =picture.slice(0, 5)
-            if (p) {
-                p.forEach((picture, index)=>{
+            const fivePicturesOrLess =pictures.slice(0, 5)
+            if (fivePicturesOrLess) {
+                fivePicturesOrLess.forEach((picture, index)=>{
                     formData.append(`picture${index}`, picture);
                 })
             }
-            await axios.post(`http://localhost:5000/api/picture/${response1.data.id}`,
+            await $api.post(`/picture/${response1.data.id}`,
                 formData, {
                     headers: {
                         "Content-Type": "multipart/form-data"
@@ -65,7 +62,6 @@ const MyStepper: React.FC = () => {
         if (activeStep === 1) sendPicture(tempFiles)
     }
 
-
     const steps: string[] = ["Form", "Master select", "Confirmation"]
     return (
         <div>
@@ -85,24 +81,6 @@ const MyStepper: React.FC = () => {
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
                                 {activeStep === 2 && <FourthStep dealPrice={dealPrice} orderId={orderId}/>}
                             </StepWrapper>
-                            <Grid>
-                               {/* {activeStep !== 2 && activeStep !== 0 && */}<div className={s.buttons}>
-                                    {/*<Button variant="contained"
-                                            color='primary'
-                                            disabled={activeStep === 0}
-                                            onClick={back}>
-                                        Назад</Button>
-                                    <div style={{color: 'red'}}>{errorChooseAMaster}</div>
-                                    <Button variant="contained"
-                                            color='primary'
-                                            disabled={ activeStep === 3}
-                                            onClick={() => next()}>
-                                        Далее</Button>*/}
-                                    {/*<Button title="Submit" onPress={handleSubmit(onSubmit)} />*/}
-
-                                </div>
-
-                            </Grid>
                         </List>
                     </Card>
                 </div>

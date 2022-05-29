@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import InputWithError from "../Registration/InputWithError";
 import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import {Role} from "../../enums/Roles";
 
 const ChangeEmail = () => {
     const dispatch = useDispatch()
@@ -31,8 +32,8 @@ const ChangeEmail = () => {
 
     const onSubmit = handleSubmit(async data => {
             await dispatch(changeEmailAuth(data.currentEmail, data.newEmail, data.password, role))
-            if (role === "USER") history.push(`/MyOffice/${id}`)
-            else if (role === "MASTER") history.push(`/MyOffice/${id}`)
+            if (role === Role.USER) history.push(`/MyOffice/${id}`)
+            else if (role === Role.MASTER) history.push(`/MyOffice/${id}`)
         }
     );
 

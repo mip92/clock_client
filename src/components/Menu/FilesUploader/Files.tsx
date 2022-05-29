@@ -1,10 +1,9 @@
 import React from 'react';
 import OneFile from "./OneFile";
 import s from "../../../style/Files.module.css"
-import {picture} from "../../../types/mainInterfacesAndTypes";
 
 interface FilesProps {
-    imgs: picture[]
+    imgs: File[]
     onDelete: Function
 
 }

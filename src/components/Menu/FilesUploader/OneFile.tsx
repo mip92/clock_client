@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button} from "@material-ui/core";
 import s from "../../../style/OneFile.module.css"
-import {picture} from "../../../types/mainInterfacesAndTypes";
 
 interface OneFileProps{
-    img:picture
+    img:File
     onDelete: Function,
     index:number
 }

@@ -73,15 +73,15 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSize
         setInputValue,
         sortHandler
     } = usePaginatorWithReduxLimit(async () => {
-        const st: string[] = []
-        const cs: number[] = []
+        const currentStatusesName: string[] = []
+        const currentClockSizesId: number[] = []
         status.map((s) => {
-            return st.push(s.name)
+            return currentStatusesName.push(s.name)
         })
         clockSize.map((s) => {
-            return cs.push(s.id)
+            return currentClockSizesId.push(s.id)
         })
-        const url = `/order?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filterMaster=${inputValue}&filterUser=${userValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
+        const url = `/order?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filterMaster=${inputValue}&filterUser=${userValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${currentClockSizesId}&status=${currentStatusesName}`
         return await $api.get<AxiosOrder>(url)
     }, setOrders, "master name")
 
@@ -96,8 +96,8 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSize
 
 
     useEffect(() => {
-        /*if (!rangeDealPrice && !rangeTotalPrice) */fetching()
-    }, [currentLimit, currentPage, sortBy, select, fetching])
+        fetching()
+    }, [currentLimit, currentPage, sortBy, select])
 
     useEffect(() => {
         if (currentRangeDeal.length === 0) {

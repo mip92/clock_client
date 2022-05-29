@@ -8,13 +8,10 @@ const FileUploaderContainer = ({tempFiles, addTempFiles, setError}) => {
 
     useEffect(() => {
         let err = false
-        tempFiles.forEach((tf)=>{
-            if (tf.size > 1048576) err = true
+        tempFiles.forEach((tempFile) => {
+            if (tempFile.size > 1048576) err = true
         })
-        if(tempFiles.length>5) err = true
-/*        for (let i = 0; i < tempFiles.length; i++) {
-            if (tempFiles[i].size > 1048576) err = true
-        }*/
+        if (tempFiles.length > 5) err = true
         setError(err)
     }, [tempFiles])
 

@@ -65,10 +65,10 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                     <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
                 </div>
                 <div className={s.item}>
-                    <MultipleSelectObject name="Clock size" arr={clockSizes} correctName={clockSize} setCorrectName={setClockSize}/>
+                    <MultipleSelectObject name="Clock size" objects={clockSizes} correctName={clockSize} setCorrectName={setClockSize}/>
                 </div>
                 <div className={s.item}>
-                    <MultipleSelectObject name="Status" arr={statuses} correctName={status} setCorrectName={setStatus}/>
+                    <MultipleSelectObject name="Status" objects={statuses} correctName={status} setCorrectName={setStatus}/>
                 </div>
                 <div className={s.name}>
                     <TextField label={userValue ? "Master name or email" : "User name or email"}

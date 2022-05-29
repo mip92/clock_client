@@ -28,7 +28,6 @@ const useSortableData = (items: Order[], config) => {
     }, [items, sortConfig]);
 
     const requestSort = (key, activeSort, setActiveSort) => {
-        //setActiveSort (prevState => ({name:prevState.name, down:!prevState.down}))
         if (activeSort.name === key) setActiveSort(prevState => ({name: prevState.name, down: !prevState.down}))
         else if (activeSort.name !== key) setActiveSort({name: key, down: true})
         let direction = 'ascending';
@@ -45,8 +44,6 @@ const useSortableData = (items: Order[], config) => {
 
 const getString = (date) => {
     return new Date(date).toLocaleString()
-    /*const d = new Date(date)
-    return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} ${d.getHours()}:00`*/
 }
 
 interface ProductTableProps {

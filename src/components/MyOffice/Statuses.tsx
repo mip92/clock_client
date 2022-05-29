@@ -21,10 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 export interface MyStatus {
-    createdAt: string
     id: number
     name: string
-    updatedAt: string
 }
 
 interface StatusesProps {

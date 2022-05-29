@@ -33,7 +33,7 @@ const Cities: React.FC = () => {
     }, setCities, "cityName")
     useEffect(() => {
         fetching()
-    }, [currentLimit, currentPage, sortBy, select, fetching])
+    }, [currentLimit, currentPage, sortBy, select])
     return (
         <div>
             <h3>List of cities</h3>

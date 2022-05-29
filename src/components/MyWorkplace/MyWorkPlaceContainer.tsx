@@ -35,7 +35,7 @@ const MyWorkPlaceContainer = () => {
         let k = 1
         const keys = Object.keys(res.data);
         keys.forEach(key => {
-            arr.push({createdAt: "", updatedAt: "", id: k, name: key})
+            arr.push({id: k, name: key})
             k++
         });
         setStatuses(arr)
@@ -53,9 +53,9 @@ const MyWorkPlaceContainer = () => {
         })
     })
     const clockSizes: MyStatus[] = [
-        {id: 1, name: 'small', createdAt: '', updatedAt: ''},
-        {id: 2, name: 'middle', createdAt: '', updatedAt: ''},
-        {id: 3, name: 'big', createdAt: '', updatedAt: ''},]
+        {id: 1, name: 'small'},
+        {id: 2, name: 'middle',},
+        {id: 3, name: 'big'}]
 
     useEffect(() => {
         if (currentRangeDeal.length === 0 || currentRangeDeal === []) {

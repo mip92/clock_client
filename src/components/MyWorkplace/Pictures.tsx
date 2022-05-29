@@ -7,11 +7,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import $api from "../../http";
 import {Button, Checkbox, FormControl, FormControlLabel} from "@material-ui/core";
 import MyPicture from "./MyPicture";
-import {StateOpenInterface} from "./WorkplaceTable";
+import {StateOpenInterface} from "./OneMasterOrder";
+
 
 interface PicturesProps {
     open: StateOpenInterface
     setOpen: Function
+    pictures:any
 }
 
 interface IPicture {
@@ -36,7 +38,7 @@ export interface pictureData {
     id: number
 }
 
-const Pictures: React.FC<PicturesProps> = ({open, setOpen}) => {
+const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
     const [urls, setPictures] = useState<pictureData[]>([])
     const [isNotFound, setIsNotFound] = useState<boolean>(false)
 
