@@ -110,7 +110,7 @@ const MyWorkplace = ({cities,
                             </td>
                         </tr>
                         :
-                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={key}
+                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={order.id}
                                                                                                           order={order}
                                                                                                           statuses={statuses}/>)
                     }

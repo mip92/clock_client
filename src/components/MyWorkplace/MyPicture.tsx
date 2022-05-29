@@ -1,9 +1,9 @@
 import React from 'react';
-import {pictureData} from "./Pictures";
 import s from '../../style/MyPicture.module.css'
+import {Picture} from "../../store/reducers/workplaceReducer";
 
 interface PictureProps {
-    picture: pictureData
+    picture: Picture
 }
 
 const MyPicture: React.FC<PictureProps> = ({picture}) => {

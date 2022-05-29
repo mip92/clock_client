@@ -1,4 +1,4 @@
-import {DelPicturesPayload, OrdersPayload} from "./mainInterfacesAndTypes";
+import {RemovePicturesPayload, OrdersPayload} from "./mainInterfacesAndTypes";
 import {Order} from "../store/reducers/workplaceReducer";
 
 export interface WorkplaseStateType {
@@ -17,7 +17,7 @@ export interface SetOrderAction {
 
 export interface DeletePicturesAction {
     type: WorkplaseActionTypes.DEL_PICTURES;
-    payload: DelPicturesPayload
+    payload: RemovePicturesPayload
 }
 
 export type WorkplaseAction = SetOrderAction | DeletePicturesAction

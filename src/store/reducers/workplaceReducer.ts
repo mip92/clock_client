@@ -35,14 +35,15 @@ interface MasterBusyDate {
     updatedAt: string
 }
 
-interface Picture {
+export interface Picture {
     createdAt: string
     id: number
     path: string
     updatedAt: string
+    url?: string
 }
 
-interface OrderPicture {
+export interface OrderPicture {
     createdAt: string
     id: number
     orderId: number
