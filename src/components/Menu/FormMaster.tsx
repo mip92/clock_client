@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Master} from "../../types/adminMasterTypes";
 import s from "../../style/FormMaster.module.css";
 import {Card} from "@material-ui/core";
+import MyModal from "../utilits/MyModal";
+import Ratings from "./Ratings";
 
 
 interface MasterProps {
@@ -13,14 +15,19 @@ interface MasterProps {
 const FormMaster: React.FC<MasterProps> = ({master, setCurrentMaster, currentMaster}) => {
 
     return (
-
-        <Card className={s.wrapper} onClick={() => setCurrentMaster(master.id)}
+        <div className={s.wrapper}>
+        <Card className={s.masterInfo} onClick={() => setCurrentMaster(master.id)}
               style={currentMaster === master.id ? {background: '#ffe0b2'} : {background: 'white'}}>
             <div>Name: {master.name}</div>
             <div>E-Mail: {master.email}</div>
             <div>Rating: {master.rating}</div>
         </Card>
-
+            <div className={s.comments}>
+                <MyModal name="Comments">
+                    <Ratings masterId={master.id}/>
+                </MyModal>
+            </div>
+        </div>
     );
 };
 
