@@ -35,7 +35,6 @@ const Registration: React.FC = () => {
     }, [])
 
 
-
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .required('Email is required')
@@ -93,7 +92,7 @@ const Registration: React.FC = () => {
 
     }, [id])
 
-    if(isFetch) return <div>Loading...</div>
+    if (isFetch) return <div>Loading...</div>
     return (
         <form onSubmit={onSubmit} className={s.wrapper}>
             <Typography variant="h6"

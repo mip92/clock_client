@@ -6,7 +6,7 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 import MyStepper from "./MySteper";
 
 const StepperContainer: React.FC = () => {
-    const {authEmail, authName}=useTypedSelector(state => state.auth)
+    const {authEmail, authName} = useTypedSelector(state => state.auth)
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentMaster, setCurrentMaster] = useState<number>(1)
     const [clockSize, setClockSize] = useState<Clock>({
@@ -16,8 +16,8 @@ const StepperContainer: React.FC = () => {
     });
     const email = useInput(authEmail || '')
     const name = useInput(authName || '')
-    const today =new Date()
-    const tomorrow =new Date(today.setDate(today.getDate() + 1))
+    const today = new Date()
+    const tomorrow = new Date(today.setDate(today.getDate() + 1))
     const [date, setCurrentDate] = useState<Date>(tomorrow);
     return (
         <FormContext.Provider value={{
@@ -33,7 +33,7 @@ const StepperContainer: React.FC = () => {
             setCurrentDate: setCurrentDate,
         }}>
             <div>
-               <MyStepper/>
+                <MyStepper/>
             </div>
         </FormContext.Provider>
     );

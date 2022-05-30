@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { KeyboardDatePicker} from "@material-ui/pickers";
+import {KeyboardDatePicker} from "@material-ui/pickers";
 
 //const DATE_FORMAT = "dd-MMM-yy";
 
@@ -21,7 +21,7 @@ export const FormInputDate = ({date, setDate, register, getValues, setValue, err
             value={date}
             onChange={(date) => {
                 setDate(date);
-                setValue('fieldName', date, { shouldValidate: true, shouldDirty: true });
+                setValue('fieldName', date, {shouldValidate: true, shouldDirty: true});
             }}
 
         />

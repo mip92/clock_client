@@ -33,7 +33,7 @@ interface MyOrdersProps {
     cities: City[],
     isFetch: boolean,
     statuses: MyStatus[] | null
-    clockSizes:MyStatus[]
+    clockSizes: MyStatus[]
 }
 
 export interface AxiosGetRange {

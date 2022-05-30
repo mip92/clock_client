@@ -22,11 +22,11 @@ const OneCity: React.FC<CityProps> = ({city, currentPage}) => {
     }
 
     const constChangeCityName = (): void => {
-      //  if (!isOpen) {
-            newNameOfCity.changeInput(city.cityName)
-            activateInput(true)
-     /*       setIsOpen(true)
-        }*/
+        //  if (!isOpen) {
+        newNameOfCity.changeInput(city.cityName)
+        activateInput(true)
+        /*       setIsOpen(true)
+           }*/
     }
 
 

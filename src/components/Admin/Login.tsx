@@ -17,8 +17,8 @@ const Login: React.FC = () => {
     const login = async () => {
         await dispatch(loginAuth(email.value, password.value))
     }
-    const onKeyDown=(e:React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-        if (e.key ==="Enter"){
+    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.key === "Enter") {
             e.preventDefault()
             login()
         }
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
     return (
         <div className={s.wrapper}>
             <Input
-                onKeyDown={(e)=>onKeyDown(e)}
+                onKeyDown={(e) => onKeyDown(e)}
                 value={email.value}
                 onChange={email.onChange}
                 placeholder="Email"
@@ -40,7 +40,7 @@ const Login: React.FC = () => {
                 className={s.email}
             />
             <Input
-                onKeyDown={(e)=>onKeyDown(e)}
+                onKeyDown={(e) => onKeyDown(e)}
                 value={password.value}
                 onChange={password.onChange}
                 placeholder="Password"
@@ -49,7 +49,7 @@ const Login: React.FC = () => {
                 inputProps={{'aria-label': 'description'}}
                 className={s.password}
             />
-            <Button className={s.btn}  onClick={() => login()}>Login</Button>
+            <Button className={s.btn} onClick={() => login()}>Login</Button>
             <div className={s.error}>{error}</div>
         </div>
     );

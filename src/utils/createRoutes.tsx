@@ -14,7 +14,7 @@ import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 import {Role} from "../enums/Roles";
 
-export const createRoute = (role:string | null) => {
+export const createRoute = (role: string | null) => {
     const mainRouts: MyRoute[] = [
         {exact: true, path: "/", component: <StepperContainer/>},
         {exact: true, path: "/blog", component: <Blog/>},
@@ -33,15 +33,19 @@ export const createRoute = (role:string | null) => {
         {exact: true, path: "/myOffice/:userId", component: <MyOffice/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
     ]
-    const masterRoutes: MyRoute[]=[
+    const masterRoutes: MyRoute[] = [
         {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkPlaceContainer/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
     ]
     const error = {exact: false, path: "*", component: <Error404/>}
     switch (role) {
-        case Role.ADMIN: return [...mainRouts, ...adminRoutes, error]
-        case Role.USER : return [...mainRouts, ...userRoutes, error]
-        case Role.MASTER: return [...mainRouts, ...masterRoutes, error]
-        default : return [...mainRouts, error]
+        case Role.ADMIN:
+            return [...mainRouts, ...adminRoutes, error]
+        case Role.USER :
+            return [...mainRouts, ...userRoutes, error]
+        case Role.MASTER:
+            return [...mainRouts, ...masterRoutes, error]
+        default :
+            return [...mainRouts, error]
     }
 }

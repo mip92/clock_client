@@ -9,8 +9,8 @@ import {MyStatus} from "./Statuses";
 import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
 
-interface AlertChangeStatusProps{
-    openAlert:boolean
+interface AlertChangeStatusProps {
+    openAlert: boolean
     setOpenAlert: Dispatch<SetStateAction<boolean>>
     changeStatus: MyStatus
     setCurrentStatus: Dispatch<SetStateAction<MyStatus>>
@@ -18,11 +18,23 @@ interface AlertChangeStatusProps{
     statuses: MyStatus[] | null
 }
 
-const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, statuses, setOpenAlert, changeStatus, setCurrentStatus, orderId}) => {
+interface putStatus {
+    orderStatus: string
+}
+
+const AlertChangeStatus: React.FC<AlertChangeStatusProps> = ({
+                                                                 openAlert,
+                                                                 statuses,
+                                                                 setOpenAlert,
+                                                                 changeStatus,
+                                                                 setCurrentStatus,
+                                                                 orderId
+                                                             }) => {
     const [fetchChangeStatus, isLoading] = useFetching(async () => {
-        const res = await $api.put(`/status/${orderId}`,{status:changeStatus.name})
+        const res = await $api.put<putStatus>(`/status/${orderId}`, {status: changeStatus.name})
         const orderStatus = res.data
-        const newStatus =statuses?.find(s => s?.name === orderStatus)
+        // @ts-ignore
+        const newStatus = statuses && statuses.find(status => status && status.name === orderStatus)
         // @ts-ignore
         orderStatus && setCurrentStatus(newStatus)
         setOpenAlert(false)
@@ -35,7 +47,7 @@ const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, statuses
         <div>
             <Dialog
                 open={openAlert}
-                onClose={()=>setOpenAlert(false)}
+                onClose={() => setOpenAlert(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -46,7 +58,7 @@ const AlertChangeStatus:React.FC<AlertChangeStatusProps> = ({openAlert, statuses
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={()=>setOpenAlert(false)} color="primary">
+                    <Button onClick={() => setOpenAlert(false)} color="primary">
                         Disagree
                     </Button>
                     <Button onClick={handleConfirm} color="primary" autoFocus>

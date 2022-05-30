@@ -34,7 +34,7 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
     if (!master.cities) {
         return <div>Loading...</div>
     }
-    const approveMaster = ()=>{
+    const approveMaster = () => {
         dispatch(approveOneMaster(master.id))
     }
     if (!isInputActivate) {
@@ -47,7 +47,7 @@ const OneMaster: React.FC<MasterProps> = ({master, currentPage}) => {
                     <CachedIcon onClick={constChangeMasterName} style={{cursor: "pointer"}}/>
                     <MyAlert handler={delMaster}
                              text={`Are you sure you want to remove ${master.name} from the list of masters?`}/>
-                             <ApproveButton isApproved={master.isApproved} approveMaster={approveMaster}/>
+                    <ApproveButton isApproved={master.isApproved} approveMaster={approveMaster}/>
                 </div>
             </div>
         );

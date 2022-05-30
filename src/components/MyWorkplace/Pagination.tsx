@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "../../style/MyWorkplace.module.css";
 
-const Pagination = ({currentPage,changePage, pagesArray,limitArray, currentLimit, changeLimit, total, length}) => {
+const Pagination = ({currentPage, changePage, pagesArray, limitArray, currentLimit, changeLimit, total, length}) => {
     return (
         <div>
             {currentPage !== 1 && <span onClick={() => changePage(currentPage - 1)} className={s.page}>Prev</span>}

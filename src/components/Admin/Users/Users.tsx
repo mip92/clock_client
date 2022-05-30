@@ -54,9 +54,9 @@ const Users: React.FC = () => {
                     :
                     <div>
                         {users && users.map((u: User, key: React.Key) => <OneUser deleteUser={delObject}
-                                                                                      updateUser={updateObject}
-                                                                                      key={key} user={u}
-                                                                                      error={error}/>)}
+                                                                                  updateUser={updateObject}
+                                                                                  key={key} user={u}
+                                                                                  error={error}/>)}
                     </div>
                 }
                 {

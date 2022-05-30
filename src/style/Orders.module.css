@@ -2,16 +2,19 @@
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
 }
-.page_wrapper{
+
+.page_wrapper {
     margin-top: 20px;
     display: flex;
 }
-.page{
+
+.page {
     padding: 5px;
     border: 1px solid #f57c00;
     cursor: pointer;
 }
-.page_current{
+
+.page_current {
     padding: 5px;
     cursor: pointer;
     background: #f57c00;

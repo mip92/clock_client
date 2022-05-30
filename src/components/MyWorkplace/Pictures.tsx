@@ -10,30 +10,11 @@ import MyPicture from "./MyPicture";
 import {StateOpenInterface} from "./OneMasterOrder";
 import {useDispatch} from "react-redux";
 import {deletePictures} from "../../actionCreators/workplaseActionCreators";
-
-
-
+import {OrderPicture} from "../../store/reducers/workplaceReducer";
 
 interface PicturesProps {
     open: StateOpenInterface
     setOpen: Function
-    pictures: any
-}
-
-interface IPicture {
-    url: string
-    createdAt: string
-    id: number
-    path: string
-    updatedAt: string
-}
-
-interface OrderPicture {
-    createdAt: string
-    id: number
-    orderId: number
-    picture: IPicture
-    url: string
     pictures:  OrderPicture[]
 }
 
@@ -44,22 +25,6 @@ export interface pictureData {
 }
 
 const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
-    const [urls, setPictures] = useState<pictureData[]>([])
-    const [isNotFound, setIsNotFound] = useState<boolean>(false)
-
-    const fetch = async () => {
-        try {
-            const response = await $api.get<OrderPicture[]>(`/picture/${open.id}`)
-            response.data.map((orderPicture) => setPictures(prevState =>
-                [...prevState, {
-                    path: orderPicture.picture.path,
-                    id: orderPicture.picture.id,
-                    url: orderPicture.picture.url
-                }]))
-        } catch (e) {
-            if (e.request.statuse === 404) setIsNotFound(true)
-        }
-    }
     const dispatch =useDispatch()
     const [state, setState] = useState({});
     const handleChange = (event) => {
@@ -70,12 +35,12 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
         try {
             const correctIds = Object.entries(state).filter(([key, value]) => value).map(([key]) => key)
             const response = await $api.delete(`/picture/${open.id}`, {data: {picturesId: correctIds}})
-            if (open.id !==null) dispatch (deletePictures(open.id, response.data.picturesId))
+            if (open.id !== null) dispatch(deletePictures(open.id, response.data.picturesId))
             setOpen(false)
         } catch (e) {
 
-            }
         }
+    }
 
     const download = () => {
         const url = `/order/getZip/${open.id}`
@@ -84,10 +49,6 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
             }
         )
     }
-
-    useEffect(() => {
-        open.id && fetch()
-    }, [])
 
     return (
         <div>

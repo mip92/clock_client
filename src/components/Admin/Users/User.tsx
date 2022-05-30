@@ -29,10 +29,10 @@ const OneUser: React.FC<UserProps> = ({user, error, deleteUser, updateUser}) => 
 
     const deleteOneUser = () => {
         try {
-            $api.delete(`/users/${user.id}`).then(()=>{
+            $api.delete(`/users/${user.id}`).then(() => {
                 deleteUser(user.id)
             })
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
     }
@@ -52,12 +52,12 @@ const OneUser: React.FC<UserProps> = ({user, error, deleteUser, updateUser}) => 
             ;
     } else
         return (
-                <ChangeUser updateUser={updateUser}
-                            deleteUser={deleteUser}
-                            user={user}
-                            activateInput={activateInput}
-                            error={error}
-                />
+            <ChangeUser updateUser={updateUser}
+                        deleteUser={deleteUser}
+                        user={user}
+                        activateInput={activateInput}
+                        error={error}
+            />
         );
 }
 export default OneUser

@@ -15,11 +15,11 @@ import {City} from "../../../types/mainInterfacesAndTypes";
 interface ChangeCityProps {
     city: City,
     activateInput: React.Dispatch<React.SetStateAction<boolean>>,
-    delCity: ()=>void,
+    delCity: () => void,
     newNameOfCity: any,
 }
 
-const ChangeCity:React.FC<ChangeCityProps> = ({activateInput, city, delCity}) => {
+const ChangeCity: React.FC<ChangeCityProps> = ({activateInput, city, delCity}) => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
     const validationSchema = Yup.object().shape({

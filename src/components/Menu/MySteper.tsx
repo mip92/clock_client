@@ -14,14 +14,14 @@ import FirstStep from "./FirstStep";
 
 const MyStepper: React.FC = () => {
     const {currentMaster} = useContext(FormContext)
-    const {currentCity, clockSize,dateTime,email,name}=useTypedSelector(state => state.order)
+    const {currentCity, clockSize, dateTime, email, name} = useTypedSelector(state => state.order)
     const [activeStep, setActiveStep] = useState<number>(0)
     const [masters, setMasters] = useState<Array<Master>>([])
     const [tempFiles, addTempFiles] = useState<File[]>([])
-    const [orderId, setOrderId]=useState<number>()
-    const [dealPrice, setDealPrice]=useState<number>()
+    const [orderId, setOrderId] = useState<number>()
+    const [dealPrice, setDealPrice] = useState<number>()
 
-    const sendPicture = async (pictures : File[]) => {
+    const sendPicture = async (pictures: File[]) => {
         try {
             const response1 = await $api.post(`/order/`, {
                 email: email,
@@ -34,9 +34,9 @@ const MyStepper: React.FC = () => {
             setOrderId(response1.data.id)
             setDealPrice(response1.data.dealPrice)
             let formData = new FormData();
-            const fivePicturesOrLess =pictures.slice(0, 5)
+            const fivePicturesOrLess = pictures.slice(0, 5)
             if (fivePicturesOrLess) {
-                fivePicturesOrLess.forEach((picture, index)=>{
+                fivePicturesOrLess.forEach((picture, index) => {
                     formData.append(`picture${index}`, picture);
                 })
             }
@@ -47,7 +47,7 @@ const MyStepper: React.FC = () => {
                     }
                 })
             setActiveStep(2)
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
     }
@@ -77,7 +77,7 @@ const MyStepper: React.FC = () => {
                                 {activeStep === 0 && <FirstStep next={next} setMasters={setMasters}
                                                                 tempFiles={tempFiles}
                                                                 addTempFiles={addTempFiles}
-                                                                />}
+                                />}
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
                                 {activeStep === 2 && <FourthStep dealPrice={dealPrice} orderId={orderId}/>}
                             </StepWrapper>

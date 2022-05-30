@@ -1,5 +1,5 @@
 import {createContext} from 'react';
 
 export const MasterContext = createContext({
-    cities: [{createdAt:'', updatedAt:'', cityName: '', id: 0, price: 0}] ,
+    cities: [{createdAt: '', updatedAt: '', cityName: '', id: 0, price: 0}],
 },)

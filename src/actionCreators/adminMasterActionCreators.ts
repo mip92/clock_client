@@ -1,5 +1,4 @@
 import {Dispatch} from "react"
-
 import {
     AdminMasterAction,
     AdminMastersActionTypes,
@@ -11,25 +10,23 @@ import {AuthAction} from "../types/authTypes";
 import $api from "../http";
 import {MyError} from "../types/mainInterfacesAndTypes";
 
-
-
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
         type: AdminMastersActionTypes.FETCH_START,
-        payload: {payload:bol}
+        payload: {payload: bol}
     }
 }
 export const fetchError = (error?: any): FetchErrorAction => {
     return {
         type: AdminMastersActionTypes.FETCH_ERROR,
-        payload:{payload:error}
+        payload: {payload: error}
     }
 }
 
-export const setMasterName = (masterName: string):  SetMasterNameAction=> {
+export const setMasterName = (masterName: string): SetMasterNameAction => {
     return {
         type: AdminMastersActionTypes.SET_MASTER_NAME,
-        payload: {payload:masterName}
+        payload: {payload: masterName}
     }
 }
 
@@ -54,10 +51,10 @@ export const fetchMasters = () => {
         }
     }
 }
-export const setMaster = (masters: Master[]):  SetMastersAction=> {
+export const setMaster = (masters: Master[]): SetMastersAction => {
     return {
         type: AdminMastersActionTypes.SET_MASTERS,
-        payload: {payload:masters}
+        payload: {payload: masters}
     }
 }
 export const delOneMaster = (id: number) => {
@@ -144,16 +141,16 @@ export const approveOneMaster = (id: number) => {
         }
     }
 }*/
-export const addOneMaster = (name: string, email:string, arrayCurrentCities:number[]) => {
+export const addOneMaster = (name: string, email: string, arrayCurrentCities: number[]) => {
     return async (dispatch: Dispatch<AdminMasterAction | AuthAction>) => {
         try {
-            const citiesId=JSON.stringify(arrayCurrentCities)
+            const citiesId = JSON.stringify(arrayCurrentCities)
             dispatch(fetchStart(true))
-            await $api.post(`/masters/`, {name, email, citiesId:citiesId})
-/*            dispatch({
-                type: AdminMastersActionTypes.ADD_MASTER,
-                payload: {payload:response.data},
-            })*/
+            await $api.post(`/masters/`, {name, email, citiesId: citiesId})
+            /*            dispatch({
+                            type: AdminMastersActionTypes.ADD_MASTER,
+                            payload: {payload:response.data},
+                        })*/
             dispatch(fetchStart(false))
         } catch (e) {
             dispatch(fetchStart(false))
@@ -166,14 +163,14 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
         }
     }
 }
-export const changeMaster = (id:number, name:string, email:string, cities_id:number[], activateInput: Function) => {
+export const changeMaster = (id: number, name: string, email: string, cities_id: number[], activateInput: Function) => {
     return async (dispatch: Dispatch<AdminMasterAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response = await $api.put(`/masters/`, {id,name,email,citiesId:String(cities_id)})
+            const response = await $api.put(`/masters/`, {id, name, email, citiesId: String(cities_id)})
             dispatch({
                 type: AdminMastersActionTypes.CHANGE_MASTER_NAME,
-                master:{payload: response.data}
+                master: {payload: response.data}
             })
             dispatch(fetchStart(false))
             activateInput(false)

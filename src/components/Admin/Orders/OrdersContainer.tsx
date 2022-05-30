@@ -5,7 +5,7 @@ import $api from "../../../http";
 import MyOrders from "./MyOrders";
 import {MyStatus} from "../../MyOffice/Statuses";
 
-interface AxiosCityResponse{
+interface AxiosCityResponse {
     count: number,
     rows: City[]
 }
@@ -16,7 +16,7 @@ const OrdersContainer = () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
     })
-    const clockSizes:MyStatus[] = [
+    const clockSizes: MyStatus[] = [
         {id: 1, name: 'small'},
         {id: 2, name: 'middle'},
         {id: 3, name: 'big'},]
@@ -32,7 +32,7 @@ const OrdersContainer = () => {
     const [statuses, setStatuses] = useState<MyStatus[] | null>([])
     const [findStatuses, isLoading] = useFetching(async () => {
         const res = await $api.get(`/status`)
-        let arr:MyStatus[] = []
+        let arr: MyStatus[] = []
         let k = 1
         const keys = Object.keys(res.data);
         keys.forEach(key => {

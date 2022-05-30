@@ -7,7 +7,7 @@ interface IFileUploadProps {
     tempFiles: File[]
 }
 
-const FilesUpload: React.FC<IFileUploadProps> = ({ tempFiles, addTempFiles, accept, children}) => {
+const FilesUpload: React.FC<IFileUploadProps> = ({tempFiles, addTempFiles, accept, children}) => {
     const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

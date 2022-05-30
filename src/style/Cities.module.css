@@ -2,34 +2,41 @@
     display: grid;
     grid-template-columns: 180px 50px;
 }
-.title{
+
+.title {
     display: grid;
     grid-template-columns: 200px 130px 100px 70px;
 }
-.page_wrapper{
+
+.page_wrapper {
     margin-top: 20px;
     display: flex;
 }
-.page, .limit{
+
+.page, .limit {
     padding: 5px;
     border: 1px solid #f57c00;
     cursor: pointer;
 }
-.page_current, .page_limit{
+
+.page_current, .page_limit {
     padding: 5px;
     cursor: pointer;
     background: #f57c00;
     font-weight: bold;
     border-top: 50px;
 }
+
 .timelineItem {
     background: #fff;
     border-color: #e5e6e9 #dfe0e4 #d0d1d5;
     width: 500px;
 }
-.button{
+
+.button {
     margin-top: 10px;
 }
+
 @keyframes placeHolderShimmer {
     0% {
         background-position: -468px 0

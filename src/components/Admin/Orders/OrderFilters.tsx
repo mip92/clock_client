@@ -59,13 +59,14 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                                                        setStatus,
                                                        status
                                                    }) => {
-    return (
+        return (
             <div className={s.wrapper}>
                 <div className={s.item}>
                     <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
                 </div>
                 <div className={s.item}>
-                    <MultipleSelectObject name="Clock size" objects={clockSizes} correctName={clockSize} setCorrectName={setClockSize}/>
+                    <MultipleSelectObject name="Clock size" objects={clockSizes} correctName={clockSize}
+                                          setCorrectName={setClockSize}/>
                 </div>
                 <div className={s.item}>
                     <MultipleSelectObject name="Status" objects={statuses} correctName={status} setCorrectName={setStatus}/>

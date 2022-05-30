@@ -58,9 +58,9 @@ export interface Order {
     originalCityName: '',
     dealPrice: number | null,
     userId: number | null,
-    status: '',
-    createdAt: '',
-    updatedAt: '',
+    status: string,
+    createdAt: string,
+    updatedAt: string,
     masterBusyDateId: number | null,
     masterId: number | null,
     cityId: number | null,
@@ -126,18 +126,34 @@ export const workplaseReducer = (state = initStateWorkPlace, action: WorkplaseAc
     switch (action.type) {
         case WorkplaseActionTypes.SET_ORDERS:
             return {...state, orders: action.payload.payload}
+
+        case WorkplaseActionTypes.CHANGE_STATUS:
+            return {
+                ...state, orders: state.orders.map((order, index) => {
+                        if (order.id === action.payload.payload.orderId) return {
+                            ...order,
+                            status: action.payload.payload.status
+                        }
+                        return order
+                    }
+                )
+            }
         case WorkplaseActionTypes.DEL_PICTURES:
-            return {...state, orders: state.orders.map((order, index)=>{
-                    if (order.id===action.payload.payload.orderId) return {...order,
-                        orderPictures: state.orders[index].orderPictures.filter((orderPicture)=>{
-                            return orderPicture.picture.id!==action.payload.payload.arrayPictureId[0] &&
-                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[1] &&
-                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[2] &&
-                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[3] &&
-                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[4]
-                        })}
+            return {
+                ...state, orders: state.orders.map((order, index) => {
+                    if (order.id === action.payload.payload.orderId) return {
+                        ...order,
+                        orderPictures: state.orders[index].orderPictures.filter((orderPicture) => {
+                            return orderPicture.picture.id !== action.payload.payload.arrayPictureId[0] &&
+                                orderPicture.picture.id !== action.payload.payload.arrayPictureId[1] &&
+                                orderPicture.picture.id !== action.payload.payload.arrayPictureId[2] &&
+                                orderPicture.picture.id !== action.payload.payload.arrayPictureId[3] &&
+                                orderPicture.picture.id !== action.payload.payload.arrayPictureId[4]
+                        })
+                    }
                     return order
-                })}
+                })
+            }
         default:
             return state
     }

@@ -14,12 +14,12 @@ import InputWithError from "../../Registration/InputWithError";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 const ChangeMaster = ({master, activateInput, delMaster}) => {
-    const arr :number[] = []
+    const arr: number[] = []
     master.cities.map(c => arr.push(c.id))
     const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>(arr)
     const dispatch = useDispatch()
     const {cities} = useContext(MasterContext)
-    const {error}=useTypedSelector(state => state.adminMaster)
+    const {error} = useTypedSelector(state => state.adminMaster)
     const validationSchema = Yup.object().shape({
         newNameOfMaster: Yup.string().min(6, 'Master name must be longer than 6 characters')
             .required('Master name is required'),

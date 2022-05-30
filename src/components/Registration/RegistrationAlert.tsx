@@ -7,7 +7,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {Link} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 
-
 const RegistrationAlert = ({open}) => {
     return (
         <div>
@@ -35,7 +34,7 @@ const RegistrationAlert = ({open}) => {
                         <Link
                             to={{
                                 pathname: "/login",
-                                state: { fromDashboard: true }
+                                state: {fromDashboard: true}
                             }}
                         >Login</Link>
                     </Typography>

@@ -22,13 +22,13 @@ export enum AuthActionTypes {
     FETCH_START = "FETCH_START",
     FETCH_ERROR = "FETCH_ERROR",
     SET_ADMIN_EMAIL = "SET_ADMIN_EMAIL",
-    SET_ADMIN_NAME="SET_ADMIN_NAME",
-    SET_TOKEN="SET_TOKEN",
-    SET_ROLE_AND_ID="SET_ROLE_AND_ID",
-    CHANGE_EMAIL="CHANGE_EMAIL",
-    LOGIN="LOGIN",
-    LOGOUT="LOGOUT",
-    STATUS="STATUS"
+    SET_ADMIN_NAME = "SET_ADMIN_NAME",
+    SET_TOKEN = "SET_TOKEN",
+    SET_ROLE_AND_ID = "SET_ROLE_AND_ID",
+    CHANGE_EMAIL = "CHANGE_EMAIL",
+    LOGIN = "LOGIN",
+    LOGOUT = "LOGOUT",
+    STATUS = "STATUS"
 }
 
 export interface FetchAction {
@@ -60,9 +60,9 @@ export interface SetAuthEmailAction {
     payload: StringPayload
 }
 
-export interface SetAuthRoleAction{
+export interface SetAuthRoleAction {
     type: AuthActionTypes.SET_ROLE_AND_ID;
-    payload: {rolePayload: string | null, idPayload:number | null}
+    payload: { rolePayload: string | null, idPayload: number | null }
 }
 
 export interface SetAuthNameAction {

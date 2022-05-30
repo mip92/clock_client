@@ -5,7 +5,7 @@ const DateStart = ({date, setDate, label}) => {
 
     return (
         <KeyboardDatePicker
-            style={{width:'180px'}}
+            style={{width: '180px'}}
             label={label}
             value={date}
             onChange={(date) => {

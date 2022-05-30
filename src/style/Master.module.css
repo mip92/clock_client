@@ -2,25 +2,30 @@
     display: grid;
     grid-template-columns: 140px 270px 100px 70px 70px 150px;
 }
-.page_wrapper{
+
+.page_wrapper {
     margin-top: 20px;
     display: flex;
 }
-.page, .limit{
+
+.page, .limit {
     padding: 5px;
     border: 1px solid #f57c00;
     cursor: pointer;
 }
-.page_current, .page_limit{
+
+.page_current, .page_limit {
     padding: 5px;
     cursor: pointer;
     background: #f57c00;
     font-weight: bold;
     border-top: 50px;
 }
-.error{
-    color:red
+
+.error {
+    color: red
 }
-.button{
+
+.button {
     margin-top: 10px;
 }

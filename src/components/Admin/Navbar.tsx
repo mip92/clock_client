@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React from 'react';
 import {useHistory} from "react-router-dom";
 import {AppBar, Box, Toolbar, Container, Button} from '@material-ui/core'
 import {useDispatch} from "react-redux";
@@ -59,7 +59,7 @@ const Navbar = ({children}) => {
                                 {history.location.pathname !== '/login' &&
                                 < Button onClick={() => teleport('login')}>
                                     Login
-                                    </Button>
+                                </Button>
                                 }
                                 {history.location.pathname !== '/registration' &&
                                 <Button onClick={() => teleport('registration')}>

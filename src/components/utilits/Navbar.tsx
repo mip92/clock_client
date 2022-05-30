@@ -83,7 +83,7 @@ const Navbar = () => {
                                 {history.location.pathname !== '/login' &&
                                 < Button onClick={() => teleport('login')}>
                                     Login
-                                    </Button>
+                                </Button>
                                 }
                                 {history.location.pathname !== '/registration' &&
                                 <Button onClick={() => teleport('registration')}>

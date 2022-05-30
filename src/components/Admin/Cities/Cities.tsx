@@ -42,7 +42,7 @@ const Cities: React.FC = () => {
                 <Button onClick={() => fetching()}>Select filters</Button>
                 <div className={s.title}>
                     <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'cityName'} select={select}/>
-                    <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'price'} select={select} />
+                    <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'price'} select={select}/>
                     <div>Edit</div>
                     <div>Remove</div>
                 </div>

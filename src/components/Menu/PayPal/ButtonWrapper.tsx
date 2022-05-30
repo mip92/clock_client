@@ -47,7 +47,7 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
                 // @ts-ignore
                 onApprove={(data, actions) => {
                     if (actions.order) return actions.order.capture().then((order) => {
-                    }).then(()=>history.push('/completed'));
+                    }).then(() => history.push('/completed'));
                 }}
                 onError={(err) => {
                 }}

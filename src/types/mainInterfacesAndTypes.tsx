@@ -20,7 +20,7 @@ export interface NavBarLink {
 }
 
 export interface Clock {
-    small:boolean,
+    small: boolean,
     middle: boolean,
     big: boolean,
 }
@@ -36,7 +36,13 @@ export type OrdersPayload = {
 export type RemovePicturesPayload = {
     payload: {
         orderId: number,
-        arrayPictureId:number[]
+        arrayPictureId: number[]
+    }
+}
+export type ChangeStatusPayload = {
+    payload: {
+        orderId: number,
+        status: string
     }
 }
 
@@ -53,12 +59,13 @@ export type StringPayload = {
 }
 
 export interface MyError {
-    value :string,
-    msg:string,
-    param:string,
-    location:string
+    value: string,
+    msg: string,
+    param: string,
+    location: string
 }
-export type ErrorOrNullPayload={
+
+export type ErrorOrNullPayload = {
     payload: MyError | null
 }
 
@@ -75,6 +82,6 @@ export type MasterPayload = {
     payload: Master
 }
 
-export type NavBarLinksPayload={
+export type NavBarLinksPayload = {
     payload: NavBarLink[]
 }

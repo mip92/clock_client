@@ -6,9 +6,9 @@ import {navbarReducer} from "./navbarReducer";
 import {workplaseReducer} from "./workplaceReducer";
 import {orderReducer} from "./orderReducer";
 
-export const rootReducer=combineReducers(
+export const rootReducer = combineReducers(
     {
-        auth:authReducer,
+        auth: authReducer,
         adminCity: adminCitiesReducer,
         adminMaster: adminMasterReducer,
         navbar: navbarReducer,
@@ -17,7 +17,7 @@ export const rootReducer=combineReducers(
     }
 )
 
-export type RootStateType=ReturnType<typeof rootReducer>
+export type RootStateType = ReturnType<typeof rootReducer>
 
 declare global {
     interface Window {

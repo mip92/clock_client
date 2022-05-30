@@ -16,7 +16,7 @@ const Files: React.FC<FilesProps> = ({imgs, onDelete}) => {
                     return <OneFile key={index} index={index} img={i} onDelete={onDelete}/>
                 })}
             </div>
-            {imgs.length > 5 && <div style={{color:'red'}}>Максимум 5 картинок</div>}
+            {imgs.length > 5 && <div style={{color: 'red'}}>Максимум 5 картинок</div>}
         </div>
     );
 };

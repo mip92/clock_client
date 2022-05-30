@@ -13,7 +13,7 @@ const ChangeUser = ({deleteUser, user, activateInput, updateUser, error}) => {
     const validationSchema = Yup.object().shape({
         newEmailOfUser: Yup.string().required('Email is required').email('Email is invalid'),
         newNameOfUser: Yup.string().min(6, 'User name must be longer than 6 characters')
-        .required('User name is required'),
+            .required('User name is required'),
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, setValue, handleSubmit, formState: {errors}, setError} = useForm(formOptions);

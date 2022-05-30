@@ -10,7 +10,7 @@ import {
 
 export interface AdminCitiesStateType {
     cities: City[]
-    citiesCount:number
+    citiesCount: number
     newCity: string
     isFetch: boolean
     error: null | MyError,
@@ -25,8 +25,8 @@ export enum AdminCitiesActionTypes {
     DELETE_CITY = "DELETE_CITY",
     SET_CITY_NAME = "SET_CITY_NAME",
     SET_CITIES = "SET_CITIES",
-    ADD_CITY="ADD_CITY",
-    CHANGE_CITY_NAME= "CHANGE_CITY_NAME",
+    ADD_CITY = "ADD_CITY",
+    CHANGE_CITY_NAME = "CHANGE_CITY_NAME",
 }
 
 
@@ -44,14 +44,13 @@ type FetchCitiesActionPayload = {
     cities: City[]
     citiesCount: number
     totalPages: number
-    pagesArray:number[]
+    pagesArray: number[]
 }
 
 export interface FetchCitiesAction {
     type: AdminCitiesActionTypes.FETCH_CITIES;
     payload: FetchCitiesActionPayload
 }
-
 
 
 export interface SetCitiesAction {
@@ -75,7 +74,7 @@ export interface AddCityAction {
 }
 
 
-export interface ChangeCityNameAction{
+export interface ChangeCityNameAction {
     type: AdminCitiesActionTypes.CHANGE_CITY_NAME;
     city: CityPayload,
 }

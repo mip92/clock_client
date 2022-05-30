@@ -62,7 +62,7 @@ const MyWorkPlaceContainer = () => {
             getRange()
         }
     }, [currentRangeDeal])
-    if (cities.length===0 || !statuses || !currentRangeDeal[0] || !currentRangeTotal[0]) return <div>Loading...</div>
+    if (cities.length === 0 || !statuses || !currentRangeDeal[0] || !currentRangeTotal[0]) return <div>Loading...</div>
     return (<MyWorkplace currentRangeDeal={currentRangeDeal}
                          currentRangeTotal={currentRangeTotal}
                          cities={cities}

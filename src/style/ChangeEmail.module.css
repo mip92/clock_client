@@ -4,7 +4,7 @@
     grid-template-rows: auto 70px 70px 70px auto auto;
 }
 
-.typography{
+.typography {
     text-align: center;
     grid-area: 1 / 2 / 2 / 3;
     padding-top: 20px;
@@ -25,11 +25,12 @@
     grid-area: 4 / 2 / 5 / 3;
 }
 
-.btn{
+.btn {
     text-align: center;
     grid-area: 5 / 2 / 6 / 3;
 }
-.error{
+
+.error {
     text-align: center;
     grid-area: 6 / 2 / 7 / 3;
     color: red;

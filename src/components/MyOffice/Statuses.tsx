@@ -46,6 +46,7 @@ const Statuses: React.FC<StatusesProps> = ({status, orderId, statuses}) => {
         orderStatus && setOrderStatus(orderStatus)
         setOpenAlert(true)
     };
+    console.log(currentStatus)
     if (!currentStatus.name) return <div>Loading...</div>
     return (
         <div>

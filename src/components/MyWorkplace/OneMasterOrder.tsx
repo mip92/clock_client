@@ -7,12 +7,12 @@ import Pictures from "./Pictures";
 import PicturesPreloader from "./PicturesPreloader";
 import {Order} from "../../store/reducers/workplaceReducer";
 
-export interface StateOpenInterface{
+export interface StateOpenInterface {
     status: boolean
     id: number | null
 }
 
-interface OneMasterOrderProps{
+interface OneMasterOrderProps {
     order: Order;
     statuses: MyStatus[]
 }
@@ -23,7 +23,7 @@ const OneMsterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
         setOpen({status: true, id})
     }
     const getString = (date: Date | null) => {
-        if (!date)  return ''
+        if (!date) return ''
         return new Date(date).toLocaleString()
     }
     return (

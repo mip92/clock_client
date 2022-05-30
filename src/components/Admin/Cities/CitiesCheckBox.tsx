@@ -5,14 +5,16 @@ import OneCheckBox from "./OneCheckBox";
 
 interface CitiesCheckBoxProps {
     cities: City[],
-    arrayCurrentCities:number[]
+    arrayCurrentCities: number[]
     setArrayCurrentCities: Dispatch<SetStateAction<number[]>>
 }
-const CitiesCheckBox:FC<CitiesCheckBoxProps> = ({cities,arrayCurrentCities, setArrayCurrentCities}) => {
+
+const CitiesCheckBox: FC<CitiesCheckBoxProps> = ({cities, arrayCurrentCities, setArrayCurrentCities}) => {
 
     return (
         <FormGroup>
-            {cities.map((c,key)=><OneCheckBox key={c.id} city={c} currentCities={arrayCurrentCities} setCurrentCities={setArrayCurrentCities}/>)}
+            {cities.map((c, key) => <OneCheckBox key={c.id} city={c} currentCities={arrayCurrentCities}
+                                                 setCurrentCities={setArrayCurrentCities}/>)}
         </FormGroup>
     );
 };

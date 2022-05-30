@@ -24,7 +24,7 @@ export interface AdminMasterStateType {
     masters: Master[]
     newMaster: string
     isFetch: boolean
-    error:  null | MyError,
+    error: null | MyError,
 }
 
 export enum AdminMastersActionTypes {
@@ -35,8 +35,8 @@ export enum AdminMastersActionTypes {
     DELETE_MASTER = "DELETE_MASTER",
     APPROVE_MASTER = "APPROVE_MASTER",
     SET_MASTER_NAME = "SET_MASTER_NAME",
-    ADD_MASTER="ADD_MASTER",
-    CHANGE_MASTER_NAME= "CHANGE_MASTER_NAME",
+    ADD_MASTER = "ADD_MASTER",
+    CHANGE_MASTER_NAME = "CHANGE_MASTER_NAME",
 }
 
 export interface FetchAction {

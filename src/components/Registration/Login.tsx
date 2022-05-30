@@ -11,6 +11,7 @@ import {useForm} from "react-hook-form";
 import InputWithError from "./InputWithError";
 import Typography from "@material-ui/core/Typography";
 import {Role} from "../../enums/Roles";
+import RolesUrls from "../../enums/RolesUrls";
 
 const Login: React.FC = () => {
     const history = useHistory();
@@ -45,13 +46,10 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (prevLocation === '/' && id) return history.push('/')
-        switch (role) {
-            case Role.ADMIN:
-                return history.push('/menu/orders')
-            case Role.USER:
-                return history.push(`/myOffice/${id}`)
-            case Role.MASTER:
-                return history.push(`/MyWorkplace/${id}`)
+        if (id) {
+            const myRole = new RolesUrls()
+            const url = myRole.getUrl(id, role)
+            return history.push(url)
         }
     }, [id])
 

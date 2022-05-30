@@ -13,7 +13,7 @@ function valuetext(value: number) {
     return `${value}°C`;
 }
 
-const RangeSlider = ({name, min , max, currentRange, setCurrentRange}) => {
+const RangeSlider = ({name, min, max, currentRange, setCurrentRange}) => {
     const classes = useStyles();
 
     const handleChange = (event: any, newValue: number | number[]) => {

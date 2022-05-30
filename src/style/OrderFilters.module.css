@@ -6,26 +6,30 @@
     /*ustify-content: space-between;*/
     align-content: space-around;
 }
-.item{
+
+.item {
     margin-left: 5px;
     margin-right: 5px;
     width: 200px;
 }
-.name{
+
+.name {
     margin-left: 5px;
     margin-right: 5px;
     width: 200px;
     margin-top: 8px;
 }
-.range{
+
+.range {
     margin-left: 5px;
     margin-right: 5px;
     width: 200px;
-    margin-top:10px
+    margin-top: 10px
 }
-.date{
+
+.date {
     margin-left: 5px;
     margin-right: 5px;
     width: 200px;
-    margin-top:7px
+    margin-top: 7px
 }

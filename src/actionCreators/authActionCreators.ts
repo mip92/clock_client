@@ -10,17 +10,16 @@ import $api from "../http";
 import {MyError} from "../types/mainInterfacesAndTypes";
 import {Role} from "../enums/Roles";
 
-
 export const fetchStart = (bol: boolean): FetchAction => {
     return {
         type: AuthActionTypes.FETCH_START,
         payload: {payload: bol}
     }
 }
-export const fetchError = (error: MyError | null): FetchErrorAction  => {
+export const fetchError = (error: MyError | null): FetchErrorAction => {
     return {
         type: AuthActionTypes.FETCH_ERROR,
-        payload:{payload:error}
+        payload: {payload: error}
     }
 }
 export const loginAuth = (email: string, password: string) => {
@@ -42,18 +41,18 @@ export const loginAuth = (email: string, password: string) => {
             localStorage.setItem('token', response.data.token);
         } catch (e) {
             dispatch(fetchStart(false))
-            const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
+            const error: MyError = JSON.parse(JSON.parse(e.request.responseText).message)
             dispatch(fetchError(error))
         }
     }
 }
-export const changeEmailAuth = (currentEmail: string, newEmail: string, password: string, role:string|null) => {
+export const changeEmailAuth = (currentEmail: string, newEmail: string, password: string, role: string | null) => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try {
             dispatch(fetchStart(true))
             let url
-            if (role===Role.MASTER) url=`/masters/changeEmail`
-            else if (role===Role.USER) url=`/users/changeEmail`
+            if (role === Role.MASTER) url = `/masters/changeEmail`
+            else if (role === Role.USER) url = `/users/changeEmail`
             const response = await $api.put(url, {
                 currentEmail,
                 newEmail,
@@ -70,11 +69,12 @@ export const changeEmailAuth = (currentEmail: string, newEmail: string, password
 
         } catch (e) {
             dispatch(fetchStart(false))
-            const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
+            const error: MyError = JSON.parse(JSON.parse(e.request.responseText).message)
             dispatch(fetchError(error))
         }
     }
 }
+
 export interface IRigistrationData {
     citiesId: number[],
     email: string
@@ -84,11 +84,12 @@ export interface IRigistrationData {
     firstPassword: string
     secondPassword: string
 }
+
 export const RigistrationAuth = (data: IRigistrationData) => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try {
             dispatch(fetchStart(true))
-            const response =await $api.post(`/auth/registration/`, data)
+            const response = await $api.post(`/auth/registration/`, data)
             dispatch({
                 type: AuthActionTypes.LOGIN,
                 payload: {payload: response.data.token}
@@ -101,7 +102,7 @@ export const RigistrationAuth = (data: IRigistrationData) => {
             dispatch(fetchError(null))
         } catch (e) {
             dispatch(fetchStart(false))
-            const error: MyError= JSON.parse(JSON.parse(e.request.responseText).message)
+            const error: MyError = JSON.parse(JSON.parse(e.request.responseText).message)
             dispatch(fetchError(error))
         }
     }
@@ -124,7 +125,7 @@ export const setAuthEmail = (email: string): SetAuthEmailAction => {
 export const setRole = (token: string | null): SetAuthRoleAction => {
     if (!token) return {
         type: AuthActionTypes.SET_ROLE_AND_ID,
-        payload: {rolePayload: null, idPayload:null}
+        payload: {rolePayload: null, idPayload: null}
     }
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -134,7 +135,7 @@ export const setRole = (token: string | null): SetAuthRoleAction => {
     const obj = JSON.parse(jsonPayload)
     return {
         type: AuthActionTypes.SET_ROLE_AND_ID,
-        payload: {rolePayload: obj.role, idPayload:obj.id}
+        payload: {rolePayload: obj.role, idPayload: obj.id}
     }
 }
 

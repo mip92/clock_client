@@ -3,11 +3,11 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 interface MyAlertListProps {
-    handler: ()=>void,
+    handler: () => void,
     text: string
 }
 
-const MyAlert: React.FC<MyAlertListProps> =({handler, text})=>{
+const MyAlert: React.FC<MyAlertListProps> = ({handler, text}) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {

@@ -16,10 +16,10 @@ export const fetchStart = (bol: boolean): FetchAction => {
         payload: {payload: bol}
     }
 }
-export const fetchError = (error: MyError | null): FetchErrorAction  => {
+export const fetchError = (error: MyError | null): FetchErrorAction => {
     return {
         type: AdminCitiesActionTypes.FETCH_ERROR,
-        payload:{payload:error}
+        payload: {payload: error}
     }
 }
 
@@ -30,10 +30,10 @@ export const setCityName = (cityName: string): SetCityNameAction => {
     }
 }
 
-export const setCities = (cities: City[]):  SetCitiesAction=> {
+export const setCities = (cities: City[]): SetCitiesAction => {
     return {
         type: AdminCitiesActionTypes.SET_CITIES,
-        payload: {payload:cities}
+        payload: {payload: cities}
     }
 }
 
@@ -105,7 +105,7 @@ export const addOneCity = (city: string, price: number) => {
         }
     }
 }
-export const changeCityName = (id: number, city: string, price: number, activateInput:any) => {
+export const changeCityName = (id: number, city: string, price: number, activateInput: any) => {
     return async (dispatch: Dispatch<AdminCitiesAction>) => {
         try {
             dispatch(fetchStart(true))
@@ -117,10 +117,10 @@ export const changeCityName = (id: number, city: string, price: number, activate
             dispatch(fetchStart(false))
             dispatch(fetchError(null))
             activateInput(false)
-           // setIsOpen(false)
+            // setIsOpen(false)
         } catch (e) {
             dispatch(fetchStart(false))
-            const error: MyError= JSON.parse(e.request.responseText).errors[0]
+            const error: MyError = JSON.parse(e.request.responseText).errors[0]
             dispatch(fetchError(error))
         }
     }

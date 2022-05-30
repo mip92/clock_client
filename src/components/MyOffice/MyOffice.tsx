@@ -9,9 +9,18 @@ import {Input} from "@material-ui/core";
 import OfficeTable from "./OfficeTable";
 
 const MyOffice = () => {
-    let {userId} = useParams<{userId :string}>();
-    const {orders}=useTypedSelector(state => state.workPlase)
-    const {offset, limit, handleChange, changePage, currentPage, isLoading, pagesArray, fetching} = usePaginatorWithRedux(async () => {
+    let {userId} = useParams<{ userId: string }>();
+    const {orders} = useTypedSelector(state => state.workPlase)
+    const {
+        offset,
+        limit,
+        handleChange,
+        changePage,
+        currentPage,
+        isLoading,
+        pagesArray,
+        fetching
+    } = usePaginatorWithRedux(async () => {
         return await $api.get(`/order?offset=${offset}&limit=${limit}&userId=${userId}`)
     }, setOrders)
     useEffect(() => {

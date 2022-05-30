@@ -1,7 +1,7 @@
 import {NavBarLink} from "../types/mainInterfacesAndTypes";
 import {Role} from "../enums/Roles";
 
-export const setLinks = (role: string | null, id: number|null) => {
+export const setLinks = (role: string | null, id: number | null) => {
     const adminLinks: NavBarLink[] = [
         {to: '/menu/cities', name: 'Cities'},
         {to: '/menu/masters', name: 'Masters'},

@@ -6,20 +6,20 @@ const OneCheckBox = ({city, currentCities, setCurrentCities}) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
     };
-    useEffect(()=>{
+    useEffect(() => {
         if (checked) setCurrentCities([...currentCities, city.id])
         else setCurrentCities(currentCities.filter(a => a !== city.id))
-    },[checked])
+    }, [checked])
 
-    useEffect(()=>{
-        if (currentCities===[]) setChecked(false)
-    },[currentCities])
+    useEffect(() => {
+        if (currentCities === []) setChecked(false)
+    }, [currentCities])
 
 
     return (
         <div>
             <FormControlLabel control={<Checkbox checked={checked}
-                                                 onChange={handleChange}/>} label={city.cityName} />
+                                                 onChange={handleChange}/>} label={city.cityName}/>
         </div>
     );
 };

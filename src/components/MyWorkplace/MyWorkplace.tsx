@@ -117,7 +117,7 @@ const MyWorkplace = ({
                                               name={name} select={select}/>
                             </th>
                         )}
-                        <th>PICTURES</th>
+                        <th className={s.btn}>PICTURES</th>
                     </tr>
                     {!orders || isLoading || isFetch ?
                         <tr className={s.timelineItem}>
