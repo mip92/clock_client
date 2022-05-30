@@ -91,7 +91,8 @@ const MyWorkplace = ({
             }
         )
     }
-if (isLoading) return <div>Loading...</div>
+
+    if (isLoading) return <div>Loading...</div>
     return (
         <div>
             <div>
@@ -124,7 +125,7 @@ if (isLoading) return <div>Loading...</div>
                             </td>
                         </tr>
                         :
-                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={key}
+                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={order.id}
                                                                                                           order={order}
                                                                                                           statuses={statuses}/>)
                     }
@@ -142,6 +143,6 @@ if (isLoading) return <div>Loading...</div>
             />
         </div>
     );
-};
+}
 
-export default MyWorkplace;
+export default MyWorkplace

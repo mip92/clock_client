@@ -8,7 +8,8 @@ import $api from "../../http";
 import {Button, Checkbox, FormControl, FormControlLabel} from "@material-ui/core";
 import MyPicture from "./MyPicture";
 import {StateOpenInterface} from "./OneMasterOrder";
-
+import {useDispatch} from "react-redux";
+import {deletePictures} from "../../actionCreators/workplaseActionCreators";
 
 interface PicturesProps {
     open: StateOpenInterface
@@ -30,6 +31,7 @@ interface OrderPicture {
     orderId: number
     picture: IPicture
     url: string
+    pictures:  OrderPicture[]
 }
 
 export interface pictureData {
@@ -55,28 +57,22 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
             if (e.request.statuse === 404) setIsNotFound(true)
         }
     }
+    const dispatch =useDispatch()
     const [state, setState] = useState({});
     const handleChange = (event) => {
         setState({...state, [event.target.name]: event.target.checked});
     };
 
-
     const onDelete = async () => {
         try {
-/*            const entries = Object.entries(state);
-            entries.forEach((p)=>{
-                if (p[1] === true) correctIds.push(p[0])
-            })*/
             const correctIds = Object.entries(state).filter(([key, value]) => value).map(([key]) => key)
-            await $api.delete(`/picture/${open.id}`, {
-                data: {picturesId: correctIds}
-            })
+            const response = await $api.delete(`/picture/${open.id}`, {data: {picturesId: correctIds}})
+            if (open.id !==null) dispatch (deletePictures(open.id, response.data.picturesId))
+            setOpen(false)
         } catch (e) {
+
+            }
         }
-    }
-    useEffect(() => {
-        open.id && fetch()
-    }, [])
     return (
         <div>
             <Dialog
@@ -89,31 +85,35 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <FormControl component="fieldset">
-                            {urls && urls.map((u, key) =>
+                            {pictures && pictures.map((picture) =>
                                 <div>
                                     <FormControlLabel
-                                        key={key}
+                                        key={picture.id}
                                         value="top"
-                                        checked={state[u.id] || !!''}
+                                        checked={state[picture.picture.id] || !!''}
                                         onChange={handleChange}
                                         control={<Checkbox color="primary"/>}
-                                        name={String(u.id)}
+                                        name={String(picture.picture.id)}
                                         label={''}
                                     />
-                                    <MyPicture picture={u}/>
+                                    <MyPicture picture={picture.picture}/>
                                 </div>
                             )}
                         </FormControl>
-                        {isNotFound && <div>Pictures was not uploaded</div>}
+                        {pictures.length === 0 && <div>Pictures was not uploaded</div>}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onDelete} color="primary">
-                        Delete
-                    </Button>
+                    {pictures.length !== 0 &&
+                    <div>
+                        <Button onClick={onDelete} color="primary">
+                            Delete
+                        </Button>
+                    </div>
+                    }
                 </DialogActions>
             </Dialog>
         </div>
-    );
+    )
 }
 export default Pictures

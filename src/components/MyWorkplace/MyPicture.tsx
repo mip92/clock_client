@@ -1,9 +1,9 @@
 import React from 'react';
-import {pictureData} from "./Pictures";
 import s from '../../style/MyPicture.module.css'
+import {Picture} from "../../store/reducers/workplaceReducer";
 
 interface PictureProps {
-    picture: pictureData
+    picture: Picture
 }
 
 const MyPicture: React.FC<PictureProps> = ({picture}) => {
@@ -12,10 +12,15 @@ const MyPicture: React.FC<PictureProps> = ({picture}) => {
         image.src = src;
         const width = image.width;
         const height = image.height;
-        window.open(src,"Image","width=" + width + ",height=" + height);
+        window.open(src, "Image", "width=" + width + ",height=" + height);
     }
     return (
-        <img alt="order_photo" onClick={()=>openImageWindow(picture.url)} className={s.img} width={400} src={picture.url}/>
+
+        <img onClick={() => openImageWindow(picture.url)}
+             alt="order_photo"
+             className={s.img}
+             width={400}
+             src={`${process.env.REACT_APP_CLOUDINARY}/${picture.path}`}/>
     )
 };
 

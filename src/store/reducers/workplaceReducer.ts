@@ -30,8 +30,25 @@ interface User {
 interface MasterBusyDate {
     id: boolean | null,
     masterId: boolean | null,
-    dateTime: string,
+    dateTime: Date | null,
     createdAt: string,
+    updatedAt: string
+}
+
+export interface Picture {
+    createdAt: string
+    id: number
+    path: string
+    updatedAt: string
+    url?: string
+}
+
+export interface OrderPicture {
+    createdAt: string
+    id: number
+    orderId: number
+    picture: Picture
+    pictureId: number
     updatedAt: string
 }
 
@@ -51,6 +68,7 @@ export interface Order {
     master: Master,
     user: User,
     master_busyDate: MasterBusyDate,
+    orderPictures: OrderPicture[]
 }
 
 export const initStateWorkPlace: InitialStateI = {
@@ -95,12 +113,12 @@ export const initStateWorkPlace: InitialStateI = {
         },
         master_busyDate: {
             createdAt: '',
-            dateTime: '',
+            dateTime: null,
             id: null,
             masterId: null,
             updatedAt: ''
-        }
-
+        },
+        orderPictures: []
     }]
 }
 
@@ -108,6 +126,18 @@ export const workplaseReducer = (state = initStateWorkPlace, action: WorkplaseAc
     switch (action.type) {
         case WorkplaseActionTypes.SET_ORDERS:
             return {...state, orders: action.payload.payload}
+        case WorkplaseActionTypes.DEL_PICTURES:
+            return {...state, orders: state.orders.map((order, index)=>{
+                    if (order.id===action.payload.payload.orderId) return {...order,
+                        orderPictures: state.orders[index].orderPictures.filter((orderPicture)=>{
+                            return orderPicture.picture.id!==action.payload.payload.arrayPictureId[0] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[1] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[2] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[3] &&
+                                orderPicture.picture.id!==action.payload.payload.arrayPictureId[4]
+                        })}
+                    return order
+                })}
         default:
             return state
     }
