@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 
+
 import Statuses, {MyStatus} from "../MyOffice/Statuses";
+
 import Pictures from "./Pictures";
 import PicturesPreloader from "./PicturesPreloader";
 import {Order} from "../../store/reducers/workplaceReducer";

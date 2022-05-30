@@ -11,10 +11,13 @@ import {StateOpenInterface} from "./OneMasterOrder";
 import {useDispatch} from "react-redux";
 import {deletePictures} from "../../actionCreators/workplaseActionCreators";
 
+
+
+
 interface PicturesProps {
     open: StateOpenInterface
     setOpen: Function
-    pictures:any
+    pictures: any
 }
 
 interface IPicture {
@@ -73,6 +76,19 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
 
             }
         }
+
+    const download = () => {
+        const url = `/order/getZip/${open.id}`
+        $api.get(url).then((response) => {
+                window.location.href = response.data;
+            }
+        )
+    }
+
+    useEffect(() => {
+        open.id && fetch()
+    }, [])
+
     return (
         <div>
             <Dialog
@@ -109,6 +125,9 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
                         <Button onClick={onDelete} color="primary">
                             Delete
                         </Button>
+                        <Button onClick={() => download()}>
+                            Download zip
+                        </Button>
                     </div>
                     }
                 </DialogActions>
@@ -116,4 +135,5 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
         </div>
     )
 }
+
 export default Pictures
