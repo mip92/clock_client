@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useCallback, useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {MyError} from "../types/mainInterfacesAndTypes";
 
@@ -15,8 +15,7 @@ export const usePaginator = (func, initialSortBy: string) => {
     const [sortBy, setSortBy] = useState<string>(initialSortBy)
     const [inputValue, setInputValue] = useState<string>('')
     const sortHandler = (value: string) => {
-        /*if (value === sortBy)*/
-        select == "ASC" ? setSelect("DESC") : setSelect("ASC")
+        select === "ASC" ? setSelect("DESC") : setSelect("ASC")
         setSortBy(value)
     }
     const changePage = (page: number) => {
@@ -39,21 +38,21 @@ export const usePaginator = (func, initialSortBy: string) => {
         })
         setObjects(obj)
     }
-    const fetching = () => {
-        setIsLoading(true)
-        const p = func().then((res) => {
-            setObjects(res.data.rows)
-            let tp: number = getPageCount(res.data.count, currentLimit)
-            let pa: Array<number> = getPagesArray(tp)
-            setPagesArray(pa)
-            setIsLoading(false)
-            p.catch(e => {
+    const fetching = useCallback(() => {
+            setIsLoading(true)
+            func().then((res) => {
+                setObjects(res.data.rows)
+                let tp: number = getPageCount(res.data.count, currentLimit)
+                let pa: Array<number> = getPagesArray(tp)
+                setPagesArray(pa)
+                setIsLoading(false)
+            }).catch(e => {
                     if (e.response.data.message) setError(e.response.data.message);
                     else setError(e.message);
                 }
             )
-        })
-    }
+        }
+        , [])
 
 
     return [

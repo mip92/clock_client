@@ -12,6 +12,7 @@ import ChangeEmail from "../components/MyWorkplace/ChangeEmail";
 import PayPalCompleted from "../components/Menu/PayPal/PayPalCompleted";
 import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
+import {Role} from "../enums/Roles";
 
 export const createRoute = (role:string | null) => {
     const mainRouts: MyRoute[] = [
@@ -38,9 +39,9 @@ export const createRoute = (role:string | null) => {
     ]
     const error = {exact: false, path: "*", component: <Error404/>}
     switch (role) {
-        case 'ADMIN': return [...mainRouts, ...adminRoutes, error]
-        case 'USER' : return [...mainRouts, ...userRoutes, error]
-        case 'MASTER': return [...mainRouts, ...masterRoutes, error]
+        case Role.ADMIN: return [...mainRouts, ...adminRoutes, error]
+        case Role.USER : return [...mainRouts, ...userRoutes, error]
+        case Role.MASTER: return [...mainRouts, ...masterRoutes, error]
         default : return [...mainRouts, error]
     }
 }

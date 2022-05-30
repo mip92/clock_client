@@ -27,12 +27,12 @@ const SecondStep: React.FC<MastersProps> = ({masters, next, back}) => {
                 <Button variant="contained"
                         color='primary'
                         onClick={() => back()}>
-                    Назад</Button>
+                    Back</Button>
                 <div style={{color: 'red'}}></div>
                 <Button variant="contained"
                         color='primary'
                         onClick={() => next()}>
-                    Далее</Button>
+                    Next</Button>
             </div>
         </div>
     )

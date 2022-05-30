@@ -11,14 +11,14 @@ import OfficeTable from "./OfficeTable";
 const MyOffice = () => {
     let {userId} = useParams<{userId :string}>();
     const {orders}=useTypedSelector(state => state.workPlase)
-    const {offset, limit, handleChange, changePage, currentPage, isLoading, error, pagesArray, fetching} = usePaginatorWithRedux(async () => {
+    const {offset, limit, handleChange, changePage, currentPage, isLoading, pagesArray, fetching} = usePaginatorWithRedux(async () => {
         return await $api.get(`/order?offset=${offset}&limit=${limit}&userId=${userId}`)
     }, setOrders)
     useEffect(() => {
         fetching()
     }, [limit, currentPage])
 
-    if (isLoading) return <div>Загрузка</div>
+    if (isLoading) return <div>Loading...</div>
     return (
         <div>
             <OfficeTable orders={orders}/>
@@ -33,7 +33,7 @@ const MyOffice = () => {
                 type='number'
                 value={limit}
                 onChange={handleChange}
-                placeholder="Городов в поле"
+                placeholder="Cities in the field"
                 color="primary"
                 inputProps={{'aria-label': 'description'}}
             />

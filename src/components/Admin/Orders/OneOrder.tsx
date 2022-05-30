@@ -3,8 +3,7 @@ import Statuses from "../../MyOffice/Statuses";
 
 const OneOrder = ({order, statuses}) => {
     const getString = (date) => {
-        const d = new Date(date)
-        return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} ${d.getHours()}:00`
+        return new Date(date).toLocaleString()
     }
     return (
         <tr>

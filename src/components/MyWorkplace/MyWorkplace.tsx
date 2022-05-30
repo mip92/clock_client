@@ -13,8 +13,10 @@ import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
 import OrderFilters from "../Admin/Orders/OrderFilters";
 import OneMsterOrder from "./OneMasterOrder";
+import Pagination from "./Pagination";
 
-const MyWorkplace = ({cities,
+const MyWorkplace = ({
+                         cities,
                          isFetch,
                          statuses,
                          rangeDealPrice,
@@ -22,24 +24,26 @@ const MyWorkplace = ({cities,
                          currentRangeDeal,
                          currentRangeTotal,
                          setCurrentRangeDeal,
-                         setCurrentRangeTotal}) => {
-    const {masterId} = useParams<{ masterId: string }>();
+                         setCurrentRangeTotal,
+                         clockSizes,
+                         isFetchRange
+                     }) => {
 
-    const THButtons = ['dateTime', 'userEmail', 'userName', 'city', 'clockSize', 'dealPrice', 'totalPrice', 'status', 'pictires']
+    const {masterId} = useParams<{ masterId: string }>();
+    const THButtons = ['date time', 'user email', 'user name', 'city', 'clock size', 'deal price', 'total price', 'status']
 
     const {orders} = useTypedSelector(state => state.workPlase)
     const [status, setStatus] = useState<MyStatus[]>([]);
+    const [clockSize, setClockSize] = useState<MyStatus[]>([]);
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
     const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
-    const [clockSize, setClockSize] = useState<string[]>([]);
 
     const {
         offset,
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -53,32 +57,41 @@ const MyWorkplace = ({cities,
         total,
         length
     } = usePaginatorWithReduxLimit(async () => {
-        const st: string[] = []
+        const currentStatusesName: string[] = []
+        const currentClockSizesId: number[] = []
         status.map((s) => {
-            return st.push(s.name)
+            return currentStatusesName.push(s.name)
         })
-        const url = `/order?offset=${offset}&limit=${currentLimit}&masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${clockSize}&status=${st}`
+        clockSize.map((s) => {
+            return currentClockSizesId.push(s.id)
+        })
+
+        const url = `/order?offset=${offset}&limit=${currentLimit}&masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${currentClockSizesId}&status=${currentStatusesName}`
         return await $api.get<AxiosOrder>(url)
-    }, setOrders, "userName")
+    }, setOrders, "user name")
 
 
     useEffect(() => {
-        if (!isFetch && currentRangeTotal[0]!=undefined) fetching()
-    }, [currentLimit, currentPage, sortBy, select, currentRangeTotal])
+        fetching()
+    }, [currentLimit, currentPage, sortBy, select])
 
 
     const download = () => {
         const st: string[] = []
+        const cs: number[] = []
         status.map((s) => {
             return st.push(s.name)
         })
-        const url = `/order/getExcel?masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${clockSize}&status=${st}`
+        clockSize.map((s) => {
+            return cs.push(s.id)
+        })
+        const url = `/order/getExcel?masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
         $api.get(url).then((response) => {
                 window.location.href = response.data;
             }
         )
     }
-
+if (isLoading) return <div>Loading...</div>
     return (
         <div>
             <div>
@@ -90,9 +103,9 @@ const MyWorkplace = ({cities,
                               setCurrentRangeDeal={setCurrentRangeDeal} setCurrentRangeTotal={setCurrentRangeTotal}
                               setDateFinish={setDateFinish} setDateStart={setDateStart} setInputValue={setInputValue}
                               setStatus={setStatus} statuses={statuses}
-                              status={status}/>
-                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
-                <Button onClick={() => download()}>Скачать</Button>
+                              status={status} clockSizes={clockSizes}/>
+                <Button onClick={() => fetching()}>Select filters</Button>
+                <Button onClick={() => download()}>Download excel</Button>
 
                 <table>
                     <tbody>
@@ -103,6 +116,7 @@ const MyWorkplace = ({cities,
                                               name={name} select={select}/>
                             </th>
                         )}
+                        <th>PICTURES</th>
                     </tr>
                     {!orders || isLoading || isFetch ?
                         <tr className={s.timelineItem}>
@@ -117,26 +131,15 @@ const MyWorkplace = ({cities,
                     </tbody>
                 </table>
             </div>
-            {currentPage !==1 && <span onClick={() => changePage(currentPage-1)} className={s.page}>Prev</span>}
-            {
-                pagesArray.map((p: number, key: React.Key) => <span
-                    className={currentPage === p ? s.page_current : s.page}
-                    key={key}
-                    onClick={() => changePage(p)}
-                >{p}</span>)
-            }
-            {currentPage !==pagesArray.length && <span onClick={() => changePage(currentPage+1)} className={s.page}>Next</span>}
-
-            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
-            {limitArray.map((l, key: React.Key) => <span
-                className={currentLimit === l ? s.page_limit : s.limit}
-                key={key}
-                onClick={() => changeLimit(l)}
-            >{l}</span>)
-            }
-            <span style={{marginLeft: 30, padding: 5}}>
-                Показано {length} из {total}
-            </span>
+            <Pagination changeLimit={changeLimit}
+                        changePage={changePage}
+                        currentLimit={currentLimit}
+                        currentPage={currentPage}
+                        limitArray={limitArray}
+                        pagesArray={pagesArray}
+                        total={total}
+                        length={length}
+            />
         </div>
     );
 };

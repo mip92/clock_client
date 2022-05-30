@@ -5,6 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {MyStatus} from "../../MyOffice/Statuses";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,13 +52,12 @@ interface MultipleSelectObjectProps {
     name :string,
     setCorrectName,
     correctName,
-    arr
+    objects
 }
 
-const MultipleSelectObject:React.FC<MultipleSelectObjectProps> = ({name, setCorrectName, correctName, arr}) => {
+const MultipleSelectObject:React.FC<MultipleSelectObjectProps> = ({name, setCorrectName, correctName, objects}) => {
     const classes = useStyles();
     const theme = useTheme();
-
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setCorrectName(event.target.value as string[]);
     };
@@ -75,8 +75,8 @@ const MultipleSelectObject:React.FC<MultipleSelectObjectProps> = ({name, setCorr
                     input={<Input />}
                     MenuProps={MenuProps}
                 >
-                    {arr.map((size) => (
-                        <MenuItem key={size} value={size} style={getStyles(size.name, correctName, theme)}>
+                    {objects && objects.map((size) => (
+                        <MenuItem key={size.id} value={size} style={getStyles(size.name, correctName, theme)}>
                             {size.name}
                         </MenuItem>
                     ))}

@@ -1,33 +1,31 @@
 import {NavBarLink} from "../types/mainInterfacesAndTypes";
+import {Role} from "../enums/Roles";
 
 export const setLinks = (role: string | null, id: number|null) => {
     const adminLinks: NavBarLink[] = [
-        {to: '/menu/cities', name: 'Города'},
-        {to: '/menu/masters', name: 'Мастера'},
-        {to: '/menu/users', name: 'Пользователи'},
-        {to: '/menu/orders', name: 'Заказы'}
+        {to: '/menu/cities', name: 'Cities'},
+        {to: '/menu/masters', name: 'Masters'},
+        {to: '/menu/users', name: 'Users'},
+        {to: '/menu/orders', name: 'Orders'}
     ]
     const masterLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},
-        {to: `/MyWorkplace/${id}`, name: 'Мое рабочее место'}
+        {to: `/MyWorkplace/${id}`, name: 'My Workplace'}
     ]
     const userLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},
-        {to: `/MyOffice/${id}`, name: 'Мой кабинет'}
+        {to: `/MyOffice/${id}`, name: 'My Office'}
     ]
     const defaultLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"}
     ]
     switch (role) {
-        case "ADMIN":
+        case Role.ADMIN:
             return adminLinks;
-            break;
-        case "MASTER":
+        case Role.MASTER:
             return masterLinks;
-            break;
-        case "USER":
+        case Role.USER:
             return userLinks;
-            break;
         default:
             return defaultLinks
     }

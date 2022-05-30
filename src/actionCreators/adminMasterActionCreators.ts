@@ -149,7 +149,7 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
         try {
             const citiesId=JSON.stringify(arrayCurrentCities)
             dispatch(fetchStart(true))
-            const response = await $api.post(`/masters/`, {name, email, citiesId:citiesId})
+            await $api.post(`/masters/`, {name, email, citiesId:citiesId})
 /*            dispatch({
                 type: AdminMastersActionTypes.ADD_MASTER,
                 payload: {payload:response.data},
@@ -157,17 +157,11 @@ export const addOneMaster = (name: string, email:string, arrayCurrentCities:numb
             dispatch(fetchStart(false))
         } catch (e) {
             dispatch(fetchStart(false))
-/*            if(e.request.status===401) {
-                localStorage.removeItem('token')
-                localStorage.removeItem('time')
-                return dispatch({
-                    type: AuthActionTypes.SET_TOKEN,
-                    payload:  {payload: null}
-                })
-            }*/
             let error: MyError
-            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
-            else error = JSON.parse(JSON.parse(e.request.responseText).message)
+            JSON.parse(e.request.responseText)?.hasOwnProperty('errors') ?
+                error = JSON.parse(e.request.responseText).errors[0]
+                :
+                error = JSON.parse(JSON.parse(e.request.responseText).message)
             dispatch(fetchError(error))
         }
     }
@@ -185,8 +179,10 @@ export const changeMaster = (id:number, name:string, email:string, cities_id:num
             activateInput(false)
         } catch (e) {
             let error: MyError
-            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')==true)  error = JSON.parse(e.request.responseText).errors[0]
-            else error = JSON.parse(JSON.parse(e.request.responseText).message)
+            JSON.parse(e.request.responseText)?.hasOwnProperty('errors') ?
+                error = JSON.parse(e.request.responseText).errors[0]
+                :
+                error = JSON.parse(JSON.parse(e.request.responseText).message)
             dispatch(fetchError(error))
         }
     }

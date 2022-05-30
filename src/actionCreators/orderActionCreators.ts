@@ -1,6 +1,6 @@
 import {Dispatch} from "react"
 import $api from "../http";
-import {MyError, Time} from "../types/mainInterfacesAndTypes";
+import {MyError} from "../types/mainInterfacesAndTypes";
 import {
     FetchAction,
     FetchErrorAction,

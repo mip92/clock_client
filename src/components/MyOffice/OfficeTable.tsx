@@ -28,8 +28,7 @@ const useSortableData = (items: Order[], config) => {
     }, [items, sortConfig]);
 
     const requestSort = (key, activeSort, setActiveSort) => {
-        //setActiveSort (prevState => ({name:prevState.name, down:!prevState.down}))
-        if (activeSort.name == key) setActiveSort(prevState => ({name: prevState.name, down: !prevState.down}))
+        if (activeSort.name === key) setActiveSort(prevState => ({name: prevState.name, down: !prevState.down}))
         else if (activeSort.name !== key) setActiveSort({name: key, down: true})
         let direction = 'ascending';
         if (
@@ -44,8 +43,7 @@ const useSortableData = (items: Order[], config) => {
 };
 
 const getString = (date) => {
-    const d = new Date(date)
-    return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} ${d.getHours()}:00`
+    return new Date(date).toLocaleString()
 }
 
 interface ProductTableProps {
@@ -54,8 +52,8 @@ interface ProductTableProps {
 
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
     const [activeSort, setActiveSort] = useState<active>({name: '', down: false})
-    const {items, requestSort, sortConfig} = useSortableData(products, 'ascending');
-    const btnConfig = ['dateTime', 'masterEmail', 'masterName', 'cityName', 'clockSize', 'dealPrice', 'totalPrice', "status"]
+    const {items, requestSort} = useSortableData(products, 'ascending');
+    const btnConfig = ['date time', 'master email', 'master name', 'city name', 'clock size', 'deal price', 'total price', "status"]
 
     return (
         <TableContainer component={Paper}>
@@ -70,7 +68,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                                 type="button"
                                 onClick={() => requestSort(btn, activeSort, setActiveSort)}
                             >
-                                {btn} {activeSort.name == btn && (activeSort.down == false ? '▲' : "▼")}
+                                {btn} {activeSort.name === btn && (!activeSort.down ? '▲' : "▼")}
                             </Button>
                         </th>)}
                 </tr>

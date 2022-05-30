@@ -4,7 +4,6 @@ import CachedIcon from '@material-ui/icons/Cached';
 import s from "../../../style/Master.module.css"
 import ChangeUser from "./ChangeUser";
 import {MyError} from "../../../types/mainInterfacesAndTypes";
-import {useDispatch} from "react-redux";
 import $api from "../../../http";
 
 export interface User {
@@ -22,7 +21,6 @@ interface UserProps {
 }
 
 const OneUser: React.FC<UserProps> = ({user, error, deleteUser, updateUser}) => {
-    const dispatch =useDispatch()
     const [isInputActivate, activateInput] = useState(false)
 
     const constChangeUserName = () => {

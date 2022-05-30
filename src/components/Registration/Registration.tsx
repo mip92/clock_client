@@ -14,6 +14,7 @@ import {useHistory} from "react-router-dom";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import InputWithError from "./InputWithError";
 import CitiesMultySelect from "../Admin/Cities/CitiesMultySelect";
+import {Role} from "../../enums/Roles";
 
 const Registration: React.FC = () => {
     const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
@@ -82,22 +83,23 @@ const Registration: React.FC = () => {
 
     useEffect(() => {
         switch (role) {
-            case "ADMIN":
+            case Role.ADMIN:
                 return history.push('/menu/orders')
-            case "USER":
+            case Role.USER:
                 return history.push(`/myOffice/${id}`)
-            case "MASTER":
+            case Role.MASTER:
                 return history.push(`/MyWorkplace/${id}`)
         }
 
     }, [id])
 
+    if(isFetch) return <div>Loading...</div>
     return (
         <form onSubmit={onSubmit} className={s.wrapper}>
             <Typography variant="h6"
                         color={'secondary'}
                         className={s.typography}
-            >Регистрация</Typography>
+            >Registration</Typography>
             <InputWithError
                 cn={s.email}
                 type="email"

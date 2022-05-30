@@ -1,10 +1,10 @@
 import React from 'react';
-import {picture} from "../../../types/mainInterfacesAndTypes";
+
 
 interface IFileUploadProps {
     accept: string;
     addTempFiles: Function;
-    tempFiles: picture[]
+    tempFiles: File[]
 }
 
 const FilesUpload: React.FC<IFileUploadProps> = ({ tempFiles, addTempFiles, accept, children}) => {

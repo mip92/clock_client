@@ -47,20 +47,21 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
     }
 
     const onDelete = (name) => {
-        const arr =tempFiles.filter((item => item.name !== name))
+        const arr = tempFiles.filter((item => item.name !== name))
         addTempFiles(arr)
     }
 
     const [isLoadingFindMaster, setIsLoading] = useState<boolean>(false);
     const [error, setFetchError] = useState<string>('');
     const formOptions = {resolver: yupResolver(validationSchema)};
-    const {register, getValues, setValue, handleSubmit, watch, formState: {errors}, setError, control} = useForm(formOptions);
+    const {register, getValues, setValue, handleSubmit, watch, formState: {errors}} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             try {
                 let clock = getKeyByValue(data.checkbox, true);
                 let dateWithTime = new Date(data.fieldName)
                 data.currentTime && dateWithTime.setHours(data.currentTime)
                 dateWithTime.setMinutes(0)
+                setIsLoading(true)
                 const res = await $api.post(`/masters/getFreeMasters/`, {
                     cityId: data.currentCity,
                     dateTime: String(dateWithTime),
@@ -85,12 +86,12 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
         dispatch(fetchCities(0, 50))
     }, [])
 
-    const [findUser, isLoading, errorfindUser, setUserError] = useFetching(async () => {
+    const [findUser, isLoading, errorfindUser] = useFetching(async () => {
         return await $api.get(`/users/findUser?email=${watch("email")}`)
     })
 
     useEffect(() => {
-        if (errorfindUser == 'User with this email is already registered' && !token) setOpenAlert(true)
+        if (errorfindUser === 'User with this email is already registered' && !token) setOpenAlert(true)
         return () => setOpenAlert(false)
     }, [errorfindUser])
 
@@ -109,7 +110,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
             shouldDirty: true
         })
     }, [cities])
-
+    if (isLoadingFindMaster || isLoading) return <div>Loading...</div>
     return (
         <form onSubmit={onSubmit}>
             <Card className={s.wrapper}>
@@ -134,13 +135,13 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 {cities ?
                     <div className={s.city}>
                         <MultilineTextFields register={register('currentCity')}
-                                             label={"Город"}
+                                             label={"City"}
                                              cities={cities}
                                              error={errors.currentCity?.message}/>
                     </div>
                     :
                     <div>
-                        Загрузка
+                        Loading...
                     </div>
                 }
                 <div className={s.date}>
@@ -153,29 +154,31 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 </div>
                 <div className={s.time}>
                     <MultilineTextFields register={register('currentTime')}
-                                         label={"Время"}
+                                         label={"Time"}
                                          time={time}
                                          error={errors.currentTime?.message}/>
                 </div>
                 <div className={s.picturesBtn}>
                     <FileUploaderContainer tempFiles={tempFiles}
                                            addTempFiles={addTempFiles}
-                                           setError={setError}
+                                           setError={setFetchError}
                     />
                 </div>
                 <div className={s.pictures}>
-                    <Files imgs={tempFiles}  onDelete={onDelete}/>
+                    <Files imgs={tempFiles} onDelete={onDelete}/>
                 </div>
                 <div className={s.buttons}>
                     <Button variant="contained"
                             color='primary'
                             disabled={true}>
-                        Назад</Button>
+                        Back</Button>
                     <div style={{color: 'red'}}>{error}</div>
                     <Button variant="contained"
                             color='primary'
-                            type='submit'>
-                        Далее</Button>
+                            type='submit'
+                            disabled={!!error}
+                    >
+                        Next</Button>
                 </div>
                 <RegistrationAlert open={openAlert}/>
             </Card>

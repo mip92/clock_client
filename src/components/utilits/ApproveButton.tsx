@@ -19,7 +19,7 @@ const ApproveButton: React.FC<ApproveButtonProps> = ({isApproved, approveMaster}
     return (
         <Button className={isApproved ? classes.approved : classes.notApproved}
                 onClick={approveMaster}>
-            {isApproved ? "Подтвержден" : "Подтвердить"}
+            {isApproved ? "Confirmed" : "Confirm"}
         </Button>
 
     );

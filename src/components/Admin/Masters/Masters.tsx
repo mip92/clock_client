@@ -28,7 +28,6 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -48,7 +47,6 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
     }, [currentLimit, currentPage, sortBy, select])
 
     useEffect(() => {
-
         return () => {
             dispatch(setMasterName(''))
         };
@@ -56,20 +54,20 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
 
     return (
         <div>
-            <h3>Список мастеров</h3>
+            <h3>List of masters</h3>
             <div>
                 <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
-                <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
+                <Input placeholder="name or email" value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+                <Button onClick={() => fetching()}>Select filters</Button>
 
                 <div className={s.wrapper}>
                     <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'name'} select={select}/>
                     <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'email'} select={select}/>
-                    <div>Города</div>
-                    <div>Изменить</div>
-                    <div>Удалить</div>
+                    <div>Cities</div>
+                    <div>Edit</div>
+                    <div>Remove</div>
                     <Button onClick={() => sortHandler("isApproved")}>
-                        Подтверждение{sortBy == 'isApproved' && select == "ASC" ? '▲' : '▼'}
+                        Status{sortBy === 'isApproved' && select === "ASC" ? '▲' : '▼'}
                     </Button>
                 </div>
                 {isFetch || !cities || isLoading ?
@@ -85,7 +83,7 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                             <OneMaster key={key}
                                        master={m}
                                        currentPage={currentPage}/>)}
-                        {masters.length == 0 &&
+                        {masters.length === 0 &&
                         <div style={{"marginBottom": '15px', color: 'red'}}>Masters not found</div>}
                     </div>
                 }
@@ -99,7 +97,7 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                     onClick={() => changePage(p)}
                 >{p}</span>)
             }
-            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+            <span style={{marginLeft: 30, padding: 5}}>Limit</span>
             {
                 limitArray.map((l, key: React.Key) => <span
                     className={currentLimit === l ? s.page_limit : s.limit}
@@ -108,7 +106,7 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                 >{l}</span>)
             }
             <div className={s.button}>
-                <MyModal name='Добавить мастера'>
+                <MyModal name='Add master'>
                     <CreateMaster cities={cities}/>
                 </MyModal>
             </div>

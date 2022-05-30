@@ -1,6 +1,6 @@
 import {
     BooleanPayload, CitiesPayload, City,
-    ErrorOrNullPayload, MyError, picture, Time
+    ErrorOrNullPayload, MyError, Time
 } from "./mainInterfacesAndTypes";
 
 export interface OrderStateType {
@@ -13,7 +13,7 @@ export interface OrderStateType {
     clockSize: number | null,
     email: string,
     name: string,
-    pictures: picture[]
+    pictures: File[]
 }
 
 export enum OrderActionTypes {
@@ -46,7 +46,7 @@ export interface SetOrder {
         clockSize: number,
         email: string,
         name: string,
-        pictures: picture[]
+        pictures: File[]
     }
 }
 

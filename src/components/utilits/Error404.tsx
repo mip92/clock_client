@@ -9,7 +9,7 @@ const Error404= () => {
     const history =useHistory()
     const dispatch =useDispatch()
     useEffect(()=>{
-        if ((!token) && (status==401)){
+        if ((!token) && (status===401)){
             dispatch(setStatus(200))
             history.push('/login')
         }

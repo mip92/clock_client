@@ -20,7 +20,6 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
     return (<>
             {(showSpinner && isPending) && <div>Загрузка</div>}
             <PayPalButtons
-                //style={style}
                 disabled={false}
                 forceReRender={[amount, currency, style]}
                 fundingSource={undefined}

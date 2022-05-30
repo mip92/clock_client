@@ -15,7 +15,7 @@ interface AxiosCityResponse {
 const MyWorkPlaceContainer = () => {
     const {masterId} = useParams<{ masterId: string }>();
     const [cities, setCities] = useState<City[]>([] as City[])
-    const [fetching, isFetch, error] = useFetching(async () => {
+    const [fetching, isFetch] = useFetching(async () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
     })
@@ -29,13 +29,13 @@ const MyWorkPlaceContainer = () => {
     }, [])
 
     const [statuses, setStatuses] = useState<MyStatus[] | null>([] as MyStatus[])
-    const [findStatuses, isLoading, errorfindStatuses, setFindStatusesError] = useFetching(async () => {
+    const [findStatuses, isLoading] = useFetching(async () => {
         const res = await $api.get(`/status`)
-        let arr:MyStatus[] = []
+        let arr: MyStatus[] = []
         let k = 1
         const keys = Object.keys(res.data);
         keys.forEach(key => {
-            arr.push({createdAt: "", updatedAt: "", id: k, name: key})
+            arr.push({id: k, name: key})
             k++
         });
         setStatuses(arr)
@@ -44,7 +44,7 @@ const MyWorkPlaceContainer = () => {
     const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([]);
     const [rangeTotalPrice, setRangeTotalPrice] = useState<TotalPrice>({} as TotalPrice)
     const [currentRangeTotal, setCurrentRangeTotal] = useState<number[]>([]);
-    const [getRange, isFetchRange, errorRange] = useFetching(async () => {
+    const [getRange, isFetchRange] = useFetching(async () => {
         $api.get<AxiosGetRange>(`/order/minMax/${masterId}`).then((response) => {
             setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
             setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
@@ -52,13 +52,17 @@ const MyWorkPlaceContainer = () => {
             setCurrentRangeTotal([response.data.minTotalPrice, response.data.maxTotalPrice])
         })
     })
+    const clockSizes: MyStatus[] = [
+        {id: 1, name: 'small'},
+        {id: 2, name: 'middle',},
+        {id: 3, name: 'big'}]
 
     useEffect(() => {
-        if (currentRangeDeal.length === 0 || currentRangeDeal == []) {
+        if (currentRangeDeal.length === 0 || currentRangeDeal === []) {
             getRange()
         }
     }, [currentRangeDeal])
-
+    if (cities.length===0 || !statuses || !currentRangeDeal[0] || !currentRangeTotal[0]) return <div>Loading...</div>
     return (<MyWorkplace currentRangeDeal={currentRangeDeal}
                          currentRangeTotal={currentRangeTotal}
                          cities={cities}
@@ -67,7 +71,9 @@ const MyWorkPlaceContainer = () => {
                          setCurrentRangeDeal={setCurrentRangeDeal}
                          setCurrentRangeTotal={setCurrentRangeTotal}
                          isFetch={isFetch || isFetchRange || isLoading}
-                         statuses={statuses}/>);
+                         isFetchRange={isFetchRange}
+                         statuses={statuses}
+                         clockSizes={clockSizes}/>);
 };
 
 export default MyWorkPlaceContainer;

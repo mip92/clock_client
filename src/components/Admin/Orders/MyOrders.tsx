@@ -33,6 +33,7 @@ interface MyOrdersProps {
     cities: City[],
     isFetch: boolean,
     statuses: MyStatus[] | null
+    clockSizes:MyStatus[]
 }
 
 export interface AxiosGetRange {
@@ -42,7 +43,7 @@ export interface AxiosGetRange {
     maxTotalPrice: number,
 }
 
-const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
+const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSizes}) => {
     const {orders} = useTypedSelector(state => state.workPlase)
     const [rangeDealPrice, setRangeDealPrice] = useState<DealPrice>({} as DealPrice)
     const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([]);
@@ -52,16 +53,15 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
     const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
     const [userValue, setUserValue,] = useState<string>('')
-    const [clockSize, setClockSize] = useState<string[]>([]);
+    const [clockSize, setClockSize] = useState<MyStatus[]>([]);
     const [status, setStatus] = useState<MyStatus[]>([]);
-    const THButtons = ['dateTime', 'masterEmail', 'masterName', 'userEmail', 'userName', 'city', 'clockSize', 'dealPrice', 'totalPrice', 'status']
+    const THButtons = ['date time', 'master email', 'master name', 'user email', 'user name', 'city', 'clock size', 'deal price', 'total price', 'status']
 
     const {
         offset,
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -73,15 +73,19 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
         setInputValue,
         sortHandler
     } = usePaginatorWithReduxLimit(async () => {
-        const st: string[] = []
+        const currentStatusesName: string[] = []
+        const currentClockSizesId: number[] = []
         status.map((s) => {
-            return st.push(s.name)
+            return currentStatusesName.push(s.name)
         })
-        const url = `/order?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filterMaster=${inputValue}&filterUser=${userValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${clockSize}&status=${st}`
+        clockSize.map((s) => {
+            return currentClockSizesId.push(s.id)
+        })
+        const url = `/order?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filterMaster=${inputValue}&filterUser=${userValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${currentClockSizesId}&status=${currentStatusesName}`
         return await $api.get<AxiosOrder>(url)
-    }, setOrders, "masterName")
+    }, setOrders, "master name")
 
-    const [getRange, isFetchRange, errorRange] = useFetching(async () => {
+    const [getRange, isFetchRange] = useFetching(async () => {
         $api.get<AxiosGetRange>(`/order/minMax/all`).then((response) => {
             setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
             setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
@@ -92,7 +96,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
 
 
     useEffect(() => {
-        if (!rangeDealPrice && !rangeTotalPrice) fetching()
+        fetching()
     }, [currentLimit, currentPage, sortBy, select])
 
     useEffect(() => {
@@ -103,7 +107,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
 
     return (
         <div>
-            <h3>Список заказов</h3>
+            <h3>Order list</h3>
             <div>
                 <OrderFilters cities={cities} clockSize={clockSize} currentRangeDeal={currentRangeDeal}
                               currentRangeTotal={currentRangeTotal}
@@ -113,8 +117,8 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
                               setCurrentRangeDeal={setCurrentRangeDeal} setCurrentRangeTotal={setCurrentRangeTotal}
                               setDateFinish={setDateFinish} setDateStart={setDateStart} setInputValue={setInputValue}
                               setStatus={setStatus} setUserValue={setUserValue} statuses={statuses}
-                              userValue={userValue} status={status}/>
-                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
+                              userValue={userValue} status={status} clockSizes={clockSizes}/>
+                <Button onClick={() => fetching()}>Select filters</Button>
                 <table>
                     <tbody>
                     <tr>
@@ -145,7 +149,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses}) => {
                     onClick={() => changePage(p)}
                 >{p}</span>)
             }
-            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+            <span style={{marginLeft: 30, padding: 5}}>Limit</span>
             {limitArray.map((l, key: React.Key) => <span
                 className={currentLimit === l ? s.page_limit : s.limit}
                 key={key}

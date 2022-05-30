@@ -8,19 +8,16 @@ import MyModal from "../../utilits/MyModal";
 import AddCity from './AddCity';
 import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
 import $api from "../../../http";
-import {useDispatch} from "react-redux";
 import ColumnButton from "../ColumnButton";
 
 
 const Cities: React.FC = () => {
-    const dispatch = useDispatch()
     const {cities} = useTypedSelector(state => state.adminCity)
     const {
         offset,
         changePage,
         currentPage,
         isLoading,
-        error,
         pagesArray,
         fetching,
         limitArray,
@@ -37,45 +34,17 @@ const Cities: React.FC = () => {
     useEffect(() => {
         fetching()
     }, [currentLimit, currentPage, sortBy, select])
-    /*const newCity = useInput('')
-    const dispatch = useDispatch()
-    const [offset, setOffset] = useState(0)
-    const [limit, setLimit] = useState(5)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [price, setPrice] = useState<number>(0)
-
-
-    useEffect(() => {
-        dispatch(fetchCities(offset, limit))
-    }, [currentPage, limit])
-    useEffect((): void => {
-        dispatch(setCityName(newCity.value))
-    }, [newCity.value])
-
-    const changePage = (page: number) => {
-        setOffset(page * limit - limit)
-        setCurrentPage(page)
-    }
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (Number(event.target.value) === 0) setLimit(10)
-        else setLimit(Number(event.target.value));
-    };
-    const [isOpen, setIsOpen] = useState(false)
-    const sortHandler = (value: string) => {
-
-    }*/
     return (
         <div>
-            <h3>Список городов</h3>
+            <h3>List of cities</h3>
             <div>
-                <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
+                <Input value={inputValue} placeholder='city name' onChange={(e) => setInputValue(e.target.value)}/>
+                <Button onClick={() => fetching()}>Select filters</Button>
                 <div className={s.title}>
                     <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'cityName'} select={select}/>
                     <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'price'} select={select} />
-                    <div>Редактировать</div>
-                    <div>Удалить</div>
+                    <div>Edit</div>
+                    <div>Remove</div>
                 </div>
                 {!cities || isLoading ?
                     <div>
@@ -98,7 +67,7 @@ const Cities: React.FC = () => {
                     onClick={() => changePage(p)}
                 >{p}</span>)
             }
-            <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+            <span style={{marginLeft: 30, padding: 5}}>Limit</span>
             {limitArray.map((l, key: React.Key) => <span
                 className={currentLimit === l ? s.page_limit : s.limit}
                 key={key}
@@ -106,7 +75,7 @@ const Cities: React.FC = () => {
             >{l}</span>)
             }
             <div className={s.button}>
-                <MyModal name='Добавить город'>
+                <MyModal name='Add city'>
                     <AddCity/>
                 </MyModal>
             </div>

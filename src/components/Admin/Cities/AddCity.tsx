@@ -19,7 +19,7 @@ const AddCity:React.FC = () => {
         price: Yup.number()/*.required('Price of city is required').positive().integer(),*/
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
-    const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
+    const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
         dispatch(addOneCity(data.city, data.price))
         }
@@ -50,13 +50,13 @@ const AddCity:React.FC = () => {
                 <InputWithError
                     cn={s.name}
                     type="text"
-                    placeholder="Название города"
+                    placeholder="City mane"
                     reg={register("city")}
                     error={errors.city?.message}/>
                 <InputWithError
                     cn={s.name}
                     type="number"
-                    placeholder="Цена за час"
+                    placeholder="Price per hour"
                     reg={register("price")}
                     error={errors.price?.message}/>
                 <Button type="submit" color='secondary' className={s.btn}>

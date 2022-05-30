@@ -6,9 +6,8 @@ import s from "../../style/FourthStep.module.css";
 import ButtonWrapper from "./PayPal/ButtonWrapper";
 import {PayPalContext} from "../../context/payPalContect";
 
-const FourthStep = ({setActiveStep, orderId, dealPrice}) => {
+const FourthStep = ({orderId, dealPrice}) => {
     const {currency} = useContext(PayPalContext)
-    /*""react-datepicker": "2.14.0",,*/
     const history = useHistory();
     const goTo = (path) => {
         history.push(path)
@@ -18,20 +17,20 @@ const FourthStep = ({setActiveStep, orderId, dealPrice}) => {
         return (
             <div className={s.wrapper}>
                 <Card style={{textAlign: "center"}}>
-                    Вам на почту отправлено письмо, подтвердите заказ мастера
+                    An email has been sent to you, please confirm your order
                     <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
                 </Card>
                 <Button variant="contained"
                         color='primary'
                         className={s.buttons}
                         onClick={() => goTo(`/myOffice/${id}`)}>
-                    Перейти к моим заказам</Button>
+                    Go to my orders</Button>
             </div>
         )
     } else return (
         <div className={s.wrapper}>
             <Card style={{textAlign: "center"}}>
-                Вам на почту отправленно письмо с дальнейшими указаниями
+                An email has been sent to you with further instructions
                 <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
             </Card>
             <Button variant="contained"
@@ -39,7 +38,7 @@ const FourthStep = ({setActiveStep, orderId, dealPrice}) => {
                     onClick={() => goTo(`/blog`)}
                     className={s.buttons}
             >
-                На главную</Button>
+                To home</Button>
         </div>
 
     )

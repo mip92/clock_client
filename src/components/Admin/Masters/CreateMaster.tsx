@@ -21,7 +21,7 @@ const CreateMaster = ({cities}) => {
         email: Yup.string().required('Email is required').email('Email is invalid'),
     });
     const formOptions = {resolver: yupResolver(validationSchema)};
-    const {register, handleSubmit, watch, setValue, formState: {errors}, setError} = useForm(formOptions);
+    const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     useEffect(() => {
         if (error?.param) {
             setError(error.param, {
@@ -31,7 +31,7 @@ const CreateMaster = ({cities}) => {
         }
     }, [error])
     useEffect(() => {
-        if (errors.param = 'citiesId' && errors.value !== arrayCurrentCities) {
+        if (errors.param === 'citiesId' && errors.value !== arrayCurrentCities) {
             dispatch(fetchError(null))
         }
     }, [errors.citiesId])
@@ -39,7 +39,6 @@ const CreateMaster = ({cities}) => {
             dispatch(addOneMaster(data.name, data.email, arrayCurrentCities))
         }
     )
-
     return (
         <form onSubmit={fetch} className={s.wrapper}>
             <div>

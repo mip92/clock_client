@@ -12,7 +12,7 @@ const CitiesCheckBox:FC<CitiesCheckBoxProps> = ({cities,arrayCurrentCities, setA
 
     return (
         <FormGroup>
-            {cities.map((c,key)=><OneCheckBox key={c.id} city={c} array={arrayCurrentCities} setArray={setArrayCurrentCities}/>)}
+            {cities.map((c,key)=><OneCheckBox key={c.id} city={c} currentCities={arrayCurrentCities} setCurrentCities={setArrayCurrentCities}/>)}
         </FormGroup>
     );
 };
