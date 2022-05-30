@@ -97,8 +97,10 @@ export const addOneCity = (city: string, price: number) => {
         } catch (e) {
             dispatch(fetchStart(false))
             let error: MyError
-            if (JSON.parse(e.request.responseText)?.hasOwnProperty('errors')===true)  error = JSON.parse(e.request.responseText).errors[0]
-            else error = JSON.parse(e.request.responseText)
+            JSON.parse(e.request.responseText)?.hasOwnProperty('errors') ?
+                error = JSON.parse(e.request.responseText).errors[0]
+                :
+                error = JSON.parse(e.request.responseText)
             dispatch(fetchError(error))
         }
     }
