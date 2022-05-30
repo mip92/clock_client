@@ -39,8 +39,8 @@ const MyModal: React.FC<MyModalListProps> =({name, children})=> {
 
     return (
         <div>
-            <Button variant="contained"
-                    color='primary'
+            <Button variant="outlined"
+                    color='inherit'
                     onClick={handleOpen}>
                 {name}
             </Button>

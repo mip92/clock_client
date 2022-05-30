@@ -1,7 +1,19 @@
-.wrapper{
-    margin: 10px;
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.masterInfo {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding: 10px;
     width: auto;
     height: 60px;
     cursor: pointer;
+}
+
+.comments {
+    padding-right: 10px;
+    margin-left: auto;
 }
