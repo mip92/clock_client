@@ -63,13 +63,13 @@ const Pictures: React.FC<PicturesProps> = ({open, setOpen, pictures}) => {
 
     const onDelete = async () => {
         try {
-            let arr:string[] = []
-            const entries = Object.entries(state);
+/*            const entries = Object.entries(state);
             entries.forEach((p)=>{
-                if (p[1] === true) arr.push(p[0])
-            })
+                if (p[1] === true) correctIds.push(p[0])
+            })*/
+            const correctIds = Object.entries(state).filter(([key, value]) => value).map(([key]) => key)
             await $api.delete(`/picture/${open.id}`, {
-                data: {picturesId: arr}
+                data: {picturesId: correctIds}
             })
         } catch (e) {
         }
