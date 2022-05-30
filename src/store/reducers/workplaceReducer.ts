@@ -68,7 +68,7 @@ export interface Order {
     master: Master,
     user: User,
     master_busyDate: MasterBusyDate,
-    orderPictures: OrderPicture[] | []
+    orderPictures: OrderPicture[]
 }
 
 export const initStateWorkPlace: InitialStateI = {
