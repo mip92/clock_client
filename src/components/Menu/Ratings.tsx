@@ -28,7 +28,6 @@ const Ratings: React.FC<RatingsProps> = ({masterId}) => {
         const response = await $api.get<AxiosGetLastComments[]>(`/rating/getLastComments/${masterId}`)
         setComments(response.data)
     })
-    console.log(comments)
     useEffect(()=>{
         fetching()
     },[])
