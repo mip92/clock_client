@@ -4,14 +4,14 @@ import {useDispatch} from "react-redux";
 import {loginAuth} from "../../actionCreators/authActionCreators";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import s from "../../style/Login.module.css";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import InputWithError from "./InputWithError";
 import Typography from "@material-ui/core/Typography";
-import {Role} from "../../enums/Roles";
 import RolesUrls from "../../enums/RolesUrls";
+import {Role} from "../../enums/Roles";
 
 const Login: React.FC = () => {
     const history = useHistory();
@@ -21,6 +21,7 @@ const Login: React.FC = () => {
     });
     const dispatch = useDispatch()
     const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
+    const {key} = useParams<{ key: string }>();
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .required('Email is required')
@@ -45,17 +46,20 @@ const Login: React.FC = () => {
     }, [error])
 
     useEffect(() => {
+        if (key && id && role === Role.USER) {
+            return history.push(`/rating/${key}`)
+        }
         if (prevLocation === '/' && id) return history.push('/')
-        if (id) {
-            const myRole = new RolesUrls()
-            const url = myRole.getUrl(id, role)
+        if (id && !key) {
+            const myRole = new RolesUrls(id)
+            const url = myRole.getUrl(role)
             return history.push(url)
         }
     }, [id])
 
     if (isFetch) return (
         <div className={s.wrapper}>
-            <div className={s.password}>Загрузка</div>
+            <div className={s.password}>Loading...</div>
         </div>
     )
     return (

@@ -15,6 +15,7 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 import InputWithError from "./InputWithError";
 import CitiesMultySelect from "../Admin/Cities/CitiesMultySelect";
 import {Role} from "../../enums/Roles";
+import RolesUrls from "../../enums/RolesUrls";
 
 const Registration: React.FC = () => {
     const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
@@ -81,15 +82,9 @@ const Registration: React.FC = () => {
     }, [error])
 
     useEffect(() => {
-        switch (role) {
-            case Role.ADMIN:
-                return history.push('/menu/orders')
-            case Role.USER:
-                return history.push(`/myOffice/${id}`)
-            case Role.MASTER:
-                return history.push(`/MyWorkplace/${id}`)
-        }
-
+        const myRole = new RolesUrls(id)
+        const url = myRole.getUrl(role)
+        return history.push(url)
     }, [id])
 
     if (isFetch) return <div>Loading...</div>

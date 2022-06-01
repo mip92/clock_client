@@ -5,7 +5,10 @@ import {
     StringOrNullPayload,
     StringPayload
 } from "./mainInterfacesAndTypes";
-
+import {Role} from "../enums/Roles";
+export type UrlByRole = {
+    [key in Role]
+}
 export interface AuthStateType {
     isAdminFound: boolean,
     isFetch: boolean,
@@ -14,7 +17,7 @@ export interface AuthStateType {
     authName: string,
     authEmail: string,
     status: number,
-    role: null | string,
+    role: Role | null,
     id: null | number,
 }
 
@@ -62,7 +65,7 @@ export interface SetAuthEmailAction {
 
 export interface SetAuthRoleAction {
     type: AuthActionTypes.SET_ROLE_AND_ID;
-    payload: { rolePayload: string | null, idPayload: number | null }
+    payload: { rolePayload: Role | null, idPayload: number | null }
 }
 
 export interface SetAuthNameAction {

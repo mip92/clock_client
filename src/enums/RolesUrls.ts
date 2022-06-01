@@ -1,30 +1,25 @@
 import {Role} from "./Roles";
-
-
-/*interface roleUrl {
-    role: [Role],
-    url: string
-}*/
+import {UrlByRole} from "../types/authTypes";
 
 class RolesUrls {
     id;
     role;
-    urls ;
-    constructor() {
+    urls: UrlByRole;
+    currentUrl;
+    constructor(id:number | null) {
+        this.urls = {
+            [Role.USER]: `/myOffice/${id}`,
+            [Role.MASTER]: `/MyWorkplace/${id}`,
+            [Role.ADMIN]: `/menu/orders`,
+        }
     }
-
-    getUrl(id, role) {
-        this.id = id
+    getUrl(role) {
         this.role = role
-        this.urls = [
-            {role: Role.ADMIN, url: '/menu/orders'},
-            {role: Role.USER, url: `/myOffice/${this.id}`},
-            {role: Role.MASTER, url: `/MyWorkplace/${this.id}`},
-        ]
-        this.urls.map((oneRole) => console.log(typeof oneRole.role))
-        const correctObject = this.urls.filter((oneRole) => oneRole.role === this.role)
-        if (!correctObject) return
-        return correctObject[0].url
+        const keys = Object.keys(this.urls);
+        keys.forEach(key => {
+            if (key==role) this.currentUrl= this.urls[key]
+        });
+        return this.currentUrl
     }
 }
 

@@ -1,0 +1,46 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.typography{
+    display: flex;
+    justify-content: center;
+}
+.comment {
+    display: flex;
+    justify-content: center;
+}
+.commentBody{
+    width: 450px;
+}
+.rating{
+    display: flex;
+    justify-content: center;
+}
+.ratingBody{
+    display: flex;
+    justify-content: center;
+    width: 450px;
+}
+.error{
+    display: flex;
+    justify-content: center;
+}
+.errorBody{
+    display: flex;
+    justify-content: center;
+    width: 450px;
+    color: red;
+}
+.btn{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+.btnBody{
+    display: flex;
+    justify-content: center;
+    width: 450px;
+    color: red;
+}

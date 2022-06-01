@@ -62,13 +62,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 data.currentTime && dateWithTime.setHours(data.currentTime)
                 dateWithTime.setMinutes(0)
                 setIsLoading(true)
-                const res = await $api.post(`/masters/getFreeMasters/`, {
-                    cityId: data.currentCity,
-                    dateTime: String(dateWithTime),
-                    clockSize: clock,
-                    email: data.email,
-                    name: data.name
-                })
+                const res = await $api.get(`/masters/getFreeMasters?cityId=${data.currentCity}&dateTime=${dateWithTime.toISOString()}&clockSize=${clock}&limit=${50}&offset=${0}`)
                 dispatch(setOrder(data.currentCity, String(dateWithTime), clock, data.email, data.name, tempFiles))
                 const masters: Master[] = res.data
                 setMasters(masters)

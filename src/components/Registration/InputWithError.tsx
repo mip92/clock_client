@@ -10,7 +10,8 @@ interface InputWithErrorProps {
     label?: string,
     defaultValue?: string | number,
     color?: string,
-    onBlur?: Function
+    onBlur?: Function,
+    multiline?: boolean
 }
 
 const InputWithError: React.FC<InputWithErrorProps> = ({
@@ -22,7 +23,8 @@ const InputWithError: React.FC<InputWithErrorProps> = ({
                                                            cn,
                                                            type,
                                                            color,
-                                                           onBlur
+                                                           onBlur,
+                                                           multiline=false
                                                        }) => {
     const [isError, setError] = useState<boolean>(false)
     useEffect(() => {
@@ -32,6 +34,7 @@ const InputWithError: React.FC<InputWithErrorProps> = ({
 
     return (
         <TextField
+            multiline={multiline}
             color={color}
             label={label}
             type={type}

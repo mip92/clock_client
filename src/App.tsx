@@ -39,7 +39,7 @@ moment.updateLocale('en', {
 
 const App: React.FC = () => {
     const dispatch = useDispatch()
-    const {token, role} = useTypedSelector(state => state.auth)
+    const {token, role, isFetch} = useTypedSelector(state => state.auth)
 
     useEffect(() => {
         dispatch(setToken())
@@ -52,14 +52,10 @@ const App: React.FC = () => {
 
 
     useEffect(() => {
-        setRoutes(createRoute(role))
+        token && role && setRoutes(createRoute(role))
     }, [role])
 
-    const [routes, setRoutes] = useState<MyRoute[]>(createRoute(role))
-
-    /* useEffect(() => {
-         setRoutes(createRoute(role))
-     }, [token])*/
+    const [routes, setRoutes] = useState<MyRoute[]>(createRoute(null))
     const payPalId: string = process.env.REACT_APP_CLIENT_PAYPAL_ID || ''
     const currency = "USD"
 
