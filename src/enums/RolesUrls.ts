@@ -17,7 +17,7 @@ class RolesUrls {
         this.role = role
         const keys = Object.keys(this.urls);
         keys.forEach(key => {
-            if (key==role) this.currentUrl= this.urls[key]
+            if (key === role) this.currentUrl= this.urls[key]
         });
         return this.currentUrl
     }
