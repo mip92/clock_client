@@ -13,6 +13,13 @@ import {useForm} from "react-hook-form";
 import InputWithError from "../../Registration/InputWithError";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
+const validationSchema = Yup.object().shape({
+    newNameOfMaster: Yup.string().min(6, 'Master name must be longer than 6 characters')
+        .required('Master name is required'),
+    newEmailOfMaster: Yup.string().required('Email is required').email('Email is invalid'),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const ChangeMaster = ({master, activateInput, delMaster}) => {
     const arr: number[] = []
     master.cities.map(c => arr.push(c.id))
@@ -20,12 +27,6 @@ const ChangeMaster = ({master, activateInput, delMaster}) => {
     const dispatch = useDispatch()
     const {cities} = useContext(MasterContext)
     const {error} = useTypedSelector(state => state.adminMaster)
-    const validationSchema = Yup.object().shape({
-        newNameOfMaster: Yup.string().min(6, 'Master name must be longer than 6 characters')
-            .required('Master name is required'),
-        newEmailOfMaster: Yup.string().required('Email is required').email('Email is invalid'),
-    });
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, setValue, formState: {errors}, setError} = useForm(formOptions);
     useEffect(() => {
         setValue("newNameOfMaster", master.name, {

@@ -29,6 +29,7 @@ const Users: React.FC = () => {
     ] = usePaginator(() => $api.get(`/users?offset=${offset}&limit=${currentLimit}&sortBy=${sortBy}&select=${select}&filter=${inputValue}`), 'name')
 
     useEffect(() => {
+
         fetching()
     }, [currentLimit, currentPage, sortBy, select])
 

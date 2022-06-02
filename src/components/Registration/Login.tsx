@@ -12,6 +12,17 @@ import InputWithError from "./InputWithError";
 import Typography from "@material-ui/core/Typography";
 import RolesUrls from "../../enums/RolesUrls";
 import {Role} from "../../enums/Roles";
+import {UrlByRole} from "../../enums/RolesUrls2";
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string()
+        .required('Email is required')
+        .email('Email is invalid'),
+    password: Yup.string()
+        .min(6, 'Password must be at least 6 characters')
+        .required('Password is required'),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
 
 const Login: React.FC = () => {
     const history = useHistory();
@@ -22,15 +33,6 @@ const Login: React.FC = () => {
     const dispatch = useDispatch()
     const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
     const {key} = useParams<{ key: string }>();
-    const validationSchema = Yup.object().shape({
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
-    });
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             await dispatch(loginAuth(data.email, data.password))
@@ -50,10 +52,9 @@ const Login: React.FC = () => {
             return history.push(`/rating/${key}`)
         }
         if (prevLocation === '/' && id) return history.push('/')
-        if (id && !key) {
-            const myRole = new RolesUrls(id)
-            const url = myRole.getUrl(role)
-            return history.push(url)
+        if (id && !key && role) {
+            const url = UrlByRole[role]
+            return history.push(url + id)
         }
     }, [id])
 

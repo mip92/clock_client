@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
 
-interface RatingsProps{
+interface RatingsProps {
     masterId: number
 }
 
@@ -28,20 +28,22 @@ const Ratings: React.FC<RatingsProps> = ({masterId}) => {
         const response = await $api.get<AxiosGetLastComments[]>(`/rating/getLastComments/${masterId}`)
         setComments(response.data)
     })
-    useEffect(()=>{
+    useEffect(() => {
         fetching()
-    },[])
+    }, [])
     if (isFetch) return <div>Loading...</div>
     return (
         <div>
-            {comments.length>0
-                ? comments.map((comment)=>{return<div>
-                <div>User name: {comment.order.user.name}</div>
-                <div>Comment: {comment.comment}</div>
-                <div>Date: {new Date(comment.createdAt).toLocaleString()}</div>
-                <br/>
-            </div>})
-                :<div>This master hase no comments</div>}
+            {comments.length > 0
+                ? comments.map((comment) => {
+                    return <div>
+                        <div>User name: {comment.order.user.name}</div>
+                        <div>Comment: {comment.comment}</div>
+                        <div>Date: {new Date(comment.createdAt).toLocaleString()}</div>
+                        <br/>
+                    </div>
+                })
+                : <div>This master hase no comments</div>}
         </div>
     );
 };

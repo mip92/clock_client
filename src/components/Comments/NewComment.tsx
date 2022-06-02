@@ -26,17 +26,19 @@ interface AxiosCreateComment {
     updatedAt: string
 }
 
+const validationSchema = Yup.object().shape({
+    comment: Yup.string()
+        .required('Comment is required')
+        .min(6, 'Comment must be at least 6 characters'),
+    rating: Yup.number()
+        .required('Rating is required')
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const NewComment = () => {
     const history = useHistory();
     const {key} = useParams<{ key: string }>();
     const {role} = useTypedSelector(state => state.auth)
-    const validationSchema = Yup.object().shape({
-        comment: Yup.string()
-            .required('Comment is required')
-            .min(6, 'Comment must be at least 6 characters'),
-        rating: Yup.number()
-            .required('Rating is required')
-    });
     const [isFetching, setIsFetching] = useState(false)
     const [isRatingCreated, setIsRatingCreated] = useState(false)
     const [apiError, setApiError] = useState<{message:string}>()
@@ -60,7 +62,6 @@ const NewComment = () => {
     const goTo = (path) => {
         history.push(path)
     }
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, formState: {errors}, setValue, setError} = useForm(formOptions);
     const onSubmit = data => {
         fetching(data)

@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
-
-
 import Statuses, {MyStatus} from "../MyOffice/Statuses";
-
 import Pictures from "./Pictures";
 import PicturesPreloader from "./PicturesPreloader";
 import {Order} from "../../store/reducers/workplaceReducer";
@@ -17,7 +14,7 @@ interface OneMasterOrderProps {
     statuses: MyStatus[]
 }
 
-const OneMsterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
+const OneMasterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
     const [isOpen, setOpen] = useState<StateOpenInterface>({status: false, id: null})
     const openPictures = (id) => {
         setOpen({status: true, id})
@@ -45,4 +42,4 @@ const OneMsterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
     );
 };
 
-export default OneMsterOrder;
+export default OneMasterOrder;

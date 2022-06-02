@@ -7,7 +7,6 @@ import MyModal from "../../utilits/MyModal";
 import {City} from "../../../types/mainInterfacesAndTypes";
 import $api from "../../../http";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
-
 import CreateMaster from "./CreateMaster";
 import OneMaster from "./OneMaster";
 import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";

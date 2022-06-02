@@ -19,26 +19,27 @@ import {Master} from "../../types/adminMasterTypes";
 import FileUploaderContainer from "./FilesUploader/FileUploaderContainer";
 import Files from "./FilesUploader/Files";
 
+const validationSchema = Yup.object().shape({
+    email: Yup.string()
+        .required('Email is required')
+        .email('Email is invalid'),
+    name: Yup.string()
+        .min(6, 'Name must be at least 6 characters')
+        .required('Name is required').default('some string'),
+    checkbox: Yup.string()
+        .oneOf(["big", "small", "middle"], "You must accept the terms and conditions").nullable(),
+    currentCity: Yup.string().required('Current city is required'),
+    currentTime: Yup.string().required('Current time is required'),
+    fieldName: Yup.string().required('Date time is required'),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
     const {token, authName, authEmail} = useTypedSelector(state => state.auth)
     const {cities, time} = useTypedSelector(state => state.order)
     const dispatch = useDispatch()
     const [date, setDate] = useState<MaterialUiPickersDate>(null);
     const [openAlert, setOpenAlert] = useState(false);
-    const validationSchema = Yup.object().shape({
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        name: Yup.string()
-            .min(6, 'Name must be at least 6 characters')
-            .required('Name is required').default('some string'),
-        checkbox: Yup.string()
-            .oneOf(["big", "small", "middle"], "You must accept the terms and conditions").nullable(),
-        currentCity: Yup.string().required('Current city is required'),
-        currentTime: Yup.string().required('Current time is required'),
-        fieldName: Yup.string().required('Date time is required'),
-    });
-
 
     function getKeyByValue(checkbox: string, value: boolean) {
         if (checkbox === 'small') return 1
@@ -53,7 +54,6 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
 
     const [isLoadingFindMaster, setIsLoading] = useState<boolean>(false);
     const [error, setFetchError] = useState<string>('');
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, getValues, setValue, handleSubmit, watch, formState: {errors}} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             try {
