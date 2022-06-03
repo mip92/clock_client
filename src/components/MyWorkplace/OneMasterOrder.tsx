@@ -30,7 +30,7 @@ const OneMasterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
             <td>{order.user.email}</td>
             <td>{order.user.name}</td>
             <td>{order.originalCityName}</td>
-            <td>{order.clockSize}</td>
+            <td>{order.clockSize === 1 ? 'small' : order.clockSize === 2 ? 'middle' : 'big'}</td>
             <td>{order.dealPrice}</td>
             <td>{(order.dealPrice && order?.clockSize) && order.dealPrice * order?.clockSize}</td>
             <td><Statuses key={`${order.id}` + `${order.status}`}
