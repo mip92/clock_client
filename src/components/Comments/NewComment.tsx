@@ -14,6 +14,7 @@ import {Container} from '@material-ui/core';
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import $api from "../../http";
 import {MyError} from "../../types/mainInterfacesAndTypes";
+import {log} from "util";
 
 interface AxiosCreateComment {
     comment: string
@@ -41,8 +42,19 @@ const NewComment = () => {
     const {role} = useTypedSelector(state => state.auth)
     const [isFetching, setIsFetching] = useState(false)
     const [isRatingCreated, setIsRatingCreated] = useState(false)
-    const [apiError, setApiError] = useState<{message:string}>()
-    const [apiValidateError, setApiValidateError]= useState<MyError[]>()
+    const [apiError, setApiError] = useState<{ message: string }>()
+    const [apiValidateError, setApiValidateError] = useState<MyError[]>()
+    const [isFetch, setFetch] = useState<boolean>(true)
+
+    useEffect(() => {
+        $api.get(`/rating/isRatingComplete/${key}`).then((response) => {
+            console.log(response.data)
+            setFetch(false)
+        }).catch((e) => {
+            if (JSON.parse(e.request.responseText).message === 'rating not available') history.push('/')
+        })
+    }, [])
+
     const fetching = async (data) => {
         try {
             setIsFetching(true)
@@ -74,7 +86,7 @@ const NewComment = () => {
     const [rating, setRating] = useState<number>(0);
 
     useEffect(() => {
-        apiValidateError&& apiValidateError.map((oneError)=>{
+        apiValidateError && apiValidateError.map((oneError) => {
             if (oneError?.param) {
                 setError(oneError.param, {
                     type: "server error",
@@ -114,7 +126,7 @@ const NewComment = () => {
             </div>
         </div>
     )
-    if (isFetching) return <div>Loading...</div>
+    if (isFetching || isFetch) return <div>Loading...</div>
     return (
         <Container>
             <form onSubmit={handleSubmit(onSubmit)} className={s.wrapper}>
