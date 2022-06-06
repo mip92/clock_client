@@ -6,7 +6,8 @@ export const setLinks = (role: string | null, id: number | null) => {
         {to: '/menu/cities', name: 'Cities'},
         {to: '/menu/masters', name: 'Masters'},
         {to: '/menu/users', name: 'Users'},
-        {to: '/menu/orders', name: 'Orders'}
+        {to: '/menu/orders', name: 'Orders'},
+        {to:'/menu/statistics', name: 'Statistics'},
     ]
     const masterLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},

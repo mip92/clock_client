@@ -13,6 +13,8 @@ import PayPalCompleted from "../components/Menu/PayPal/PayPalCompleted";
 import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 import {Role} from "../enums/Roles";
+import Statistics from "../components/Admin/Statistcics/Statistics";
+import StatisticsContainer from "../components/Admin/Statistcics/StatisticsContainer";
 
 export const createRoute = (role: string | null) => {
     const mainRouts: MyRoute[] = [
@@ -23,11 +25,12 @@ export const createRoute = (role: string | null) => {
         {exact: false, path: "/completed", component: <PayPalCompleted/>},
     ]
     const adminRoutes: MyRoute[] = [
-        {exact: false, path: "/menu/cities", component: <Cities/>},
-        {exact: false, path: "/menu/masters", component: <MastersContainer/>},
-        {exact: false, path: "/menu/users", component: <Users/>},
-        {exact: false, path: "/menu/orders", component: <OrdersContainer/>},
-        {exact: false, path: "/menu", component: <OrdersContainer/>}
+        {exact: true, path: "/menu/cities", component: <Cities/>},
+        {exact: true, path: "/menu/masters", component: <MastersContainer/>},
+        {exact: true, path: "/menu/users", component: <Users/>},
+        {exact: true, path: "/menu/orders", component: <OrdersContainer/>},
+        {exact: true, path: "/menu", component: <OrdersContainer/>},
+        {exact: true, path: "/menu/statistics", component: <StatisticsContainer/>}
     ]
     const userRoutes: MyRoute[] = [
         {exact: true, path: "/myOffice/:userId", component: <MyOffice/>},
