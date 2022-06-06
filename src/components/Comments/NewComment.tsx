@@ -48,7 +48,6 @@ const NewComment = () => {
 
     useEffect(() => {
         $api.get(`/rating/isRatingComplete/${key}`).then((response) => {
-            console.log(response.data)
             setFetch(false)
         }).catch((e) => {
             if (JSON.parse(e.request.responseText).message === 'rating not available') history.push('/')
