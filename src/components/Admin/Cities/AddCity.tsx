@@ -10,15 +10,16 @@ import {addOneCity} from "../../../actionCreators/adminCityActionCreators";
 import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
+const validationSchema = Yup.object().shape({
+    city: Yup.string().min(3, 'City name must be longer than 3 characters')
+        .required('City name is required'),
+    price: Yup.number()/*.required('Price of city is required').positive().integer(),*/
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const AddCity: React.FC = () => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
-    const validationSchema = Yup.object().shape({
-        city: Yup.string().min(3, 'City name must be longer than 3 characters')
-            .required('City name is required'),
-        price: Yup.number()/*.required('Price of city is required').positive().integer(),*/
-    });
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             dispatch(addOneCity(data.city, data.price))

@@ -12,22 +12,23 @@ import {Button} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {Role} from "../../enums/Roles";
 
+const validationSchema = Yup.object().shape({
+    currentEmail: Yup.string()
+        .required('Email is required')
+        .email('Email is invalid'),
+    newEmail: Yup.string()
+        .required('Email is required')
+        .email('Email is invalid'),
+    password: Yup.string()
+        .min(6, 'Password must be at least 6 characters')
+        .required('Password is required'),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const ChangeEmail = () => {
     const dispatch = useDispatch()
     const history = useHistory();
     const {isFetch, error, role, token, id} = useTypedSelector(state => state.auth)
-    const validationSchema = Yup.object().shape({
-        currentEmail: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        newEmail: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        password: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
-    });
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, resetField, formState: {errors}, setError} = useForm(formOptions);
 
     const onSubmit = handleSubmit(async data => {

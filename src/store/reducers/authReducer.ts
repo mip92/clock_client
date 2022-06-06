@@ -1,4 +1,5 @@
 import {AuthAction, AuthActionTypes, AuthStateType} from "../../types/authTypes";
+import {Role} from "../../enums/Roles";
 
 const initState: AuthStateType = {
     isAdminFound: false,
@@ -8,7 +9,7 @@ const initState: AuthStateType = {
     authEmail: '',
     authName: '',
     status: 200,
-    role: '',
+    role: null,
     id: null
 }
 

@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-
-
 import Statuses, {MyStatus} from "../MyOffice/Statuses";
-
 import Pictures from "./Pictures";
 import PicturesPreloader from "./PicturesPreloader";
 import {Order} from "../../store/reducers/workplaceReducer";
+import {CLOCK_SIZE} from "../../enums/ClockSize";
 
 export interface StateOpenInterface {
     status: boolean
@@ -17,7 +15,7 @@ interface OneMasterOrderProps {
     statuses: MyStatus[]
 }
 
-const OneMsterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
+const OneMasterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
     const [isOpen, setOpen] = useState<StateOpenInterface>({status: false, id: null})
     const openPictures = (id) => {
         setOpen({status: true, id})
@@ -33,7 +31,7 @@ const OneMsterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
             <td>{order.user.email}</td>
             <td>{order.user.name}</td>
             <td>{order.originalCityName}</td>
-            <td>{order.clockSize}</td>
+            <td>{order.clockSize && CLOCK_SIZE[order.clockSize]}</td>
             <td>{order.dealPrice}</td>
             <td>{(order.dealPrice && order?.clockSize) && order.dealPrice * order?.clockSize}</td>
             <td><Statuses key={`${order.id}` + `${order.status}`}
@@ -45,4 +43,4 @@ const OneMsterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
     );
 };
 
-export default OneMsterOrder;
+export default OneMasterOrder;

@@ -5,7 +5,6 @@ import s from "../../../style/Files.module.css"
 interface FilesProps {
     imgs: File[]
     onDelete: Function
-
 }
 
 const Files: React.FC<FilesProps> = ({imgs, onDelete}) => {

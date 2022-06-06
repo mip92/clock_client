@@ -11,16 +11,17 @@ import InputWithError from "../../Registration/InputWithError";
 import CitiesMultySelect from "../Cities/CitiesMultySelect";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
+const validationSchema = Yup.object().shape({
+    name: Yup.string().min(6, 'Master name must be longer than 6 characters')
+        .required('Master name is required'),
+    email: Yup.string().required('Email is required').email('Email is invalid'),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const CreateMaster = ({cities}) => {
     const {error} = useTypedSelector(state => state.adminMaster);
     const dispatch = useDispatch();
     const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>([])
-    const validationSchema = Yup.object().shape({
-        name: Yup.string().min(6, 'Master name must be longer than 6 characters')
-            .required('Master name is required'),
-        email: Yup.string().required('Email is required').email('Email is invalid'),
-    });
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     useEffect(() => {
         if (error?.param) {

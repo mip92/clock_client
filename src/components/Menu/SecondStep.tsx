@@ -13,6 +13,7 @@ interface MastersProps {
 
 const SecondStep: React.FC<MastersProps> = ({masters, next, back}) => {
     const {currentMaster, setCurrentMaster} = useContext(FormContext)
+
     return (
         <div>
             <Card className={s.wrapper}>

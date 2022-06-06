@@ -19,15 +19,16 @@ interface ChangeCityProps {
     newNameOfCity: any,
 }
 
+const validationSchema = Yup.object().shape({
+    cityName: Yup.string().min(3, 'City name must be longer than 3 characters')
+        .required('City name is required'),
+    price: Yup.number().required('Price of city is required').positive().integer(),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const ChangeCity: React.FC<ChangeCityProps> = ({activateInput, city, delCity}) => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
-    const validationSchema = Yup.object().shape({
-        cityName: Yup.string().min(3, 'City name must be longer than 3 characters')
-            .required('City name is required'),
-        price: Yup.number().required('Price of city is required').positive().integer(),
-    });
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             dispatch(await changeCityName(city.id, data.cityName, data.price, activateInput))

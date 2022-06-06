@@ -9,13 +9,14 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import InputWithError from "../../Registration/InputWithError";
 
+const validationSchema = Yup.object().shape({
+    newEmailOfUser: Yup.string().required('Email is required').email('Email is invalid'),
+    newNameOfUser: Yup.string().min(6, 'User name must be longer than 6 characters')
+        .required('User name is required'),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
+
 const ChangeUser = ({deleteUser, user, activateInput, updateUser, error}) => {
-    const validationSchema = Yup.object().shape({
-        newEmailOfUser: Yup.string().required('Email is required').email('Email is invalid'),
-        newNameOfUser: Yup.string().min(6, 'User name must be longer than 6 characters')
-            .required('User name is required'),
-    });
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, setValue, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             const response = await $api.put(`/users`, {

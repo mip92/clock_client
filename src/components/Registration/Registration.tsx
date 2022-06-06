@@ -14,7 +14,25 @@ import {useHistory} from "react-router-dom";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import InputWithError from "./InputWithError";
 import CitiesMultySelect from "../Admin/Cities/CitiesMultySelect";
-import {Role} from "../../enums/Roles";
+import {UrlByRole} from "../../enums/RolesUrls2";
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string()
+        .required('Email is required')
+        .email('Email is invalid'),
+    name: Yup.string()
+        .required('First Name is required')
+        .min(6, 'Name must be at least 3 characters'),
+    firstPassword: Yup.string()
+        .min(6, 'Password must be at least 6 characters')
+        .required('Password is required'),
+    secondPassword: Yup.string()
+        .oneOf([Yup.ref('firstPassword'), null], 'Passwords must match')
+        .required('Confirm Password is required'),
+    isRulesChecked: Yup.boolean()
+        .oneOf([true], 'Rules is required'),
+});
+const formOptions = {resolver: yupResolver(validationSchema)};
 
 const Registration: React.FC = () => {
     const {isFetch, error, role, id} = useTypedSelector(state => state.auth)
@@ -34,25 +52,7 @@ const Registration: React.FC = () => {
         findCities(0, 50)
     }, [])
 
-
-    const validationSchema = Yup.object().shape({
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        name: Yup.string()
-            .required('First Name is required')
-            .min(3, 'Name must be at least 3 characters'),
-        firstPassword: Yup.string()
-            .min(6, 'Password must be at least 6 characters')
-            .required('Password is required'),
-        secondPassword: Yup.string()
-            .oneOf([Yup.ref('firstPassword'), null], 'Passwords must match')
-            .required('Confirm Password is required'),
-        isRulesChecked: Yup.boolean()
-            .oneOf([true], 'Rules is required'),
-    });
     const dispatch = useDispatch()
-    const formOptions = {resolver: yupResolver(validationSchema)};
     const {register, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             const newData: IRigistrationData = {
@@ -81,15 +81,10 @@ const Registration: React.FC = () => {
     }, [error])
 
     useEffect(() => {
-        switch (role) {
-            case Role.ADMIN:
-                return history.push('/menu/orders')
-            case Role.USER:
-                return history.push(`/myOffice/${id}`)
-            case Role.MASTER:
-                return history.push(`/MyWorkplace/${id}`)
+        if (id && role) {
+            const url = UrlByRole[role]
+            return history.push(url + id)
         }
-
     }, [id])
 
     if (isFetch) return <div>Loading...</div>

@@ -38,7 +38,7 @@ export const usePaginator = (func, initialSortBy: string) => {
         })
         setObjects(obj)
     }
-    const fetching = useCallback(() => {
+    const fetching = () => {
             setIsLoading(true)
             func().then((res) => {
                 setObjects(res.data.rows)
@@ -52,9 +52,6 @@ export const usePaginator = (func, initialSortBy: string) => {
                 }
             )
         }
-        , [])
-
-
     return [
         offset,
         changePage,

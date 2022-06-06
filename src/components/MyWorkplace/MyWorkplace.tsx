@@ -12,7 +12,7 @@ import {MyStatus} from "../MyOffice/Statuses";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {initStateWorkPlace} from "../../store/reducers/workplaceReducer";
 import OrderFilters from "../Admin/Orders/OrderFilters";
-import OneMsterOrder from "./OneMasterOrder";
+import OneMasterOrder from "./OneMasterOrder";
 import Pagination from "./Pagination";
 
 const MyWorkplace = ({
@@ -125,9 +125,9 @@ const MyWorkplace = ({
                             </td>
                         </tr>
                         :
-                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMsterOrder key={order.id}
-                                                                                                          order={order}
-                                                                                                          statuses={statuses}/>)
+                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMasterOrder key={order.id}
+                                                                                                           order={order}
+                                                                                                           statuses={statuses}/>)
                     }
                     </tbody>
                 </table>

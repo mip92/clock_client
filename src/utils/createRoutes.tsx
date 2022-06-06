@@ -13,25 +13,30 @@ import PayPalCompleted from "../components/Menu/PayPal/PayPalCompleted";
 import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 import {Role} from "../enums/Roles";
+import NewComment from "../components/Comments/NewComment";
 
-export const createRoute = (role: string | null) => {
+export const createRoute = (role: Role | null) => {
     const mainRouts: MyRoute[] = [
         {exact: true, path: "/", component: <StepperContainer/>},
         {exact: true, path: "/blog", component: <Blog/>},
-        {exact: true, path: "/login", component: <Login/>},
+        {exact: true, path: "/login/", component: <Login/>},
+        {exact: true, path: "/login/:key", component: <Login/>},
         {exact: false, path: "/registration", component: <Registration/>},
         {exact: false, path: "/completed", component: <PayPalCompleted/>},
+        {exact: true, path: "/rating/:key", component: <NewComment/>}
     ]
     const adminRoutes: MyRoute[] = [
         {exact: false, path: "/menu/cities", component: <Cities/>},
         {exact: false, path: "/menu/masters", component: <MastersContainer/>},
         {exact: false, path: "/menu/users", component: <Users/>},
         {exact: false, path: "/menu/orders", component: <OrdersContainer/>},
-        {exact: false, path: "/menu", component: <OrdersContainer/>}
+        {exact: false, path: "/menu", component: <OrdersContainer/>},
+
     ]
     const userRoutes: MyRoute[] = [
         {exact: true, path: "/myOffice/:userId", component: <MyOffice/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
+
     ]
     const masterRoutes: MyRoute[] = [
         {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkPlaceContainer/>},
@@ -46,6 +51,6 @@ export const createRoute = (role: string | null) => {
         case Role.MASTER:
             return [...mainRouts, ...masterRoutes, error]
         default :
-            return [...mainRouts, error]
+            return [...mainRouts, ...adminRoutes, ...userRoutes, ...masterRoutes, error]
     }
 }
