@@ -14,7 +14,6 @@ import {useHistory} from "react-router-dom";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import InputWithError from "./InputWithError";
 import CitiesMultySelect from "../Admin/Cities/CitiesMultySelect";
-import RolesUrls from "../../enums/RolesUrls";
 import {UrlByRole} from "../../enums/RolesUrls2";
 
 const validationSchema = Yup.object().shape({

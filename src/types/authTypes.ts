@@ -6,9 +6,7 @@ import {
     StringPayload
 } from "./mainInterfacesAndTypes";
 import {Role} from "../enums/Roles";
-export type UrlByRole = {
-    [key in Role]
-}
+
 export interface AuthStateType {
     isAdminFound: boolean,
     isFetch: boolean,

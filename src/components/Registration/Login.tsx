@@ -10,7 +10,6 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {useForm} from "react-hook-form";
 import InputWithError from "./InputWithError";
 import Typography from "@material-ui/core/Typography";
-import RolesUrls from "../../enums/RolesUrls";
 import {Role} from "../../enums/Roles";
 import {UrlByRole} from "../../enums/RolesUrls2";
 

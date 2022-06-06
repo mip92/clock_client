@@ -3,6 +3,7 @@ import Statuses, {MyStatus} from "../MyOffice/Statuses";
 import Pictures from "./Pictures";
 import PicturesPreloader from "./PicturesPreloader";
 import {Order} from "../../store/reducers/workplaceReducer";
+import {CLOCK_SIZE} from "../../enums/ClockSize";
 
 export interface StateOpenInterface {
     status: boolean
@@ -30,7 +31,7 @@ const OneMasterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
             <td>{order.user.email}</td>
             <td>{order.user.name}</td>
             <td>{order.originalCityName}</td>
-            <td>{order.clockSize === 1 ? 'small' : order.clockSize === 2 ? 'middle' : 'big'}</td>
+            <td>{order.clockSize && CLOCK_SIZE[order.clockSize]}</td>
             <td>{order.dealPrice}</td>
             <td>{(order.dealPrice && order?.clockSize) && order.dealPrice * order?.clockSize}</td>
             <td><Statuses key={`${order.id}` + `${order.status}`}
