@@ -28,7 +28,6 @@ const Statistics = ({cities, masters}) => {
         status.map((s) => {
             return currentStatusesName.push(s.name)
         })
-        console.log(currentMasters)
         const url = `/order?sortBy=${sortBy}&masterId=${currentMasters}&select=${select}&filterMaster=${inputValue}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&status=${currentStatusesName}`
         return await $api.get<AxiosOrder>(url)
     }, setOrders, "master name")
