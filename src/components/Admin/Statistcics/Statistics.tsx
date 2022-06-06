@@ -9,6 +9,50 @@ import s from "../../../style/OrderFilters.module.css";
 import CitiesMultySelect from "../Cities/CitiesMultySelect";
 import DateStart from "../Orders/DateStart";
 import MastersMultySelect from "./MastersMultySelect";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+} from "chart.js";
+import {Bar} from "react-chartjs-2";
+
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
+export const options = {
+    responsive: true,
+    plugins: {
+        legend: {position: "top" as const},
+        title: {display: true, text: "Chart.js Bar Chart"}
+    }
+};
+
+export const data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+        {
+            label: "Dataset 1",
+            data: [0, 10, 15, 120, 500, 470, 500],
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
+        },
+        {
+            label: "Dataset 2",
+            data: [400, 500, 500, 600, 500, 400, 600],
+            backgroundColor: "rgba(53, 162, 235, 0.5)"
+        }
+    ]
+};
 
 const Statistics = ({cities, masters}) => {
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
@@ -16,27 +60,31 @@ const Statistics = ({cities, masters}) => {
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     const [currentMasters, setArrayCurrentMasters] = useState<number[]>([])
     const [status, setStatus] = useState<MyStatus[]>([]);
-    const {
-        currentPage,
-        fetching,
-        currentLimit,
-        sortBy,
-        select,
-        inputValue,
-    } = usePaginatorWithReduxLimit(async () => {
+    const [isFetch, setIsFetch] = useState(false)
+    const [myData, setData] = useState(data)
+    const getDataSet = () => {
         const currentStatusesName: string[] = []
         status.map((s) => {
             return currentStatusesName.push(s.name)
         })
-        const url = `/order?sortBy=${sortBy}&masterId=${currentMasters}&select=${select}&filterMaster=${inputValue}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&status=${currentStatusesName}`
-        return await $api.get<AxiosOrder>(url)
-    }, setOrders, "master name")
+        const isoDateStart = dateStart?.toISOString()
+        const isoDateFinish = dateFinish?.toISOString()
+        console.log(currentMasters, currentArray, isoDateStart, isoDateFinish, currentStatusesName)
+        const url = `/order/getOrdersByDate?masterId=${currentMasters}&cities=${currentArray}&dateStart=${isoDateStart}&dateFinish=${isoDateFinish}&status=${currentStatusesName}`
+        $api.get(url).then((response) => {
+            setIsFetch(false)
+            setData(response.data)
+        })
+    }
+    console.log(isFetch)
 
-    useEffect(() => {
-        fetching()
-    }, [currentLimit, currentPage, sortBy, select, currentArray, dateStart, dateFinish, currentMasters])
+    /*    useEffect(() => {
+            getDataSet()
+        }, [currentArray, dateStart, dateFinish, currentMasters])*/
+    if (isFetch) return <div>Loading</div>
     return (
         <div>
+            <button onClick={() => getDataSet()}></button>
             <div className={s.item}>
                 <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
             </div>
@@ -49,6 +97,8 @@ const Statistics = ({cities, masters}) => {
             <div className={s.date}>
                 <DateStart date={dateFinish} setDate={setDateFinish} label='Date finish sort'/>
             </div>
+
+            <Bar options={options} data={myData}/>
         </div>
     );
 };

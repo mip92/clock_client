@@ -13,24 +13,37 @@ interface AxiosCityResponse {
 const StatisticsContainer = () => {
     const [cities, setCities] = useState<City[]>([])
     const [masters, setMasters] = useState<City[]>([])
-    const [fetching, isFetch] = useFetching(async () => {
+    const [isFetch, setIsFetch]=useState(true)
+/*    const [fetching, isFetch] = useFetching(async () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
     })
     const [fetching2, isFetch2] = useFetching(async () => {
         const response = await $api.get<AxiosCityResponse>(`/masters`)
-        console.log(2222222)
         setMasters(response.data.rows)
-    })
+    })*/
+
+    const fetch=()=>{
+        $api.get<AxiosCityResponse>(`/masters`).then(response=>{
+            setMasters(response.data.rows)
+            $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`).then(response=> {
+                setCities(response.data.rows)
+            }).then(()=>{
+                setIsFetch(false)
+            })
+        })
+
+
+    }
 
     useEffect(() => {
-        fetching()
-        fetching2()
+        fetch()
         return () => {
             setCities([])
         };
     }, [])
-    if (isFetch2 || isFetch) return <div>Loading...</div>
+    console.log(cities, masters)
+    if (isFetch) return <div>Loading...</div>
         return (<Statistics cities={cities} masters={masters}/>);
 };
 
