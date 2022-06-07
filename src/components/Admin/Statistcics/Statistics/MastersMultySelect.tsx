@@ -9,8 +9,8 @@ import {
     Input, Chip, MenuItem
 } from "@material-ui/core";
 import {Controller, useForm} from "react-hook-form";
-import {useTypedSelector} from "../../../hooks/useTypedSelector";
-import {Master} from "../../../types/adminMasterTypes";
+import {useTypedSelector} from "../../../../hooks/useTypedSelector";
+import {Master} from "../../../../types/adminMasterTypes";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

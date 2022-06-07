@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {usePaginatorWithReduxLimit} from "../../../hooks/usePaginatorWithReduxLimit";
-import $api from "../../../http";
-import {setOrders} from "../../../actionCreators/workplaseActionCreators";
-import {AxiosOrder} from "../Orders/MyOrders";
+import $api from "../../../../http";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
-import {MyStatus} from "../../MyOffice/Statuses";
-import s from "../../../style/OrderFilters.module.css";
-import CitiesMultySelect from "../Cities/CitiesMultySelect";
-import DateStart from "../Orders/DateStart";
+import {MyStatus} from "../../../MyOffice/Statuses";
+import s from "../../../../style/OrderFilters.module.css";
+import CitiesMultySelect from "../../Cities/CitiesMultySelect";
+import DateStart from "../../Orders/DateStart";
 import MastersMultySelect from "./MastersMultySelect";
 import {
     Chart as ChartJS,
@@ -18,8 +15,8 @@ import {
     Tooltip,
     Legend
 } from "chart.js";
-import {Bar} from "react-chartjs-2";
 import MyBar from "./MyBar";
+import {log} from "util";
 
 
 ChartJS.register(
@@ -35,7 +32,7 @@ export const options = {
     responsive: true,
     plugins: {
         legend: {position: "top" as const},
-        title: {display: true, text: "Chart.js Bar Chart"}
+        title: {display: true, text: "Count orders of masters"}
     }
 };
 
@@ -74,7 +71,9 @@ const Statistics = ({cities, masters}) => {
     const [status, setStatus] = useState<MyStatus[]>([]);
     const [isFetch, setIsFetch] = useState(false)
     const [myData, setData] = useState<DataType>({} as DataType)
+    const [error, setError]=useState('')
     const getDataSet = () => {
+        setError('')
         const currentStatusesName: string[] = []
         status.map((s) => {
             return currentStatusesName.push(s.name)
@@ -87,7 +86,7 @@ const Statistics = ({cities, masters}) => {
             response.data.labels.map((label)=>{date.push(new Date(label).toDateString())})
             setData({...response.data, labels:date})
             setIsFetch(false)
-        })
+        }).catch((err)=>setError(JSON.parse(err.request.responseText).message))
     }
 
        useEffect(() => {
@@ -109,7 +108,7 @@ const Statistics = ({cities, masters}) => {
             <div className={s.date}>
                 <DateStart date={dateFinish} setDate={setDateFinish} label='Date finish sort'/>
             </div>
-            {!myData.labels ? <div>Loading</div>:<MyBar myData={myData}/>}
+            {!myData.labels ? <div>Loading</div>: error ? <div>{error}</div>: <MyBar myData={myData}/>}
         </div>
     );
 };

@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {City} from "../../../types/mainInterfacesAndTypes";
-import {useFetching} from "../../../hooks/useFetching";
-import $api from "../../../http";
-import {MyStatus} from "../../MyOffice/Statuses";
+import {City} from "../../../../types/mainInterfacesAndTypes";
+import $api from "../../../../http";
 import Statistics from "./Statistics";
 
 interface AxiosCityResponse {
@@ -10,18 +8,11 @@ interface AxiosCityResponse {
     rows: City[]
 }
 
+
 const StatisticsContainer = () => {
     const [cities, setCities] = useState<City[]>([])
     const [masters, setMasters] = useState<City[]>([])
     const [isFetch, setIsFetch] = useState(true)
-    /*    const [fetching, isFetch] = useFetching(async () => {
-            const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
-            setCities(response.data.rows)
-        })
-        const [fetching2, isFetch2] = useFetching(async () => {
-            const response = await $api.get<AxiosCityResponse>(`/masters`)
-            setMasters(response.data.rows)
-        })*/
 
     const fetch = () => {
         $api.get<AxiosCityResponse>(`/masters`).then(response => {
@@ -32,8 +23,6 @@ const StatisticsContainer = () => {
                 setIsFetch(false)
             })
         })
-
-
     }
 
     useEffect(() => {
@@ -42,8 +31,11 @@ const StatisticsContainer = () => {
             setCities([])
         };
     }, [])
-    if (isFetch) return <div>Loading...</div>
-    return (<Statistics cities={cities} masters={masters}/>);
+    if (isFetch) <div>Loading...</div>
+
+    return (
+        <Statistics cities={cities} masters={masters}/>
+    );
 };
 
 export default StatisticsContainer;
