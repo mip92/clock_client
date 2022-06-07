@@ -19,6 +19,7 @@ import {
     Legend
 } from "chart.js";
 import {Bar} from "react-chartjs-2";
+import MyBar from "./MyBar";
 
 
 ChartJS.register(
@@ -38,6 +39,17 @@ export const options = {
     }
 };
 
+
+export interface DataSet {
+    label: string,
+    data: number[],
+    backgroundColor: string
+}
+
+export interface DataType {
+    labels: string[],
+    datasets: DataSet[] | undefined
+}
 export const data = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
@@ -61,7 +73,7 @@ const Statistics = ({cities, masters}) => {
     const [currentMasters, setArrayCurrentMasters] = useState<number[]>([])
     const [status, setStatus] = useState<MyStatus[]>([]);
     const [isFetch, setIsFetch] = useState(false)
-    const [myData, setData] = useState(data)
+    const [myData, setData] = useState<DataType>({} as DataType)
     const getDataSet = () => {
         const currentStatusesName: string[] = []
         status.map((s) => {
@@ -69,22 +81,22 @@ const Statistics = ({cities, masters}) => {
         })
         const isoDateStart = dateStart?.toISOString()
         const isoDateFinish = dateFinish?.toISOString()
-        console.log(currentMasters, currentArray, isoDateStart, isoDateFinish, currentStatusesName)
         const url = `/order/getOrdersByDate?masterId=${currentMasters}&cities=${currentArray}&dateStart=${isoDateStart}&dateFinish=${isoDateFinish}&status=${currentStatusesName}`
-        $api.get(url).then((response) => {
+        $api.get<DataType>(url).then((response) => {
+            const date:string[]=[]
+            response.data.labels.map((label)=>{date.push(new Date(label).toDateString())})
+            setData({...response.data, labels:date})
             setIsFetch(false)
-            setData(response.data)
         })
     }
-    console.log(isFetch)
 
-    /*    useEffect(() => {
+       useEffect(() => {
             getDataSet()
-        }, [currentArray, dateStart, dateFinish, currentMasters])*/
+        }, [])
     if (isFetch) return <div>Loading</div>
     return (
         <div>
-            <button onClick={() => getDataSet()}></button>
+            <button onClick={() => getDataSet()}>ИСКАТЬ</button>
             <div className={s.item}>
                 <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
             </div>
@@ -97,8 +109,7 @@ const Statistics = ({cities, masters}) => {
             <div className={s.date}>
                 <DateStart date={dateFinish} setDate={setDateFinish} label='Date finish sort'/>
             </div>
-
-            <Bar options={options} data={myData}/>
+            {!myData.labels ? <div>Loading</div>:<MyBar myData={myData}/>}
         </div>
     );
 };
