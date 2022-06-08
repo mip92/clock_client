@@ -13,7 +13,7 @@ import PayPalCompleted from "../components/Menu/PayPal/PayPalCompleted";
 import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 import {Role} from "../enums/Roles";
-import ChangeTable from "../components/Admin/Statistcics/ChamgeTable";
+import ChangeTable from "../components/Admin/Statistcics/ChangeTable";
 
 export const createRoute = (role: string | null) => {
     const mainRouts: MyRoute[] = [

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button} from "@material-ui/core";
-import {MyTable} from "./ChamgeTable";
+import {MyTable} from "./ChangeTable";
 
 interface SortByProps{
     setCorrectTable: React.Dispatch<React.SetStateAction<MyTable>>,

@@ -13,11 +13,9 @@ import {
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend, Chart
 } from "chart.js";
 import MyBar from "./MyBar";
-import {log} from "util";
-
 
 ChartJS.register(
     CategoryScale,
@@ -27,13 +25,20 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
 export const options = {
     responsive: true,
     plugins: {
         legend: {position: "top" as const},
         title: {display: true, text: "Count orders of masters"}
-    }
+    },
+    scales: {
+        y: {
+            beginAtZero: true,
+            ticks: {
+                stepSize: 1,
+            },
+        },
+    },
 };
 
 
