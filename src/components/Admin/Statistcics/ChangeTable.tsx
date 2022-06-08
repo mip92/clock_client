@@ -2,23 +2,31 @@ import React, {useState} from 'react';
 import SortBy from "./SortBy";
 import StatisticsContainer from "./Statistics/StatisticsContainer";
 import CircleContainer from "./Circle/CircleContainer";
+import StatisticsTableContainer from "./StatisticsTable/StatisticsTableContainer";
 
 export interface MyTable {
     id: number,
     name: string
 }
 
-const tables: MyTable[] = [{id: 1, name: 'Cities Master'}, {id: 2, name: 'Circle'}, {id: 3, name: 'Rating'}]
+const tables: MyTable[] = [
+    {id: 1, name: 'Count orders of masters'},
+    {id: 2, name: 'Counting orders by city'},
+    {id: 3, name: 'Masters rating'},
+    {id: 4, name: 'Statistic table'}
+]
 
 const ChangeTable = () => {
     const [correctTable, setCorrectTable] = useState<MyTable>(tables[1])
     return (
         <SortBy setCorrectTable={setCorrectTable} correctTable={correctTable} tables={tables}>
-            {correctTable.name === "Cities Master"
+            {correctTable.name === "Count orders of masters"
                 ? <StatisticsContainer/>
-                :correctTable.name === "Circle"
-                ? <CircleContainer link='getOrdersByCities'/>
-                :<CircleContainer link='getRatingByMaster'/>
+                : correctTable.name === "Counting orders by city"
+                    ? <CircleContainer link='getOrdersByCities'/>
+                    : correctTable.name === "Masters rating"
+                        ? <CircleContainer link='getRatingByMaster'/>
+                        : <StatisticsTableContainer/>
             }
         </SortBy>
     );
