@@ -21,7 +21,6 @@ const StatisticsTableContainer = () => {
     const fetch = () => {
         $api.get<MasterStatisticInterface[]>(`/order/getStatisticsByMaster`).then(response => {
             setData(response.data)
-            console.log(response.data)
         }).then(() => {
             setIsFetch(false)
         })
@@ -30,7 +29,6 @@ const StatisticsTableContainer = () => {
     useEffect(() => {
         fetch()
     }, [])
-    console.log(data)
     if (isFetch) return <div>Loading...</div>
     return (<StatisticsTable data={data}/>);
 };

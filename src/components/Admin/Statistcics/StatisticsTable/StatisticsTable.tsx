@@ -66,7 +66,6 @@ const rows = [
 ];
 
 const StatisticsTable = ({data}) => {
-    console.log(data)
     return (
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid
