@@ -14,6 +14,7 @@ import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 import {Role} from "../enums/Roles";
 import NewComment from "../components/Comments/NewComment";
+import MasterCalendar from "../components/MyWorkplace/Calendar/MasterCalendar";
 
 export const createRoute = (role: Role | null) => {
     const mainRouts: MyRoute[] = [
@@ -41,6 +42,7 @@ export const createRoute = (role: Role | null) => {
     const masterRoutes: MyRoute[] = [
         {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkPlaceContainer/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
+        {exact: true, path: "/Calendar/:masterId", component: <MasterCalendar/>},
     ]
     const error = {exact: false, path: "*", component: <Error404/>}
     switch (role) {
