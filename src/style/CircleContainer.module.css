@@ -1,0 +1,20 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.filter {
+    display: flex;
+    width: 500px;
+    justify-content: space-between;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+
+}

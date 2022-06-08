@@ -2,10 +2,7 @@ import React, {useEffect, useState} from 'react';
 import $api from "../../../../http";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {MyStatus} from "../../../MyOffice/Statuses";
-import s from "../../../../style/OrderFilters.module.css";
-import CitiesMultySelect from "../../Cities/CitiesMultySelect";
-import DateStart from "../../Orders/DateStart";
-import MastersMultySelect from "./MastersMultySelect";
+import s from "../../../../style/Statistics.module.css";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -13,9 +10,11 @@ import {
     BarElement,
     Title,
     Tooltip,
-    Legend, Chart
+    Legend,
 } from "chart.js";
 import MyBar from "./MyBar";
+import SortByStatistics from "./SortByStatistics";
+import {Button} from "@material-ui/core";
 
 ChartJS.register(
     CategoryScale,
@@ -52,6 +51,7 @@ export interface DataType {
     labels: string[],
     datasets: DataSet[] | undefined
 }
+
 export const data = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
@@ -76,7 +76,7 @@ const Statistics = ({cities, masters}) => {
     const [status, setStatus] = useState<MyStatus[]>([]);
     const [isFetch, setIsFetch] = useState(false)
     const [myData, setData] = useState<DataType>({} as DataType)
-    const [error, setError]=useState('')
+    const [error, setError] = useState('')
     const getDataSet = () => {
         setError('')
         const currentStatusesName: string[] = []
@@ -87,33 +87,45 @@ const Statistics = ({cities, masters}) => {
         const isoDateFinish = dateFinish?.toISOString()
         const url = `/order/getOrdersByDate?masterId=${currentMasters}&cities=${currentArray}&dateStart=${isoDateStart}&dateFinish=${isoDateFinish}&status=${currentStatusesName}`
         $api.get<DataType>(url).then((response) => {
-            const date:string[]=[]
-            response.data.labels.map((label)=>{date.push(new Date(label).toDateString())})
-            setData({...response.data, labels:date})
+            const date: string[] = []
+            response.data.labels.map((label) => {
+                date.push(new Date(label).toDateString())
+            })
+            setData({...response.data, labels: date})
             setIsFetch(false)
-        }).catch((err)=>setError(JSON.parse(err.request.responseText).message))
+        }).catch((err) => setError(JSON.parse(err.request.responseText).message))
     }
 
-       useEffect(() => {
-            getDataSet()
-        }, [])
+    useEffect(() => {
+        getDataSet()
+    }, [])
     if (isFetch) return <div>Loading</div>
     return (
-        <div>
-            <button onClick={() => getDataSet()}>ИСКАТЬ</button>
-            <div className={s.item}>
-                <CitiesMultySelect cities={cities} setArrayCurrentCities={setArrayCurrentCities}/>
+        <div className={s.wrapper}>
+            <div className={s.sort}>
+                <SortByStatistics cities={cities} dateFinish={dateFinish} dateStart={dateStart} masters={masters}
+                                  setArrayCurrentCities={setArrayCurrentCities}
+                                  setArrayCurrentMasters={setArrayCurrentMasters} setDateFinish={setDateFinish}
+                                  setDateStart={setDateStart}/>
             </div>
-            <div className={s.item}>
-                <MastersMultySelect masters={masters} setArrayCurrentMasters={setArrayCurrentMasters}/>
+            <div className={s.content}>
+                <div className={s.contentBody}>
+                    <div className={s.btn}>
+                        <div className={s.content}>
+                            <Button variant="contained" color='primary' onClick={() => getDataSet()}>Set Filters</Button>
+                        </div>
+                    </div>
+                    <div>
+                        {!myData.labels ? <div>Loading</div>
+                            : error ? <div>{error}</div>
+                                :
+                                <div>
+                                    <MyBar myData={myData}/>
+                                </div>
+                        }
+                    </div>
+                </div>
             </div>
-            <div className={s.date}>
-                <DateStart date={dateStart} setDate={setDateStart} label='Date start sort'/>
-            </div>
-            <div className={s.date}>
-                <DateStart date={dateFinish} setDate={setDateFinish} label='Date finish sort'/>
-            </div>
-            {!myData.labels ? <div>Loading</div>: error ? <div>{error}</div>: <MyBar myData={myData}/>}
         </div>
     );
 };
