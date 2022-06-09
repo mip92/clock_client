@@ -11,7 +11,7 @@ export const setLinks = (role: string | null, id: number | null) => {
     const masterLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},
         {to: `/MyWorkplace/${id}`, name: 'My Workplace'},
-        {to: `/Calendar/${id}}`, name: 'My Calendar'}
+        {to: `/Calendar/${id}`, name: 'My Calendar'}
     ]
     const userLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},

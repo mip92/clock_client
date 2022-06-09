@@ -2,61 +2,87 @@ import React, {useEffect, useState} from 'react';
 import s from '../../../style/MasterCalemdar.module.css'
 import $api from "../../../http";
 import {useParams} from "react-router-dom";
+import OneDay from "./OneDay";
+import {Button, Typography} from "@material-ui/core";
+import {MONTHS} from "../../../enums/months";
+import {MyStatus} from "../../MyOffice/Statuses";
+import {useFetching} from "../../../hooks/useFetching";
+import {useDispatch} from "react-redux";
+import {fetchCalendar} from "../../../actionCreators/calendarActionCreators";
+import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
-/*const date = new Date(Date.now())
-const month = date.getMonth()
-const firstDay = date.setDate(1)
-const dayOfWeek = date.getDay()
-const nextMontFistDay = new Date(firstDay).setMonth(month + 1)
-const DaysOfMonth: number = Math.round((+new Date(nextMontFistDay) - +new Date(firstDay)) / 1000 / 3600 / 24);
-let arr: { start: number, dayOfMonth: number }[] = []
-console.log(dayOfWeek, DaysOfMonth)
-let currentDayOfWeek = dayOfWeek
-for (let i = 1; i < DaysOfMonth + 1; i++) {
-    if (i > dayOfWeek) {
-        currentDayOfWeek++
-        arr.push({start: i, dayOfMonth: currentDayOfWeek - dayOfWeek})
-    } else arr.push({start: i, dayOfMonth: 0})
-}
-
-console.log(arr)*/
-
-interface ApiResponse {
+export interface OrderInterface {
     clockSize: number,
     id: number,
     master_busyDate: { dateTime: string },
     payPalOrderId: null | string,
     status: string,
     user: { name: string }
-
 }
 
+interface ApiResponse {
+    orders: OrderInterface[],
+    date: Date,
+    id: number
+}
+
+const today = new Date(Date.now())
+
 const MasterCalendar = () => {
+    const dispatch = useDispatch()
+    const {calendar}=useTypedSelector(state => state.calendar)
     const {masterId} = useParams<{ masterId: string }>();
     const [isFetch, setFetch] = useState(true)
-    const [data, setDate] = useState<ApiResponse[][]>([])
+    const [month, setMonth] = useState<string>(new Date(today).toISOString())
+    const [statuses, setStatuses] = useState<MyStatus[] | null>([] as MyStatus[])
+    const [findStatuses, isLoading] = useFetching(async () => {
+        const res = await $api.get(`/status`)
+        let arr: MyStatus[] = []
+        let k = 1
+        const keys = Object.keys(res.data);
+        keys.forEach(key => {
+            arr.push({id: k, name: key})
+            k++
+        });
+        setStatuses(arr)
+    })
     const fetch = () => {
-        $api.get<ApiResponse[][]>(`/calendar/month/${masterId}`).then((response) => {
-            setDate(response.data)
+        dispatch(fetchCalendar(+masterId, month))
+        findStatuses().then(() => {
             setFetch(false)
         })
+
     }
     useEffect(() => {
         fetch()
-    }, [])
+        return () => {
+            setFetch(false)
+        };
+    }, [month])
 
-
-    /*<div key={day.id} className={day.id === null ? s.zero : s.content}>
-        {day.master_busyDate}
-    </div>*/
-    if (isFetch) return <div>Loading...</div>
+    const setMonthHandler = (add) => {
+        setMonth(new Date(new Date(month).setMonth(new Date(month).getMonth() + add)).toISOString())
+    }
+    const dayOfWeek = [{id: 1, day: 'Mon'}, {id: 2, day: "Tue"}, {id: 3, day: "Wed"}, {id: 4, day: "Thu"},
+        {id: 5, day: " Fri"}, {id: 6, day: "Sat"}, {id: 7, day: "Sun"}]
+    if (isFetch || !statuses) return <div>Loading...</div>
     else return (
-        <div className={s.wrapper}>
-            {data.map((day, key) =>  <div className={s.content}>
-                {day === null  ? <div ></div> :  day.length === 0 ? <div >0</div>:<div>{day[0].id}</div>}
-                        </div>
+        <div>
+            <Typography variant="h5" component="h4" className={s.month}>
+                {MONTHS[new Date(month).getMonth()]}
+            </Typography>
+            <div className={s.wrapper}>
+                {dayOfWeek.map((day) => <div className={s.title} key={day.id}>{day.day}</div>)}
+                {calendar.map((day) => <div key={day.id} className={day.date === null ? s.zero : s.content}>
+                        <OneDay orders={day.orders} date={day.date} statuses={statuses} masterId={masterId} month={month}/>
+                    </div>
+                )}
 
-            )}
+            </div>
+            <div className={s.btns}>
+                <Button onClick={() => setMonthHandler(-1)}>Prev Month</Button>
+                <Button onClick={() => setMonthHandler(1)}>Next Month</Button>
+            </div>
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import {Master} from "./adminMasterTypes";
 import {Order} from "../store/reducers/workplaceReducer";
+import {CalendarStateType, OneCalendarItem} from "./calendarTypes";
 
 export interface City {
     cityName: string,
@@ -67,6 +68,10 @@ export interface MyError {
 
 export type ErrorOrNullPayload = {
     payload: MyError | null
+}
+
+export type FetchCalendarPayload = {
+    payload: OneCalendarItem[]
 }
 
 export type CityPayload = {
