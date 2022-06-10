@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import OrdersModal from "../Comments/OrdersModal";
-import {OrderInterface} from "../MyWorkplace/Calendar/MasterCalendar";
+import {OrderInterface} from "../MyWorkplace/Calendar/MasterCalendarMonth";
 import {Button} from "@material-ui/core";
 import {MyStatus} from "../MyOffice/Statuses";
 import {useDispatch} from "react-redux";

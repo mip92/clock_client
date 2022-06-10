@@ -35,7 +35,6 @@ export const fetchCalendar = (masterId: number,month:string)=> {
         try {
             dispatch(fetchStart(true))
             const response = await $api.get<OneCalendarItem[]>(`/calendar/month?masterId=${masterId}&correctData=${month}`)
-            console.log(response)
             dispatch(setCalendar(response.data))
             dispatch(fetchStart(false))
         } catch (e) {

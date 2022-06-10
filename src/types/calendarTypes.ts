@@ -3,7 +3,7 @@ import {
     ErrorOrNullPayload, FetchCalendarPayload,
     MyError,
 } from "./mainInterfacesAndTypes";
-import {OrderInterface} from "../components/MyWorkplace/Calendar/MasterCalendar";
+import {OrderInterface} from "../components/MyWorkplace/Calendar/MasterCalendarMonth";
 
 export interface OneCalendarItem {
     orders: OrderInterface[],

@@ -1,5 +1,5 @@
 import React from 'react';
-import {OrderInterface} from "./MasterCalendar";
+import {OrderInterface} from "./MasterCalendarMonth";
 import {CLOCK_SIZE} from "../../../enums/ClockSize";
 import s from "../../../style/OneDay.module.css"
 import MyModalWithoutBtn from "../../utilits/ModalWithotBtn";

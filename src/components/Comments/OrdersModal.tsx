@@ -1,5 +1,5 @@
 import React from 'react';
-import {OrderInterface} from "../MyWorkplace/Calendar/MasterCalendar";
+import {OrderInterface} from "../MyWorkplace/Calendar/MasterCalendarMonth";
 import {CLOCK_SIZE} from "../../enums/ClockSize";
 import s from "../../style/OrderModal.module.css"
 import {Card} from "@material-ui/core";

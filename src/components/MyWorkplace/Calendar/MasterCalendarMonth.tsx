@@ -28,7 +28,7 @@ interface ApiResponse {
 
 const today = new Date(Date.now())
 
-const MasterCalendar = () => {
+const MasterCalendarMonth = () => {
     const dispatch = useDispatch()
     const {calendar}=useTypedSelector(state => state.calendar)
     const {masterId} = useParams<{ masterId: string }>();
@@ -87,4 +87,4 @@ const MasterCalendar = () => {
     );
 };
 
-export default MasterCalendar;
+export default MasterCalendarMonth;
