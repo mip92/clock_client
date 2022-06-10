@@ -36,8 +36,10 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": [
