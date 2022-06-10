@@ -14,6 +14,8 @@ import OrdersContainer from "../components/Admin/Orders/OrdersContainer";
 import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer";
 import {Role} from "../enums/Roles";
 import NewComment from "../components/Comments/NewComment";
+import ChangeTable from "../components/Admin/Statistcics/ChangeTable";
+
 
 export const createRoute = (role: Role | null) => {
     const mainRouts: MyRoute[] = [
@@ -26,12 +28,12 @@ export const createRoute = (role: Role | null) => {
         {exact: true, path: "/rating/:key", component: <NewComment/>}
     ]
     const adminRoutes: MyRoute[] = [
-        {exact: false, path: "/menu/cities", component: <Cities/>},
-        {exact: false, path: "/menu/masters", component: <MastersContainer/>},
-        {exact: false, path: "/menu/users", component: <Users/>},
-        {exact: false, path: "/menu/orders", component: <OrdersContainer/>},
-        {exact: false, path: "/menu", component: <OrdersContainer/>},
-
+        {exact: true, path: "/menu/cities", component: <Cities/>},
+        {exact: true, path: "/menu/masters", component: <MastersContainer/>},
+        {exact: true, path: "/menu/users", component: <Users/>},
+        {exact: true, path: "/menu/orders", component: <OrdersContainer/>},
+        {exact: true, path: "/menu", component: <OrdersContainer/>},
+        {exact: true, path: "/menu/statistics", component: <ChangeTable/>}
     ]
     const userRoutes: MyRoute[] = [
         {exact: true, path: "/myOffice/:userId", component: <MyOffice/>},
