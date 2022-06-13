@@ -11,39 +11,24 @@ import {Button, Typography} from "@material-ui/core";
 import {MONTHS} from "../../../enums/months";
 import OneDay from "./OneDay";
 
+interface MasterCalendarWeekProps{
+    statuses: MyStatus[] | null
+}
+
 const monday = new Date(Date.now());
 
-const MasterCalendarWeek = () => {
+const MasterCalendarWeek: React.FC<MasterCalendarWeekProps> = ({statuses}) => {
     const dispatch = useDispatch()
-    const {calendar, dayOfWeek, numberOfWeek} = useTypedSelector(state => state.calendar)
+    const {calendar, dayOfWeek, numberOfWeek, isFetch} = useTypedSelector(state => state.calendar)
     const {masterId} = useParams<{ masterId: string }>();
-    const [isFetch, setFetch] = useState(true)
     const [week, setWeek] = useState<string>(new Date(monday).toISOString())
-    const [statuses, setStatuses] = useState<MyStatus[] | null>([] as MyStatus[])
-    const [findStatuses, isLoading] = useFetching(async () => {
-        const res = await $api.get(`/status`)
-        let arr: MyStatus[] = []
-        let k = 1
-        const keys = Object.keys(res.data);
-        keys.forEach(key => {
-            arr.push({id: k, name: key})
-            k++
-        });
-        setStatuses(arr)
-    })
+
     const fetch = () => {
         dispatch(fetchWeek(+masterId, week))
         dispatch(setCorrectMonday(week))
-        findStatuses().then(() => {
-            setFetch(false)
-        })
-
     }
     useEffect(() => {
         fetch()
-        return () => {
-            setFetch(false)
-        };
     }, [week])
     const setWeekHandler = (add) => {
         const firstDayOfWeek = new Date(week)

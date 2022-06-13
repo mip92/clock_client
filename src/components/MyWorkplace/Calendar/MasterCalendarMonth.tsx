@@ -20,39 +20,25 @@ export interface OrderInterface {
     user: { name: string }
 }
 
+interface MasterCalendarMonthProps{
+    statuses: MyStatus[] | null
+}
+
 const today = new Date(Date.now())
 
-const MasterCalendarMonth = () => {
+const MasterCalendarMonth:React.FC<MasterCalendarMonthProps>  = ({statuses}) => {
     const dispatch = useDispatch()
-    const {calendar, dayOfWeek, correctMonday}=useTypedSelector(state => state.calendar)
+    const {calendar, dayOfWeek, correctMonday, isFetch}=useTypedSelector(state => state.calendar)
     const {masterId} = useParams<{ masterId: string }>();
-    const [isFetch, setFetch] = useState(true)
+
     const [month, setMonth] = useState<string>(new Date(today).toISOString())
-    const [statuses, setStatuses] = useState<MyStatus[] | null>([] as MyStatus[])
-    const [findStatuses, isLoading] = useFetching(async () => {
-        const res = await $api.get(`/status`)
-        let arr: MyStatus[] = []
-        let k = 1
-        const keys = Object.keys(res.data);
-        keys.forEach(key => {
-            arr.push({id: k, name: key})
-            k++
-        });
-        setStatuses(arr)
-    })
+
     const fetch = () => {
         dispatch(fetchCalendar(+masterId, month))
         dispatch(setCorrectMonday(''))
-        findStatuses().then(() => {
-            setFetch(false)
-        })
-
     }
     useEffect(() => {
         fetch()
-        return () => {
-            setFetch(false)
-        };
     }, [month])
 
     const setMonthHandler = (add) => {
