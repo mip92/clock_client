@@ -8,7 +8,7 @@ import {MONTHS} from "../../../enums/months";
 import {MyStatus} from "../../MyOffice/Statuses";
 import {useFetching} from "../../../hooks/useFetching";
 import {useDispatch} from "react-redux";
-import {fetchCalendar} from "../../../actionCreators/calendarActionCreators";
+import {fetchCalendar, setCorrectMonday} from "../../../actionCreators/calendarActionCreators";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 export interface OrderInterface {
@@ -24,7 +24,7 @@ const today = new Date(Date.now())
 
 const MasterCalendarMonth = () => {
     const dispatch = useDispatch()
-    const {calendar, dayOfWeek}=useTypedSelector(state => state.calendar)
+    const {calendar, dayOfWeek, correctMonday}=useTypedSelector(state => state.calendar)
     const {masterId} = useParams<{ masterId: string }>();
     const [isFetch, setFetch] = useState(true)
     const [month, setMonth] = useState<string>(new Date(today).toISOString())
@@ -42,6 +42,7 @@ const MasterCalendarMonth = () => {
     })
     const fetch = () => {
         dispatch(fetchCalendar(+masterId, month))
+        dispatch(setCorrectMonday(''))
         findStatuses().then(() => {
             setFetch(false)
         })
@@ -73,8 +74,8 @@ const MasterCalendarMonth = () => {
 
             </div>
             <div className={s.btns}>
-                <Button onClick={() => setMonthHandler(-1)}>Prev Month</Button>
-                <Button onClick={() => setMonthHandler(1)}>Next Month</Button>
+                <Button variant='outlined' color='default' onClick={() => setMonthHandler(-1)}>Prev Month</Button>
+                <Button variant='outlined' color='default' onClick={() => setMonthHandler(1)}>Next Month</Button>
             </div>
         </div>
     );

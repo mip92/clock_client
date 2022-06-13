@@ -1,6 +1,6 @@
 import {Master} from "./adminMasterTypes";
 import {Order} from "../store/reducers/workplaceReducer";
-import {CalendarStateType, OneCalendarItem} from "./calendarTypes";
+import {CalendarStateType, FORMAT, OneCalendarItem} from "./calendarTypes";
 
 export interface City {
     cityName: string,
@@ -59,6 +59,10 @@ export type StringPayload = {
     payload: string
 }
 
+export type FormatPayload = {
+    payload: FORMAT
+}
+
 export interface MyError {
     value: string,
     msg: string,
@@ -68,6 +72,13 @@ export interface MyError {
 
 export type ErrorOrNullPayload = {
     payload: MyError | null
+}
+
+export type CorrectMondayPayload = {
+    payload: {
+        monday: string,
+        numberOfWeek: number
+    }
 }
 
 export type FetchCalendarPayload = {

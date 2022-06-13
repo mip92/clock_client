@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -9,6 +9,8 @@ import {Button} from "@material-ui/core";
 import {MyStatus} from "../MyOffice/Statuses";
 import {useDispatch} from "react-redux";
 import {fetchCalendar, fetchWeek} from "../../actionCreators/calendarActionCreators";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {FORMAT} from "../../types/calendarTypes";
 
 interface MyModalListProps {
     orders: OrderInterface[]
@@ -34,14 +36,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const MyModalWithoutBtn: React.FC<MyModalListProps> = ({orders, statuses, masterId, month, children,}) => {
+    const {format} = useTypedSelector(state => state.calendar)
     const classes = useStyles();
     const dispatch =useDispatch()
+    const {correctMonday}=useTypedSelector(state => state.calendar)
     const [open, setOpen] = useState(false)
 
     const handleClose = (e) => {
         e.preventDefault();
-        dispatch(fetchCalendar(+masterId, month))
-        dispatch(fetchWeek(+masterId, correctMonday))
+        format === FORMAT.Month && dispatch(fetchCalendar(+masterId, month))
+        format === FORMAT.Week && dispatch(fetchWeek(+masterId, correctMonday))
         setOpen(false)
     };
     const handleOpen = (e) => {

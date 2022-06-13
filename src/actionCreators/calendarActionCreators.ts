@@ -2,13 +2,13 @@ import {
     CalendarAction,
     CalendarActionTypes, CalendarStateType,
     FetchAction, FetchCalendarAction,
-    FetchErrorAction, OneCalendarItem
+    FetchErrorAction, FORMAT, OneCalendarItem, SetCorrectMondayAction, SetFormatAction
 } from "../types/calendarTypes";
 import {Dispatch} from "react";
 import $api from "../http";
 
 
-import {MyError} from "../types/mainInterfacesAndTypes";
+import {CorrectMondayPayload, MyError} from "../types/mainInterfacesAndTypes";
 
 export const setCalendar = (data:OneCalendarItem[]): FetchCalendarAction => {
     return {
@@ -27,6 +27,25 @@ export const fetchError = (error: MyError | null): FetchErrorAction => {
     return {
         type: CalendarActionTypes.FETCH_ERROR,
         payload: {payload: error}
+    }
+}
+
+export const setCorrectMonday = (monday: string): SetCorrectMondayAction => {
+
+    let currentdate = new Date(monday);
+    let oneJan = new Date(currentdate.getFullYear(),0,1);
+    let numberOfDays = Math.floor((+currentdate - +oneJan) / (24 * 60 * 60 * 1000));
+    let numberOfWeek = Math.ceil(( currentdate.getDay() + 1 + numberOfDays) / 7);
+    return {
+        type: CalendarActionTypes.SET_CORRECT_MONDAY,
+        payload: {payload:{monday, numberOfWeek}}
+    }
+}
+
+export const setFormat = (format: FORMAT): SetFormatAction => {
+    return {
+        type: CalendarActionTypes.SET_FORMAT,
+        payload: {payload: format}
     }
 }
 

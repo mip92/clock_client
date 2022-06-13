@@ -14,10 +14,10 @@ const OrdersModal: React.FC<OrdersModalProps> = ({orders, statuses}) => {
     return (
         <div>
             {orders.map((order) =>
-                <Card variant="outlined" className={order.status === "Completed" ? s.complete : s.notComplete}>
+                <Card key={order.id} variant="outlined" className={order.status === "Completed" ? s.complete : s.notComplete}>
                     <div>id: {order.id}</div>
                     <div>user name: {order.user.name}</div>
-                    <div>date: {new Date(order.master_busyDate.dateTime).toLocaleDateString()}</div>
+                    <div>date: {new Date(order.master_busyDate.dateTime).toLocaleString()}</div>
                     <div>clock size: {CLOCK_SIZE[order.clockSize]}</div>
                     <Statuses key={`${order.id}` + `${order.status}`}
                               orderId={order.id} status={order.status}

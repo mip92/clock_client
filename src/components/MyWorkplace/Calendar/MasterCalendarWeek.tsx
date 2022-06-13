@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom";
 import {MyStatus} from "../../MyOffice/Statuses";
 import {useFetching} from "../../../hooks/useFetching";
 import $api from "../../../http";
-import {fetchWeek} from "../../../actionCreators/calendarActionCreators";
+import {fetchWeek, setCorrectMonday} from "../../../actionCreators/calendarActionCreators";
 import s from "../../../style/MasterCalemdar.module.css";
 import {Button, Typography} from "@material-ui/core";
 import {MONTHS} from "../../../enums/months";
@@ -15,7 +15,7 @@ const monday = new Date(Date.now());
 
 const MasterCalendarWeek = () => {
     const dispatch = useDispatch()
-    const {calendar, dayOfWeek} = useTypedSelector(state => state.calendar)
+    const {calendar, dayOfWeek, numberOfWeek} = useTypedSelector(state => state.calendar)
     const {masterId} = useParams<{ masterId: string }>();
     const [isFetch, setFetch] = useState(true)
     const [week, setWeek] = useState<string>(new Date(monday).toISOString())
@@ -33,6 +33,7 @@ const MasterCalendarWeek = () => {
     })
     const fetch = () => {
         dispatch(fetchWeek(+masterId, week))
+        dispatch(setCorrectMonday(week))
         findStatuses().then(() => {
             setFetch(false)
         })
@@ -52,7 +53,7 @@ const MasterCalendarWeek = () => {
     return (
         <div>
             <Typography variant="h5" component="h4" className={s.month}>
-                {MONTHS[new Date(week).getMonth()]}
+                {numberOfWeek} week of year
             </Typography>
             <div className={s.wrapper}>
                 {dayOfWeek.map((day) => <div className={s.title} key={day.id}>{day.day}</div>)}
@@ -63,8 +64,8 @@ const MasterCalendarWeek = () => {
 
             </div>
             <div className={s.btns}>
-                <Button onClick={() => setWeekHandler(-7)}>Prev Week</Button>
-                <Button onClick={() => setWeekHandler(7)}>Next Week</Button>
+                <Button variant='outlined' color='default' onClick={() => setWeekHandler(-7)}>Prev Week</Button>
+                <Button variant='outlined' color='default' onClick={() => setWeekHandler(7)}>Next Week</Button>
             </div>
         </div>
     );
