@@ -10,7 +10,7 @@ import $api from "../http";
 
 import {CorrectMondayPayload, MyError} from "../types/mainInterfacesAndTypes";
 
-export const setCalendar = (data:OneCalendarItem[]): FetchCalendarAction => {
+export const setCalendar = (data: OneCalendarItem[]): FetchCalendarAction => {
     return {
         type: CalendarActionTypes.FETCH_CALENDAR,
         payload: {payload: data}
@@ -32,13 +32,13 @@ export const fetchError = (error: MyError | null): FetchErrorAction => {
 
 export const setCorrectMonday = (monday: string): SetCorrectMondayAction => {
 
-    let currentdate = new Date(monday);
-    let oneJan = new Date(currentdate.getFullYear(),0,1);
-    let numberOfDays = Math.floor((+currentdate - +oneJan) / (24 * 60 * 60 * 1000));
-    let numberOfWeek = Math.ceil(( currentdate.getDay() + 1 + numberOfDays) / 7);
+    const currentdate = new Date(monday);
+    const oneJan = new Date(currentdate.getFullYear(), 0, 1);
+    const numberOfDays = Math.floor((+currentdate - +oneJan) / (24 * 60 * 60 * 1000));
+    const numberOfWeek = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
     return {
         type: CalendarActionTypes.SET_CORRECT_MONDAY,
-        payload: {payload:{monday, numberOfWeek}}
+        payload: {payload: {monday, numberOfWeek}}
     }
 }
 
@@ -49,7 +49,7 @@ export const setFormat = (format: FORMAT): SetFormatAction => {
     }
 }
 
-export const fetchCalendar = (masterId: number,month:string)=> {
+export const fetchCalendar = (masterId: number, month: string) => {
     return async (dispatch: Dispatch<CalendarAction>) => {
         try {
             dispatch(fetchStart(true))
@@ -67,7 +67,7 @@ export const fetchCalendar = (masterId: number,month:string)=> {
     }
 }
 
-export const fetchWeek = (masterId: number,correctMonday:string)=> {
+export const fetchWeek = (masterId: number, correctMonday: string) => {
     return async (dispatch: Dispatch<CalendarAction>) => {
         try {
             dispatch(fetchStart(true))
