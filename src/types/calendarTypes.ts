@@ -11,10 +11,14 @@ export interface OneCalendarItem {
     id: number
 }
 
+interface OneDay{id: number, day: string};
+
 export interface CalendarStateType {
     calendar: OneCalendarItem[]
     isFetch: boolean
     error: null | MyError,
+    dayOfWeek: OneDay[],
+    correctMonday
 }
 
 export enum CalendarActionTypes {

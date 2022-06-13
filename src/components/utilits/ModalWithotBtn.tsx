@@ -8,7 +8,7 @@ import {OrderInterface} from "../MyWorkplace/Calendar/MasterCalendarMonth";
 import {Button} from "@material-ui/core";
 import {MyStatus} from "../MyOffice/Statuses";
 import {useDispatch} from "react-redux";
-import {fetchCalendar} from "../../actionCreators/calendarActionCreators";
+import {fetchCalendar, fetchWeek} from "../../actionCreators/calendarActionCreators";
 
 interface MyModalListProps {
     orders: OrderInterface[]
@@ -41,6 +41,7 @@ const MyModalWithoutBtn: React.FC<MyModalListProps> = ({orders, statuses, master
     const handleClose = (e) => {
         e.preventDefault();
         dispatch(fetchCalendar(+masterId, month))
+        dispatch(fetchWeek(+masterId, correctMonday))
         setOpen(false)
     };
     const handleOpen = (e) => {

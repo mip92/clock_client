@@ -47,3 +47,21 @@ export const fetchCalendar = (masterId: number,month:string)=> {
         }
     }
 }
+
+export const fetchWeek = (masterId: number,correctMonday:string)=> {
+    return async (dispatch: Dispatch<CalendarAction>) => {
+        try {
+            dispatch(fetchStart(true))
+            const response = await $api.get<OneCalendarItem[]>(`/calendar/week?masterId=${masterId}&correctMonday=${correctMonday}`)
+            dispatch(setCalendar(response.data))
+            dispatch(fetchStart(false))
+        } catch (e) {
+            dispatch(fetchStart(false))
+            const error = JSON.parse(e.request.responseText).message[0]
+            dispatch(fetchError(error))
+            setTimeout(async () => {
+                dispatch(fetchError(null))
+            }, 2000)
+        }
+    }
+}

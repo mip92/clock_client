@@ -20,17 +20,11 @@ export interface OrderInterface {
     user: { name: string }
 }
 
-interface ApiResponse {
-    orders: OrderInterface[],
-    date: Date,
-    id: number
-}
-
 const today = new Date(Date.now())
 
 const MasterCalendarMonth = () => {
     const dispatch = useDispatch()
-    const {calendar}=useTypedSelector(state => state.calendar)
+    const {calendar, dayOfWeek}=useTypedSelector(state => state.calendar)
     const {masterId} = useParams<{ masterId: string }>();
     const [isFetch, setFetch] = useState(true)
     const [month, setMonth] = useState<string>(new Date(today).toISOString())
@@ -63,8 +57,7 @@ const MasterCalendarMonth = () => {
     const setMonthHandler = (add) => {
         setMonth(new Date(new Date(month).setMonth(new Date(month).getMonth() + add)).toISOString())
     }
-    const dayOfWeek = [{id: 1, day: 'Mon'}, {id: 2, day: "Tue"}, {id: 3, day: "Wed"}, {id: 4, day: "Thu"},
-        {id: 5, day: " Fri"}, {id: 6, day: "Sat"}, {id: 7, day: "Sun"}]
+
     if (isFetch || !statuses) return <div>Loading...</div>
     else return (
         <div>
