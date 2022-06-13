@@ -15,6 +15,7 @@ import {
 import MyBar from "./MyBar";
 import SortByStatistics from "./SortByStatistics";
 import {Button} from "@material-ui/core";
+import {COLORS} from "../../../../enums/Colors";
 
 ChartJS.register(
     CategoryScale,
@@ -47,26 +48,21 @@ export interface DataSet {
     backgroundColor: string
 }
 
+export interface AxiosDataSet {
+    label: string,
+    data: number[],
+    backgroundColor
+}
+
 export interface DataType {
     labels: string[],
     datasets: DataSet[] | undefined
 }
 
-export const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-        {
-            label: "Dataset 1",
-            data: [0, 10, 15, 120, 500, 470, 500],
-            backgroundColor: "rgba(255, 99, 132, 0.5)"
-        },
-        {
-            label: "Dataset 2",
-            data: [400, 500, 500, 600, 500, 400, 600],
-            backgroundColor: "rgba(53, 162, 235, 0.5)"
-        }
-    ]
-};
+export interface AxiosDataType {
+    labels: string[],
+    datasets: AxiosDataSet[] | undefined
+}
 
 const Statistics = ({cities, masters}) => {
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
@@ -86,12 +82,15 @@ const Statistics = ({cities, masters}) => {
         const isoDateStart = dateStart?.toISOString()
         const isoDateFinish = dateFinish?.toISOString()
         const url = `/order/getOrdersByDate?masterId=${currentMasters}&cities=${currentArray}&dateStart=${isoDateStart}&dateFinish=${isoDateFinish}&status=${currentStatusesName}`
-        $api.get<DataType>(url).then((response) => {
+        $api.get<AxiosDataType>(url).then((response) => {
             const date: string[] = []
             response.data.labels.map((label) => {
                 date.push(new Date(label).toDateString())
             })
-            setData({...response.data, labels: date})
+
+            let dataSets: DataSet[] |undefined | AxiosDataSet[] = response.data.datasets
+            response && response.data && response.data.datasets && dataSets && dataSets.map((oneData,key) => oneData.backgroundColor = COLORS[key])
+            setData({datasets: dataSets, labels: date})
             setIsFetch(false)
         }).catch((err) => setError(JSON.parse(err.request.responseText).message))
     }
@@ -112,7 +111,8 @@ const Statistics = ({cities, masters}) => {
                 <div className={s.contentBody}>
                     <div className={s.btn}>
                         <div className={s.content}>
-                            <Button variant="contained" color='primary' onClick={() => getDataSet()}>Set Filters</Button>
+                            <Button variant="contained" color='primary' onClick={() => getDataSet()}>Set
+                                Filters</Button>
                         </div>
                     </div>
                     <div>

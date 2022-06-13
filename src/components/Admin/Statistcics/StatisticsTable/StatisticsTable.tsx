@@ -31,23 +31,30 @@ const columns: GridColDef[] = [
     },
     {
         field: 'small',
-        headerName: 'small',
+        headerName: 'Small',
         type: 'number',
         width: 120,
         editable: true,
     },
     {
         field: 'middle',
-        headerName: 'middle',
+        headerName: 'Middle',
         type: 'number',
         width: 120,
         editable: true,
     },
     {
         field: 'big',
-        headerName: 'big',
+        headerName: 'Big',
         type: 'number',
         width: 100,
+        editable: true,
+    },
+    {
+        field: 'totalSum',
+        headerName: 'Total Sum',
+        type: 'number',
+        width: 141,
         editable: true,
     },
 
