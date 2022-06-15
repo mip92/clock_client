@@ -22,15 +22,23 @@ interface MyModalListProps {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         modal: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            marginLeft:'30%',
+            position:'absolute',
+            top:'10%',
+            left:'10%',
+            overflow:'scroll',
+            height:'100%',
+            display:'block'
         },
         paper: {
+            marginTop:"15%",
+            marginBottom:"15%",
             backgroundColor: theme.palette.background.paper,
             border: '2px solid #000',
             boxShadow: theme.shadows[5],
-            padding: theme.spacing(2, 4, 3),
+            padding: '40px',
+            width:'50%',
+            display:'block'
         },
     }),
 );

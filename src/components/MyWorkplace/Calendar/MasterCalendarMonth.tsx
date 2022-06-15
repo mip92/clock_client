@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import s from '../../../style/MasterCalemdar.module.css'
-import $api from "../../../http";
 import {useParams} from "react-router-dom";
 import OneDay from "./OneDay";
 import {Button, Typography} from "@material-ui/core";
 import {MONTHS} from "../../../enums/months";
 import {MyStatus} from "../../MyOffice/Statuses";
-import {useFetching} from "../../../hooks/useFetching";
 import {useDispatch} from "react-redux";
 import {fetchCalendar, setCorrectMonday} from "../../../actionCreators/calendarActionCreators";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";

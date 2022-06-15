@@ -42,6 +42,7 @@ const MasterCalendarWeek: React.FC<MasterCalendarWeekProps> = ({statuses}) => {
             </Typography>
             <div className={s.wrapper}>
                 {dayOfWeek.map((day) => <div className={s.title} key={day.id}>{day.day}</div>)}
+
                 {calendar.map((day) => <div key={day.id} className={day.date === null ? s.zero : s.content}>
                         <OneDay orders={day.orders} date={day.date} statuses={statuses} masterId={masterId} month={week}/>
                     </div>
