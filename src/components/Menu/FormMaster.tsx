@@ -28,6 +28,7 @@ const FormMaster: React.FC<MasterProps> = ({master, setCurrentMaster, currentMas
     useEffect(() => {
         fetching()
     }, [])
+    const [open, setOpen] = useState(false);
     return (
         <div className={s.wrapper}>
             <Card className={s.masterInfo} onClick={() => setCurrentMaster(master.id)}
@@ -37,8 +38,8 @@ const FormMaster: React.FC<MasterProps> = ({master, setCurrentMaster, currentMas
                 <div>Rating: {rating}</div>
             </Card>
             <div className={s.comments}>
-                <MyModal name="Comments">
-                    <Ratings masterId={master.id}/>
+                <MyModal name="Comments" open={open} setOpen={setOpen}>
+                    <Ratings masterId={master.id} setOpen={setOpen}/>
                 </MyModal>
             </div>
         </div>

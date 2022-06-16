@@ -33,7 +33,14 @@ interface MyOrdersProps {
     cities: City[],
     isFetch: boolean,
     statuses: MyStatus[] | null
-    clockSizes: MyStatus[]
+    rangeDealPrice,
+    rangeTotalPrice,
+    currentRangeDeal,
+    currentRangeTotal,
+    setCurrentRangeDeal,
+    setCurrentRangeTotal,
+    clockSizes,
+    isFetchRange
 }
 
 export interface AxiosGetRange {
@@ -43,12 +50,20 @@ export interface AxiosGetRange {
     maxTotalPrice: number,
 }
 
-const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSizes}) => {
+const MyOrders: React.FC<MyOrdersProps> = ({
+                                               cities,
+                                               isFetch,
+                                               statuses,
+                                               rangeDealPrice,
+                                               rangeTotalPrice,
+                                               currentRangeDeal,
+                                               currentRangeTotal,
+                                               setCurrentRangeDeal,
+                                               setCurrentRangeTotal,
+                                               clockSizes,
+                                               isFetchRange
+                                           }) => {
     const {orders} = useTypedSelector(state => state.workPlase)
-    const [rangeDealPrice, setRangeDealPrice] = useState<DealPrice>({} as DealPrice)
-    const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([]);
-    const [rangeTotalPrice, setRangeTotalPrice] = useState<TotalPrice>({} as TotalPrice)
-    const [currentRangeTotal, setCurrentRangeTotal] = useState<number[]>([]);
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
     const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
@@ -85,25 +100,11 @@ const MyOrders: React.FC<MyOrdersProps> = ({cities, isFetch, statuses, clockSize
         return await $api.get<AxiosOrder>(url)
     }, setOrders, "master name")
 
-    const [getRange, isFetchRange] = useFetching(async () => {
-        $api.get<AxiosGetRange>(`/order/minMax/all`).then((response) => {
-            setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
-            setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
-            setCurrentRangeDeal([response.data.minDealPrice, response.data.maxDealPrice])
-            setCurrentRangeTotal([response.data.minTotalPrice, response.data.maxTotalPrice])
-        })
-    })
-
 
     useEffect(() => {
         fetching()
     }, [currentLimit, currentPage, sortBy, select])
 
-    useEffect(() => {
-        if (currentRangeDeal.length === 0) {
-            getRange()
-        }
-    }, [currentRangeDeal])
 
     return (
         <div>

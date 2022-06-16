@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
 });
 const formOptions = {resolver: yupResolver(validationSchema)};
 
-const CreateMaster = ({cities}) => {
+const CreateMaster = ({cities, setOpen}) => {
     const {error} = useTypedSelector(state => state.adminMaster);
     const dispatch = useDispatch();
     const [arrayCurrentCities, setArrayCurrentCities] = useState<number[]>([])
@@ -38,6 +38,7 @@ const CreateMaster = ({cities}) => {
     }, [errors.citiesId])
     const fetch = handleSubmit(async data => {
             dispatch(addOneMaster(data.name, data.email, arrayCurrentCities))
+            setOpen(false)
         }
     )
     return (

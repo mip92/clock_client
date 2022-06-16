@@ -54,7 +54,8 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
 
     const [isLoadingFindMaster, setIsLoading] = useState<boolean>(false);
     const [error, setFetchError] = useState<string>('');
-    const {register, getValues, setValue, handleSubmit, watch, formState: {errors}} = useForm(formOptions);
+    const [pictureError, setPictureError] = useState<string>('');
+    const {register, getValues, setValue, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             try {
                 let clock = getKeyByValue(data.checkbox, true);
@@ -75,7 +76,14 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
             }
         }
     );
-
+    useEffect(() => {
+        if (error) {
+            setError('fieldName', {
+                type: "server error",
+                message: error
+            });
+        }
+    }, [error])
     useEffect(() => {
         dispatch(fetchCities(0, 50))
     }, [])
@@ -105,6 +113,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
         })
     }, [cities])
     if (isLoadingFindMaster || isLoading) return <div>Loading...</div>
+
     return (
         <form onSubmit={onSubmit}>
             <Card className={s.wrapper}>
@@ -155,7 +164,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 <div className={s.picturesBtn}>
                     <FileUploaderContainer tempFiles={tempFiles}
                                            addTempFiles={addTempFiles}
-                                           setError={setFetchError}
+                                           setError={setPictureError}
                     />
                 </div>
                 <div className={s.pictures}>
@@ -166,11 +175,11 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                             color='primary'
                             disabled={true}>
                         Back</Button>
-                    <div style={{color: 'red'}}>{error}</div>
+                    <div style={{color: 'red'}}>{pictureError}</div>
                     <Button variant="contained"
                             color='primary'
                             type='submit'
-                            disabled={!!error}
+                            disabled={!!pictureError}
                     >
                         Next</Button>
                 </div>
