@@ -1,6 +1,6 @@
 import React from 'react';
 import CitiesMultySelect from "../Cities/CitiesMultySelect";
-import {Input, TextField} from "@material-ui/core";
+import {Button, Input, TextField} from "@material-ui/core";
 import RangeSlider from "./RangeSlider";
 import DateStart from "./DateStart";
 import MultipleSelectObject from "./MultySelectObject";
@@ -104,7 +104,6 @@ const OrderFilters: React.FC<OrderFiltersProps> = ({
                 <div className={s.date}>
                     <DateStart date={dateFinish} setDate={setDateFinish} label='Date finish sort'/>
                 </div>
-
             </div>
         );
     }

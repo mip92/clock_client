@@ -64,9 +64,18 @@ export interface AxiosDataType {
     datasets: AxiosDataSet[] | undefined
 }
 
+let newestDate = new Date(Date.now())
+newestDate.setHours(0)
+newestDate.setMinutes(0)
+newestDate.setSeconds(0)
+newestDate.setMilliseconds(0)
+
+let oldestDate = new Date(newestDate)
+oldestDate.setDate(oldestDate.getDate() - 30)
+
 const Statistics = ({cities, masters}) => {
-    const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
-    const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
+    const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(oldestDate);
+    const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(newestDate);
     const [currentArray, setArrayCurrentCities] = useState<number[]>([])
     const [currentMasters, setArrayCurrentMasters] = useState<number[]>([])
     const [status, setStatus] = useState<MyStatus[]>([]);

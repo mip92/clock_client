@@ -8,11 +8,11 @@ import {Button} from "@material-ui/core";
 import s from "../../../style/Cities.module.css";
 import ColumnButton from "../ColumnButton";
 import OneOrder from "./OneOrder";
-import {useFetching} from "../../../hooks/useFetching";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {City} from "../../../types/mainInterfacesAndTypes";
 import {MyStatus} from "../../MyOffice/Statuses";
 import OrderFilters from "./OrderFilters";
+
 
 export interface DealPrice {
     minDealPrice: number,

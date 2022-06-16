@@ -10,11 +10,11 @@ import s from "../../../style/MasterCalemdarContainer.module.css"
 import {MyStatus} from "../../MyOffice/Statuses";
 
 const statuses: MyStatus[] = [
-    {id: 1, name: 'Approval'},
+    {id: 1, name: 'Approved'},
     {id: 2, name: 'Canceled'},
     {id: 3, name: 'Confirmed'},
     {id: 4, name: 'Completed'},
-    {id: 5, name: 'NotCompleted'},
+    {id: 5, name: 'Declined'},
     {id: 6, name: 'AwaitingPayment'}
 ]
 

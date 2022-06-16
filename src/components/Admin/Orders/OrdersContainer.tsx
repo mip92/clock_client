@@ -5,6 +5,7 @@ import $api from "../../../http";
 import MyOrders, {AxiosGetRange, DealPrice, TotalPrice} from "./MyOrders";
 import {MyStatus} from "../../MyOffice/Statuses";
 
+
 interface AxiosCityResponse {
     count: number,
     rows: City[]
@@ -16,6 +17,7 @@ const OrdersContainer = () => {
     const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([]);
     const [rangeTotalPrice, setRangeTotalPrice] = useState<TotalPrice>({} as TotalPrice)
     const [currentRangeTotal, setCurrentRangeTotal] = useState<number[]>([]);
+    const [serverError, setServerError] = useState('')
     const [fetching, isFetch] = useFetching(async () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
         setCities(response.data.rows)
@@ -56,8 +58,11 @@ const OrdersContainer = () => {
             setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
             setCurrentRangeDeal([response.data.minDealPrice, response.data.maxDealPrice])
             setCurrentRangeTotal([response.data.minTotalPrice, response.data.maxTotalPrice])
+        }).catch((e) => {
+            setServerError(e.response.data.message)
         })
     })
+    if(serverError) return <div>{serverError}</div>
     if (cities.length === 0 || !statuses || !currentRangeDeal[0] || !currentRangeTotal[0]) return <div>Loading...</div>
     return (<MyOrders
         currentRangeDeal={currentRangeDeal}

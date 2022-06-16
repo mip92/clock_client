@@ -5,6 +5,7 @@
 }
 
 .filter {
+    margin-top: 10px;
     display: flex;
     width: 500px;
     justify-content: space-between;
@@ -13,8 +14,4 @@
 .btn {
     display: flex;
     justify-content: center;
-}
-
-.content {
-
 }

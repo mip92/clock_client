@@ -147,12 +147,11 @@ const NewComment = () => {
                                       control={
                                           <>
                                               <Rating
-
                                                   name="rating"
-                                                  value={rating}
+                                                  value={+rating}
                                                   precision={1}
                                                   onChange={(_, value) => {
-                                                      setValue('rating', value, {shouldValidate: true})
+                                                      if (value) setValue('rating', value, {shouldValidate: true})
                                                       value && setRating(value);
                                                   }}
                                                   icon={<RadioButtonUncheckedIcon fontSize="inherit"/>}
