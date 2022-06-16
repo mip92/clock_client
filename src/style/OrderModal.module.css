@@ -1,0 +1,12 @@
+
+.complete {
+    margin: 10px;
+    padding: 10px;
+    background: lightgreen;
+}
+
+.notComplete {
+    margin: 10px;
+    padding: 10px;
+    background: lightcoral;
+}

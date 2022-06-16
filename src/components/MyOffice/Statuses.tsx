@@ -6,7 +6,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AlertChangeStatus from "./AlertChangeStatus";
 
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         formControl: {
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
-
 
 export interface MyStatus {
     id: number
@@ -38,7 +36,6 @@ const Statuses: React.FC<StatusesProps> = ({status, orderId, statuses}) => {
         const orderStatus = statuses.find(s => s.name === status)
         orderStatus && setCurrentStatus(orderStatus)
     }, [statuses])
-
     const [openAlert, setOpenAlert] = useState(false);
     const [changeStatus, setOrderStatus] = useState({} as MyStatus);
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -62,7 +59,6 @@ const Statuses: React.FC<StatusesProps> = ({status, orderId, statuses}) => {
                             {s.name}
                         </MenuItem>
                     )}
-
                 </Select>
             </FormControl>
             <AlertChangeStatus changeStatus={changeStatus}

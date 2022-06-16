@@ -14,7 +14,6 @@ import {Container} from '@material-ui/core';
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import $api from "../../http";
 import {MyError} from "../../types/mainInterfacesAndTypes";
-import {log} from "util";
 
 interface AxiosCreateComment {
     comment: string

@@ -1,0 +1,10 @@
+
+.complete {
+    margin: 2px;
+    background: lightgreen;
+}
+
+.notComplete {
+    margin: 2px;
+    background: lightcoral;
+}

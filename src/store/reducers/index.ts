@@ -5,6 +5,7 @@ import {adminMasterReducer} from "./adminMasterReducer";
 import {navbarReducer} from "./navbarReducer";
 import {workplaseReducer} from "./workplaceReducer";
 import {orderReducer} from "./orderReducer";
+import {calendarReducer} from "./calendarReducer";
 
 export const rootReducer = combineReducers(
     {
@@ -13,7 +14,8 @@ export const rootReducer = combineReducers(
         adminMaster: adminMasterReducer,
         navbar: navbarReducer,
         workPlase: workplaseReducer,
-        order: orderReducer
+        order: orderReducer,
+        calendar: calendarReducer
     }
 )
 

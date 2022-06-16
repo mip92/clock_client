@@ -15,6 +15,7 @@ import MyWorkPlaceContainer from "../components/MyWorkplace/MyWorkPlaceContainer
 import {Role} from "../enums/Roles";
 import NewComment from "../components/Comments/NewComment";
 import ChangeTable from "../components/Admin/Statistcics/ChangeTable";
+import MasterCalendarContainer from "../components/MyWorkplace/Calendar/MasterCalendarContainer";
 
 
 export const createRoute = (role: Role | null) => {
@@ -43,6 +44,7 @@ export const createRoute = (role: Role | null) => {
     const masterRoutes: MyRoute[] = [
         {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkPlaceContainer/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
+        {exact: true, path: "/Calendar/:masterId", component: <MasterCalendarContainer/>},
     ]
     const error = {exact: false, path: "*", component: <Error404/>}
     switch (role) {
