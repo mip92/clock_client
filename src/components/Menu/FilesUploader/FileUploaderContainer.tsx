@@ -6,14 +6,14 @@ import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined";
 
 const FileUploaderContainer = ({tempFiles, addTempFiles, setError}) => {
 
-    useEffect(() => {
+    /*useEffect(() => {
         let err = false
         tempFiles.forEach((tempFile) => {
             if (tempFile.size > 1048576) err = true
         })
         if (tempFiles.length > 5) err = true
         setError(err)
-    }, [tempFiles])
+    }, [tempFiles])*/
 
     return (
         <List>

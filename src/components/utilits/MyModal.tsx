@@ -24,11 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface MyModalListProps {
     name: string,
+    open,
+    setOpen
 }
 
-const MyModal: React.FC<MyModalListProps> = ({name, children}) => {
+const MyModal: React.FC<MyModalListProps> = ({name, open, setOpen,  children}) => {
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
+
 
     const handleOpen = () => {
         setOpen(true);

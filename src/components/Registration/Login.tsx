@@ -50,11 +50,12 @@ const Login: React.FC = () => {
         if (key && id && role === Role.USER) {
             return history.push(`/rating/${key}`)
         }
-        if (prevLocation === '/' && id) return history.push('/')
         if (id && !key && role) {
             const url = UrlByRole[role]
+            if (role===Role.ADMIN) return history.push(url)
             return history.push(url + id)
         }
+        //if (prevLocation === '/' && id) return history.push('/')
     }, [id])
 
     if (isFetch) return (

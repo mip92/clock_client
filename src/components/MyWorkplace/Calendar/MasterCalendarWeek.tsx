@@ -3,12 +3,9 @@ import {useDispatch} from "react-redux";
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import {useParams} from "react-router-dom";
 import {MyStatus} from "../../MyOffice/Statuses";
-import {useFetching} from "../../../hooks/useFetching";
-import $api from "../../../http";
 import {fetchWeek, setCorrectMonday} from "../../../actionCreators/calendarActionCreators";
 import s from "../../../style/MasterCalemdar.module.css";
 import {Button, Typography} from "@material-ui/core";
-import {MONTHS} from "../../../enums/months";
 import OneDay from "./OneDay";
 
 interface MasterCalendarWeekProps{

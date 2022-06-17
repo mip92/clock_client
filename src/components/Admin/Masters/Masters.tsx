@@ -50,7 +50,7 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
             dispatch(setMasterName(''))
         };
     }, [])
-
+    const [open, setOpen] = useState(false);
     return (
         <div>
             <h3>List of masters</h3>
@@ -105,8 +105,8 @@ const Masters: React.FC<MastersProps> = ({isFetch, cities}) => {
                 >{l}</span>)
             }
             <div className={s.button}>
-                <MyModal name='Add master'>
-                    <CreateMaster cities={cities}/>
+                <MyModal name='Add master' open={open} setOpen={setOpen}>
+                    <CreateMaster cities={cities} setOpen={setOpen}/>
                 </MyModal>
             </div>
         </div>

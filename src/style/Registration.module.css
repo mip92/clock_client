@@ -11,25 +11,49 @@
 }
 
 .email {
+    display: flex;
+    justify-content: center;
     text-align: center;
     grid-area: 2 / 2 / 3 / 3;
 }
 
 .name {
+    display: flex;
+    justify-content: center;
     text-align: center;
     grid-area: 3 / 2 / 4 / 3;
 }
 
 .firstPassword {
+    display: flex;
+    justify-content: center;
     text-align: center;
     grid-area: 4 / 2 / 5 / 3;
 }
-
+.openFirst{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: auto;
+    text-align: center;
+    grid-area: 4 / 3 / 5 / 4;
+}
 .secondPassword {
+    display: flex;
+    justify-content: center;
     text-align: center;
     grid-area: 5 / 2 / 6 / 3;
 }
-
+.openSecond{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: auto;
+    text-align: center;
+    grid-area: 5 / 3 / 6 / 4;
+}
 .checkboxes {
     text-align: center;
     grid-area: 6 / 2 / 7 / 3;

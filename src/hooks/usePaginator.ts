@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import {useState} from "react";
 import {getPageCount, getPagesArray} from "../utils/pages";
 import {MyError} from "../types/mainInterfacesAndTypes";
 

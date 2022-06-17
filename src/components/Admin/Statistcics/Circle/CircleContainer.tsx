@@ -31,10 +31,19 @@ export interface AxiosCircleResponse {
     labels: string[]
 }
 
+let newestDate = new Date(Date.now())
+newestDate.setHours(0)
+newestDate.setMinutes(0)
+newestDate.setSeconds(0)
+newestDate.setMilliseconds(0)
+
+let oldestDate = new Date(newestDate)
+oldestDate.setDate(oldestDate.getDate() - 30)
+
 const CircleContainer = ({link}) => {
     const [statisticData, setStatisticData] = useState<CircleResponse>({} as CircleResponse)
-    const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(null);
-    const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(null);
+    const [dateStart, setDateStart] = useState<MaterialUiPickersDate>(oldestDate);
+    const [dateFinish, setDateFinish] = useState<MaterialUiPickersDate>(newestDate);
     const [isFetch, setIsFetch] = useState(true)
     const fetch = () => {
         const isoDateStart = dateStart?.toISOString()

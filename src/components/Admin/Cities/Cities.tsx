@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTypedSelector} from "../../../hooks/useTypedSelector";
 import OneCity from "./OneCity"
 import {setCities} from "../../../actionCreators/adminCityActionCreators";
@@ -34,6 +34,7 @@ const Cities: React.FC = () => {
     useEffect(() => {
         fetching()
     }, [currentLimit, currentPage, sortBy, select])
+    const [open, setOpen] = useState(false);
     return (
         <div>
             <h3>List of cities</h3>
@@ -75,8 +76,8 @@ const Cities: React.FC = () => {
             >{l}</span>)
             }
             <div className={s.button}>
-                <MyModal name='Add city'>
-                    <AddCity/>
+                <MyModal name='Add city' open={open} setOpen={setOpen}>
+                    <AddCity setOpen={setOpen}/>
                 </MyModal>
             </div>
         </div>

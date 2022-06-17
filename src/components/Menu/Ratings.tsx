@@ -3,7 +3,8 @@ import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
 
 interface RatingsProps {
-    masterId: number
+    masterId: number,
+    setOpen: Function
 }
 
 interface AxiosGetLastComments {
@@ -22,7 +23,7 @@ interface AxiosGetLastComments {
     }
 }
 
-const Ratings: React.FC<RatingsProps> = ({masterId}) => {
+const Ratings: React.FC<RatingsProps> = ({masterId, setOpen}) => {
     const [comments, setComments] = useState<AxiosGetLastComments[]>([])
     const [fetching, isFetch, error] = useFetching(async () => {
         const response = await $api.get<AxiosGetLastComments[]>(`/rating/getLastComments/${masterId}`)

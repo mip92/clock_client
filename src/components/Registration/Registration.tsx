@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {Checkbox, Input} from "@material-ui/core";
+import {Button, Checkbox, Input} from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import s from "../../style/Registration.module.css";
 import Typography from "@material-ui/core/Typography";
@@ -15,6 +15,9 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 import InputWithError from "./InputWithError";
 import CitiesMultySelect from "../Admin/Cities/CitiesMultySelect";
 import {UrlByRole} from "../../enums/RolesUrls2";
+
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -86,6 +89,12 @@ const Registration: React.FC = () => {
             return history.push(url + id)
         }
     }, [id])
+    const [isPasswordOpen, setIsPasswordOpen] = useState(true)
+    const [isRepeatPasswordOpen, setIsRepeatPasswordOpen] = useState(true)
+    const openHandler = (id: number) => {
+        id === 1 && setIsPasswordOpen(prevState => !prevState)
+        id === 2 && setIsRepeatPasswordOpen(prevState => !prevState)
+    }
 
     if (isFetch) return <div>Loading...</div>
     return (
@@ -108,16 +117,26 @@ const Registration: React.FC = () => {
                 error={errors.name?.message}/>
             <InputWithError
                 cn={s.firstPassword}
-                type="password"
+                type={isPasswordOpen ? "password" : "text"}
                 placeholder="Password"
                 reg={register("firstPassword")}
                 error={errors.firstPassword?.message}/>
+            <div onMouseUp={() => openHandler(1)}
+                 onMouseDown={() => openHandler(1)}
+                 className={s.openFirst}>
+                {!isPasswordOpen ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+            </div>
             <InputWithError
                 cn={s.secondPassword}
-                type="password"
+                type={isRepeatPasswordOpen ? "password" : "text"}
                 placeholder="Repeat password"
                 reg={register("secondPassword")}
                 error={errors.secondPassword?.message}/>
+            <div onMouseUp={() => openHandler(2)}
+                 onMouseDown={() => openHandler(2)}
+                 className={s.openSecond}>
+                {!isRepeatPasswordOpen ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+            </div>
             <div className={s.checkboxes}>
                 <FormControlLabel
                     control={<Checkbox {...register("isRulesChecked")} />}

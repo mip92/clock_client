@@ -17,12 +17,13 @@ const validationSchema = Yup.object().shape({
 });
 const formOptions = {resolver: yupResolver(validationSchema)};
 
-const AddCity: React.FC = () => {
+const AddCity = ({setOpen}) => {
     const {error} = useTypedSelector(state => state.adminCity)
     const dispatch = useDispatch()
     const {register, handleSubmit, formState: {errors}, setError} = useForm(formOptions);
     const onSubmit = handleSubmit(async data => {
             dispatch(addOneCity(data.city, data.price))
+            setOpen(false)
         }
     )
 
