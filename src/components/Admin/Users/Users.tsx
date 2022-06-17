@@ -36,14 +36,14 @@ const Users: React.FC = () => {
     return (
         <div>
             <div>
-                <h3>Список пользователей</h3>
+                <h3>Users list</h3>
                 <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
-                <Button onClick={() => fetching()}>Выбрать фильтры</Button>
+                <Button onClick={() => fetching()}>Select filters</Button>
                 <div className={s.wrapper}>
                     <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'name'} select={select}/>
                     <ColumnButton sortHandler={sortHandler} sortBy={sortBy} name={'email'} select={select}/>
-                    <div>Изменить</div>
-                    <div>Удалить</div>
+                    <div>Edit</div>
+                    <div>Remove</div>
                 </div>
                 {isLoading ?
                     <div>
@@ -67,7 +67,7 @@ const Users: React.FC = () => {
                         onClick={() => changePage(p)}
                     >{p}</span>)
                 }
-                <span style={{marginLeft: 30, padding: 5}}>Лимит</span>
+                <span style={{marginLeft: 30, padding: 5}}>Limit</span>
                 {
                     limits.map((l, key: React.Key) => <span
                         className={currentLimit === l ? s.page_limit : s.limit}

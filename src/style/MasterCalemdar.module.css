@@ -33,14 +33,12 @@
     height: 135px;
     min-height: 50px;
     background: #ffe0b2;
-    opacity: 100%;
     border: 1px solid white;
     order: 7
 }
 
 .content:hover {
     cursor: pointer;
-    opacity: 100%;
 }
 
 .zero {
