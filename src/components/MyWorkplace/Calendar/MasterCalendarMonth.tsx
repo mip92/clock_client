@@ -47,7 +47,7 @@ const MasterCalendarMonth:React.FC<MasterCalendarMonthProps>  = ({statuses}) => 
     else return (
         <div>
             <Typography variant="h5" component="h4" className={s.month}>
-                {MONTHS[new Date(month).getMonth()]}
+                {`${MONTHS[new Date(month).getMonth()]} ${new Date(month).getFullYear()}`}
             </Typography>
             <div className={s.wrapper}>
                 {dayOfWeek.map((day) => <div className={s.title} key={day.id}>{day.day}</div>)}

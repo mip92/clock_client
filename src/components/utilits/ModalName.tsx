@@ -5,9 +5,20 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {Link} from "react-router-dom";
-import {Typography} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 
-const RegistrationAlert = ({open}) => {
+const ModalName = ({open, setNameError, setValue}) => {
+    const chaneDBNameNameHandler=()=>{
+        setValue("name", open, {
+            shouldValidate: true,
+            shouldDirty: true
+        })
+        setNameError('')
+    }
+    const chaneNameHandler=()=>{
+        setNameError('')
+    }
+
     return (
         <div>
             <Dialog
@@ -18,21 +29,18 @@ const RegistrationAlert = ({open}) => {
                 <DialogTitle id="alert-dialog-title">{"User with this email is already registered"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Login to complete your order
+                        This user has a different name, change it?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Typography>
-                        <Link
-                            to={{
-                                pathname: "/login",
-                                state: {fromDashboard: true}
-                            }}
-                        >Login</Link>
+                        <Button onClick={()=>chaneDBNameNameHandler()}>Change name</Button>
+                        <Button onClick={()=>chaneNameHandler()}>Name is correct</Button>
                     </Typography>
                 </DialogActions>
             </Dialog>
+
         </div>
     );
 }
-export default RegistrationAlert
+export default ModalName

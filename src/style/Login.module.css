@@ -30,3 +30,8 @@
     grid-area: 5 / 2 / 6 / 3;
     color: red;
 }
+.openFirst{
+    margin-right: auto;
+    text-align: center;
+    grid-area: 3 / 3 / 4 / 4;
+}

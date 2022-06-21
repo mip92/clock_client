@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import {loginAuth} from "../../actionCreators/authActionCreators";
@@ -12,6 +12,8 @@ import InputWithError from "./InputWithError";
 import Typography from "@material-ui/core/Typography";
 import {Role} from "../../enums/Roles";
 import {UrlByRole} from "../../enums/RolesUrls2";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -57,6 +59,11 @@ const Login: React.FC = () => {
         }
         //if (prevLocation === '/' && id) return history.push('/')
     }, [id])
+    const [isPasswordOpen, setIsPasswordOpen] = useState(true)
+    const openHandler = () => {
+        setIsPasswordOpen(prevState => !prevState)
+    }
+
 
     if (isFetch) return (
         <div className={s.wrapper}>
@@ -78,13 +85,15 @@ const Login: React.FC = () => {
             <InputWithError
                 date-testid="passwordTest"
                 cn={s.password}
-                type="password"
+                type={isPasswordOpen ? "password" : "text"}
                 placeholder="Password"
                 reg={register("password")}
                 error={errors.password?.message}/>
-            {/*<Input type="submit"
-                   color='primary'
-                   className={s.btn}/>*/}
+            <div onMouseUp={() => openHandler()}
+                 onMouseDown={() => openHandler()}
+                 className={s.openFirst}>
+                {!isPasswordOpen ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+            </div>
             <Button className={s.btn} type='submit'>Login</Button>
         </form>
     );

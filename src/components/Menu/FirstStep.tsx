@@ -18,6 +18,7 @@ import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {Master} from "../../types/adminMasterTypes";
 import FileUploaderContainer from "./FilesUploader/FileUploaderContainer";
 import Files from "./FilesUploader/Files";
+import ModalName from "../utilits/ModalName";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -56,6 +57,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
     const [error, setFetchError] = useState<string>('');
     const [pictureError, setPictureError] = useState<string>('');
     const {register, getValues, setValue, handleSubmit, watch, formState: {errors}, setError} = useForm(formOptions);
+    const [nameError, setNameError]=useState('')
     const onSubmit = handleSubmit(async data => {
             try {
                 let clock = getKeyByValue(data.checkbox, true);
@@ -84,13 +86,25 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
             });
         }
     }, [error])
+
     useEffect(() => {
         dispatch(fetchCities(0, 50))
     }, [])
 
     const [findUser, isLoading, errorfindUser] = useFetching(async () => {
+        await findName()
         return await $api.get(`/users/findUser?email=${watch("email")}`)
     })
+    const findName = async ()=>{
+        if(watch("email") && watch("name")){
+            try {
+                await $api.get(`/users/findName?email=${watch("email")}&name=${watch("name")}`)
+            }catch (e) {
+                setNameError(e.response.data.message)
+            }
+        }
+
+    }
 
     useEffect(() => {
         if (errorfindUser === 'User with this email is already registered' && !token) setOpenAlert(true)
@@ -126,6 +140,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                     reg={register('email')}
                     error={errors.email?.message}/>
                 <InputWithError
+                    onBlur={findName}
                     cn={s.name}
                     type="text"
                     placeholder="Your name"
@@ -135,11 +150,11 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 <div className={s.size}>
                     <ClockSize register={register} error={errors.checkbox?.message}/>
                 </div>
-                {cities ?
+                {cities.length>0 ?
                     <div className={s.city}>
                         <MultilineTextFields register={register('currentCity')}
                                              label={"City"}
-                                             cities={cities}
+                                             objects={cities}
                                              error={errors.currentCity?.message}/>
                     </div>
                     :
@@ -158,7 +173,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 <div className={s.time}>
                     <MultilineTextFields register={register('currentTime')}
                                          label={"Time"}
-                                         time={time}
+                                         objects={time}
                                          error={errors.currentTime?.message}/>
                 </div>
                 <div className={s.picturesBtn}>
@@ -183,6 +198,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                     >
                         Next</Button>
                 </div>
+                <ModalName open={nameError} setNameError={setNameError} setValue={setValue}/>
                 <RegistrationAlert open={openAlert}/>
             </Card>
         </form>

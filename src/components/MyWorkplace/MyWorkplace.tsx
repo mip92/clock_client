@@ -120,9 +120,11 @@ const MyWorkplace = ({
                               setDateFinish={setDateFinish} setDateStart={setDateStart} setInputValue={setInputValue}
                               setStatus={setStatus} statuses={statuses}
                               status={status} clockSizes={clockSizes}/>
-                <Button onClick={() => fetching()}>Select filters</Button>
-                <Button onClick={() => download()}>Download excel</Button>
-                <Button onClick={() => clearFilters()}>Clear filters</Button>
+                              <div className={s.btns}>
+                                  <Button onClick={() => fetching()}>Select filters</Button>
+                                  <Button onClick={() => clearFilters()}>Clear filters</Button>
+                                  <Button onClick={() => download()} className={s.download}>Download excel</Button>
+                              </div>
                 <table>
                     <tbody>
                     <tr>
