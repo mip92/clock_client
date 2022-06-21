@@ -16,16 +16,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface MultilineTextFieldsListProps {
     label: string;
-    cities?: City[] | undefined
-    time?: Time[] | undefined
+    objects?: Time[] | City[] | undefined
     register: any,
     error: string,
 }
 
 const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
                                                                          label,
-                                                                         cities,
-                                                                         time,
+                                                                         objects,
                                                                          register,
                                                                          error
                                                                      }) => {
@@ -35,24 +33,19 @@ const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
             <div>
                 <TextField
                     helperText={error}
-                    id={'standard-select-currency-native' + label}
+                    id={label}
                     select
                     label={label}
                     error={!!error}
                     {...register}
-                    //defaultValue={0}
+                    defaultValue={0}
                     SelectProps={{
                         native: true,
                     }}
                 >
-                    {cities && cities.map((option, key) => (
-                        <option key={'cities' + key} value={option.id}>
-                            {option.cityName}
-                        </option>
-                    ))}
-                    {time && time.map((option, key) => (
-                        <option key={'time' + key} value={option.id}>
-                            {option.time}
+                    {objects && objects.map((option, key) => (
+                        <option key={option.id} value={option.id}>
+                            {option.time || option.cityName}
                         </option>
                     ))}
                 </TextField>

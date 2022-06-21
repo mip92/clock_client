@@ -86,6 +86,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
             });
         }
     }, [error])
+
     useEffect(() => {
         dispatch(fetchCities(0, 50))
     }, [])
@@ -104,9 +105,6 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
         }
 
     }
-    useEffect(()=>{
-        if(nameError!=='') console.log(nameError)
-    },[nameError])
 
     useEffect(() => {
         if (errorfindUser === 'User with this email is already registered' && !token) setOpenAlert(true)
@@ -152,11 +150,11 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 <div className={s.size}>
                     <ClockSize register={register} error={errors.checkbox?.message}/>
                 </div>
-                {cities ?
+                {cities.length>0 ?
                     <div className={s.city}>
                         <MultilineTextFields register={register('currentCity')}
                                              label={"City"}
-                                             cities={cities}
+                                             objects={cities}
                                              error={errors.currentCity?.message}/>
                     </div>
                     :
@@ -175,7 +173,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                 <div className={s.time}>
                     <MultilineTextFields register={register('currentTime')}
                                          label={"Time"}
-                                         time={time}
+                                         objects={time}
                                          error={errors.currentTime?.message}/>
                 </div>
                 <div className={s.picturesBtn}>
