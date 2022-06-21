@@ -44,14 +44,22 @@ const MyWorkPlaceContainer = () => {
     const [currentRangeDeal, setCurrentRangeDeal] = useState<number[]>([]);
     const [rangeTotalPrice, setRangeTotalPrice] = useState<TotalPrice>({} as TotalPrice)
     const [currentRangeTotal, setCurrentRangeTotal] = useState<number[]>([]);
+    const [serverError, setServerError] = useState('')
     const [getRange, isFetchRange] = useFetching(async () => {
+
         $api.get<AxiosGetRange>(`/order/minMax/${masterId}`).then((response) => {
             setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
-            setRangeTotalPrice({minTotalPrice: response.data.minTotalPrice, maxTotalPrice: response.data.maxTotalPrice})
+            setRangeTotalPrice({
+                minTotalPrice: response.data.minTotalPrice,
+                maxTotalPrice: response.data.maxTotalPrice
+            })
             setCurrentRangeDeal([response.data.minDealPrice, response.data.maxDealPrice])
             setCurrentRangeTotal([response.data.minTotalPrice, response.data.maxTotalPrice])
+        }).catch((e) => {
+            setServerError(e.response.data.message)
         })
     })
+
     const clockSizes: MyStatus[] = [
         {id: 1, name: 'small'},
         {id: 2, name: 'middle',},
@@ -62,6 +70,7 @@ const MyWorkPlaceContainer = () => {
             getRange()
         }
     }, [currentRangeDeal])
+    if(serverError) return <div>{serverError}</div>
     if (cities.length === 0 || !statuses || !currentRangeDeal[0] || !currentRangeTotal[0]) return <div>Loading...</div>
     return (<MyWorkplace currentRangeDeal={currentRangeDeal}
                          currentRangeTotal={currentRangeTotal}

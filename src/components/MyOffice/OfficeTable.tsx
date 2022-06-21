@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Paper, Table, TableContainer, Typography} from "@material-ui/core";
 import {Order} from "../../store/reducers/workplaceReducer";
+import {CLOCK_SIZE} from "../../enums/ClockSize";
 
 
 interface active {
@@ -81,7 +82,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                         <td>{item.master.email}</td>
                         <td>{item.master.name}</td>
                         <td>{item.originalCityName}</td>
-                        <td>{item.clockSize}</td>
+                        <td>{item.clockSize && CLOCK_SIZE[item.clockSize]}</td>
                         <td>{item.dealPrice}</td>
                         <td>{(item.dealPrice && item?.clockSize) && item.dealPrice * item?.clockSize}</td>
                         <td>{item.status}</td>

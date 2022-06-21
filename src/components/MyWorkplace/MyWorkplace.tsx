@@ -28,7 +28,8 @@ const MyWorkplace = ({
                          clockSizes,
                          isFetchRange
                      }) => {
-
+    const [startRangeDeal, setStartRange] = useState(currentRangeDeal)
+    const [startRangeTotal, setStartRangeTotal] = useState(currentRangeTotal)
     const {masterId} = useParams<{ masterId: string }>();
     const THButtons = ['date time', 'user email', 'user name', 'city', 'clock size', 'deal price', 'total price', 'status']
 
@@ -75,7 +76,21 @@ const MyWorkplace = ({
         fetching()
     }, [currentLimit, currentPage, sortBy, select])
 
-
+    const clearFilters = () => {
+        setStatus([])
+        setArrayCurrentCities([])
+        setClockSize([])
+        setCurrentRangeDeal(startRangeDeal)
+        setCurrentRangeTotal(startRangeTotal)
+        setDateFinish(null)
+        setDateStart(null)
+        setInputValue('')
+    }
+    useEffect(()=>{
+        if (status.length===0){
+            fetching()
+        }
+    },[status])
     const download = () => {
         const st: string[] = []
         const cs: number[] = []
@@ -107,7 +122,7 @@ const MyWorkplace = ({
                               status={status} clockSizes={clockSizes}/>
                 <Button onClick={() => fetching()}>Select filters</Button>
                 <Button onClick={() => download()}>Download excel</Button>
-
+                <Button onClick={() => clearFilters()}>Clear filters</Button>
                 <table>
                     <tbody>
                     <tr>
@@ -125,9 +140,10 @@ const MyWorkplace = ({
                             </td>
                         </tr>
                         :
-                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMasterOrder key={order.id}
-                                                                                                           order={order}
-                                                                                                           statuses={statuses}/>)
+                        orders !== initStateWorkPlace.orders && orders.map((order, key) => <OneMasterOrder
+                            key={order.id}
+                            order={order}
+                            statuses={statuses}/>)
                     }
                     </tbody>
                 </table>
