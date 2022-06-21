@@ -75,6 +75,7 @@ const Login: React.FC = () => {
                 reg={register("email")}
                 error={errors.email?.message}/>
             <InputWithError
+                date-testid="passwordTest"
                 cn={s.password}
                 type="password"
                 placeholder="Password"

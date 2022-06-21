@@ -76,7 +76,6 @@ const App: React.FC = () => {
                 </ThemeProvider>
             </MuiPickersUtilsProvider>
         </PayPalScriptProvider>
-
     );
 }
 

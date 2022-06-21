@@ -64,7 +64,7 @@ const MyStepper: React.FC = () => {
 
     const steps: string[] = ["Form", "Master select", "Confirmation"]
     return (
-        <div>
+        <div data-testid="myId">
             <ThemeProvider theme={theme}>
                 <div className={s.main}>
                     <Card className={s.card} variant="outlined">
@@ -72,14 +72,15 @@ const MyStepper: React.FC = () => {
                             <Typography variant="h6"
                                         color={'secondary'}
                                         className={s.typography}
+                                        data-testid="Application"
                             >Application for the services of a master</Typography>
                             <StepWrapper activeStep={activeStep} steps={steps}>
-                                {activeStep === 0 && <FirstStep next={next} setMasters={setMasters}
+                                {activeStep === 0 && <FirstStep data-testid="firstStep" next={next} setMasters={setMasters}
                                                                 tempFiles={tempFiles}
                                                                 addTempFiles={addTempFiles}
                                 />}
-                                {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
-                                {activeStep === 2 && <FourthStep dealPrice={dealPrice} orderId={orderId}/>}
+                                {activeStep === 1 && <SecondStep data-testid="secondStep" next={next} back={back} masters={masters}/>}
+                                {activeStep === 2 && <FourthStep data-testid="thirdStep" dealPrice={dealPrice} orderId={orderId}/>}
                             </StepWrapper>
                         </List>
                     </Card>
