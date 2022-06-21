@@ -37,7 +37,7 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
                             ],
                         })
                         .then((payPalOrderId) => {
-                            $api.post(`http://localhost:5000/api/payPal/created/${orderId}`, {
+                            $api.post(`/api/payPal/created/${orderId}`, {
                                 payPalOrderId
                             }).then((response) => {
                             })
