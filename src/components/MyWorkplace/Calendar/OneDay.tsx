@@ -16,8 +16,10 @@ interface OneDayProps {
 
 const OneDay: React.FC<OneDayProps> = ({date, orders, statuses, masterId, month}) => {
     return (
-        <MyModalWithoutBtn orders={orders} statuses={statuses} masterId={masterId} month={month}>
-            {date && new Date(date).toLocaleDateString()}
+        <MyModalWithoutBtn  orders={orders} statuses={statuses} masterId={masterId} month={month}>
+            <div className={s.day}>
+                {date && new Date(date).getDate()}
+            </div>
             {orders && orders.length < 3 && orders.map((order) =>
                 <div key={order.id} className={order.status === "Completed" ? s.complete : s.notComplete}>
                     <div>name: {order.user.name}</div>

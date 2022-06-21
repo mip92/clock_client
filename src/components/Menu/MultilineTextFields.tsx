@@ -40,7 +40,7 @@ const MultilineTextFields: React.FC<MultilineTextFieldsListProps> = ({
                     label={label}
                     error={!!error}
                     {...register}
-                    defaultValue={0}
+                    //defaultValue={0}
                     SelectProps={{
                         native: true,
                     }}

@@ -3,7 +3,19 @@
     margin: 2px;
     background: lightgreen;
 }
-
+.wrapper{
+    width: auto;
+    height: auto;
+}
+.content{
+    justify-content: center;
+    align-items: center;
+}
+.day{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .notComplete {
     margin: 2px;
     background: lightcoral;
