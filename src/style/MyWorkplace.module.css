@@ -54,10 +54,12 @@
     letter-spacing: 0.02857em;
     text-transform: uppercase;
 }
-.btns{
+/*.btns{
     display: flex;
-    justify-content: start;
-}
+    justify-content: flex-start;
+
+}*/
 .download {
-    margin-left: auto;
+    display: flex;
+    margin-right: auto;
 }
