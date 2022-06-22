@@ -37,14 +37,14 @@ export const createRoute = (role: Role | null) => {
         {exact: true, path: "/menu/statistics", component: <ChangeTable/>}
     ]
     const userRoutes: MyRoute[] = [
-        {exact: true, path: "/myOffice/:userId", component: <MyOffice/>},
+        {exact: true, path: "/myOffice", component: <MyOffice/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
 
     ]
     const masterRoutes: MyRoute[] = [
-        {exact: true, path: "/MyWorkplace/:masterId", component: <MyWorkPlaceContainer/>},
+        {exact: true, path: "/MyWorkplace", component: <MyWorkPlaceContainer/>},
         {exact: true, path: "/changeEmail", component: <ChangeEmail/>},
-        {exact: true, path: "/Calendar/:masterId", component: <MasterCalendarContainer/>},
+        {exact: true, path: "/Calendar", component: <MasterCalendarContainer/>},
     ]
     const error = {exact: false, path: "*", component: <Error404/>}
     switch (role) {

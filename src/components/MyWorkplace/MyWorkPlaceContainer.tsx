@@ -6,6 +6,7 @@ import {useFetching} from "../../hooks/useFetching";
 import $api from "../../http";
 import {AxiosGetRange, DealPrice, TotalPrice} from "../Admin/Orders/MyOrders";
 import {useParams} from "react-router-dom";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 interface AxiosCityResponse {
     count: number,
@@ -13,7 +14,7 @@ interface AxiosCityResponse {
 }
 
 const MyWorkPlaceContainer = () => {
-    const {masterId} = useParams<{ masterId: string }>();
+    const {id} =useTypedSelector(state => state.auth)
     const [cities, setCities] = useState<City[]>([] as City[])
     const [fetching, isFetch] = useFetching(async () => {
         const response = await $api.get<AxiosCityResponse>(`/cities?offset=0&limit=50`)
@@ -47,7 +48,7 @@ const MyWorkPlaceContainer = () => {
     const [serverError, setServerError] = useState('')
     const [getRange, isFetchRange] = useFetching(async () => {
 
-        $api.get<AxiosGetRange>(`/order/minMax/${masterId}`).then((response) => {
+        $api.get<AxiosGetRange>(`/order/minMax/${id}`).then((response) => {
             setRangeDealPrice({minDealPrice: response.data.minDealPrice, maxDealPrice: response.data.maxDealPrice})
             setRangeTotalPrice({
                 minTotalPrice: response.data.minTotalPrice,

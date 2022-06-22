@@ -15,7 +15,7 @@ import {FORMAT} from "../../types/calendarTypes";
 interface MyModalListProps {
     orders: OrderInterface[]
     statuses: MyStatus[]
-    masterId: string
+    masterId: number | null
     month: string
 }
 
@@ -52,8 +52,8 @@ const MyModalWithoutBtn: React.FC<MyModalListProps> = ({orders, statuses, master
 
     const handleClose = (e) => {
         e.preventDefault();
-        format === FORMAT.Month && dispatch(fetchCalendar(+masterId, month))
-        format === FORMAT.Week && dispatch(fetchWeek(+masterId, correctMonday))
+        format === FORMAT.Month && masterId && dispatch(fetchCalendar(masterId, month))
+        format === FORMAT.Week && masterId && dispatch(fetchWeek(masterId, correctMonday))
         setOpen(false)
     };
     const handleOpen = (e) => {

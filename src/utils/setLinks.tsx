@@ -1,7 +1,7 @@
 import {NavBarLink} from "../types/mainInterfacesAndTypes";
 import {Role} from "../enums/Roles";
 
-export const setLinks = (role: string | null, id: number | null) => {
+export const setLinks = (role: string | null) => {
     const adminLinks: NavBarLink[] = [
         {to: '/menu/cities', name: 'Cities'},
         {to: '/menu/masters', name: 'Masters'},
@@ -11,12 +11,12 @@ export const setLinks = (role: string | null, id: number | null) => {
     ]
     const masterLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},
-        {to: `/MyWorkplace/${id}`, name: 'My Workplace'},
-        {to: `/Calendar/${id}`, name: 'My Calendar'}
+        {to: `/MyWorkplace`, name: 'My Workplace'},
+        {to: `/Calendar`, name: 'My Calendar'}
     ]
     const userLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"},
-        {to: `/MyOffice/${id}`, name: 'My Office'}
+        {to: `/MyOffice`, name: 'My Office'}
     ]
     const defaultLinks: NavBarLink[] = [
         {to: '/blog', name: "Blog"}
