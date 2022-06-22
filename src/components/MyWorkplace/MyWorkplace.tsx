@@ -102,7 +102,7 @@ const MyWorkplace = ({
         })
         const url = `/order/getExcel?masterId=${id}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
         $api.get(url).then((response) => {
-                window.location.href = response.data;
+                window.location.href = url;
             }
         )
     }
@@ -135,6 +135,7 @@ const MyWorkplace = ({
                             </th>
                         )}
                         <th className={s.btn}>PICTURES</th>
+                        <th className={s.btn}>PDF</th>
                     </tr>
                     {!orders || isLoading || isFetch ?
                         <tr className={s.timelineItem}>

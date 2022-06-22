@@ -4,6 +4,7 @@ import Pictures from "./Pictures";
 import PicturesPreloader from "./PicturesPreloader";
 import {Order} from "../../store/reducers/workplaceReducer";
 import {CLOCK_SIZE} from "../../enums/ClockSize";
+import s from "../../style/OneMaster.module.css"
 
 export interface StateOpenInterface {
     status: boolean
@@ -24,6 +25,10 @@ const OneMasterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
         if (!date) return ''
         return new Date(date).toLocaleString()
     }
+    const download = () => {
+        const url = `${process.env.REACT_APP_SERVER_URL}/api/payPal/getPdf/3`
+        window.location.href = url;
+    }
     return (
         <tr>
             <td>{getString(order.master_busyDate.dateTime)}</td>
@@ -39,6 +44,10 @@ const OneMasterOrder: React.FC<OneMasterOrderProps> = ({order, statuses}) => {
                           statuses={statuses}/></td>
             <td onClick={() => openPictures(order.id)}>{<PicturesPreloader pictures={order.orderPictures}/>}</td>
             {isOpen.status && <td><Pictures open={isOpen} setOpen={setOpen} pictures={order.orderPictures}/></td>}
+            {/*<Button onClick={()=>download()}>скачать PDF</Button>*/}
+            <div className={s.link}>
+                <a href={`${process.env.REACT_APP_SERVER_URL}/api/payPal/getPdf/${order.id}`} target="_blank">Pdf</a>
+            </div>
         </tr>
     );
 };
