@@ -17,11 +17,11 @@ const monday = new Date(Date.now());
 const MasterCalendarWeek: React.FC<MasterCalendarWeekProps> = ({statuses}) => {
     const dispatch = useDispatch()
     const {calendar, dayOfWeek, numberOfWeek, isFetch} = useTypedSelector(state => state.calendar)
-    const {masterId} = useParams<{ masterId: string }>();
+    const {id} =useTypedSelector(state => state.auth)
     const [week, setWeek] = useState<string>(new Date(monday).toISOString())
 
     const fetch = () => {
-        dispatch(fetchWeek(+masterId, week))
+        id && dispatch(fetchWeek(id, week))
         dispatch(setCorrectMonday(week))
     }
     useEffect(() => {
@@ -41,7 +41,7 @@ const MasterCalendarWeek: React.FC<MasterCalendarWeekProps> = ({statuses}) => {
                 {dayOfWeek.map((day) => <div className={s.title} key={day.id}>{day.day}</div>)}
 
                 {calendar.map((day) => <div key={day.id} className={day.date === null ? s.zero : s.content}>
-                        <OneDay orders={day.orders} date={day.date} statuses={statuses} masterId={masterId} month={week}/>
+                        <OneDay orders={day.orders} date={day.date} statuses={statuses} masterId={id} month={week}/>
                     </div>
                 )}
 

@@ -30,7 +30,7 @@ const MyWorkplace = ({
                      }) => {
     const [startRangeDeal, setStartRange] = useState(currentRangeDeal)
     const [startRangeTotal, setStartRangeTotal] = useState(currentRangeTotal)
-    const {masterId} = useParams<{ masterId: string }>();
+    const {id} =useTypedSelector(state => state.auth)
     const THButtons = ['date time', 'user email', 'user name', 'city', 'clock size', 'deal price', 'total price', 'status']
 
     const {orders} = useTypedSelector(state => state.workPlase)
@@ -67,7 +67,7 @@ const MyWorkplace = ({
             return currentClockSizesId.push(s.id)
         })
 
-        const url = `/order?offset=${offset}&limit=${currentLimit}&masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${currentClockSizesId}&status=${currentStatusesName}`
+        const url = `/order?offset=${offset}&limit=${currentLimit}&masterId=${id}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${currentClockSizesId}&status=${currentStatusesName}`
         return await $api.get<AxiosOrder>(url)
     }, setOrders, "user name")
 
@@ -100,7 +100,7 @@ const MyWorkplace = ({
         clockSize.map((s) => {
             return cs.push(s.id)
         })
-        const url = `/order/getExcel?masterId=${masterId}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
+        const url = `/order/getExcel?masterId=${id}&sortBy=${sortBy}&select=${select}&filterUser=${inputValue}&minDealPrice=${currentRangeDeal[0]}&maxDealPrice=${currentRangeDeal[1]}&minTotalPrice=${currentRangeTotal[0]}&maxTotalPrice=${currentRangeTotal[1]}&cities=${currentArray}&dateStart=${dateStart}&dateFinish=${dateFinish}&clockSize=${cs}&status=${st}`
         $api.get(url).then((response) => {
                 window.location.href = response.data;
             }

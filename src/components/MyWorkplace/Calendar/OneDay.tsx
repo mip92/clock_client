@@ -10,7 +10,7 @@ interface OneDayProps {
     date: Date
     orders: OrderInterface[]
     statuses: MyStatus[]
-    masterId: string,
+    masterId:  number | null,
     month: string
 }
 

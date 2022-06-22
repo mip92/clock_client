@@ -54,8 +54,7 @@ const Login: React.FC = () => {
         }
         if (id && !key && role) {
             const url = UrlByRole[role]
-            if (role===Role.ADMIN) return history.push(url)
-            return history.push(url + id)
+            return history.push(url)
         }
         //if (prevLocation === '/' && id) return history.push('/')
     }, [id])
