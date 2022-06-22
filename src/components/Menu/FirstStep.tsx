@@ -158,7 +158,7 @@ const FirstStep = ({setMasters, next, tempFiles, addTempFiles}) => {
                                              error={errors.currentCity?.message}/>
                     </div>
                     :
-                    <div>
+                    <div className={s.city}>
                         Loading...
                     </div>
                 }

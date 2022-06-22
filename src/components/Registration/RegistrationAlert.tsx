@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {Link} from "react-router-dom";
-import {Button, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 
 const RegistrationAlert = ({open}) => {
     return (
@@ -22,14 +22,6 @@ const RegistrationAlert = ({open}) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {/*<Link
-                        to={{
-                            pathname: "/login",
-                            search: "?sort=name",
-                            hash: "#the-hash",
-                            state: { fromDashboard: true }
-                        }}
-                    />*/}
                     <Typography>
                         <Link
                             to={{
