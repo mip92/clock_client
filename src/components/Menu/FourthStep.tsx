@@ -6,8 +6,7 @@ import s from "../../style/FourthStep.module.css";
 import ButtonWrapper from "./PayPal/ButtonWrapper";
 import {PayPalContext} from "../../context/payPalContect";
 
-const FourthStep = ({orderId, dealPrice}) => {
-    const {currency} = useContext(PayPalContext)
+const FourthStep = () => {
     const history = useHistory();
     const goTo = (path) => {
         history.push(path)
@@ -18,7 +17,6 @@ const FourthStep = ({orderId, dealPrice}) => {
             <div className={s.wrapper}>
                 <Card style={{textAlign: "center"}}>
                     An email has been sent to you, please confirm your order
-                    <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
                 </Card>
                 <Button variant="contained"
                         color='primary'
@@ -31,7 +29,6 @@ const FourthStep = ({orderId, dealPrice}) => {
         <div className={s.wrapper}>
             <Card style={{textAlign: "center"}}>
                 An email has been sent to you with further instructions
-                <ButtonWrapper currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
             </Card>
             <Button variant="contained"
                     color='primary'

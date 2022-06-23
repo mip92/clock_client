@@ -11,6 +11,7 @@ import $api from "../../http";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import FourthStep from "./FourthStep";
 import FirstStep from "./FirstStep";
+import ThirdStep from "./ThirdStep";
 
 const MyStepper: React.FC = () => {
     const {currentMaster} = useContext(FormContext)
@@ -62,7 +63,7 @@ const MyStepper: React.FC = () => {
         if (activeStep === 1) sendPicture(tempFiles)
     }
 
-    const steps: string[] = ["Form", "Master select", "Confirmation"]
+    const steps: string[] = ["Form", "Master select", "Payment", "Confirmation"]
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -79,7 +80,8 @@ const MyStepper: React.FC = () => {
                                                                 addTempFiles={addTempFiles}
                                 />}
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
-                                {activeStep === 2 && <FourthStep dealPrice={dealPrice} orderId={orderId}/>}
+                                {activeStep === 2 && <ThirdStep next={next} dealPrice={dealPrice} orderId={orderId}/>}
+                                {activeStep === 3 && <FourthStep/>}
                             </StepWrapper>
                         </List>
                     </Card>

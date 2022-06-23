@@ -3,7 +3,7 @@ import {PayPalButtons, usePayPalScriptReducer} from "@paypal/react-paypal-js";
 import $api from "../../../http";
 import {useHistory} from "react-router-dom";
 
-const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
+const ButtonWrapper = ({next, currency, showSpinner, amount, orderId}) => {
     const history = useHistory();
     const style = {"layout": "vertical"};
     const [{options, isPending}, dispatch] = usePayPalScriptReducer();
@@ -18,7 +18,7 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
     }, [currency, showSpinner]);
 
     return (<>
-            {(showSpinner && isPending) && <div>Загрузка</div>}
+            {(showSpinner && isPending) && <div>Loading...</div>}
             <PayPalButtons
                 disabled={false}
                 forceReRender={[amount, currency, style]}
@@ -47,7 +47,10 @@ const ButtonWrapper = ({currency, showSpinner, amount, orderId}) => {
                 // @ts-ignore
                 onApprove={(data, actions) => {
                     if (actions.order) return actions.order.capture().then((order) => {
-                    }).then(() => history.push('/completed'));
+                    }).then(() => {
+                        next()
+                        //history.push('/completed')
+                    });
                 }}
                 onError={(err) => {
                 }}

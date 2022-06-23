@@ -1,26 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import ButtonWrapper from "./PayPal/ButtonWrapper";
+import {PayPalContext} from "../../context/payPalContect";
 
-const ThirdStep = ({tempFile, addTempFile, setError, back, next}) => {
+const ThirdStep = ({orderId, dealPrice, next}) => {
+    const {currency} = useContext(PayPalContext)
     return (
         <div>
-            {/*<Card className={s.wrapper}>
-                <FileUploaderContainer tempFile={tempFile}
-                                       addTempFile={addTempFile}
-                                       setError={setError}
-                />
-
-            </Card>
-            <div className={s.buttons}>
-                <Button variant="contained"
-                        color='primary'
-                        onClick={() => back()}>
-                    Назад</Button>
-                <div style={{color: 'red'}}></div>
-                <Button variant="contained"
-                        color='primary'
-                        onClick={() => next()}>
-                    Далее</Button>
-            </div>*/}
+            <ButtonWrapper next={next} currency={currency} amount={dealPrice} showSpinner={true} orderId={orderId}/>
         </div>
     );
 };
