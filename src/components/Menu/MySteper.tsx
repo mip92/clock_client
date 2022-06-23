@@ -80,7 +80,7 @@ const MyStepper: React.FC = () => {
                                                                 addTempFiles={addTempFiles}
                                 />}
                                 {activeStep === 1 && <SecondStep next={next} back={back} masters={masters}/>}
-                                {activeStep === 2 && <ThirdStep next={next} dealPrice={dealPrice} orderId={orderId}/>}
+                                {activeStep === 2 && <ThirdStep back={back} next={next} dealPrice={dealPrice} orderId={orderId}/>}
                                 {activeStep === 3 && <FourthStep/>}
                             </StepWrapper>
                         </List>

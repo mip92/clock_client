@@ -17,7 +17,7 @@ const PayPalCompleted = () => {
                     color='primary'
                     className={s.buttons}
                     onClick={() => goTo(`/myOffice/${id}`)}>
-                Перейти к моим заказам</Button>
+                To my orders</Button>
         </div>
     );
 };
