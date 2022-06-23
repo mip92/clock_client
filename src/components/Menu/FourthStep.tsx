@@ -21,7 +21,7 @@ const FourthStep = () => {
                 <Button variant="contained"
                         color='primary'
                         className={s.buttons}
-                        onClick={() => goTo(`/myOffice/${id}`)}>
+                        onClick={() => goTo(`/myOffice`)}>
                     Go to my orders</Button>
             </div>
         )
